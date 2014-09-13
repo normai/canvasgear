@@ -1,8 +1,8 @@
 ﻿# CanvasGear 0.1.2
 
-_Slogan_ : CanvasGear is a JavaScript application to draw icons on HTML5 canvases.
+_Slogan_ : CanvasGear is a JavaScript program to draw animated canvases by just specifying some parameters.
 
-_Status_ : Proof-of-concept
+_Status_ : Proof-of-concept.
 
 _Home_ : CanvasGear home is [downtown.trilo.de/svn/demosjs/trunk/canvasgear](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/index.html).
 
@@ -12,26 +12,31 @@ _Demos_ : See chapter [Demo](http://downtown.trilo.de/svn/demosjs/trunk/canvasge
 
 ### Quickstart
 
-This are the steps to get a canvas in a HTML page:
+Copy [`canvasgear.js`](./canvasgear.js) and [`canvasgearexcanvas.js`](./canvasgearexcanvas.js)
+to your web folder. Then add the following ingredients into your HTML file :
 
- - Copy canvasgear.js and canvasgearexcanvas.js to your web folder.
+<br />`<span style="color:#c0c0c0;"<!DOCTYPE HTML></span>`
+<br />`<span style="color:#c0c0c0;"<html></span>`
+<br />` <span style="color:#c0c0c0;"<head></span>`
+<br />` <script src="./canvasgear.js"></script><span style="color:#c0c0c0;">&lt!-- (1) load script --&gt</span>`
+<br />` <!--[if lte IE 9]><script src="./canvasgearexcanvas.js"></script><![endif]--><span style="color:#c0c0c0;">&lt!-- (2) load helper script --&gt</span>`
+<br />`<body onload="startCanvasGear();"><span style="color:#c0c0c0;">&lt!-- (3) start processing --&gt</span>`
+<br />` <canvas id="myCanvas44" width="123" height="123"></canvas><span style="color:#c0c0c0;">&lt!-- (4) define canvas --&gt</span>`
+<br />` <!-- algo=pulse color=hotpink hertz=0.2 --><span style="color:#c0c0c0;">&lt!-- (5) specify canvas parameters --&gt</span>`
+<br />`<span style="color:#c0c0c0;"<body></span>`
+<br />`<span style="color:#c0c0c0;"<html></span>`
 
- - In the HTML header, insert the script tag for canvasgear.js.
-<br />`<script src="./canvasgear.js"></script>`
+ 1. In the HTML header, insert the script tag for canvasgear.js.
 
- - In the HTML header, insert the script tag for canvasgearexcanvas.js inside IE conditional load.
-<br />`<!--[if lte IE 9]><script src="./canvasgearexcanvas.js"></script><![endif]-->`
+ 2. In the HTML header, insert the conditional script tag for canvasgearexcanvas.js.
 
- - In the body tag, insert 'onload="startCanvasGear"'
-<br />`<body onload="startCanvasGear();">`
+ 3. In the body tag, provide the attribute 'onload="startCanvasGear()"'.
 
- - Inside the body, define one or more canvases.
-<br />`<canvas id="myCanvas44" width="123" height="123"></canvas>`
+ 4. Inside the body, define one or more canvases.
 
- - In a comment behind each canvas, specify the canvas parameters.
-<br />`<!-- algo=pulse color=hotpink hertz=0.2 -->`
+ 5. In a comment immediately behind each canvas, specify the canvas parameters.
 
-More details about the installation you find in chapter [Installation](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/install.html).
+Details about the installation you find in chapter [Installation](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/install.html).
 
 [![CanvasGear Demo](img/20140829o0322.icondrawer-demo-cut.png)](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/demo.html)
 

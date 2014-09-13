@@ -1,0 +1,304 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <title>CanvasGear - Issues</title>
+   <script src="./canvasgear.js"></script>
+   <!--[if lte IE 9]><script src="./canvasgearexcanvas.js"></script><![endif]-->
+   <style>
+      body { background-color:#fafafa; font-family:arial,helvetica,sans-serif; text-align:center; } /* rule # 20140828.0421 */
+      body.lavendero { background-color:lavender; } /* (rule # 20140502.1911) */
+      div.chapter  { margin:0 auto; max-width:780px; width:80%; background-color:#f8f8f8; padding:0.9em; margin-top:0.9em; margin-bottom:1.1em; } /* (rule # 20100822.1331) */
+      h1.toptitle  { text-align:center; margin-top:0.2em; color:#0000f0; } /* (rule # 20080711.0521) */
+      h2 { color:#0000f0; }
+      h3 { color:#0000f0; }
+
+      li { text-align:left; }                          /* (rule # 20140302.0622) counteract 'text-align:center' for IE in body */
+      p { text-align:left; }                           /* (rule # 20140302.0623) counteract 'text-align:center' for IE in body */
+      td { text-align:left; vertical-align:top; }      /* (rule # 20140302.0624) counteract 'text-align:center' for IE in body */
+      pre { text-align:left; }                         /* (rule # 20140828o0441) counteract 'text-align:center' for IE in body */
+
+      p.attention    { font-family:monospace; font-weight:bold; color:darkred; font-size:127%; } /* (rule # 20100826.2101) */
+      p.footer       { border-top:1px solid; color:#808080; font-size:0.77em; margin-bottom:1.6em; margin-top:0.1%; } /* footer paragraph (rule # 20080710.2312) */
+      p.goodbye      { font-family:Comic Sans MS,Arial; margin-bottom:1.5em; margin-top:1.5em; } /* footer paragraph (rule # 20080710.2314) */
+      p.imagecenter  { text-align:center; color:green; } /* (rule # 20100826.2111) */
+      p.imprint      { color:#505050; font-size:0.77em; margin-bottom:0.1em; margin-right:1.1em; margin-top:2.4em; text-align:right; } /* footer paragraph (rule # 20080710.2313) */
+      p.toptitlecrumbs { color:#0000f0; font-size:130%; margin-bottom:0.2em; margin-top:0.2em; text-align:center; } /* (rule 20080711.0522) */
+      .timestamp { color:Turquoise; font-size:55%; font-family:Comic Sans MS,Arial } /* (rule # 20100826.2121) */
+
+      canvas { border: 3px #c0c0c0 solid; }            /* rule # 20140828.0422 */
+      .useborder { border-width:3px; border-color:lightgray; border-style:solid; } /* (# 20140828.0731) */
+      .verticaltight { margin-top:0.1em; margin-bottom:0.1em; } /* no space above and below (rule # 20140828.0641) */
+
+      /*  title : 'link-with-target-blank' (rule # 20120725.1151)
+       *  reference : http://www.peterkroener.de/links-mit-target_blank-gesondert-markieren (# 20120725.1141)
+       *  note : This style eliminates the need for class 'extern', the target attribut in the link is sufficient
+       */
+      a[target^="_blank"] {
+         padding-left:11px;
+         background-image:url(./img/20091221o152103.extern.png);
+         background-position:left center;
+         background-repeat:no-repeat;
+         color:darkviolet; /* background-color:#ffffa0; */
+      }
+
+      /* (rule # 20140902.0411 (# 20121111.1911)) */
+      hr.fatlavender {
+         color:#e6e6fa; border:0.2em solid; margin-top:2.2em; margin-bottom:0.9em;
+      }
+   </style>
+</head>
+
+<body class="lavendero" onload="startCanvasGear();" id="id20140902o1321">
+
+<table width="100%" summary="Aerial Breadcrumbs" border="0">
+ <tr>
+  <td>
+       <a href="./index.html"><b>CanvasGear</b></a> &nbsp; - &nbsp;
+       <!-- <a href="./canvasgeardoc.html">Doc</a> &nbsp; -->
+       <a href="./install.html">Installation</a> &nbsp;
+       <a href="./features.html">Features</a> &nbsp;
+       <!-- a href="./issues.html" --><b>Issues</b><!-- /a --> &nbsp;
+       <a href="./references.html">Ref</a> &nbsp;
+       <a href="./demo.html">Demo</a> &nbsp;
+       <!-- <a href="./demo2.html">Demo2</a> &nbsp; -->
+  </td>
+  <td width="131">
+       <a href="./features.html"><img src="./img/20081114o1721.navi-arrow-left.png.gif" width="48" height="24" alt="Previous page" border="0"></a>
+       <a href="./index.html"><img src="./img/20081114o172303.navi-arrow-up-wide.png.gif" width="24" height="24" alt="Home chapter" border="0"></a>
+       <a href="./references.html"><img src="./img/20081114o1722.navi-arrow-right.png.gif" width="48" height="24" alt="Next page" border="0"></a>
+  </td>
+ </tr>
+</table>
+
+
+<div id="id20140902o1322" style="text-align:right; float:right;">
+   <canvas id="myCanvas43" width="98" height="98">[CANVAS]</canvas>
+   <!-- algo=triangle color=mediumspringgreen hertz=0.1 -->
+</div>
+
+
+<div class="chapter" id="id20140902o1323">
+
+
+<p class="toptitlecrumbs" id="id20140902o1331">
+               CanvasGear
+</p>
+<h1 class="toptitle" id="id20140902o1332"><!-- id20140828o0521 -->
+               Issues
+</h1>
+
+
+<!-- p id="id20140902o1431">
+               Subchapters :
+               <a href="#">Issues</a> &nbsp;
+               <a href="#">Quirks</a> &nbsp;
+               <a href="#">Todos</a> &nbsp;
+               <a href="#">Roadmap</a> &nbsp;
+</p -->
+
+
+<p id="id20140828o0522">
+               No schedule exists.
+               Nevertheless, this page exists to hold issues, quirks, todos and the  roadmap.
+</p>
+
+
+<h2 id="id20140902o1441">
+               Overview
+</h2>
+
+
+<p id="id20140815o1141"><!-- id="id20140815o1141" -->
+               <span class="timestamp">(Todo&nbsp;#&nbsp;0140815.1141)</span>
+       <br />
+               Outsource drawing code from the time loop
+               to a dedicated function, which can serve
+               as the Algo property of the Ikon object.
+               <span style="color:#7b68ee;">(Done)</span><!-- MediumSlateBlue 7B 68 EE -->
+</p>
+
+
+<p id="id20140901o0612"><!-- id="id20140901o0612" -->
+               <span class="timestamp">(Todo&nbsp;#&nbsp;20140901.0611)</span>
+       <br />
+               JavaScript advanced programming. Currently,
+               different algorithms are called via a switch,
+               depending on the given token from the commandline.
+               Todo:
+               Make the algorithm function a property of the icon, so it can
+               directly be called without any switch.
+</p>
+
+
+<p id="id20140901o0622"><!-- id="id20140901o0622" -->
+               <span class="timestamp">(Todo&nbsp;#&nbsp;20140901.0621)</span>
+       <br />
+               Generalize features. E.g. make the rotate function not part
+               of one specific algorithm, but make a rotation applied to
+               all algorithms like an overlay.
+</p>
+
+
+<p id="id20140901o0632"><!-- id="id20140901o0632" -->
+               <span class="timestamp">(Todo&nbsp;#&nbsp;20140901.0631)</span>
+       <br />
+               Allow algorithms be provided in separate files.
+</p>
+
+
+<p id="id20140901o0631"><!-- id="id20140901o0631" -->
+               <span class="timestamp">(Todo&nbsp;#&nbsp;20140901.0631)</span>
+       <br />
+               Write algorithm to draw verctor graphics from graphic files like *.svg.
+</p>
+
+
+<h2 id="id20140828o0451">
+               Details
+</h2>
+
+
+<h3 id="id20140828o1816">
+               Issue (1) 'IE drawing outside canvas'
+</h3>
+
+<p id="id20140828o0452">
+               If you paint over the borders of the canvas, expect two behaviours
+               <small><small>(Issue&nbsp;#&nbsp;20140828.0541)</small></small>
+               :
+</p>
+
+<ul id="id20140828o0453">
+ <li id="id20140828o0455">
+               The object is painted even outside the canvas borders.
+               This is what IE does.
+               <br />&nbsp;
+ </li>
+ <li id="id20140828o0454">
+               The object outside the canvas borders is clipped.
+               This do Chrome, FF and Opera.
+               <small>One question is, whether for the outborder parts,
+               the calculations are done or skipped.
+               The answer were interesting for ressource and performance understanding.</small>
+ </li>
+</ul>
+
+
+<p id="id20140828o0456">
+               Here screenshots demonstrating the two different rendering flavours :
+</p>
+
+
+<p class="imagecenter" id="id20140828o0511">
+               <a href="./img/20140819o1731.downtown---icondrawer--ie8.mht.png">
+                <!-- width="805" height="848" * 0.2 = width="403" height="424" -->
+                <img src="./img/20140819o1731.downtown---icondrawer--ie8.mht.png" width="242" height="255" alt="id20140819o1731">
+               </a>
+       <br />  CanvasGear in IE8
+</p>
+
+
+<p class="imagecenter" id="id20140828o0512">
+               <a href="./img/20140819o1734.downtown---icondrawer--opera.png">
+                <!-- width="868" height="790" * 0.2 = width="434" height="395" -->
+                <img src="./img/20140819o1734.downtown---icondrawer--opera.png" width="260" height="237" alt="id20140819o1734">
+               </a>
+       <br />  CanvasGear in Opera. Chrome and Firefox look the same.
+</p>
+
+
+<a name="nm20140828o1211"></a>
+<h3 id="id20140828o1211">
+               Issue (2) 'IE cannot see canvas content'
+</h3>
+
+
+<p id="id20140828o1212">
+               (Issue # 20140828.1151) With IE8, the canvas property 'innerHTML' is unusable.
+               In IE8, the following line yields an unexpected value.
+               And when workaround findComments() or getComments() is applied,
+               IE may display the dialog below.
+</p>
+
+
+<p class="imagecenter" id="id20140828o1215">
+               <img src="./img/20140828o1321.icondrawer--ie--get-comments.png" width="377" height="172" alt="20140828o1321" />
+         <br />
+               IE8 shows this dialog when findComments() or getComment()
+               are active then freezes.
+</p>
+
+
+<pre id="id20140828o1213">
+   var sCmd = ico.Canvas.innerHTML; // (issue # 20140828.1151)
+   ico.Command = sCmd;
+
+   // Wanted value = "color=#bb1111 speed=800"
+   // IE8 yield = "&lt;DIV style="POSITION: absolute; WIDTH: 24px; HEIGHT: 24px"&gt;&lt;/DIV&gt;"
+</pre>
+
+<p id="id20140828o1214">
+               Status : open.
+</p>
+
+<p id="id20140828o1341">
+               Proposal : Create XML file with the params for IE to read parameters from.
+</p>
+
+
+<a name="nm20140829o0311"></a>
+<h3 id="id20140829o0311">
+               Issue (3) 'color and stroke on canvas'
+</h3>
+
+
+<p id="id20140829o0312">
+               Issue # 20140829.0331 'Color select on canvas'.
+</p>
+
+<p id="id20140829o0313">
+               When drawing on a canvas, a line is started with beginPath(),
+               the color and the stroke can be set.
+               On one canvas, only one style seems possible,
+               but more styles are wanted.
+</p>
+
+<p class="imagecenter" id="id20140829o0314">
+               <img src="./img/20140829o0322.icondrawer-demo-cut.png" width="366" height="113" alt="20140829o0322" />
+       <br /> Note canvas number two with the yellow stroke.
+</p>
+
+<p id="id20140815o1341">
+               Note icons one and <b>two</b>.
+               It tries to draw two objects, a triangle and a line.
+               It has only one color and stroke, not different, as should.
+               How to write code to put two objects on one canvas?
+</p>
+
+<p id="id20140829o0315">
+               <b>Todo</b>. Clear whether this is just a coding particularity,
+               or whether a canvas can indeed display only one color and stroke.
+               Perhaps it has to do with layers or the like.
+</p>
+
+
+<hr class="fatlavender" />
+
+
+<p id="id20140902o1341" style="color:magenta;"><!-- output status message -->
+               .<!-- This paragraph may be replaced from canvasgear.js -->
+</p>
+
+
+</div><!-- div class="chapter" id="id20140902o1323" -->
+
+
+<p class="imprint" id="id20140902o1312">
+               Imprint : <a href="http://www.trilo.de" target="_blank">www.trilo.de</a>
+</p>
+<p class="footer" id="id20140902o1311">
+               http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/issues.html
+               <small>(# 20140902.1311)</small>
+</p>
+</body>
+</html>

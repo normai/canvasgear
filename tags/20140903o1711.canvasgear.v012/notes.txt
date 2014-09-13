@@ -1,0 +1,215 @@
+﻿
+
+   issue 20140830.0231 IE webcolors
+   text : IE8 does not understand all webcolors. IE understands
+      e.g 'blue' but not 'lightblue'.
+   workaround : Use RGB values for all colors. Or implement a mapping function.
+   note :
+
+
+   //--------------------------------------
+   // issue # 20140830o0221 'IE get HTML comment'
+   // descript : About reading a HTML comment from various browsers
+   // findings :
+   //    (1) A comment node cannot be directly found.
+   //    (2) It can be found in a node collection it's nodeType, which is 8.
+   //    (3) Having that node, IE and the others differ
+   //    (3.1) In IE, the comment can be read via n.innerHTML or n.nodeValue.
+   //    (3.2) In others, n.innerHTML yields 'undefined'.
+   //    (3.3) In others, the comment can be read via n.nodeValue.
+   // location : File canvasgear.js seq # 20140830o0211
+   // note : After sequence # 20140830o0311, it looks as if the both browsers
+   //    understand nodeValue. Hm .. was this issue just some misconception?
+   // note :
+   //--------------------------------------
+
+
+   // issue # 20140828.1151 'IE canvas innerHTML'
+   // symptoms : In IE, not individual algorithms are used, but one only.
+   // location : File canvasgear.js seq # 20140830.0211
+   // finding : In IE, ico.Canvas.innerHTML does not yield a command like 'color=red',
+   //    but a string like "<DIV style="POSITION: absolute; WIDTH: 64px; HEIGHT: 64px"></DIV>"
+   // workaround : Use something else to store the icon command, e.g. a comment
+   // note :
+
+
+   //--------------------------------------------
+   // (issue # 20140828.0751)
+   // title : Algo calling params quirk
+   // symptom : When calling the outsourced algorithm with the plain
+   //    icon as parameter, only the first canvas is drawn, the other
+   //    are skipped.
+   // suspect : Parameter passing by reference not consequently done.
+   // workaround : Call it with the full icons array plus the index.
+   // note : About failed attempts to pass the plain icon
+   //    - //var x = icos[iFor];
+   //    - //icos[iFor] = algoPulse(x);
+   //    - //algoPulse(icos[iFor]);
+   //--------------------------------------------
+
+
+   // (discard # 20140830o0245)
+   // workaround for issue # 20140828.1151 IE (seq # 20140828.1251)
+   // note : Not useful, makes IE freeze (issue 20140828o1321 screenshot 20140828o1322).
+   /*
+   var commentNodes = findComments(ico.Canvas); // same with getComments()
+   var iNodes = commentNodes.length;
+   var sCmnt = '';
+   for (i = 0; i < iNodes; i++) {
+      sCmnt += commentNodes[i].nodeValue + '\n';
+   }
+   */
+
+
+   // (discard # 20140830o0244)
+   //--------------------------------------------
+   // (IE8 experiment # 20140829.1713)
+   // ref : http://www.mediaevent.de/javascript/DOM-Navigation.html (20140829o1732)
+   /*
+   ////var jsdomThisDiv = document.getElementById('jsdomThisDiv');
+   var jsdomThisDiv = canvases[i];
+   var allNodes = jsdomThisDiv.childNodes;
+   var text = "";
+   for (var i2 = 0; i2 < allNodes.length; i2++) {
+      text = text + allNodes[i2].tagName + " " + allNodes[i2].nodeName + "\n";
+   }
+   if (jsdomThisDiv.id == "id20140828o1951" ) {
+      alert('Debug ' + i + ' node = ' + jsdomThisDiv.tagName + ' : ' + text); // 'DIV DIV'
+   }
+   */
+   /*
+   var tgCanvas = canvases[i];
+   var tgCanvasContainer = tgCanvas.parentNode;
+   var allNodes = tgCanvasContainer.childNodes;
+   var text = "";
+   for (var i2 = 0; i2 < allNodes.length; i2++) {
+      text = text + "\n - " + allNodes[i2].nodeType + " " + allNodes[i2].nodeName;
+      if (allNodes[i2].nodeType === 8) {
+          ////text = text + allNodes[i2].outerHTML; // works as expected
+          text = text + " " + allNodes[i2].innerHTML; // in IE8, this yields the comment, in FF this yields 'undefined'
+          //text = text + " " + allNodes[i2].innerText; // in IE8, this yields nothing
+      }
+   }
+   if (tgCanvasContainer.id == "id20140828o1952" ) {
+      alert('Debug ' + i + ' node = ' + tgCanvasContainer.tagName + ' : ' + text); // 'DIV DIV'
+   }
+   */
+
+
+   // (discard # 20140830o0243)
+   //--------------------------------------------
+   // (IE8 experiment # 20140829.1713)
+   // ref : http://www.bennadel.com/blog/1563-jquery-comments-plug-in-to-access-html-comments-for-dom-templating.htm (20140829o1721)
+   /*
+   var eFirst = canvases[i].nextSibling;
+   if (eFirst) {
+      var iNType = eFirst.nodeType;              // noteType =
+      var s125 = eFirst.innerHTML;               // = "1"
+   }
+   */
+   //--------------------------------------------
+
+
+   // (discard # 20140830o0242)
+   //--------------------------------------------
+   // (IE8 experiment # 20140829.1712)
+   // ref : http://stackoverflow.com/questions/11583271/how-to-load-the-content-of-a-file-into-variable-using-jquery-load-method (20140829o1725)
+   /*
+   var stuff;
+   $.get('index.html', function (response) {
+      stuff = response; // in IE, stuff will remain 'undefined', in FF it is an 'Object {type="longString"}'
+   });
+   //while (! stuff) {
+   //   // will hang here
+   //}
+   alert('[Debug] ' + stuff);
+   */
+   //--------------------------------------------
+
+
+   // (discard # 20140830o0241)
+   //--------------------------------------------
+   // (IE8 experiment # 20140829.1711)
+   /*
+   var elParent = canvases[i].parentElement;
+   var s2 = elParent.innerHTML;
+   // e.g. s2 = "<canvas style="WIDTH: 98px; HEIGHT: 98px" id=myCanvas43
+   //   width="98" height="98"><DIV style="POSITION: absolute;
+   //   WIDTH: 98px; HEIGHT: 98px"></DIV></canvas>"
+   //   this does not contain the wanted comment inside the canvas tag.
+   var s3 = elParent.innerText; // s3 = "";
+   var s3 = document.getElementsByTagName('BODY')[0].innerHTML; // does not contain the canvas comments
+   var es = canvases[i].childNodes;
+   if (es) {
+      var e123 = es[0];                  // noteType = 1
+      var s4 = e123.innerHTML;           // = ""
+   }
+   */
+   //--------------------------------------------
+
+
+   note # 20140815.0731
+   Coming from the example after (# 20140814.2211)
+http://www.kirupa.com/html5/creating_simple_html5_canvas_animation.htm,
+I want the following features to be changed:
+   - The JS code is inside the HTML, I want it as a separate JS file
+   - It is for modern browsers only, I want it for older browsers as well.
+   The transition did not succeed on the first attempt. So I introduced
+the file series canvas-2-pulse-v*.html to introduces the wanted features
+step by step. The steps are:
+   - v1 : Pretty the original as is.
+   - v2 : Introcude excanvas.js
+   - v3 : Split file into HTML and JS
+   - v4 : ...
+
+
+   link # 20140815.0634
+   title: Article 'requestAnimationFrame for Smart Animating'
+   author : Paul Irish on 2011-Feb-22
+   url : http://www.paulirish.com/2011/requestanimationframe-for-smart-animating
+   note :
+
+
+   link # 20140815.0631
+   url : http://caniuse.com/#feat=requestanimationframe
+   note : canvas-2-pulse.html uses requestAnimationFrame.
+           For IE8, we need some replacement.
+   note :
+
+
+   link # 20140815.0543
+   title : Blog 'Create an animated PNG from a sequence of images using jQuery'
+             by John C. Molyneux, Tuesday, 13 December 2011
+   url : http://johncmolyneux.blogspot.de/2011/12/create-animated-png-from-sequence-of.html
+   ref : Google 'create animated png with javascript'
+   note :
+
+
+   link # 20140815.0542
+   title : Blog 'Javascript debugging in the browser console.'
+             by John C. Molyneux, Thursday, 17 July 2014
+   url : http://johncmolyneux.blogspot.de/2014/07/javascript-debugging-in-browser-console.html
+   note :
+
+
+   link # 20140815.0541
+   url : http://spritely.net
+   ref : Google 'create animated png with javascript'
+   note : Animated backgrounds using CSS.
+
+
+   link # 20140815.0531
+   url : http://pasargad.cse.shirazu.ac.ir/~kazemi/PresentRTDataLineChart/chart.html
+   ref : Comment by alireza....@gmail.com, Sep 8, 2010 on
+          https://code.google.com/p/explorercanvas/wiki/Instructions
+   note : Simple example working also in IE8
+   note : Has extremely long loading time.
+   note :
+
+
+   link # 20140815.0521
+   url : http://gnuzoo.org/rose/index.htm
+   ref : Comment by gnu...@gmail.com, Sep 14, 2010 on
+          https://code.google.com/p/explorercanvas/wiki/Instructions
+   note : Simple example working also in IE8
+   note :

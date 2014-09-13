@@ -1,0 +1,526 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <title>CanvasGear</title>
+   <script src="./canvasgear.js"></script>
+   <!--[if lte IE 9]><script src="./canvasgearexcanvas.js"></script><![endif]-->
+   <style>
+      body { background-color:#fafafa; font-family:arial,helvetica,sans-serif; text-align:center; } /* rule # 20140828.0421 */
+      body.lavendero { background-color:lavender; } /* (rule # 20140502.1911) */
+      div.chapter  { margin:0 auto; max-width:780px; width:80%; background-color:#f8f8f8; padding:0.9em; margin-top:0.9em; margin-bottom:1.1em; } /* (rule # 20100822.1331) */
+      h1.toptitle  { text-align:center; margin-top:0.2em; color:#0000f0; } /* (rule # 20080711.0521) */
+
+      li { text-align:left; }                          /* (rule # 20140302.0622) counteract 'text-align:center' for IE in body */
+      p { text-align:left; }                           /* (rule # 20140302.0623) counteract 'text-align:center' for IE in body */
+      td { text-align:left; vertical-align:top; }      /* (rule # 20140302.0624) counteract 'text-align:center' for IE in body */
+      pre { text-align:left; }                         /* (rule # 20140828o0441) counteract 'text-align:center' for IE in body */
+
+      p.attention    { font-family:monospace; font-weight:bold; color:darkred; font-size:127%; } /* (rule # 20100826.2101) */
+      p.footer       { border-top:1px solid; color:#808080; font-size:0.77em; margin-bottom:1.6em; margin-top:0.1%; } /* footer paragraph (rule # 20080710.2312) */
+      p.goodbye      { font-family:Comic Sans MS,Arial; margin-bottom:1.5em; margin-top:1.5em; } /* footer paragraph (rule # 20080710.2314) */
+      p.imagecenter  { text-align:center; color:green; } /* (rule # 20100826.2111) */
+      p.imprint      { color:#505050; font-size:0.77em; margin-bottom:0.1em; margin-right:1.1em; margin-top:2.4em; text-align:right; } /* footer paragraph (rule # 20080710.2313) */
+      p.toptitlecrumbs { color:#0000f0; font-size:130%; margin-bottom:0.2em; margin-top:0.2em; text-align:center; } /* (rule 20080711.0522) */
+      .timestamp { color:Turquoise; font-size:55%; font-family:Comic Sans MS,Arial } /* (rule # 20100826.2121) */
+
+      canvas { border: 3px #c0c0c0 solid; }            /* rule # 20140828.0422 */
+      .useborder { border-width:3px; border-color:lightgray; border-style:solid; } /* (# 20140828.0731) */
+      .verticaltight { margin-top:0.1em; margin-bottom:0.1em; } /* no space above and below (rule # 20140828.0641) */
+
+      /*  title : 'link-with-target-blank' (rule # 20120725.1151)
+       *  reference : http://www.peterkroener.de/links-mit-target_blank-gesondert-markieren (# 20120725.1141)
+       *  note : This style eliminates the need for class 'extern', the target attribut in the link is sufficient
+       */
+      a[target^="_blank"] {
+         padding-left:11px;
+         background-image:url(./img/20091221o152103.extern.png);
+         background-position:left center;
+         background-repeat:no-repeat;
+         color:darkviolet; /* background-color:#ffffa0; */
+      }
+   </style>
+</head>
+
+<body class="lavendero" onload="startCanvasGear();" id="id20140828o1921">
+
+<table width="100%" summary="Aerial Breadcrumbs" border="0">
+ <tr>
+  <td>
+       <!-- a href="./index.html" --><b>CanvasGear</b><!-- /a --> &nbsp; - &nbsp;
+       <!-- <a href="./canvasgeardoc.html">Doc</a> &nbsp; -->
+       <a href="./install.html">Installation</a> &nbsp;
+       <a href="./features.html">Features</a> &nbsp;
+       <a href="./issues.html">Issues</a> &nbsp;
+       <a href="./references.html">Ref</a> &nbsp;
+       <a href="./demo.html">Demo</a> &nbsp;
+       <!-- <a href="./demo2.html">Demo2</a> &nbsp; -->
+  </td>
+  <td width="131">
+       <a href="./demo.html"><img src="./img/20081114o1721.navi-arrow-left.png.gif" width="48" height="24" alt="Previous page" border="0"></a>
+       <a href="./index.html"><img src="./img/20081114o172303.navi-arrow-up-wide.png.gif" width="24" height="24" alt="Home chapter" border="0"></a>
+       <a href="./install.html"><img src="./img/20081114o1722.navi-arrow-right.png.gif" width="48" height="24" alt="Next page" border="0"></a>
+  </td>
+ </tr>
+</table>
+
+
+<div id="id20140828o1922" style="text-align:right; float:right;">
+   <canvas id="myCanvas43" height="98" width="98">[Canvas]</canvas>
+   <!-- algo=triangle color=mediumspringgreen hertz=0.1 -->
+</div>
+
+
+<div class="chapter" id="id20140828o1923">
+
+
+<h1 class="toptitle" id="id20140828o1924">
+               CanvasGear
+               <small><small>0.1.2</small></small>
+</h1>
+
+
+<p id="id20140828o1941">
+               <b>Slogan</b>:
+               CanvasGear is a JavaScript program to draw
+               animated canvases by just specifying some parameters.
+</p>
+
+
+<p id="id20140828o1931">
+               <b>Quickstart</b>:
+               Copy
+               <tt><a href="canvasgear.js">canvasgear.js</a></tt>
+               and
+               <tt><a href="canvasgearexcanvas.js">canvasgearexcanvas.js</a></tt>
+               to your pages folder.
+               Then place the following outlined code in your HTML file:
+</p>
+
+
+<!-- pre id="id20140828o1942" style="background-color:#e0ffe0;" -->
+<pre id="id20140828o1942" style="background-color:#e8ffe8;">
+ <span style="color:#c0c0c0;">&lt;html&gt;</span>
+  <span style="color:#c0c0c0;">&lt;head&gt;</span>
+   <b>&lt;script src="./canvasgear.js"&gt;&lt;/script&gt;</b>           <span style="color:red;">&lt;!-- (1) load script --&gt;</span>
+   <b>&lt;!--[if lte IE 9]&gt;&lt;script src="./canvasgearexcanvas.js"&gt;&lt;/script&gt;&lt;![endif]--&gt;</b> <span style="color:red;">&lt;!-- (2) load IE compatibility --&gt;</span>
+  <span style="color:#c0c0c0;">&lt;/head&gt;</span>
+  <span style="color:#c0c0c0;">&lt;body</span> <b>onload="startCanvasGear();"</b><span style="color:#c0c0c0;">&gt;</span>                <span style="color:red;">&lt;!-- (3) start work --&gt;</span>
+   <b>&lt;canvas id="myCanvas44" width="123" height="123"&gt;&lt;/canvas&gt;</b> <span style="color:red;">&lt;!-- (4) define a canvas --&gt;</span>
+   <b>&lt;!-- algo=pulse color=hotpink hertz=0.2 --&gt;</b>      <span style="color:red;">&lt;!-- (5) specify parameters for canvas --&gt;</span>
+  <span style="color:#c0c0c0;">&lt;/body&gt;</span>
+ <span style="color:#c0c0c0;">&lt;/html&gt;</span>
+</pre>
+
+
+<p id="id20140828o1932" style="clear:left;">
+               <b>Examples</b>.
+               Below you should see hundred animated canvases.
+               For more examples see the
+               <a href="demo.html">Demo</a>
+               page.
+</p>
+
+<!-- p id="id20140828o1933">
+               .
+<p -->
+
+
+<!-- ************************************** -->
+
+<div id="id20140828o1952" style="text-align:right; float:left;">
+   1
+   <canvas id="id20140828o1951" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=triangle color=red -->
+
+   <canvas id="id20140828o2011" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=oblongrose color=royalblue -->
+
+   <canvas id="id20140828o2031" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=triangulum color=cornflowerblue hertz=0.9 -->
+
+   <canvas id="id20140828o2041" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=triangulum color=cornflowerblue color2=blue bgcolor=khaki -->
+
+   <canvas id="id20140828o2051" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=develop -->
+
+   <canvas id="id20140828o2111" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=lightblue hertz=0.201 -->
+
+   <canvas id="id20140828o2121" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=lightblue hertz=0.202 -->
+
+   <canvas id="id20140828o2131" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=lightblue hertz=0.203 -->
+
+   <canvas id="id20140828o2141" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=lightblue hertz=0.204 -->
+
+   <canvas id="id20140828o2151" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=lightblue hertz=0.205 -->
+</div>
+
+<!-- ************************************** -->
+
+<div style="text-align:right; float:left; clear:left">
+   2
+   <canvas id="id20140829o1411" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.110 -->
+
+   <canvas id="id20140829o1412" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=#ffa500 hertz=0.111 -->
+
+   <canvas id="id20140829o1413" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.112 -->
+
+   <canvas id="id20140829o1414" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.113 -->
+
+   <canvas id="id20140829o1415" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.114 -->
+
+   <canvas id="id20140829o1421" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.115 -->
+
+   <canvas id="id20140829o1422" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.116 -->
+
+   <canvas id="id20140829o1423" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.117 -->
+
+   <canvas id="id20140829o1424" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.118 -->
+
+   <canvas id="id20140829o1425" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=algo2line color=lightblue hertz=0.206 -->
+</div>
+
+<!-- ************************************** -->
+
+<div style="text-align:right; float:left; clear:left">
+   3
+   <canvas id="id20140829o1431" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.111 -->
+
+   <canvas id="id20140829o1432" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.112 -->
+
+   <canvas id="id20140829o1433" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.113 -->
+
+   <canvas id="id20140829o1434" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.114 -->
+
+   <canvas id="id20140829o1435" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.115 -->
+
+   <canvas id="id20140829o1441" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.116 -->
+
+   <canvas id="id20140829o1442" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.117 -->
+
+   <canvas id="id20140829o1443" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.118 -->
+
+   <canvas id="id20140829o1444" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.119 -->
+
+   <canvas id="id20140829o1445" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=algo2line color=lightblue hertz=0.207 -->
+</div>
+
+<!-- ************************************** -->
+
+<div style="text-align:right; float:left; clear:left">
+   4
+   <canvas id="id20140829o1451" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.112 -->
+
+   <canvas id="id20140829o1452" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.113 -->
+
+   <canvas id="id20140829o1453" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.114 -->
+
+   <canvas id="id20140829o1454" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.115 -->
+
+   <canvas id="id20140829o1455" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.116 -->
+
+   <canvas id="id20140829o1511" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.117 -->
+
+   <canvas id="id20140829o1512" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.118 -->
+
+   <canvas id="id20140829o1513" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.119 -->
+
+   <canvas id="id20140829o1514" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.120 -->
+
+   <canvas id="id20140829o1515" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=algo2line color=lightblue hertz=0.208 -->
+</div>
+
+<!-- ************************************** -->
+
+<div style="text-align:right; float:left; clear:left">
+   5
+   <canvas id="id20140829o1521" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.113 -->
+
+   <canvas id="id20140829o1522" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.114 -->
+
+   <canvas id="id20140829o1523" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.115 -->
+
+   <canvas id="id20140829o1534" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.116 -->
+
+   <canvas id="id20140829o1535" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.117 -->
+
+   <canvas id="id20140829o1536" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.118 -->
+
+   <canvas id="id20140829o1537" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.119 -->
+
+   <canvas id="id20140829o1538" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.120 -->
+
+   <canvas id="id20140829o1539" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.121 -->
+
+   <canvas id="id20140829o1540" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=algo2line color=lightblue hertz=0.209 -->
+</div>
+
+<!-- ************************************** -->
+
+<div style="text-align:right; float:left; clear:left">
+   6
+   <canvas id="id20140829o1541" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.114 -->
+
+   <canvas id="id20140829o1542" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.115 -->
+
+   <canvas id="id20140829o1543" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.116 -->
+
+   <canvas id="id20140829o1544" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.117 -->
+
+   <canvas id="id20140829o1545" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.118 -->
+
+   <canvas id="id20140829o1551" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.119 -->
+
+   <canvas id="id20140829o1552" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.120 -->
+
+   <canvas id="id20140829o1553" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.121 -->
+
+   <canvas id="id20140829o1554" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.122 -->
+
+   <canvas id="id20140829o1555" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=algo2line color=lightblue hertz=0.21 -->
+</div>
+
+<!-- ************************************** -->
+
+<div style="text-align:right; float:left; clear:left">
+   7
+   <canvas id="id20140829o1911" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.115 -->
+
+   <canvas id="id20140829o1912" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.116 -->
+
+   <canvas id="id20140829o1913" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.117 -->
+
+   <canvas id="id20140829o1914" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.118 -->
+
+   <canvas id="id20140829o1915" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.119 -->
+
+   <canvas id="id20140829o1921" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.120 -->
+
+   <canvas id="id20140829o1922" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.121 -->
+
+   <canvas id="id20140829o1923" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.122 -->
+
+   <canvas id="id20140829o1924" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.123 -->
+
+   <canvas id="id20140829o1925" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=triangle color=hotpink hertz=0.2 -->
+</div>
+
+<!-- ************************************** -->
+
+<div style="text-align:right; float:left; clear:left">
+   8
+   <canvas id="id20140829o1931" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.116 -->
+
+   <canvas id="id20140829o1932" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.117 -->
+
+   <canvas id="id20140829o1933" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.118 -->
+
+   <canvas id="id20140829o1934" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.119 -->
+
+   <canvas id="id20140829o1935" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.120 -->
+
+   <canvas id="id20140829o1941" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.121 -->
+
+   <canvas id="id20140829o1942" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.122 -->
+
+   <canvas id="id20140829o1943" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.123 -->
+
+   <canvas id="id20140829o1944" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.124 -->
+
+   <canvas id="id20140829o1945" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=triangle color=lightsalmon hertz=0.7 -->
+</div>
+
+<!-- ************************************** -->
+
+<div style="text-align:right; float:left; clear:left">
+   9
+   <canvas id="id20140829o2011" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.117 -->
+
+   <canvas id="id20140829o2012" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.118 -->
+
+   <canvas id="id20140829o2013" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.119 -->
+
+   <canvas id="id20140829o2014" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.120 -->
+
+   <canvas id="id20140829o2015" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.121 -->
+
+   <canvas id="id20140829o2021" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.122 -->
+
+   <canvas id="id20140829o2022" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.123 -->
+
+   <canvas id="id20140829o2023" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.124 -->
+
+   <canvas id="id20140829o2024" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.125 -->
+
+   <canvas id="id20140829o2025" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=triangle color=lightcoral hertz=1.1 -->
+</div>
+
+<!-- ************************************** -->
+
+<div style="text-align:right; float:left; clear:left">
+   0
+   <canvas id="id20140829o2031" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.118 -->
+
+   <canvas id="id20140829o2032" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.119 -->
+
+   <canvas id="id20140829o2033" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.120 -->
+
+   <canvas id="id20140829o2034" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.121 -->
+
+   <canvas id="id20140829o2035" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.122 -->
+
+   <canvas id="id20140829o2041" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.123 -->
+
+   <canvas id="id20140829o2042" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.124 -->
+
+   <canvas id="id20140829o2043" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.125 -->
+
+   <canvas id="id20140829o2044" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=pulse color=orange hertz=0.126 -->
+
+   <canvas id="id20140829o2045" width="32" height="32">[Canvas]</canvas>
+   <!-- algo=triangle color=tomato hertz=-0.3 -->
+</div>
+
+<!-- ************************************** -->
+
+
+<p id="id20140830o0317" style="clear:left;">
+               &nbsp;
+</p>
+
+
+<p id="id20140901o0551">
+               <b>Project status</b>: Proof-of-concept.
+</p>
+
+
+<p id="id20140901o0551">
+               <b>Features</b>.
+               See page
+               <a href="features.html">Features</a>
+               .
+</p>
+
+<p id="id20140828o1941">
+               <b>Compatibility</b>.
+               CanvasGear is developed under
+               Chrome 32.0, Firefox 30.0, IE 8 and Opera 10.53.
+</p>
+
+
+<p id="id20140828o1934">
+               Have fun.
+</p>
+
+
+<!-- p id="id20140828o0651" style="color:magenta; font-size:77%;" --><!-- output status message -->
+               <!-- . --><!-- This paragraph may be replaced from canvasgear.js -->
+<!-- /p -->
+
+
+</div><!-- div class="chapter" id="id20140828o1922" -->
+
+
+<p class="imprint" id="id20140828o1912">
+               Imprint : <a href="http://www.trilo.de" target="_blank">www.trilo.de</a>
+</p>
+<p class="footer" id="id20140828o1911">
+               http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/index.html
+               <small>(# 20140828.1911)</small>
+</p>
+</body>
+</html>

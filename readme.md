@@ -6,7 +6,7 @@ Slogan : CanvasGear is a JavaScript application to draw icons on HTML5 canvases.
 
 Status : Proof-of-concept
 
-## Installation
+### Installation
 
 Follow this steps:
 
@@ -17,16 +17,15 @@ Follow this steps:
  - Inside the body, define one or more canvases.
  - In a comment behind each canvas, specify the canvas parameters.
 
-How the HTML lines looks like, see
+Example lines you see on the project page
  http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/index.html
+.
 
-## Description
+### Description
 
-See the demo and the documentation page.
-
-For more demos see
+For the demos see the demo page
  http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/demo.html
 
-[![CanvasGear Demo](img/20140819o1731.downtown---icondrawer--ie8.mht.png)](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/demo.html)
+[![CanvasGear Demo](img/20140829o0322.icondrawer-demo-cut.png)](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/demo.html)
 
    Bye.

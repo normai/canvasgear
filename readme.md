@@ -2,9 +2,9 @@
 
 **Slogan** : CanvasGear is a JavaScript program to draw animated canvases by just specifying some parameters.
 
-**Status** : Proof-of-concept.
-
 **Home** : CanvasGear home is [downtown.trilo.de/svn/demosjs/trunk/canvasgear](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/index.html).
+
+**Status** : Proof-of-concept.
 
 **Demos** : See chapter [Demo](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/demo.html).
 
@@ -13,7 +13,9 @@
 ### Quickstart
 
 Copy [`canvasgear.js`](./canvasgear.js) and [`canvasgearexcanvas.js`](./canvasgearexcanvas.js)
-to your web folder. Then add the following ingredients into your HTML file :
+to your web folder.
+
+Then put the following ingredients into your HTML file :
 
 ```
 <!DOCTYPE HTML>
@@ -33,6 +35,8 @@ to your web folder. Then add the following ingredients into your HTML file :
  3. In the body tag, provide attribute 'onload="startCanvasGear()"'.
  4. Somewhere inside the body, define one or more canvases.
  5. In a comment immediately behind each canvas, specify the canvas parameters.
+
+Now should the defined canvases should appear on your page.
 
 Details about the installation you find in chapter [Installation](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/install.html).
 

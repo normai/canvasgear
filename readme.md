@@ -36,7 +36,7 @@ Then put the following ingredients into your HTML file :
  4. Somewhere inside the body, define one or more canvases.
  5. In a comment immediately behind each canvas, specify the canvas parameters.
 
-Now should the defined canvases should appear on your page.
+Now the defined canvases should appear on your page.
 
 Details about the installation you find in chapter [Installation](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/install.html).
 

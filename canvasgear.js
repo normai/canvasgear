@@ -1,7 +1,7 @@
 /*
  * file : canvasgear.js
  * id : # 20140815.1213
- * version : CanvasGear 0.1.2 (# 20140903.1711)
+ * version : CanvasGear 0.1.2 (# 20140904.0311)
  * description : This script paints animated icons on canvases.
  * license : The MIT License
  * copyright : Norbert C. Maier

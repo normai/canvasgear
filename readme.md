@@ -2,7 +2,7 @@
 
 **Slogan** : CanvasGear is a JavaScript program to draw animated canvases by just specifying some parameters.
 
-**Status**_ : Proof-of-concept.
+**Status** : Proof-of-concept.
 
 **Home** : CanvasGear home is [downtown.trilo.de/svn/demosjs/trunk/canvasgear](http://downtown.trilo.de/svn/demosjs/trunk/canvasgear/index.html).
 
@@ -19,11 +19,11 @@ to your web folder. Then add the following ingredients into your HTML file :
 <!DOCTYPE HTML>
 <html>
 <head>
-**<script src="./canvasgear.js"></script>**                    <!-- (1) load script -->
-**<!--[if lte IE 9]><script src="./canvasgearexcanvas.js"></script>** <![endif]--> <!-- (2) load IE compatibility -->
-<body **onload="startCanvasGear();"**>                         <!-- (3) start processing -->
- **<canvas id="myCanvas44" width="123" height="123"></canvas>** <!-- (4) define canvas -->
- **<!-- algo=pulse color=hotpink hertz=0.2 -->**               <!-- (5) specify canvas parameters -->
+<script src="./canvasgear.js"></script>                    <!-- (1) load script -->
+<!--[if lte IE 9]><script src="./canvasgearexcanvas.js"></script> <![endif]--> <!-- (2) load IE compatibility -->
+<body onload="startCanvasGear();">                         <!-- (3) start processing -->
+ <canvas id="myCanvas44" width="123" height="123"></canvas> <!-- (4) define canvas -->
+ <!-- algo=pulse color=hotpink hertz=0.2 -->               <!-- (5) specify canvas parameters -->
 <body>
 <html>
 ```

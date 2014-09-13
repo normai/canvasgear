@@ -19,11 +19,11 @@ to your web folder. Then add the following ingredients into your HTML file :
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="./canvasgear.js"></script>                    <!-- (1) load script -->
-<!--[if lte IE 9]><script src="./canvasgearexcanvas.js"></script><![endif]--> <!-- (2) load helper script -->
-<body onload="startCanvasGear();">                         <!-- (3) start processing -->
- <canvas id="myCanvas44" width="123" height="123"></canvas> <!-- (4) define canvas -->
- <!-- algo=pulse color=hotpink hertz=0.2 -->               <!-- (5) specify canvas parameters -->
+_<script src="./canvasgear.js"></script>_                    <!-- (1) load script -->
+_<!--[if lte IE 9]><script src="./canvasgearexcanvas.js"></script>_<![endif]--> <!-- (2) load helper script -->
+<body _onload="startCanvasGear();"_>                         <!-- (3) start processing -->
+ _<canvas id="myCanvas44" width="123" height="123"></canvas>_ <!-- (4) define canvas -->
+ _<!-- algo=pulse color=hotpink hertz=0.2 -->_               <!-- (5) specify canvas parameters -->
 <body>
 <html>
 ```

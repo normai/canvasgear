@@ -89,7 +89,7 @@ p.typewrite    { font-family:monospace,monospace; font-size:1.00em; }          /
 
 p.phperror     { background-color:red; font-size:160%; font-weight:bold; padding:0.6em; } /* for php echo lines in Daftari debug mode (rule 20111002°1951) */
 
-p.imagecenter  { text-align:center; color:green; }                              /* (rule 20100826°2111) */
+p.imageCenter  { text-align:center; color:green; }                              /* (rule 20100826°2111) */
 
 
 /* footer paragraphs */
@@ -304,7 +304,7 @@ p.typewrite-comment    { color:green ; font-size:84%; }                         
 p.typewrite-comment-header { color:green ; font-size:84%; margin-top:3em;; border-top:1px none ;} /*(rule 20080711°0616)  behind bye, green like in the faq */
 p.typewrite-comment-body { color:green ; font-size:84%; }                              /* (rule 20080711°0617) same as comment */
 
-p.image        { text-align:center; color:blue; }                                      /* ELIMINATE in favour of 'imagecenter' (rule 20100826°211102) */
+p.image        { text-align:center; color:blue; }                                      /* ELIMINATE in favour of 'imageCenter' (rule 20100826°211102) */
 p.session      { text-align:right; font-size:80%; font-style:italic;  color:#808080; } /* (rule 20100826°2112) */
 p.notez        { font-size:80%; color:darkgreen; }                                     /* (rule 20111228°1131) */
 

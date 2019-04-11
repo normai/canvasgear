@@ -45,7 +45,7 @@
    ܀
 
    todo 20140904°0711 'refactor property parsing'
-   todo : Refactor. Compact sequence 20140904°0651 to oneliners or
+   todo : Refactor. Compact sequence 20140904°0645 to one-liners or
       somehow eliminate the individual processing of each single property.
       Or outsource above sequence to dedicated helper function. Or use
       a loop over all object properties instead individual properties.
@@ -93,8 +93,8 @@
    status :
    ܀
 
-   issue 20140830o0221 °IE get HTML comment'
-   descript : About reading a HTML comment from various browsers
+   issue 20140830°0221 'IE get HTML comment'
+   summary : About reading a HTML comment from various browsers
    findings :
       (1) A comment node cannot be directly found.
       (2) It can be found in a node collection it's nodeType, which is 8.
@@ -102,19 +102,41 @@
       (3.1) In IE, the comment can be read via n.innerHTML or n.nodeValue.
       (3.2) In others, n.innerHTML yields 'undefined'.
       (3.3) In others, the comment can be read via n.nodeValue.
-   location : File canvasgear.js seq 20140830o0211°
-   note : After sequence 20140830o0311° it looks as if the both browsers
-      understand nodeValue. Hm .. was this issue just some misconception?
-   status :
+   location : File canvasgear.js seq 20140830°0211
+   note : After sequence 20140830°0311, it looks as if the both browsers
+      understand nodeValue. Possibly, this issue was just a misconception?
+   status : Finished
    ܀
 
-   issue 20140828°1151 'IE canvas innerHTML'
-   symptoms : In IE, not individual algorithms are used, but one only.
+   issue 20140829°0331 'Color and stroke select on canvas'.
+   matter : When drawing on a canvas, a line is started with beginPath,
+      the color and the stroke can be set. On one canvas, only one style
+      seems possible, but more styles are wanted.
+   ref : Screenshot 20140829°0322. Note icons one and **two**. It tries
+          to draw two objects, a triangle and a line. It has only one color
+          and stroke, not different, as should. How to write code to put two
+          objects on one canvas?
+   todo : Clear whether this is just a coding particularity, or whether
+       a canvas can indeed display only one color and stroke. Perhaps
+       it has to do with layers or the like. [todo 20140829°0315]
+   status : Probably finished
+   ܀
+
+   issue 20140828°1151 'IE8 canvas innerHTML unusable'
+   matter : With IE8, the canvas property 'innerHTML' is unusable. With workaround
+      func 20140828°1231 findComments1 or func 20140828°1241 findComments2 applied,
+      IE8 may display the dialog as in screenshot 20140828°1321.
+   solution : See sequence/function 20140830°0311.
    location : File canvasgear.js seq 20140830°0211
-   finding : In IE, ico.Canvas.innerHTML does not yield a command like 'color=red',
-      but a string like "<DIV style="POSITION: absolute; WIDTH: 64px; HEIGHT: 64px"></DIV>"
-   workaround : Use something else to store the icon command, e.g. a comment
-   status :
+   workaround : Use something else to store the icon command, e.g.
+       a comment like in seq 20140828°1251 (discarded 20140830°0246)
+   note : Workaround was not useful, makes IE freeze see screenshot 20140828°1321
+      http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/img/20140828o1321.icondrawer--ie--get-comments.png
+   ref 20190324°0813 : A demo how to find comments is now in repo 20140713°1811
+        http://www.trekta.biz/svn/demosjs/trunk/findcomments/findcomments.html
+   status : Finished with 20190324°0813, IE8 is no more supported
+
+
    ܀
 
    issue 20140828°0751 'algo calling params quirk'

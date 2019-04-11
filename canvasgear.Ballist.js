@@ -1,3 +1,5 @@
+//---✂------✂------✂------✂------✂------✂------✂------✂----
+//------------------------- Schnippel -------------------------
 ﻿/*!
  * This module provides an algorithm for canvasgear.js.
  *
@@ -109,14 +111,6 @@ Cvgr.Algos.Ballist.Hit = function(nRingval, nMinutes) {
    this.X = x;                                         // number - calculated
    this.Y = y;                                         // number - calculated
 };
-
-/////**
-//// * This variable stores the next step for an algorithm
-//// *
-//// * @callers Seems unused
-//// * @id 20140916°0811
-//// */
-////Cvgr.Algos.iStep = 0;
 
 /**
  * This function .. is a test function
@@ -460,4 +454,6 @@ Cvgr.Algos.Ballist.executeAlgorithm = function(icos, iNdx)
    }
 };
 
+//------------------------- Schnappel -------------------------
+//---✂------✂------✂------✂------✂------✂------✂------✂----
 /* eof */

@@ -250,80 +250,30 @@
        <br />  CanvasGear in Opera. Chrome and Firefox look the same.
 </p>
 
-<a name="nm20140828o1211"></a>
-<h4 id="i20140828o1211">
-               Issue (2) 'IE cannot see canvas content'
-</h4>
 
-<p id="i20140828o1212">
-               [issue 20140828°1151] With IE8, the canvas property 'innerHTML'
-               is unusable. In IE8, the following line yields an unexpected value.
-               And when workaround function 20140828°1231 Cvgr.Func.findComments1_DEMO_METHOD()
-               or function 20140828°1241 Cvgr.Func.findComments2_DEMO_METHOD()
-               is applied, IE may display the dialog below.
-               Solution : See sequence/function 20140830°0311.
-</p>
+<hr id="i20140828o1211" />
 
 <p class="imageCenter" id="i20140828o1215">
                <img src="./img/20140828o1321.icondrawer--ie--get-comments.png" width="377" height="172" alt="20140828o1321" />
          <br />
-               IE8 shows this dialog when findComments1() or findComments2()
-               are active, then freezes.
+               <span style="font-size:small;">[image 20140828°1321]</span> &nbsp;
+               Reminiscence on issue 20140828°1151 'IE8 canvas innerHTML unusable'.
+               With workaound findComments1() or findComments2(),
+               IE8 shows this dialog then freezes.
 </p>
 
-<pre id="i20140828o1213">
-   var sCmd = ico.Canvas.innerHTML; // (issue 20140828°1151)
-   ico.Command = sCmd;
 
-   // Wanted value = "color=#bb1111 speed=800"
-   // IE8 yield = "&lt;DIV style="POSITION: absolute; WIDTH: 24px; HEIGHT: 24px"&gt;&lt;/DIV&gt;"
-</pre>
-
-<p id="i20140828o1214">
-               Status : open.
-</p>
-
-<p id="i20140828o1341">
-               Proposal : Create XML file with the params for IE to read parameters from.
-</p>
-
-<a name="nm20140829o0311"></a>
-<h4 id="i20140829o0311">
-               Issue (3) 'color and stroke on canvas'
-</h4>
-
-<p id="i20140829o0312">
-               Issue 20140829°0331 'Color select on canvas'.
-</p>
-
-<p id="i20140829o0313">
-               When drawing on a canvas, a line is started with beginPath(),
-               the color and the stroke can be set.
-               On one canvas, only one style seems possible,
-               but more styles are wanted.
-</p>
+<hr id="i20140829o0311" />
 
 <p class="imageCenter" id="i20140829o0314">
                <img src="./img/20140829o0322.icondrawer-demo-cut.png" width="366" height="113" alt="20140829o0322" />
-       <br /> Note canvas number two with the yellow stroke.
+       <br />
+               <span style="font-size:small;">[screenshot 20140829°0322]</span> &nbsp;
+               Reminiscence on issue 20140829°0331 'Color and stroke select on canvas'.
+               Note canvas number two with the yellow stroke.
 </p>
 
-<p id="i20140815o1341">
-               Note icons one and <b>two</b>.
-               It tries to draw two objects, a triangle and a line.
-               It has only one color and stroke, not different, as should.
-               How to write code to put two objects on one canvas?
-</p>
-
-<p id="i20140829o0315">
-               <b>Todo</b>. Clear whether this is just a coding particularity,
-               or whether a canvas can indeed display only one color and stroke.
-               Perhaps it has to do with layers or the like.
-</p>
-
-<p id="i20140902o1341" style="color:magenta;"><!-- output status message -->
-               .<!-- This paragraph may be replaced from canvasgear.js -->
-</p>
+<hr id="i20140902o1341" />
 
 </div>
 
@@ -331,7 +281,7 @@
                <a href="http://www.trilo.de/imprint.html" class="extern">Imprint</a>
 </p>
 <p class="footer" id="i20140902o1311">
-               <span class="footerFileUrl">http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/<a href="http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/remains.html">remains.html</a></span>
+               <span class="footerFileUrl">http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/<a href="http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/attic.html">attic.html</a></span>
                <span class="footerCopyright">©&nbsp;2014&nbsp;&#8209;&nbsp;2019&nbsp;Norbert&nbsp;C.&nbsp;Maier</span> —
                <span class="footerLicense">Page&nbsp;license:&nbsp;<a href="https://creativecommons.org/licenses/by-sa/4.0/" class="extern" data-webshot="20180503°2122" id="i20181116o0543">CC&nbsp;BY&#8209;SA&nbsp;4.0</a></span> —
                <span class="footerPageId">page 20140902°1311</span>

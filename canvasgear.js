@@ -328,7 +328,6 @@ Cvgr.startCanvasGear = function()
       // now string ico.Command is known, e.g. "algo=pulse hertz=111 color=orange"
 
       // () parse commandline
-      ////ico.CmdHash2 = Daf.Utilis.CmdlinParser.parse(ico.Command, true);
       ico.CmdHash2 = Trekta.Util2.CmdlinParser.parse(ico.Command, true);
 
       //+++++++++++++++++++++++++++++++++++++++++++++++
@@ -377,12 +376,9 @@ Cvgr.startCanvasGear = function()
       }
       //+++++++++++++++++++++++++++++++++++++++++++++++
 
-      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      // [seq 20140904°0651]
-      // (M) read properties from commandline
-      // See todo 20140904°0711 'refactor property parsing'
-
-      // (M.1) determine AlgoName [seq 20140904°065x]
+      // (M) read properties from commandline [seq 20140904°0645]
+      //  See todo 20140904°0711 'refactor property parsing'
+      // (M.1) determine AlgoName [seq 20140904°0646]
       if ((ico.CmdHash2['algo'] === undefined) || (ico.CmdHash2['algo'] === null) ||  (ico.CmdHash2['algo'] === ''))
       {
          ico.AlgoName = 'default';
@@ -392,13 +388,12 @@ Cvgr.startCanvasGear = function()
          ico.AlgoName = ico.CmdHash2['algo'];
       }
 
-      // (M.2) determine BgColor [seq 20140904°065x]
+      // (M.2) determine BgColor [seq 20140904°0647]
       if ( (ico.CmdHash2['bgcolor'] === null)
           || (ico.CmdHash2['bgcolor'] === undefined)
            || (ico.CmdHash2['bgcolor'] === '')
             ) // [fix 20180618°0711`01]
       {
-         ////ico.BgColor = '#f0f0f0';
          ico.BgColor = 'Transparent'; // #f0f0f0
       }
       else
@@ -410,7 +405,7 @@ Cvgr.startCanvasGear = function()
          }
       }
 
-      // (M.3) determine Color [seq 20140904°065x]
+      // (M.3) determine Color [seq 20140904°0648]
       if ((ico.CmdHash2['color'] === undefined) || (ico.CmdHash2['color'] === null) || (ico.CmdHash2['color'] === ''))
       {
          ico.Color = '#404040';
@@ -424,7 +419,7 @@ Cvgr.startCanvasGear = function()
          }
       }
 
-      // (M.4) determine Color2 [seq 20140904°065x]
+      // (M.4) determine Color2 [seq 20140904°0649]
       if (ico.Color.substr(0, 1) !== '#')
       {
          ico.Color2 = '#606060';
@@ -438,7 +433,7 @@ Cvgr.startCanvasGear = function()
          }
       }
 
-      // (M.5) determine Color3 [seq 20140904°065x]
+      // (M.5) determine Color3 [seq 20140904°0650]
       if ((ico.CmdHash2['color3'] === undefined) ||  (ico.CmdHash2['color3'] === null) ||  (ico.CmdHash2['color3'] === ''))
       {
          ico.Color3 = '#808080';
@@ -452,7 +447,7 @@ Cvgr.startCanvasGear = function()
          }
       }
 
-      // (M.6) determine Hertz [seq 20140904°065x]
+      // (M.6) determine Hertz [seq 20140904°0651]
       if ((ico.CmdHash2['hertz'] === undefined) || (ico.CmdHash2['hertz'] === null) || (ico.CmdHash2['hertz'] === ''))
       {
          ico.Hertz = 0.2;
@@ -462,7 +457,7 @@ Cvgr.startCanvasGear = function()
          ico.Hertz = ico.CmdHash2['hertz'];
       }
 
-      // (M.7) determine ShiftX (pixel) [seq 20140904°065x]
+      // (M.7) determine ShiftX (pixel) [seq 20140904°0652]
       if ((ico.CmdHash2['shiftx'] === undefined) || (ico.CmdHash2['shiftx'] === null) || (ico.CmdHash2['shiftx'] === ''))
       {
          ico.ShiftX = 0;
@@ -472,7 +467,7 @@ Cvgr.startCanvasGear = function()
          ico.ShiftX = ico.CmdHash2['shiftx'];
       }
 
-      // (M.8) determine ShiftY (pixel) [seq 20140904°065x]
+      // (M.8) determine ShiftY (pixel) [seq 20140904°0653]
       if ((ico.CmdHash2['shifty'] === undefined) || (ico.CmdHash2['shifty'] === null) || (ico.CmdHash2['shifty'] === ''))
       {
          ico.ShiftY = 0;
@@ -482,7 +477,7 @@ Cvgr.startCanvasGear = function()
          ico.ShiftY = ico.CmdHash2['shifty'];
       }
 
-      // (M.9) determine Speed [seq 20140904°065x]
+      // (M.9) determine Speed [seq 20140904°0654]
       if ((ico.CmdHash2['speed'] === undefined) || (ico.CmdHash2['speed'] === null) || (ico.CmdHash2['speed'] === ''))
       {
          ico.Speed = 444;
@@ -492,25 +487,20 @@ Cvgr.startCanvasGear = function()
          ico.Speed = ico.CmdHash2['speed'];
       }
 
-      // (M.9) determine SizeFactor [seq 20190328°0833]
-      //////if (ico.CmdHash2['SizeFactor'] === undefined) {
-      //////   ico.SizeFactor = 1.0;
-      //////}
-      //////else {
-      //////   ico.SizeFactor = ico.CmdHash2['SizeFactor'];
-      //////}
+      // (M.10) determine SizeFactor [seq 20190328°0833]
       ico.SizeFactor = ('SizeFactor' in ico.CmdHash2)
                       ? ico.CmdHash2['SizeFactor']
                        : 1.0
                         ;
-      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+      // (N) .. [line 20140904°0655]
       Cvgr.Func.startCanvasGear_setProperties();
 
-      //  [line 20140904°065x]
+      // (O) put it on array of canvases [line 20140904°0656]
       Cvgr.Vars.icos.push(ico);
    }
 
-   // [line 20140904°065x]
+   // [line 20140904°0657]
    canvases = null; // deleting a canvas is perhaps not a good idea
 
    // initialize canvasgearexcanvas.js [seq 20140815°0651]
@@ -943,16 +933,21 @@ Cvgr.Func.executeFrame = function()
       else if (sAlgo === 'pulse') {
          Cvgr.Func.algoPulse(Cvgr.Vars.icos, iNdx);
       }
-      else if ( sAlgo === 'Ballist' ) {
-         //////if (typeof Cvgr.Algs.Bal !== 'undefined') {
-         /////if ( 'membername' in Cvgr.Algs ) {
-         if ( sAlgo in Cvgr.Algos ) {
-            ////Cvgr.Algs.Bal.algoBallist(Cvgr.Vars.icos, iNdx);
+      else if ( sAlgo === 'Ballist' )
+      {
+         if ( sAlgo in Cvgr.Algos )
+         {
             Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
          }
-         else {
+         else
+         {
             // [seq 20190329°0141]
-            //alert("Sorry ...");
+            // check : s = Trekta.Utils.retrieveScriptFolderRel('canvasgear.js'); // e.g. "./../c" WRONG
+            var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/treksvn/canvasgeardev/trunk/canvasgear/"
+            var sModNam = sPathAbs + 'canvasgear.' + sAlgo + '.js';
+            Trekta.Utils.pullScriptBehind ( sModNam , function() {
+                                           Cvgr.Func.executeFrameContinu( sAlgo, iNdx );
+                                            });
          }
 
       }
@@ -971,41 +966,22 @@ Cvgr.Func.executeFrame = function()
    window.requestAnimFrame(Cvgr.Func.executeFrame);
 };
 
-////// SHIFT AWAY TO http://www.trekta.biz/svn/demosjs/trunk/findcomments
-/////**
-//// * This function finds comments in the given element
-//// *
-//// * @id 20140830°0312
-//// * @summary : This function gets along without siblings list, directly reading
-//// *    the next and next but one node behind the canvas, expecting a comment node.
-//// * @note Remember retired functions 20140828°1231 and 20140828°1241
-//// * @note Only if the comment immediately follows the canvas, the next
-//// *    sibling will be the wanted one. If between canvas and comment is
-//// *    a blank or something, then we need the next but one sibling.
-//// * @note 20150223°1751 : IE8 wants thorough testing for null first.
-//// * @note Node type 8 means a comment node.
-//// * @callers func 20140815°1241 startCanvasGear seq 20140830°0311
-//// * @param {node} ndNextSibling — The node considerd to be the wanted comment
-//// * @returns {string} The wanted comment content, this should be a commandline
-//// */
-////Cvgr.Func.findComments3 = function(ndNextSibling)
-////{
-////   if (ndNextSibling !== null) {                                       // IE8 accepts
-////      if (ndNextSibling.nodeType === 8) {
-////         return ndNextSibling.nodeValue;
-////      }
-////      else {
-////         if (ndNextSibling !== null) {
-////            var ndNext2 = ndNextSibling.nextSibling;
-////            if (ndNext2 !== null) {
-////               if (ndNext2.nodeType === 8) {
-////                  return ndNext2.nodeValue;
-////               }
-////            }
-////         }
-////      }
-////   }
-////};
+/**
+ * This function is called possibly only after wanted script is pulled-behind
+ *
+ * @id 20190329°0211
+ * @callers •
+ */
+Cvgr.Func.executeFrameContinu = function(sAlgo, iNdx)
+{
+   // perhaps the alog is not yet ready [condi 20190329°0213]
+   // note : With the both requestAnimFrame and pullScriptBehind
+   //    intertweened, the exact callings may get a bit complicated.
+   if (sAlgo in Cvgr.Algos) {
+      // finally do the wanted algo [line 20190329°0215]
+      Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
+   }
+};
 
 /**
  * This function is the radiobuttons 'onClick' event handler
@@ -1423,16 +1399,15 @@ Trekta.Util2.CmdlinParser = ( function()
       parse : parse
    };
 })();
-
 //+++++++++++++++++++++++++ Schnappel +++++++++++++++++++++++++
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~✂~~~~~~~~✂~~~~~~~~✂~~~~~~~~✂~~~~~~~~✂~~~~~~~~✂~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~ Schnippel ~~~~~~~~~~~~~~~~~~~~~~~~~
-// summary : This area is for cutnpaste from dafutils.js
-//            to • canvasgear.js • slidegear.js
-// version : 20190328°0957 (20190316°0155)
+// summary : This area is shared via cutnpaste by those:
+//            • dafutils.js • canvasgear.js • slidegear.js
+// version : 20190329°0221
 
 /**
  * This namespace shall be root namespace
@@ -1453,7 +1428,7 @@ var Trekta = Trekta || {};
 Trekta.Utils = Trekta.Utils || {
 
    /**
-    * This function retrieves the filename of the file to be edited
+    * This function retrieves the filename of the page to be edited
     *
     * @id 20110820°1741
     * @note Remember issue 20110901°1741 'get self filename for default page'
@@ -1574,8 +1549,6 @@ Trekta.Utils = Trekta.Utils || {
     */
    , htmlEscape : function(sHtml) // [Trekta.Utils.htmlEscape]
    {
-      ////sHtml = sHtml.replace(/</, '&lt;');
-      ////sHtml = sHtml.replace(/>/, '&gt;');
       sHtml = sHtml.replace(/</g, '&lt;'); // g = replace all hits, not only the first
       sHtml = sHtml.replace(/>/g, '&gt;');
 
@@ -1634,10 +1607,9 @@ Trekta.Utils = Trekta.Utils || {
     * @param callbackfunc The callback function for the script onload event
     * @returns Success flag (so far just a dummy always true) e.g. function(){ DafCanary.squeak(); }
     */
-   , pullScriptBehind : function // [Trekta.Utils.pullScriptBehind]
-                                  ( sScriptToLoad
-                                   , callbackfunc
-                                    )
+   , pullScriptBehind : function ( sScriptToLoad
+                                  , callbackfunc
+                                   )
    {
       // avoid multiple loading [seq 20110821°0122]
       if ( Trekta.Utils.isScriptAlreadyLoaded(sScriptToLoad) ) {
@@ -1648,12 +1620,20 @@ Trekta.Utils = Trekta.Utils || {
          return;
       }
 
-      // bad workaround for s_DaftariBaseFolderRel mismatch [seq 20190211°0131]
-      //  The reason we need it is, that s_DaftariBaseFolderRel is the folder
-      //    where the calling script resides, not the Daftari base folder.
-      var sScriptSource = DafStart.Conf.s_DaftariBaseFolderRel + sScriptToLoad;
-      if (sScriptToLoad.indexOf('showdown/showdown') > 0) {
-         sScriptSource = sScriptToLoad; // e.g. "http://localhost/workspaces/daftaridev/trunk/daftari/js.libs/showdown/showdown.min.js"
+      // workaround against workaround [condition 20190329°0151]
+      if ( typeof DafStart !== 'undefined' ) {
+
+         // bad workaround for s_DaftariBaseFolderRel mismatch [seq 20190211°0131]
+         //  The reason is, that s_DaftariBaseFolderRel is the folder where
+         //  the calling script resides, not the Daftari base folder.
+         var sScriptSource = DafStart.Conf.s_DaftariBaseFolderRel + sScriptToLoad;
+         if ( sScriptToLoad.indexOf('showdown/showdown' ) > 0) {
+            sScriptSource = sScriptToLoad; // e.g. "http://localhost/workspaces/daftaridev/trunk/daftari/js.libs/showdown/showdown.min.js"
+         }
+      }
+      else {
+         // call from CanvasGear [line 20190329°0152]
+         sScriptSource = sScriptToLoad;
       }
 
       // prepare the involved elements [seq 20110821°0123]
@@ -1771,7 +1751,7 @@ Trekta.Utils = Trekta.Utils || {
     *
     * @id 20110820°2041
     * @status working
-    * @callers •
+    * @callers • CanvasGear func 20140815°1221 executeFrame
     * @param sScriptName {String} The name of the canary script, e.g. 'sitmapdaf.js'.
     * @returns {String} The wanted path, where the given script resides, but
     *    there are browser differences, e.g.
@@ -1967,7 +1947,7 @@ Trekta.Utils = Trekta.Utils || {
 
 };
 //~~~~~~~~~~~~~~~~~~~~~~~~~ Schnappel ~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~✂~~~~~~~~✂~~~~~~~~✂~~~~~~~~✂~~~~~~~~✂~~~~~~~~✂~~~~~~
 
 // start mechanism [line 20190316°0231]
 Trekta.Utils.windowOnloadDaisychain(Cvgr.startCanvasGear);

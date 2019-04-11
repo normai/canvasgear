@@ -37,4 +37,4 @@ Have fun
 
 2019-April-11..
 
-<sup><sub><sub>(file 20140815°0121) (project 20140815°0111)</sub></sub></sup>
+<sup><sub>(file 20140815°0121) (project 20140815°0111)</sub></sup>

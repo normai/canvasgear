@@ -57,7 +57,7 @@
    note : If above e.g. 'iko.width' is used instead 'iko.Width', Opera will
       receive iPt1x/iPt1y as NaN and throw an exception here. If this line here
       throws exception, far below lines will do so as well.
-   location : canvasgear.js, canvasgearalgos.js
+   location : canvasgear.js, canvasgear-ballist.js
    solution : Use a try envelop on the first element. Questions are left open.
    status :
    ܀

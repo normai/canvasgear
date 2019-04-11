@@ -1,4 +1,4 @@
-# CanvasGear v0.1.7 <sup><sub><sub>20190330°0711</sub></sub></sup>
+# CanvasGear v0.1.8.. <sup><sub><sub>20190330°0711..</sub></sub></sup>
 
 **Slogan** : Draw animated canvases by just specifying some parameters in a data attribute
 
@@ -13,7 +13,7 @@
 **Status** : Proof-of-concept
 
 **Installation** :
-- Copy [`canvasgear.min.js`](./canvasgear.js) to your web folder (on demand also [`canvasgearalgos.min.js`](./canvasgearalgos.min.js))
+- Copy [`canvasgear.min.js`](./canvasgear.js) to your web folder
 - Equip your HTML file with the following elements :
 ```
       <head>
@@ -35,6 +35,6 @@
 
 Have fun
 
-2019-April-11
+2019-April-11..
 
 <sup><sub><sub>(file 20140815°0121) (project 20140815°0111)</sub></sub></sup>

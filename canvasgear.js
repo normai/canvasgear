@@ -1,13 +1,13 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.1.7 — 20190330°0711
+ * version : 0.1.8 — 20190330°0711..
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
  */
 /**
- * id : 20140815°1213
+ * id : file 20140815°1213
  * @authors ncm
  * @encoding UTF-8-with-BOM
  * @note This shall work with Chrome 32.0, Edge 42 , FF 60, IE 9, Opera 58
@@ -22,6 +22,13 @@
 var Cvgr = {};
 
 /**
+ * This namespace shall be a dummy for possible external algorithms
+ *
+ * @id 20180619°0111`02
+ */
+Cvgr.Algos = Cvgr.Algos || {};
+
+/**
  * This namespace stores CanvasGear constants
  *
  * @id 20140926°0741
@@ -34,14 +41,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-     versionnumber : '0.1.7'
+    versionnumber : '0.1.8'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190330°0711'
+   , versiontimestamp : '20190330°0711..'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -826,11 +833,11 @@ Cvgr.Func.algoTriangulum = function(icos, iFor)
 //*****************************************************
 
 /**
- * This function does continuous drawing
+ * This function performs the continuous drawing
  *
  * @id 20140815°1221
  * @callers This is called once by start function Cvgr.startCanvasGear(),
- *    and then periodically by the browser's requestAnimFrame().
+ *    and then periodically by the browser's requestAnimFrame()
  */
 Cvgr.Func.executeFrame = function()
 {
@@ -894,8 +901,8 @@ Cvgr.Func.executeFrame = function()
       el.innerHTML = s;
    }
 
-   // process each canvas [seq 20140815°1252]
-   for (var iFor = 0; iFor < Cvgr.Vars.icos.length; iFor++)
+   // process each canvas on the page [seq 20140815°1252]
+   for (var iNdx = 0; iNdx < Cvgr.Vars.icos.length; iNdx++)
    {
       // flag to skip icon
       // prolog - draw this algorithm only once [seq 20140916°102204]
@@ -903,21 +910,21 @@ Cvgr.Func.executeFrame = function()
 
       // (x) output canvas status [seq 20140815°1253]
       // The id of the output element has to be the id of the canvas with added '.info'.
-      var sIde = Cvgr.Vars.icos[iFor].Ide + '.info';
+      var sIde = Cvgr.Vars.icos[iNdx].Ide + '.info';
       var el = document.getElementById(sIde);                          // <!-- canvas attached info paragraph -->
       if (el !== null)
       {
          var s = '<small>CanvasGear Canvas Debug Info :';
          var i = 1;
-         i = Math.floor( Cvgr.Vars.icos[iFor].Angle * 10);             // convert from number to int, also floor and round were available
+         i = Math.floor( Cvgr.Vars.icos[iNdx].Angle * 10);             // convert from number to int, also floor and round were available
          s += "<br />iko.Angle = " + i;
-         s += "<br />iko.Color = " + Cvgr.Vars.icos[iFor].Color;
-         s += "<br />iko.Height = " + Cvgr.Vars.icos[iFor].Height;
+         s += "<br />iko.Color = " + Cvgr.Vars.icos[iNdx].Color;
+         s += "<br />iko.Height = " + Cvgr.Vars.icos[iNdx].Height;
          s += "<br />iko.Mode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip');
-         s += "<br />iko.Width = " + Cvgr.Vars.icos[iFor].Width;
-         for ( ki in Cvgr.Vars.icos[iFor].CmdHash2 )
+         s += "<br />iko.Width = " + Cvgr.Vars.icos[iNdx].Width;
+         for ( ki in Cvgr.Vars.icos[iNdx].CmdHash2 )
          {
-            var sValEscaped = Trekta.Utils.htmlEscape(Cvgr.Vars.icos[iFor].CmdHash2[ki]);
+            var sValEscaped = Trekta.Utils.htmlEscape(Cvgr.Vars.icos[iNdx].CmdHash2[ki]);
             s += "<br /> [cmd] " + ki + " = " + sValEscaped;
          }
          s += "</small>";
@@ -926,76 +933,79 @@ Cvgr.Func.executeFrame = function()
 
       // () execute algorithm [seq 20140815°1254]
       // note : Remember issue 20140828°0751 'Algo calling params quirk' -- is it solved?
-      s = Cvgr.Vars.icos[iFor].AlgoName;
-      if (s === 'develop')
-      {
-         Cvgr.Func.algoDevelop(Cvgr.Vars.icos, iFor);
+      var sAlgo = Cvgr.Vars.icos[iNdx].AlgoName;
+      if (sAlgo === 'develop') {
+         Cvgr.Func.algoDevelop(Cvgr.Vars.icos, iNdx);
       }
-      else if (s === 'oblongrose')
-      {
-         Cvgr.Func.algoOblongrose(Cvgr.Vars.icos, iFor);
+      else if (sAlgo === 'oblongrose') {
+         Cvgr.Func.algoOblongrose(Cvgr.Vars.icos, iNdx);
       }
-      else if (s === 'pulse')
-      {
-         Cvgr.Func.algoPulse(Cvgr.Vars.icos, iFor);
+      else if (sAlgo === 'pulse') {
+         Cvgr.Func.algoPulse(Cvgr.Vars.icos, iNdx);
       }
-      else if ( s === 'ballist' )
-      {
-         Cvgr.Algs.Bal.algoBallist(Cvgr.Vars.icos, iFor);
+      else if ( sAlgo === 'Ballist' ) {
+         //////if (typeof Cvgr.Algs.Bal !== 'undefined') {
+         /////if ( 'membername' in Cvgr.Algs ) {
+         if ( sAlgo in Cvgr.Algos ) {
+            ////Cvgr.Algs.Bal.algoBallist(Cvgr.Vars.icos, iNdx);
+            Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
+         }
+         else {
+            // [seq 20190329°0141]
+            //alert("Sorry ...");
+         }
+
       }
-      else if ( s === 'triangle' )
-      {
-         Cvgr.Func.algoTriangle(Cvgr.Vars.icos, iFor);
+      else if ( sAlgo === 'triangle' ) {
+         Cvgr.Func.algoTriangle(Cvgr.Vars.icos, iNdx);
       }
-      else if (s === 'triangulum')
-      {
-         Cvgr.Func.algoTriangulum(Cvgr.Vars.icos, iFor);
+      else if (sAlgo === 'triangulum') {
+         Cvgr.Func.algoTriangulum(Cvgr.Vars.icos, iNdx);
       }
-      else
-      {
-         Cvgr.Func.algoPulse(Cvgr.Vars.icos, iFor);
+      else {
+         Cvgr.Func.algoPulse(Cvgr.Vars.icos, iNdx);
       }
    }
 
-   // (line 20140815°1255)
+   // [line 20140815°1255]
    window.requestAnimFrame(Cvgr.Func.executeFrame);
 };
 
-// SHIFT AWAY TO http://www.trekta.biz/svn/demosjs/trunk/findcomments
-/**
- * This function finds comments in the given element
- *
- * @id 20140830°0312
- * @summary : This function gets along without siblings list, directly reading
- *    the next and next but one node behind the canvas, expecting a comment node.
- * @note Remember retired functions 20140828°1231 and 20140828°1241
- * @note Only if the comment immediately follows the canvas, the next
- *    sibling will be the wanted one. If between canvas and comment is
- *    a blank or something, then we need the next but one sibling.
- * @note 20150223°1751 : IE8 wants thorough testing for null first.
- * @note Node type 8 means a comment node.
- * @callers func 20140815°1241 startCanvasGear seq 20140830°0311
- * @param {node} ndNextSibling — The node considerd to be the wanted comment
- * @returns {string} The wanted comment content, this should be a commandline
- */
-Cvgr.Func.findComments3 = function(ndNextSibling)
-{
-   if (ndNextSibling !== null) {                                       // IE8 accepts
-      if (ndNextSibling.nodeType === 8) {
-         return ndNextSibling.nodeValue;
-      }
-      else {
-         if (ndNextSibling !== null) {
-            var ndNext2 = ndNextSibling.nextSibling;
-            if (ndNext2 !== null) {
-               if (ndNext2.nodeType === 8) {
-                  return ndNext2.nodeValue;
-               }
-            }
-         }
-      }
-   }
-};
+////// SHIFT AWAY TO http://www.trekta.biz/svn/demosjs/trunk/findcomments
+/////**
+//// * This function finds comments in the given element
+//// *
+//// * @id 20140830°0312
+//// * @summary : This function gets along without siblings list, directly reading
+//// *    the next and next but one node behind the canvas, expecting a comment node.
+//// * @note Remember retired functions 20140828°1231 and 20140828°1241
+//// * @note Only if the comment immediately follows the canvas, the next
+//// *    sibling will be the wanted one. If between canvas and comment is
+//// *    a blank or something, then we need the next but one sibling.
+//// * @note 20150223°1751 : IE8 wants thorough testing for null first.
+//// * @note Node type 8 means a comment node.
+//// * @callers func 20140815°1241 startCanvasGear seq 20140830°0311
+//// * @param {node} ndNextSibling — The node considerd to be the wanted comment
+//// * @returns {string} The wanted comment content, this should be a commandline
+//// */
+////Cvgr.Func.findComments3 = function(ndNextSibling)
+////{
+////   if (ndNextSibling !== null) {                                       // IE8 accepts
+////      if (ndNextSibling.nodeType === 8) {
+////         return ndNextSibling.nodeValue;
+////      }
+////      else {
+////         if (ndNextSibling !== null) {
+////            var ndNext2 = ndNextSibling.nextSibling;
+////            if (ndNext2 !== null) {
+////               if (ndNext2.nodeType === 8) {
+////                  return ndNext2.nodeValue;
+////               }
+////            }
+////         }
+////      }
+////   }
+////};
 
 /**
  * This function is the radiobuttons 'onClick' event handler
@@ -1252,7 +1262,7 @@ Trekta.Util2.Webcolors = function()
  * @callers Only • CanvasGear
  * @note This helps to use webcolors with IE8.
  * @todo 20140926°1321 : Implement some validations because e.g. a color '1'
- *           as Cvgr.Algs.Bal.Ring.color causes difficult to debug failures.
+ *           as Cvgr.Algos.Ballist.Ring.color causes difficult to debug failures.
  * @todo 20180618°0731 : Shift this function into class Webcolors
  * @returns The wanted color hex value, e.g. '#FF0000' for 'red', or '#C0C0C0' silver for wrong names.
  * @param {string} sName — The name of the wanted color
@@ -1284,7 +1294,7 @@ Trekta.Util2.colorNameToHex = function(sName) {
  * @note Code after ref 20140926°0621 'Krasimir: Simple command line parser in JS'
  * @note Test input
  *    - <!-- algo="triangle" color=mediumspringgreen hertz=0.1 -->
- *    - <!-- algo=ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" shiftx=20 shifty=20 id="id20140916o0731" -->
+ *    - <!-- algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" shiftx=20 shifty=20 id="id20140916o0731" -->
  *    - <!-- algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11 -->
  *    -
  */

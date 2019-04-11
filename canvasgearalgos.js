@@ -1,7 +1,7 @@
 ﻿/*!
  * This module provides an algorithm for canvasgear.js.
  *
- * version : 0.1.7
+ * version : 0.1.7 — 20190330°0711
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */

@@ -1,0 +1,1965 @@
+﻿/*!
+ * This script paints animated icons on HTML5 canvases
+ *
+ * version : 0.1.7
+ * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
+ * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
+ * note : Minimized with Google Closure Compiler
+ */
+/**
+ * id : 20140815°1213
+ * @authors ncm
+ * @encoding UTF-8-with-BOM
+ * @note This shall work with Chrome 32.0, Edge 42 , FF 60, IE 9, Opera 58
+ * @note Use canvas class 'skipthis' to skip canvas not to be process by CanvasGear
+ */
+
+/**
+ * This namespace constitutes the CanvasGear root namespace
+ *
+ * @id 20180618°0621
+ */
+var Cvgr = {};
+
+/**
+ * This namespace stores CanvasGear constants
+ *
+ * @id 20140926°0741
+ * @ref qna 20160612°0321 'semicolon after function definition'
+ */
+Cvgr.Const =
+{
+   /**
+    * This constant tells the CanvasGear version number -- unused so far
+    *
+    * @id 20140926°0931
+    */
+     versionnumber : '0.1.7'
+
+   /**
+    * This constant tells the CanvasGear version timestamp -- unused so far
+    *
+    * @id 20140926°0932
+    */
+   , versiontimestamp : '20190329°0151'
+
+   /**
+    * This ~constant tells whether to pop up debug messages or not
+    *
+    * @id 20190311°1523
+    * @type Boolean
+    */
+   , bShow_Debug_Dialogs : false
+
+};
+
+/**
+ * This namespace holds CanvasGear functions
+ *
+ * @id 20180618°0631
+ */
+Cvgr.Func = {};
+
+/**
+ * This namespace holds CanvasGear objects
+ *
+ * @id 20180618°0641
+ */
+Cvgr.Objs = {};
+
+/**
+ * This namespace holds CanvasGear global variables
+ *
+ * @id 20180618°0651
+ */
+Cvgr.Vars =
+{
+   /**
+    * This flag is experimental ..
+    *
+    * @id 20180618°0642
+    */
+   bFlagTipTopTest : false
+
+   /**
+    * This number stores the CanvasGear start seconds
+    *
+    * @id 20180618°0643
+    */
+   , iTimeStart : 0
+
+   /**
+    * This number stores the CanvasGear start milliseconds
+    *
+    * @id 20180618°0644
+    */
+   , iTimeStartMs : 0 // unused so far
+
+};
+
+// initialize
+Cvgr.Vars.iTimeStart = new Date();
+Cvgr.Vars.iTimeStart.getTime();
+Cvgr.Vars.iTimeStartMs = Cvgr.Vars.iTimeStart.getMilliseconds();
+
+// initialize controls [seq 20140926°0811]
+// note : This should be done after the document is completely loaded.
+Cvgr.Vars.radiobuttn = document.getElementById("id20140819o1822"); // top
+if (Cvgr.Vars.radiobuttn !== null)
+{
+   Cvgr.Vars.radiobuttn.checked = true;
+}
+
+/**
+ * This class represents an icon object
+ *
+ * @id 20140815°1221
+ * @note Line 'this.Algo = Cvgr.Func.algoPulse;' is bad, it makes
+ *        the script disappear [note 20140828°0722]
+ */
+Cvgr.Objs.Ikon = function()
+{
+   // public properties, to be set by user via HTML comment
+   this.AlgoName = 'default';         // string - algorithm (workaround for Algo) [prop 20140916°0512]
+   this.BgColor = 'Red'; // set color here has no effect // string - background color as RGB or webcolor [prop 20140916°0513]
+   this.Color = '';                   // string - RGB or webcolor                 // fix 20180618°071103 ineffective [prop 20140916°0514]
+   this.Color2 = '';                  // string - RGB or webcolor                 // fix 20180618°071104 ineffective [prop 20140916°0515]
+   this.Color3 = '';                  // string - RGB or webcolor (nowhere used)  // fix 20180618°071105 ineffective [prop 20140916°0516]
+   this.Hertz = null;                 // number - frequency in Hz [prop 20140916°0517]
+   this.Ide = null;                   // string - canvas id from html [prop 20140926°0311]
+   this.ShiftX = null;                // int - horizontal offset (in pixel) [prop 20140916°0518]
+   this.ShiftY = null;                // int - vertical offset (in pixel) [prop 20140916°0522]
+   this.SizeFactor = null;            // number - enlarge or reduce relative to automatic size [prop 20190328°0831]
+   this.Speed = null;                 // number - use empirical values, shall be replaced by Hertz [prop 20140916°0523]
+
+   // constant properties, set from the canvas HTML attributes
+   // // this.Diameter;               // number - canvas size (in meter) [var 20140926°1331]
+   this.Height = null;                // int - canvas height (in pixel) [prop 20140916°0524]
+   this.Width = null;                 // int - canvas width (in pixel) [prop 20140916°0525]
+
+   // private properties, set program internally
+   this.Algo = null;                   // Algo - drawing algorithm (not yet used?) [prop 20140916°0526]
+   this.Angle = 0;                     // private [prop 20140916°0527]
+   this.Canvas = null;                 // object - the canvas tag DOM element [prop 20140916°0528]
+   this.CmdHash2 = null;               // object/array - the commandline as an associative array [var 20140926°0651]
+   this.Command = null;                // string - the commandline as read from the html comment [prop 20140916°0532]
+   this.Context = null;                // object - attached to canvas [prop 20140916°0533]
+   this.DrawOnlyOnce = false;          // object - flag [prop 20140916°1021]
+   this.iDrawCount = 0;                // integer how often the icon is drawn completely [prop 20140916°0534]
+
+   // // experimental function, not yet active (syntax wrong) [func 20140916°0541]
+   // this.draw1 = function x()           // funct - algorithm
+   // {
+   //    // The drawing function must be provided by the caller?
+   //    // ...;
+   // };
+};
+
+/**
+ * This class represents an algorithm object
+ *
+ * @id 20140815°1231
+ * @descr It shall store a drawing algorithm which acts on an Ikon object.
+ * @status Under construction, implementation yet unclear
+ * @note Compare ...
+ */
+Cvgr.Objs.Algo = function()
+{
+   this.Canvas = null;                                 // Canvas object - the canvas tag [prop 20140916°0552]
+   this.Context = null;                                // Context object - attached to canvas [prop 20140916°0553]
+   this.Funktion = null;                               // function - ... [prop 20140916°0554]
+   this.Ikon = null;                                   // Ikon object - ...  [prop 20140916°0555]
+   this.draw = function x()                            // function - The wanted algorithm  [prop 20140916°0556]
+   {
+      // The drawing function must be provided by the caller?
+   };
+};
+
+/**
+ * This class represents one line to be drawn
+ *
+ * @id 20140901°0511
+ * @usage In function algoLines() ...
+ * @status Embryonic ... experimental
+ * @param {number} iX1 — x position start
+ * @param {number} iY1 — y position start
+ * @param {number} iX2 — x position end
+ * @param {number} iY2 — y position end
+ * @param {string} sColor — The web color name (see func 20140831°0321 Webcolors)
+ * @param {number} iWidth — Optional, width in pixel (ES6 default params do not
+ *                work in IE, see issue 20190312°0251 'IE fails with default params')
+ */
+Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iWidth)
+{
+   // workaround for missing default parameter [seq 20190312°0253]
+   //  Remember issue 20190312°0251 'IE fails with default params'
+   if (iWidth === undefined) {
+       var iWidth = 2;
+   }
+
+   this.X1 = iX1;
+   this.Y1 = iY1;
+   this.X2 = iX2;
+   this.Y2 = iY2;
+   this.Colo = Trekta.Util2.colorNameToHex(sColor);
+   this.Width = iWidth;
+};
+
+/**
+ * This class represents a two-dimensional point object
+ *
+ * @id 20140815°1221
+ * @see ref 20140926°1231 'tutorial : write class in js'
+ * @see ref 20140926°1413 'stoyan : define javascript class'
+ * @see Book ref 20111031°1322 'Harms & Diaz : JavaScript object orientation ..'
+ * @note This function is named similar instead exactly 'Point', just to text-search it more distinctively.
+ * @callers • None yet
+ * @param {number} nX — The x positon of the point
+ * @param {number} nY — The y positon of the point
+ */
+Cvgr.Objs.Pojnt = function(nX, nY)
+{
+    this.X = nX;
+    this.Y = nY;
+    this.Colhor = "red";
+    this.getIt = function()
+    {
+        return this.Colhor + ' ' + this.x + '/' + this.Y + ' apple';
+    };
+};
+
+// Some 'static' variables for below function startCanvasGear()
+Cvgr.Vars.icos = new Array();
+Cvgr.Vars.iFrameNo = 0; // counter
+
+/**
+ * This function starts CanvasGear
+ *
+ * @id 20140815°1241
+ * @callers The page's body tag onload event or the onload event daisychain.
+ *
+ */
+Cvgr.startCanvasGear = function()
+{
+
+   /**
+    * This anonymous function registers the test page radiobutton click handler
+    *
+    * @id 20140819°1811
+    * @note Does not work as expected. We need still onclick in HTML.
+    * @note This can also be defined outside this function on script level.
+    * @note Experimental shutdown 20170302°0321 did not work as expected
+    * @todo 20160612°0341 : This function will destroy any already existing
+    *     onload handlers. Use func 20160614°0331windowOnloadDaisychain!
+    */
+   window.onload = function()
+   {
+      var bt1 = document.getElementById("id20140819o1821");
+      var bt2 = document.getElementById("id20140819o1822");
+      bt1.onclick = Cvgr.Func.setRadiobutton;
+      bt2.onclick = Cvgr.Func.setRadiobutton;
+   };
+
+   /*
+   issue 20140815°0641 'browser is missing requestAnimationFrame'
+   matter : Method requestAnimationFrame does not exist in IE8.
+   workaround : Use the fallback shim layer by Paul Irish (seq 20140815°0651).
+   note 20190324°0143 : The method comes with IE10, IE9 is still missing it.
+   status : Leave as is until also IE9 support shall be dropped.
+   */
+
+   // workaround missing requestAnimFrame [seq 20140815°0651]
+   // See issue 20140815°0641 'browser is missing requestAnimationFrame'
+   // summary : This sequence provides a fallback for the possibly of 
+   //    a missing 'requestAnimationFrame' browser method.
+   // ref : http://www.paulirish.com/2011/requestanimationframe-for-smart-animating [ref 20140815°0634]
+   //--------------------------------------------------
+   // shim layer with setTimeout fallback
+   window.requestAnimFrame = (function()
+   {
+      return window.requestAnimationFrame
+              || window.webkitRequestAnimationFrame
+               || window.mozRequestAnimationFrame
+                || window.msRequestAnimationFrame
+                 || function( callback )
+                    {
+                       window.setTimeout(callback, 1000 / 60);
+                    };
+   })();
+   //--------------------------------------------------
+
+   // retrieve all canvases [seq 20140815°0941]
+   var canvases = document.getElementsByTagName("canvas");
+   // note : canvases is of type 'HTMLCollection[]' now
+
+   // () loop over canvases and provide each one Icon object [seq 20140815°0942]
+   for (var i = 0; i < canvases.length; i++)
+   {
+      // () possibly skip this canvas
+      // if the string 'skipthis' is found in the canvas HTML element
+      if (canvases[i].outerHTML.indexOf("skipthis") > -1 ) {
+         continue;
+      }
+
+      // () create Ikon object for this one canvas
+      var ico = new Cvgr.Objs.Ikon();
+      ico.Canvas = canvases[i];
+      ico.Context = canvases[i].getContext('2d');
+      ico.Width = ico.Canvas.height;
+      ico.Height = ico.Canvas.width;
+      ico.Command = "";
+
+      // () get commandline [seq 20140830°0311]
+      if ( ico.Canvas['attributes']['data-cvgr'] !== undefined ) {
+         // new style [line 20180619°0211]
+         ico.Command = ico.Canvas['attributes']['data-cvgr'].value;
+      }
+      else {
+         // old style
+         ico.Command = Cvgr.Func.findComments3(ico.Canvas.nextSibling);
+      }
+      // now string ico.Command is known, e.g. "algo=pulse hertz=111 color=orange"
+
+      // () parse commandline
+      ////ico.CmdHash2 = Daf.Utilis.CmdlinParser.parse(ico.Command, true);
+      ico.CmdHash2 = Trekta.Util2.CmdlinParser.parse(ico.Command, true);
+
+      //+++++++++++++++++++++++++++++++++++++++++++++++
+      // provide array with known keys [seq 20140926°0331]
+      // see : ref 20140926°0351 'Stacko : For-each on array'
+      // see : ref 20140926°0352 'Stackoverflow : Check key in object'
+      // see : ref 20111031°1322 'Harms & Diaz : JavaScript object oriented ...'
+      var keys = new Array ( 'algo', 'class', 'height', 'id', 'width', 'Algo'
+                            , 'Bgcolor', 'Color', 'Color2', 'Color3', 'Hertz'
+                             , 'Shiftx', 'Shifty', 'Speed'
+                              );
+
+      // () collect the icon's properties
+      // (.1) extract some dedicated properties from the original canvas element
+      ico.Ide = canvases[i].id;
+      ico.Height = canvases[i].height;
+      ico.Width = canvases[i].width;
+
+      if ( Cvgr.Const.bShow_Debug_Dialogs )                            // toggle debug output
+      {
+         var sMsg = "Dedicated properties :";
+         sMsg += "\n[x] ico.Canvas = " + ico.Canvas;
+         sMsg += "\n[x] ico.Height = " + ico.Height;
+         sMsg += "\n[x] ico.Ide = " + ico.Ide;                         // ico.Ide = canvases[i].id
+         sMsg += "\n[x] ico.Width = " + ico.Width;
+
+         // (.2) provide values from the canvas element
+         // note canvases[i] has a list of about 175 properties, ID is the last one,
+         //    and it is correctly assigned. But height and with have assigned nothing.
+         sMsg += "\n\nElement properties :";
+         for ( sKey in canvases[i] )
+         {
+            if (keys.indexOf(sKey) > (-1))
+            {
+               sMsg += "\n[c] " + sKey + " = " + canvases[i][sKey];
+            }
+         }
+
+         // (.3) provide values from the commandline
+         sMsg += "\n\nCommandline values :";
+         for(sKey in ico.CmdHash2 )
+         {
+            sMsg += "\n[o] " + sKey + " = " + ico.CmdHash2[sKey];
+         }
+         alert("[Debug 20140926°0332] Canvas element:\n" + sMsg);
+      }
+      //+++++++++++++++++++++++++++++++++++++++++++++++
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      // [seq 20140904°0651]
+      // (M) read properties from commandline
+      // See todo 20140904°0711 'refactor property parsing'
+
+      // (M.1) determine AlgoName [seq 20140904°065x]
+      if ((ico.CmdHash2['algo'] === undefined) || (ico.CmdHash2['algo'] === null) ||  (ico.CmdHash2['algo'] === ''))
+      {
+         ico.AlgoName = 'default';
+      }
+      else
+      {
+         ico.AlgoName = ico.CmdHash2['algo'];
+      }
+
+      // (M.2) determine BgColor [seq 20140904°065x]
+      if ( (ico.CmdHash2['bgcolor'] === null)
+          || (ico.CmdHash2['bgcolor'] === undefined)
+           || (ico.CmdHash2['bgcolor'] === '')
+            ) // [fix 20180618°0711`01]
+      {
+         ////ico.BgColor = '#f0f0f0';
+         ico.BgColor = 'Transparent'; // #f0f0f0
+      }
+      else
+      {
+         ico.BgColor = ico.CmdHash2['bgcolor'];
+         if (ico.BgColor.substr(0, 1) !== '#')
+         {
+            ico.BgColor = Trekta.Util2.colorNameToHex(ico.BgColor);
+         }
+      }
+
+      // (M.3) determine Color [seq 20140904°065x]
+      if ((ico.CmdHash2['color'] === undefined) || (ico.CmdHash2['color'] === null) || (ico.CmdHash2['color'] === ''))
+      {
+         ico.Color = '#404040';
+      }
+      else
+      {
+         ico.Color = ico.CmdHash2['color'] || '';                      // [fix 20180618°0711`07]
+         if (ico.Color.substr(0, 1) !== '#')
+         {
+            ico.Color = Trekta.Util2.colorNameToHex(ico.Color);
+         }
+      }
+
+      // (M.4) determine Color2 [seq 20140904°065x]
+      if (ico.Color.substr(0, 1) !== '#')
+      {
+         ico.Color2 = '#606060';
+      }
+      else
+      {
+         ico.Color2 = ico.CmdHash2['color2'] || '';                    // [fix 20180618°0711`06]
+         if (ico.Color2.substr(0, 1) !== '#')                          // [fix 20180618°0711`02]
+         {
+            ico.Color2 = Trekta.Util2.colorNameToHex(ico.Color2);
+         }
+      }
+
+      // (M.5) determine Color3 [seq 20140904°065x]
+      if ((ico.CmdHash2['color3'] === undefined) ||  (ico.CmdHash2['color3'] === null) ||  (ico.CmdHash2['color3'] === ''))
+      {
+         ico.Color3 = '#808080';
+      }
+      else
+      {
+         ico.Color3 = ico.CmdHash2['color3'] || '';
+         if (ico.Color3.substr(0, 1) !== '#')
+         {
+            ico.Color3 = Trekta.Util2.colorNameToHex(ico.Color3);
+         }
+      }
+
+      // (M.6) determine Hertz [seq 20140904°065x]
+      if ((ico.CmdHash2['hertz'] === undefined) || (ico.CmdHash2['hertz'] === null) || (ico.CmdHash2['hertz'] === ''))
+      {
+         ico.Hertz = 0.2;
+      }
+      else
+      {
+         ico.Hertz = ico.CmdHash2['hertz'];
+      }
+
+      // (M.7) determine ShiftX (pixel) [seq 20140904°065x]
+      if ((ico.CmdHash2['shiftx'] === undefined) || (ico.CmdHash2['shiftx'] === null) || (ico.CmdHash2['shiftx'] === ''))
+      {
+         ico.ShiftX = 0;
+      }
+      else
+      {
+         ico.ShiftX = ico.CmdHash2['shiftx'];
+      }
+
+      // (M.8) determine ShiftY (pixel) [seq 20140904°065x]
+      if ((ico.CmdHash2['shifty'] === undefined) || (ico.CmdHash2['shifty'] === null) || (ico.CmdHash2['shifty'] === ''))
+      {
+         ico.ShiftY = 0;
+      }
+      else
+      {
+         ico.ShiftY = ico.CmdHash2['shifty'];
+      }
+
+      // (M.9) determine Speed [seq 20140904°065x]
+      if ((ico.CmdHash2['speed'] === undefined) || (ico.CmdHash2['speed'] === null) || (ico.CmdHash2['speed'] === ''))
+      {
+         ico.Speed = 444;
+      }
+      else
+      {
+         ico.Speed = ico.CmdHash2['speed'];
+      }
+
+      // (M.9) determine SizeFactor [seq 20190328°0833]
+      //////if (ico.CmdHash2['SizeFactor'] === undefined) {
+      //////   ico.SizeFactor = 1.0;
+      //////}
+      //////else {
+      //////   ico.SizeFactor = ico.CmdHash2['SizeFactor'];
+      //////}
+      ico.SizeFactor = ('SizeFactor' in ico.CmdHash2)
+                      ? ico.CmdHash2['SizeFactor']
+                       : 1.0
+                        ;
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      Cvgr.Func.startCanvasGear_setProperties();
+
+      //  [line 20140904°065x]
+      Cvgr.Vars.icos.push(ico);
+   }
+
+   // [line 20140904°065x]
+   canvases = null; // deleting a canvas is perhaps not a good idea
+
+   // initialize canvasgearexcanvas.js [seq 20140815°0651]
+   if ( typeof window.bIs_IE8_ExcanvasLoaded !== 'undefined' ) {
+      if (bIs_IE8_LocalExcanvasLoaded) {
+         for (var i = 0; i < Cvgr.Vars.icos.length; i++) {
+            G_vmlCanvasManager.initElement(Cvgr.Vars.icos[i].Canvas);
+         }
+      }
+   }
+
+   // ignit continuous drawing
+   Cvgr.Func.executeFrame();
+};
+
+// helper variables for browser independend angle calculation
+Cvgr.Vars.iMarkLastTwoSecond = 0;                      //
+Cvgr.Vars.iMarkLastTwoSecondFrame = 0;                 //
+Cvgr.Vars.iFramesInLastTwoSeconds = 0;                 //
+Cvgr.Vars.iFramesPerTowSeconds = 0;                    //
+Cvgr.Vars.nTrueAngleTurns = 0;                         // wanted browser independend angle in turns for 1 Hz
+Cvgr.Vars.nIncTurnsPerFrame = 0;                       // increment turns per frame for 1 Hz
+
+//*****************************************************
+// Algorithms
+//*****************************************************
+
+/**
+ * This function serves developing an algorithm
+ *
+ * @id 20140901°0521
+ * @status
+ * @note Sorrily, we must pass the icon via array plus index. All attempts
+ *    to pass the plain icon failed. Not sure why [issue 20140828°0751]
+ * @param icos The complete Cvgr.Vars.icos icons array (as workaround)
+ * @param iFor The index into the icons array to the wanted icon
+ */
+Cvgr.Func.algoDevelop = function(icos, iFor)
+{
+   // This shall become the 'lines' algorithm' [seq 20140901°0521]
+
+   // workaround for issue 20140828°0751
+   var iko = icos[iFor];
+
+   // draw this algorithm only once [seq 20140916°1022`01]
+   if (iko.DrawOnlyOnce)
+   {
+      return;
+   }
+   iko.DrawOnlyOnce = true;
+
+   // preparatory calculations [seq 20140916°0821]
+   var iSize = (+iko.Width + +iko.Height) / 2;                         // [see note 20140901°0331]
+
+   // prepare canvas
+   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+   iko.Context.fillStyle = "#eeeeee";
+   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+   // preparatory calculations
+   var lins = new Array();
+   var lin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, 'crimson');
+   var lin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, 'seagreen');
+   var lin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, 'royalblue');
+   lins.push(lin1);
+   lins.push(lin2);
+   lins.push(lin3);
+
+   for (var i = 0; i < lins.length; i++)
+   {
+      iko.Context.beginPath();
+      iko.Context.moveTo(lins[i].X1, lins[i].Y1);
+      iko.Context.lineTo(lins[i].X2, lins[i].Y2);
+      iko.Context.lineWidth = 3;
+      iko.Context.strokeStyle = lins[i].Colo;
+      iko.Context.stroke();
+   }
+};
+
+/**
+ * This function implements a drawing algorithm to draw a rose
+ *
+ * @id 20140828°1411
+ * @status Not yet animated
+ * @ref http://gnuzoo.org/rose/index.htm [20140815°0521]
+ * @param {number} icos — This is Cvgr.Vars.icos[iFor] at the caller.
+ * @param {number} iFor — The index into the icos array.
+ */
+Cvgr.Func.algoOblongrose = function(icos, iFor)
+{
+   var iko = icos[iFor]; // (workaround for issue 20140828°0751)
+
+   // draw this algorithm only once [seq 20140916°1022`02]
+   if (iko.DrawOnlyOnce)
+   {
+      return;
+   }
+   iko.DrawOnlyOnce = true;
+
+   // preparatory calculations [seq 20140916°0822]
+   var iSize = (+iko.Width + +iko.Height) / 2;                         // [see note 20140901°0331]
+
+   // prepare canvas
+   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+   // set colors
+   iko.Context.strokeStyle = iko.Color;
+   iko.Context.fillStyle = '#ffff00';                                  // 'yellow' // not applied below
+
+   // set registration point
+   iko.Context.translate(iSize / 2, iSize / 2);
+
+   var iNums = 16;
+   for (var i = 0; i < iNums; i++)
+   {
+      iko.Context.rotate(2 * Math.PI / iNums);
+      iko.Context.strokeRect(0, 0, iSize / 2, iSize / 6);
+   }
+};
+
+/**
+ * This function implements the pulse drawing algorithm v2
+ *
+ * @id 20140829°0511
+ * @descript Features are:
+ *    - It adjusts the drawing size relative to the canvas size.
+ *    - It allows parameters 'shiftx' and 'shifty'.
+ *    - It uses parameter 'hertz' instead of the old 'speed'
+ * @status
+ * @param {number} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
+ * @param {number} iNdx — This is the index into the array.
+ */
+Cvgr.Func.algoPulse = function(icos, iNdx)
+{
+   var iko = icos[iNdx]; // workaround for issue 20140828°0751
+
+   // (.) prepare canvas
+   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+   iko.Context.fillStyle = "#f0f0f0";
+   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+   // (.) calculate size
+   var iRadius = (iko.Width > iko.Height) ? iko.Width : iko.Height;
+   iRadius *= iko.SizeFactor; // [line 20190328°0835]
+   iRadius = iRadius / 2;
+
+   // (.) calculate current radius
+   var radius = 0;
+   radius = iRadius * Math.abs(Math.cos(iko.Angle));
+
+   // (.) calculate position
+   var iRadiX = iRadius + parseInt(iko.ShiftX, 10);
+   var iRadiY = iRadius + parseInt(iko.ShiftY, 10);
+
+   // (.) draw
+   iko.Context.beginPath();                            // circle
+   iko.Context.arc ( iRadiX                            // x coordinate, e.g. 90
+                    , iRadiY                           // y coordinate, e.g. 90
+                     , radius                          // radius, e.g. 90
+                      , 0                              // starting point angle in radians, starting east
+                       , Math.PI * 2                   // endpoint angle in radians
+                        , false                        // clockwise
+                         );
+
+   // (.) finish
+   iko.Context.closePath();
+   iko.Context.fillStyle = iko.Color;
+   iko.Context.fill();
+
+   // (.) calculate progression
+   iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+};
+
+/**
+ * This function implements a drawing algorithm for an ikon
+ *
+ * @id 20140828o°0851
+ * @status proof-of-concept
+ * @note Sorrily, we must pass the icon via array plus index. All attempts
+ *     to pass the plain icon failed. No idea why. (issue 20140828°0751)
+ * @ref Article 'Drawing shapes with canvas'
+ *     https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Drawing_shapes [20140828o0911]
+ * @ref Article 'Hwo do you rotate an HTML5 canvas around it's center' [20140901o0321]
+ *     http://www.williammalone.com/briefs/how-to-rotate-html5-canvas-around-center
+ * @note [note 20140901°0331]
+ *     The plus sign before iko.Width and iko.Height is wanted for
+ *     IE8, which will otherwise interpret that as string, and e.g.
+ *     iSize will have the value 3232 if width=64 and height=64.
+ * @param icos {} This is Cvgr.Vars.icos[iFor] at the caller.
+ * @param iFor {} ..
+ */
+Cvgr.Func.algoTriangle = function(icos, iFor)
+{
+   var iko = icos[iFor]; // (workaround for issue 20140828°0751)
+
+   // preparatory calculations [seq 20140916°0823]
+   //  See note 20140901°0331 about '+'
+   var iSize = (+iko.Width + +iko.Height) / 2;
+   var iPt1x = iSize * 0.5;
+   var iPt1y = iSize * 0.01;
+   var iPt2x = iSize * 0.8;
+   var iPt2y = iSize * 0.9;
+   var iPt3x = iSize * 0.2;
+   var iPt3y = iPt2y;
+
+   // prepare canvas
+   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);   // Opera works fine
+
+   // (.) rotation
+   // (.1) set registration point
+   iko.Context.translate(iSize / 2, iSize / 2);
+   // (.2) rotate 1 degree
+   iko.Context.rotate(Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz);    // 'Cvgr.Vars.nIncTurnsPerFrame * 4' is 1 rotation per second
+   // (.3) move registration point back to the top left corner of canvas
+   iko.Context.translate(-iSize / 2, -iSize / 2);
+
+   // note : Remember issue 20140901°0911 'Opera fillRect() fail'
+
+   // set background
+   iko.Context.fillStyle = iko.BgColor;
+   // (20140901°0912) try envelope against issue 20140901°0911 'Opera fillRect() fail'
+   try
+   {
+      // Opera may throw 'object DOMException' here (issue 20140901°0911)
+      iko.Context.fillRect(0, 0, iko.Width, iko.Height);
+   }
+   catch (e)
+   {
+      if ( Cvgr.Const.bShow_Debug_Dialogs )                            // toggle debug
+      {
+         alert('[debug 20140901°0913]\nException "' + e + '"');
+      }
+   }
+
+   // draw
+   iko.Context.beginPath();
+
+   // (why the try see issue 20140901°0933)
+   try
+   {
+      iko.Context.moveTo(iPt1x, iPt1y);
+   }
+   catch (e)
+   {
+      if ( Cvgr.Const.bShow_Debug_Dialogs )                            // debug toggle
+      {
+         alert('[debug 20140901°0932]\nException "' + e + '"');
+      }
+   }
+   iko.Context.lineTo(iPt2x, iPt2y);
+   iko.Context.lineTo(iPt3x, iPt3y);
+   iko.Context.fillStyle = iko.Color;
+   iko.Context.fill();
+   iko.Context.closePath();
+};
+
+/**
+ * This function implements the line drawing algorithm
+ *
+ * @id 20140828°1431
+ * @status under construction
+ * @ref http://stackoverflow.com/questions/3594653/html5-canvas-drawing-multicolored-lines [20140831o0741]
+ * @ref http://html5tutorial.com/advanced-path-painting/ [20140831o0742]
+ * @ref http://www.mysamplecode.com/2012/04/html5-canvas-draw-line-tutorial.html [20140831o0743] here I found the first example for multi colored lines
+ * @ref http://www.peterkroener.de/eine-kleine-canvas-einfuehrung [20140828o1221]
+ * @ref http://canvas.quaese.de/index.php?doc_id=36&nav=6,47 [20140828o1421]
+ * @ref https://developer.mozilla.org/de/docs/Web/Guide/HTML/Canvas_tutorial/Applying_styles_and_colors [20140828o1422]
+ * @note The statement 'fill() includes closePath()' is true only to some degree,
+ *         e.g. *not* for drawing the final line to origin.
+ * @param icos This is Cvgr.Vars.icos[iFor] at the caller.
+ * @param iFor The index into the icos array.
+ */
+Cvgr.Func.algoTriangulum = function(icos, iFor)
+{
+   // workaround for issue 20140828°0751
+   var iko = icos[iFor];
+
+   // preparatory calculations [seq 20140916°0824]
+   //  See note 20140901°0331
+   var iSize = (+iko.Width + +iko.Height) / 2;
+
+   var nCurrAngle = iko.Angle;
+   nCurrAngle = Math.sin (iko.Angle) * (iSize - 4) / 2 + iSize / 2;
+
+   // prepare canvas
+   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+   iko.Context.fillStyle = iko.BgColor;
+   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+   // draw triangle
+   iko.Context.beginPath();
+   iko.Context.moveTo(3, 3);
+   iko.Context.lineTo(iSize - 3, 3);
+   iko.Context.lineTo(nCurrAngle, iSize - 5);
+   iko.Context.fillStyle = iko.Color;
+   iko.Context.fill();
+   iko.Context.closePath();
+   iko.Context.lineWidth = 2;
+   iko.Context.strokeStyle = iko.Color2;
+   iko.Context.stroke();
+
+   // draw line
+   iko.Context.beginPath();
+   iko.Context.moveTo(2, iSize - 2);
+   iko.Context.lineTo(iSize - 2, iSize - 2);
+   iko.Context.lineWidth = 3;
+   iko.Context.strokeStyle = iko.Color3;
+   iko.Context.stroke();
+
+   // maintain progress
+   iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
+   if (iko.Angle > iSize - 4)
+   {
+      iko.Angle = 0;
+   }
+};
+
+//*****************************************************
+// Utility functions
+//*****************************************************
+
+/**
+ * This function does continuous drawing
+ *
+ * @id 20140815°1221
+ * @callers This is called once by start function Cvgr.startCanvasGear(),
+ *    and then periodically by the browser's requestAnimFrame().
+ */
+Cvgr.Func.executeFrame = function()
+{
+   // () output page status [seq 20140815°1251]
+   // (.1) calculate each frame
+   Cvgr.Vars.iFrameNo++;
+   var iTimeCurr = new Date();
+   iTimeCurr.getTime();
+   //var iTimeCurrMs = iTimeCurr.getMilliseconds();
+   var iElapsedMs = iTimeCurr - Cvgr.Vars.iTimeStart;
+   var iFramesPerSecondTotal = Cvgr.Vars.iFrameNo / iElapsedMs * 1000;
+   var iElapsedTwoSeconds = Math.floor( iElapsedMs / 2000 ) * 2;
+
+   // (.2) calculate periodic measurment
+   if ( Cvgr.Vars.iMarkLastTwoSecond < iElapsedTwoSeconds )
+   {
+      Cvgr.Vars.iMarkLastTwoSecond = iElapsedTwoSeconds;
+      Cvgr.Vars.iFramesInLastTwoSeconds = Cvgr.Vars.iFrameNo - Cvgr.Vars.iMarkLastTwoSecondFrame;
+      Cvgr.Vars.iFramesPerTowSeconds = (Cvgr.Vars.iFrameNo - Cvgr.Vars.iMarkLastTwoSecondFrame) / 2;
+      Cvgr.Vars.iMarkLastTwoSecondFrame = Cvgr.Vars.iFrameNo;
+   }
+
+   // (.3) calculate true angle
+   // (.3.1) handle border situation
+   if (Cvgr.Vars.iFramesPerTowSeconds < 0.001)
+   {
+      // The calculated speed is not available on start, there is not yet a
+      // two-second measurement, so use the first available value. But this
+      // is pretty imprecise, sometime half, sometime double the final value.
+      Cvgr.Vars.iFramesPerTowSeconds = iFramesPerSecondTotal * 2;
+   }
+   // (.3.2) perform calculation
+   Cvgr.Vars.nTrueAngleTurns = Cvgr.Vars.nTrueAngleTurns + (1 / Cvgr.Vars.iFramesPerTowSeconds);
+   if (Cvgr.Vars.nTrueAngleTurns > 1)
+   {
+      Cvgr.Vars.nTrueAngleTurns = Cvgr.Vars.nTrueAngleTurns - 1;
+   }
+   Cvgr.Vars.nIncTurnsPerFrame = 1 / Cvgr.Vars.iFramesPerTowSeconds;
+
+   // (note 20140916°1031) Now this cornerstones are known:
+   // - Cvgr.Vars.nTrueAngleTurns : This is a value cycling between 0 and 0.999
+   //      with one Hertz frequency independend of the browser.
+   // - Cvgr.Vars.nIncTurnsPerFrame : This value depends on the browser, it stays
+   //      fluctuates around e.g. 0.017 to 0.020 with Chrome,
+   //      or 0.021 to 0.023 with IE8.
+
+   // (.4) output Page Debug Info [seq 20140916°1032]
+   var el = document.getElementById("id20140828o0651");                // <!-- output status message -->
+   if (el !== null)
+   {
+      var s = "<b>CanvasGear Debug Info</b> :";
+      s += " AlgoMode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip') + "; ";
+      s += " Frame number = " + Cvgr.Vars.iFrameNo + ";";
+      s += "<br />Start time = " + Cvgr.Vars.iTimeStart + " = " + Cvgr.Vars.iTimeStart.valueOf() + ";"; // issue 20180619°0221 'difference between time and time.valueOf()'
+      s += "<br />Current time = " + iTimeCurr; // + " = " + iTimeCurr.valueOf() + ";";
+      s += "<br />Elapsed seconds (every two) = " + iElapsedTwoSeconds + ";";
+      s += "<br />Frames per seconds (total, average since start) = " + iFramesPerSecondTotal;
+      s += "<br />Frames per seconds (for the last two seconds) = " + Cvgr.Vars.iFramesPerTowSeconds;
+      s += "<br />True angle for 1 Hz (turns) = " + Cvgr.Vars.nTrueAngleTurns + ";";
+      s += "<br />Increment per frame (turns) = " + Cvgr.Vars.nIncTurnsPerFrame + ";";
+      el.innerHTML = s;
+   }
+
+   // process each canvas [seq 20140815°1252]
+   for (var iFor = 0; iFor < Cvgr.Vars.icos.length; iFor++)
+   {
+      // flag to skip icon
+      // prolog - draw this algorithm only once [seq 20140916°102204]
+      // todo : Implement here flag from commandline
+
+      // (x) output canvas status [seq 20140815°1253]
+      // The id of the output element has to be the id of the canvas with added '.info'.
+      var sIde = Cvgr.Vars.icos[iFor].Ide + '.info';
+      var el = document.getElementById(sIde);                          // <!-- canvas attached info paragraph -->
+      if (el !== null)
+      {
+         var s = '<small>CanvasGear Canvas Debug Info :';
+         var i = 1;
+         i = Math.floor( Cvgr.Vars.icos[iFor].Angle * 10);             // convert from number to int, also floor and round were available
+         s += "<br />iko.Angle = " + i;
+         s += "<br />iko.Color = " + Cvgr.Vars.icos[iFor].Color;
+         s += "<br />iko.Height = " + Cvgr.Vars.icos[iFor].Height;
+         s += "<br />iko.Mode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip');
+         s += "<br />iko.Width = " + Cvgr.Vars.icos[iFor].Width;
+         for ( ki in Cvgr.Vars.icos[iFor].CmdHash2 )
+         {
+            var sValEscaped = Trekta.Utils.htmlEscape(Cvgr.Vars.icos[iFor].CmdHash2[ki]);
+            s += "<br /> [cmd] " + ki + " = " + sValEscaped;
+         }
+         s += "</small>";
+         el.innerHTML = s;
+      }
+
+      // () execute algorithm [seq 20140815°1254]
+      // note : Remember issue 20140828°0751 'Algo calling params quirk' -- is it solved?
+      s = Cvgr.Vars.icos[iFor].AlgoName;
+      if (s === 'develop')
+      {
+         Cvgr.Func.algoDevelop(Cvgr.Vars.icos, iFor);
+      }
+      else if (s === 'oblongrose')
+      {
+         Cvgr.Func.algoOblongrose(Cvgr.Vars.icos, iFor);
+      }
+      else if (s === 'pulse')
+      {
+         Cvgr.Func.algoPulse(Cvgr.Vars.icos, iFor);
+      }
+      else if ( s === 'ballist' )
+      {
+         Cvgr.Algs.Bal.algoBallist(Cvgr.Vars.icos, iFor);
+      }
+      else if ( s === 'triangle' )
+      {
+         Cvgr.Func.algoTriangle(Cvgr.Vars.icos, iFor);
+      }
+      else if (s === 'triangulum')
+      {
+         Cvgr.Func.algoTriangulum(Cvgr.Vars.icos, iFor);
+      }
+      else
+      {
+         Cvgr.Func.algoPulse(Cvgr.Vars.icos, iFor);
+      }
+   }
+
+   // (line 20140815°1255)
+   window.requestAnimFrame(Cvgr.Func.executeFrame);
+};
+
+// SHIFT AWAY TO http://www.trekta.biz/svn/demosjs/trunk/findcomments
+/**
+ * This function finds comments in the given element
+ *
+ * @id 20140830°0312
+ * @summary : This function gets along without siblings list, directly reading
+ *    the next and next but one node behind the canvas, expecting a comment node.
+ * @note Remember retired functions 20140828°1231 and 20140828°1241
+ * @note Only if the comment immediately follows the canvas, the next
+ *    sibling will be the wanted one. If between canvas and comment is
+ *    a blank or something, then we need the next but one sibling.
+ * @note 20150223°1751 : IE8 wants thorough testing for null first.
+ * @note Node type 8 means a comment node.
+ * @callers func 20140815°1241 startCanvasGear seq 20140830°0311
+ * @param {node} ndNextSibling — The node considerd to be the wanted comment
+ * @returns {string} The wanted comment content, this should be a commandline
+ */
+Cvgr.Func.findComments3 = function(ndNextSibling)
+{
+   if (ndNextSibling !== null) {                                       // IE8 accepts
+      if (ndNextSibling.nodeType === 8) {
+         return ndNextSibling.nodeValue;
+      }
+      else {
+         if (ndNextSibling !== null) {
+            var ndNext2 = ndNextSibling.nextSibling;
+            if (ndNext2 !== null) {
+               if (ndNext2.nodeType === 8) {
+                  return ndNext2.nodeValue;
+               }
+            }
+         }
+      }
+   }
+};
+
+/**
+ * This function is the radiobuttons 'onClick' event handler
+ *
+ * @id 20140819°1751
+ * @status
+ * @callers : This is called when selecting a radiobutton
+ * @param
+ */
+Cvgr.Func.setRadiobutton = function()
+{
+   var s = "";
+
+   if ( Cvgr.Const.bShow_Debug_Dialogs )
+   {
+      alert("Debug 20140926°1131");
+   }
+
+   if (document.FormAlgoMode.AlgoMode[0].checked)
+   {
+      Cvgr.Vars.bFlagTipTopTest = false;
+      s = document.FormAlgoMode.AlgoMode[0].value;
+   }
+   else
+   {
+      Cvgr.Vars.bFlagTipTopTest = true;
+      s = document.FormAlgoMode.AlgoMode[1].value;
+   }
+
+   // debug
+   if ( Cvgr.Const.bShow_Debug_Dialogs )
+   {
+      var s = "[Debug] Radiobutton algo-mode is '" + s + "'.";
+      document.getElementById("id20140828o0651").innerHTML = s;        // <!-- output debug messages -->
+   }
+
+   return;
+};
+
+/**
+ * This function ... is a helper function
+ *
+ * @id 20140916°1041
+ */
+Cvgr.Func.startCanvasGear_setProperties = function()
+{
+   // space for outsourced sequence from above ...
+};
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++ Schnippel +++++++++++++++++++++++++
+// id : block 20190329°0131
+// version : 20190329°0141
+// summary : This block is to be shared by scripts via cutnpaste
+// callers : So far only • canvasgear.js
+// note : Other commandline parser exist e.g. in terminal.js
+
+/**
+ * @id 20190329°0111 (root 20190106°0311)
+ */
+var Trekta = Trekta || {};
+
+/**
+ * @id 20190329°0113 (root 20190106°0313)
+ */
+Trekta.Util2 = Trekta.Util2 || {};
+
+
+/**
+ * This object defines webcolors
+ *
+ * @id 20140831°0321
+ * @status Working
+ * @callers Only function 20140831°0331 Trekta.Util2.colorNameToHex
+ * @ref http://en.wikipedia.org/wiki/Web_colors [ws 20140831°0311]
+ */
+Trekta.Util2.Webcolors = function()
+{
+   // Pink colors
+   this.pink                 = '#ffc0cb';      // Pink                  FF C0 CB    255 192 203
+   this.lightpink            = '#ffb6c1';      // LightPink             FF B6 C1    255 182 193
+   this.hotpink              = '#ff69b4';      // HotPink               FF 69 B4    255 105 180
+   this.deeppink             = '#ff1493';      // DeepPink              FF 14 93    255  20 147
+   this.palevioletred        = '#db7093';      // PaleVioletRed         DB 70 93    219 112 147
+   this.mediumvioletred      = '#c71585';      // MediumVioletRed       C7 15 85    199  21 133
+
+   // Red colors
+   this.lightsalmon          = '#ffa07a';      // LightSalmon           FF A0 7A    255 160 122
+   this.salmon               = '#fa8072';      // Salmon                FA 80 72    250 128 114
+   this.darksalmon           = '#e9967a';      // DarkSalmon            E9 96 7A    233 150 122
+   this.lightcoral           = '#f08080';      // LightCoral            F0 80 80    240 128 128
+   this.indianred            = '#cd5c5c';      // IndianRed             CD 5C 5C    205  92  92
+   this.crimson              = '#dc143c';      // Crimson               DC 14 3C    220  20  60
+   this.firebrick            = '#b22222';      // FireBrick             B2 22 22    178  34  34
+   this.darkred              = '#8b0000';      // DarkRed               8B 00 00    139   0   0
+   this.red                  = '#ff0000';      // Red                   FF 00 00    255   0   0
+
+   // Orange colors
+   this.orangered            = '#ff4500';      // OrangeRed             FF 45 00    255  69   0
+   this.tomato               = '#ff6347';      // Tomato                FF 63 47    255  99  71
+   this.coral                = '#ff7f50';      // Coral                 FF 7F 50    255 127  80
+   this.darkorange           = '#ff8c00';      // DarkOrange            FF 8C 00    255 140   0
+   this.orange               = '#ffa500';      // Orange                FF A5 00    255 165   0
+
+   // Yellow colors
+   this.yellow               = '#ffff00';      // Yellow                FF FF 00    255 255   0
+   this.lightyellow          = '#ffffe0';      // LightYellow           FF FF E0    255 255 224
+   this.lemonchiffon         = '#fffacd';      // LemonChiffon          FF FA CD    255 250 205
+   this.lightgoldenrodyellow = '#fafad2';      // LightGoldenrodYellow  FA FA D2    250 250 210
+   this.papayawhip           = '#ffefd5';      // PapayaWhip            FF EF D5    255 239 213
+   this.moccasin             = '#ffe4b5';      // Moccasin              FF E4 B5    255 228 181
+   this.peachpuff            = '#ffdab9';      // PeachPuff             FF DA B9    255 218 185
+   this.palegoldenrod        = '#eee8aa';      // PaleGoldenrod         EE E8 AA    238 232 170
+   this.khaki                = '#f0e68c';      // Khaki                 F0 E6 8C    240 230 140
+   this.darkkhaki            = '#bdb76b';      // DarkKhaki             BD B7 6B    189 183 107
+   this.gold                 = '#ffd700';      // Gold                  FF D7 00    255 215   0
+
+   // Brown colors
+   this.cornsilk             = '#fff8dc';      // Cornsilk              FF F8 DC    255 248 220
+   this.blanchedalmond       = '#ffebcd';      // BlanchedAlmond        FF EB CD    255 235 205
+   this.bisque               = '#ffe4c4';      // Bisque                FF E4 C4    255 228 196
+   this.navajowhite          = '#ffdead';      // NavajoWhite           FF DE AD    255 222 173
+   this.wheat                = '#f5deb3';      // Wheat                 F5 DE B3    245 222 179
+   this.burlywood            = '#deb887';      // BurlyWood             DE B8 87    222 184 135
+   this.tan                  = '#d2b48c';      // Tan                   D2 B4 8C    210 180 140
+   this.rosybrown            = '#bc8f8f';      // RosyBrown             BC 8F 8F    188 143 143
+   this.sandybrown           = '#f4a460';      // SandyBrown            F4 A4 60    244 164  96
+   this.goldenrod            = '#daa520';      // Goldenrod             DA A5 20    218 165  32
+   this.darkgoldenrod        = '#b8860b';      // DarkGoldenrod         B8 86 0B    184 134  11
+   this.peru                 = '#cd853f';      // Peru                  CD 85 3F    205 133  63
+   this.chocolate            = '#d2691e';      // Chocolate             D2 69 1E    210 105  30
+   this.saddlebrown          = '#8b4513';      // SaddleBrown           8B 45 13    139  69  19
+   this.sienna               = '#a0522d';      // Sienna                A0 52 2D    160  82  45
+   this.brown                = '#a52a2a';      // Brown                 A5 2A 2A    165  42  42
+   this.maroon               = '#800000';      // Maroon                80 00 00    128   0   0
+
+   // Green colors
+   this.darkolivegreen       = '#556b2f';      // DarkOliveGreen        55 6B 2F     85 107  47
+   this.olive                = '#808000';      // Olive                 80 80 00    128 128   0
+   this.olivedrab            = '#6b8e23';      // OliveDrab             6B 8E 23    107 142  35
+   this.yellowgreen          = '#9acd32';      // YellowGreen           9A CD 32    154 205  50
+   this.limegreen            = '#32cd32';      // LimeGreen             32 CD 32     50 205  50
+   this.lime                 = '#00ff00';      // Lime                  00 FF 00      0 255   0
+   this.lawngreen            = '#7cfc00';      // LawnGreen             7C FC 00    124 252   0
+   this.chartreuse           = '#7fff00';      // Chartreuse            7F FF 00    127 255   0
+   this.greenyellow          = '#adff2f';      // GreenYellow           AD FF 2F    173 255  47
+   this.springgreen          = '#00ff7f';      // SpringGreen           00 FF 7F      0 255 127
+   this.mediumspringgreen    = '#00fa9a';      // MediumSpringGreen     00 FA 9A      0 250 154
+   this.lightgreen           = '#90ee90';      // LightGreen            90 EE 90    144 238 144
+   this.palegreen            = '#98fb98';      // PaleGreen             98 FB 98    152 251 152
+   this.darkseagreen         = '#8fbc8f';      // DarkSeaGreen          8F BC 8F    143 188 143
+   this.mediumseagreen       = '#3cb371';      // MediumSeaGreen        3C B3 71     60 179 113
+   this.seagreen             = '#2e8b57';      // SeaGreen              2E 8B 57     46 139  87
+   this.forestgreen          = '#228b22';      // ForestGreen           22 8B 22     34 139  34
+   this.green                = '#008000';      // Green                 00 80 00      0 128   0
+   this.darkgreen            = '#006400';      // DarkGreen             00 64 00      0 100   0
+
+   // Cyan colors
+   this.mediumaquamarine     = '#66cdaa';      // MediumAquamarine      66 CD AA    102 205 170
+   this.aqua                 = '#00ffff';      // Aqua                  00 FF FF      0 255 255
+   this.cyan                 = '#00ffff';      // Cyan                  00 FF FF      0 255 255
+   this.lightcyan            = '#e0ffff';      // LightCyan             E0 FF FF    224 255 255
+   this.paleturquoise        = '#afeeee';      // PaleTurquoise         AF EE EE    175 238 238
+   this.aquamarine           = '#7fffd4';      // Aquamarine            7F FF D4    127 255 212
+   this.turquoise            = '#40e0d0';      // Turquoise             40 E0 D0     64 224 208
+   this.mediumturquoise      = '#48d1cc';      // MediumTurquoise       48 D1 CC     72 209 204
+   this.darkturquoise        = '#00ced1';      // DarkTurquoise         00 CE D1      0 206 209
+   this.lightseagreen        = '#20b2aa';      // LightSeaGreen         20 B2 AA     32 178 170
+   this.cadetblue            = '#5f9ea0';      // CadetBlue             5F 9E A0     95 158 160
+   this.darkcyan             = '#008b8b';      // DarkCyan              00 8B 8B      0 139 139
+   this.teal                 = '#008080';      // Teal                  00 80 80      0 128 128
+
+   // Blue colors
+   this.lightsteelblue       = '#b0c4de';      // LightSteelBlue        B0 C4 DE    176 196 222
+   this.powderblue           = '#b0e0e6';      // PowderBlue            B0 E0 E6    176 224 230
+   this.lightblue            = '#add8e6';      // LightBlue             AD D8 E6    173 216 230
+   this.skyblue              = '#87ceeb';      // SkyBlue               87 CE EB    135 206 235
+   this.lightskyblue         = '#87cefa';      // LightSkyBlue          87 CE FA    135 206 250
+   this.deepskyblue          = '#00bfff';      // DeepSkyBlue           00 BF FF      0 191 255
+   this.dodgerblue           = '#1e90ff';      // DodgerBlue            1E 90 FF     30 144 255
+   this.cornflowerblue       = '#6495ed';      // CornflowerBlue        64 95 ED    100 149 237
+   this.steelblue            = '#4682b4';      // SteelBlue             46 82 B4     70 130 180
+   this.royalblue            = '#4169e1';      // RoyalBlue             41 69 E1     65 105 225
+   this.blue                 = '#0000ff';      // Blue                  00 00 FF      0   0 255
+   this.mediumblue           = '#0000cd';      // MediumBlue            00 00 CD      0   0 205
+   this.darkblue             = '#00008b';      // DarkBlue              00 00 8B      0   0 139
+   this.navy                 = '#000080';      // Navy                  00 00 80      0   0 128
+   this.midnightblue         = '#191970';      // MidnightBlue          19 19 70     25  25 112
+
+   // Purple colors
+   this.lavender             = '#e6e6fa';      // Lavender              E6 E6 FA    230 230 250
+   this.thistle              = '#d8bfd8';      // Thistle               D8 BF D8    216 191 216
+   this.plum                 = '#dda0dd';      // Plum                  DD A0 DD    221 160 221
+   this.violet               = '#ee82ee';      // Violet                EE 82 EE    238 130 238
+   this.orchid               = '#da70d6';      // Orchid                DA 70 D6    218 112 214
+   this.fuchsia              = '#ff00ff';      // Fuchsia               FF 00 FF    255   0 255
+   this.magenta              = '#ff00ff';      // Magenta               FF 00 FF    255   0 255
+   this.mediumorchid         = '#ba55d3';      // MediumOrchid          BA 55 D3    186  85 211
+   this.mediumpurple         = '#9370db';      // MediumPurple          93 70 DB    147 112 219
+   this.blueviolet           = '#8a2be2';      // BlueViolet            8A 2B E2    138  43 226
+   this.darkviolet           = '#9400d3';      // DarkViolet            94 00 D3    148   0 211
+   this.darkorchid           = '#9932cc';      // DarkOrchid            99 32 CC    153  50 204
+   this.darkmagenta          = '#8b008b';      // DarkMagenta           8B 00 8B    139   0 139
+   this.purple               = '#800080';      // Purple                80 00 80    128   0 128
+   this.indigo               = '#4b0082';      // Indigo                4B 00 82     75   0 130
+   this.darkslateblue        = '#483d8b';      // DarkSlateBlue         48 3D 8B     72  61 139
+   this.slateblue            = '#6a5acd';      // SlateBlue             6A 5A CD    106  90 205
+   this.mediumslateblue      = '#7b68ee';      // MediumSlateBlue       7B 68 EE    123 104 238
+
+   // White colors
+   this.white                = '#ffffff';      // White                 FF FF FF    255 255 255
+   this.snow                 = '#fffafa';      // Snow                  FF FA FA    255 250 250
+   this.honeydew             = '#f0fff0';      // Honeydew              F0 FF F0    240 255 240
+   this.mintcream            = '#f5fffa';      // MintCream             F5 FF FA    245 255 250
+   this.azure                = '#f0ffff';      // Azure                 F0 FF FF    240 255 255
+   this.aliceblue            = '#f0f8ff';      // AliceBlue             F0 F8 FF    240 248 255
+   this.ghostwhite           = '#f8f8ff';      // GhostWhite            F8 F8 FF    248 248 255
+   this.whitesmoke           = '#f5f5f5';      // WhiteSmoke            F5 F5 F5    245 245 245
+   this.seashell             = '#fff5ee';      // Seashell              FF F5 EE    255 245 238
+   this.beige                = '#f5f5dc';      // Beige                 F5 F5 DC    245 245 220
+   this.oldlace              = '#fdf5e6';      // OldLace               FD F5 E6    253 245 230
+   this.floralwhite          = '#fffaf0';      // FloralWhite           FF FA F0    255 250 240
+   this.ivory                = '#fffff0';      // Ivory                 FF FF F0    255 255 240
+   this.antiquewhite         = '#faebd7';      // AntiqueWhite          FA EB D7    250 235 215
+   this.linen                = '#faF0e6';      // Linen                 FA F0 E6    250 240 230
+   this.lavenderblush        = '#fff0f5';      // LavenderBlush         FF F0 F5    255 240 245
+   this.mistyrose            = '#ffe4e1';      // MistyRose             FF E4 E1    255 228 225
+
+   // Gray/Black colors
+   this.gainsboro            = '#dcdcdc';      // Gainsboro             DC DC DC    220 220 220
+   this.lightgrey            = '#d3d3d3';      // LightGrey             D3 D3 D3    211 211 211
+   this.silver               = '#c0c0c0';      // Silver                C0 C0 C0    192 192 192
+   this.darkgray             = '#a9a9a9';      // DarkGray              A9 A9 A9    169 169 169
+   this.gray                 = '#808080';      // Gray                  80 80 80    128 128 128
+   this.dimgray              = '#696969';      // DimGray               69 69 69    105 105 105
+   this.lightslategray       = '#778899';      // LightSlateGray        77 88 99    119 136 153
+   this.slategray            = '#708090';      // SlateGray             70 80 90    112 128 144
+   this.darkslategray        = '#2f4f4f';      // DarkSlateGray         2F 4F 4F     47  79  79
+   this.black                = '#000000';      // Black                 00 00 00      0   0   0
+
+   // Additional colors
+   this.rebeccapurple        = '#663399';      // Rebeccapurple         66 33 99    102  51 152
+
+   // Custom colors
+   this.verydarkviolett      = '#d000d0';      // (custom color 20140903°0341)
+};
+
+/**
+ * This function translates a X11 web color name to it's hex value
+ *
+ * @id 20140831°0331
+ * @status Working
+ * @callers Only • CanvasGear
+ * @note This helps to use webcolors with IE8.
+ * @todo 20140926°1321 : Implement some validations because e.g. a color '1'
+ *           as Cvgr.Algs.Bal.Ring.color causes difficult to debug failures.
+ * @todo 20180618°0731 : Shift this function into class Webcolors
+ * @returns The wanted color hex value, e.g. '#FF0000' for 'red', or '#C0C0C0' silver for wrong names.
+ * @param {string} sName — The name of the wanted color
+ */
+Trekta.Util2.colorNameToHex = function(sName) {
+
+   var cols = new Trekta.Util2.Webcolors;
+   var sCol = '';
+
+   sName = sName.toLowerCase();
+
+   if (cols[sName]) {
+      sCol = cols[sName];
+   }
+   else {
+      sCol = '#C0C0C0'; // silver for unknown color names
+   }
+
+   return sCol;
+};
+
+/**
+ * This ~static ~class provides a method to parse a commandstring
+ *
+ * @id 20140926°0641
+ * @status Works fine for key/value pairs only. Limitation: This detects
+ *    only key/value pairs, but not single command options.
+ * @callers So far only • CanvasGear
+ * @note Code after ref 20140926°0621 'Krasimir: Simple command line parser in JS'
+ * @note Test input
+ *    - <!-- algo="triangle" color=mediumspringgreen hertz=0.1 -->
+ *    - <!-- algo=ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" shiftx=20 shifty=20 id="id20140916o0731" -->
+ *    - <!-- algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11 -->
+ *    -
+ */
+Trekta.Util2.CmdlinParser = ( function()
+{
+   /**
+    * This function parses a commandline
+    *
+    * @id 20140926°0642
+    * @todo 20180618°0751 In NetBeans Navigator, this function is listed on
+    *    script level. Make it appear inside the Daf.Utilis.CmdlinParser level.
+    * @param sCmdlin {string} The string to be parsed
+    * @param bProcessQuotes {boolean} Flag whether to process quotes or not
+    * @returns
+    */
+   parse = function(sCmdlin, bProcessQuotes)
+   {
+      // paranoia — advisably
+      if (sCmdlin === undefined) {
+         sCmdlin = '';
+      }
+
+      var args = [];
+      var bQuoteReading = false;
+      var sToken = '';
+      for ( var i = 0; i < sCmdlin.length; i++)
+      {
+         // look for token delimiter
+         if ( ((sCmdlin.charAt(i) === ' ') || (sCmdlin.charAt(i) === '=')) && (! bQuoteReading) ) {
+
+            // look for token delimiter found, finish token
+            args.push(sToken);
+            sToken = '';
+
+            // re-supplement equal sign
+            if (sCmdlin.charAt(i) === '=') {
+               args.push('=');
+            }
+         }
+         else {
+
+            // no token delimiter, continue with token
+            if (( sCmdlin.charAt(i) === '\"') && bProcessQuotes ) {
+               bQuoteReading = (! bQuoteReading);
+            }
+            else {
+               sToken += sCmdlin.charAt(i);
+            }
+         }
+      }
+      args.push(sToken);
+      // now the plain token array is ready, the equal sign is also a token.
+
+      // There are two parsing modes: (1) plain parse and (2) kvp parse.
+      var bParsePlain = true; // (flag 20140926°1121)
+      if (! bParsePlain) {
+
+         // (a) The old and proven mode. It reads only the equations
+         //  and is just dropping single commands [seq 20140926°06322]
+         // note : This algo points to an equal sign, and then it processes
+         //   the elements above and below.
+
+         // (a.1) loop over the token array and assemble key/value pairs from the equal signs
+         var kvps = [];
+         for (var i = 0; i < args.length; i++) {
+            if (i === 0) {
+               continue;
+            }
+
+            if (i >= (args.length - 1)) {
+               continue;
+            }
+
+            // assemble key/value pair
+            if (args[i] === '=') {
+               kvps[args[i-1]] = args[i+1];
+               i++;                                                    // better do two or three increments?
+            }
+         }
+      }
+      else
+      {
+         // (b) parsing algo next version [seq 20140926°1111]
+         // summary : This algo points to the first token, then looks ahead for
+         //  an equal sign. This has the advantage, that any solitary token is
+         //  treated like a key as well, just later it will no more receive a value.
+         // hint : One loop finishes one CmdHash2 element/cell.
+
+         // (b.1) loop over the token array and assemble key/value pairs from the equal signs
+         var kvps = [];
+         var sCurrKey = '';
+         for (var i = 0; i < args.length; i++) {
+
+            // (b.2) possibly skip empty elements
+            // note : This cleaning could be done separately before the loop. As
+            //    well it is not yet exactly clear, what happens with blank values.
+            if (args[i] === '') {                                      // experimental
+               continue;
+            }
+
+            // (b.3) read key name and create key with empty value
+            sCurrKey = args[i];
+            kvps[sCurrKey] = '<n/a>';                                  // '<n/a>' is a maker, may be replaced by null or the like
+
+            // (b.4) is next token an equal sign?
+            if (args[i + 1] === '=') {
+               // complete current key/value pair with value
+               kvps[sCurrKey] = args[i + 2];
+               sCurrKey = '<n?a>';                                     // reset
+
+               i++;                                                    // forward to equal sign
+               i++;                                                    // forward to this value
+               continue;                                               // forward to next key
+            }
+            else {
+               continue;                                               // forward to next key
+            }
+         }
+      }
+      return kvps;
+   };
+
+   // Curiously, if you place the curly bracket behind return on the
+   //  next line, the script will be broken (note 20160416°1311)
+   return {
+      parse : parse
+   };
+})();
+
+//+++++++++++++++++++++++++ Schnappel +++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~ Schnippel ~~~~~~~~~~~~~~~~~~~~~~~~~
+// summary : This area is for cutnpaste from dafutils.js
+//            to • canvasgear.js • slidegear.js
+// version : 20190328°0957 (20190316°0155)
+
+/**
+ * This namespace shall be root namespace
+ *
+ * @id 20190106°0311
+ * @callers
+ */
+var Trekta = Trekta || {};
+
+/**
+ * This namespace shall provide some general basic functionalities.
+ *
+ *  The section between ~~~ Schnippel ~~~ and ~~~ Schnappel ~~~ can be cut
+ *  and pasted to other scripts to provide them independent standalone basics.
+ *
+ * @id 20190106°0313
+ */
+Trekta.Utils = Trekta.Utils || {
+
+   /**
+    * This function retrieves the filename of the file to be edited
+    *
+    * @id 20110820°1741
+    * @note Remember issue 20110901°1741 'get self filename for default page'
+    * @callers • 20120827°1511 getFilenamePlain • 20150411°0651 featuresWorkoff_1_loopAll
+    *      • 20150515°1241 sitmapWorkoff_process_Cakecrumbs1 • 20120830°0451 editFinishTransmit
+    * @returns {String} e.g. 'daftari/daftari/login.html' (with Firefox)
+    */
+   getFileNameFull : function() // [Trekta.Utils.getFileNameFull]
+   {
+      // read URL of this page
+      // Values are e.g.
+      //    • 'http://localhost/eps/index.html?XDEBUG_SESSION_START=netbeans-xdebug#'
+      //    • 'file:///G:/work/downtown/daftaridev/trunk/daftari/moonbouncy.html' (not yet working)
+      var sUrl = document.location.href;
+
+      // remove possible query after the file name
+      sUrl = sUrl.substring(0, (sUrl.indexOf('?') === -1) ? sUrl.length : sUrl.indexOf('?'));
+
+      // remove possible anchor at the end
+      sUrl = sUrl.substring(0, (sUrl.indexOf('#') === -1) ? sUrl.length : sUrl.indexOf('#'));
+
+      return sUrl;
+   }
+
+   /**
+    * This function gets the plain filename of the page, e.g. 'help.html'
+    *
+    * @id 20120827°1511
+    * @callers E.g. • dafdispatch.js::workoff_Cake_0_go
+    * @returns {String} The plainfilename, e.g. 'help.html'
+    */
+   , getFilenamePlain : function() // [Trekta.Utils.getFileNameFull]
+   {
+      var sUrl = Trekta.Utils.getFileNameFull(); // e.g 'daftari/daftari/login.html' (in FF)
+
+      // fix issue 20181228°0931 'slideshow fails' [seq 20181228°0935]
+      if ( sUrl.indexOf('/', sUrl.length - 1) !== -1 ) { // 'endswith' replacement, see howto 20181228°0936
+         sUrl += 'index.html';
+      }
+
+      var a = sUrl.split('/');
+      sUrl = a[a.length - 1];
+      return sUrl;
+   }
+
+   /**
+    * This helper function delivers an XMLHttp object
+    *
+    * id : 20110816°1622
+    * ref : 20110816°1421 'first simple ajax example'
+    * note 20150515°173101 : This function seems to work even with IE8
+    * note : Any AJAX request might be easier done with jQuery, e.g. like $.ajax()
+    * callers : • readTextFile1 • MakeRequest
+    * note :
+    */
+   , getXMLHttp : function() // [Trekta.Utils.getFileNameFull]
+   {
+      var xmlHttp;
+
+      // () seqence 20150515°1612 'browser switch'
+      // note : Heureka, now we can read the XML file in dafdispatch.js.
+      //    This solves issue 20150515°1411 'jquery get() fails in IE8'.
+      // note : We do not use variable Trekta.Utils.bIs_Browser_Explorer anymore,
+      //    so this function can be used without .. daftari.js, e.g. in fadeinfiles.js.
+      // note : Tested only with IE8, not yet with any higher IE version.
+      if ( ! Trekta.Utils.bIs_Browser_Explorer ) {
+
+         // Firefox, Opera 8.0+, Safari
+         // todo 20190209°0836 : Implement feature detect and notify if not
+         //    available. Then it will be different, what exactly the XMLHttpRequest
+         //    object does handle. See ref 20190209°0853 'MDN → Using XMLHttpRequest'.
+         xmlHttp = new XMLHttpRequest();
+
+         // [seq 20160616°0231] experimentally preserved from throwaway old sequence
+         // note : Does it make sense to keep this sequence here? Not really.
+         //  It might make a bit sense, if we distrust above condition from the
+         //  DafUtils library, and we want make our own opinion. And second,
+         //  this statement is may ubiquitous appear in JS, like a watchdog,
+         //  or perhaps like human speakers often use 'aeh'.
+         var bFlag_SnipArchival_NaviAppNamExplo = false; // flag 20160616°0251
+
+         // () condition 20160616°0241
+         if (bFlag_SnipArchival_NaviAppNamExplo) {
+            if ( Trekta.Utils.bIs_Browser_Explorer ) {
+               throw 'The browser is IE';
+            }
+         }
+      }
+      else {
+         // Internet Explorer (IE8)
+         // todo 20190209°0835 : Switch off this sequence, this seems
+         //    to be for Internet Exporer 5 and 6.
+         try {
+            xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
+         }
+         catch(e) {
+            try {
+               xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+            catch(e) {
+               alert('Sorry, your browser does not support AJAX [message 20160613°0421]');
+               return false;
+            }
+         }
+      }
+      return xmlHttp;
+   }
+
+   /**
+    * This function escapes a string to be used as HTML output
+    *
+    * @id : 20140926°1431
+    * @callers : • Cvgr.Func.executeFrame
+    * @todo  In FadeInFiles seq 20151106°1822 and seq 20151106°1821
+    *            shall use this function here. [todo 20190328°0943]
+    * @param sHtml {String} The HTML fragment to be escaped 
+    * @returns {String} The wanted escaped HTML fragment
+    */
+   , htmlEscape : function(sHtml) // [Trekta.Utils.htmlEscape]
+   {
+      ////sHtml = sHtml.replace(/</, '&lt;');
+      ////sHtml = sHtml.replace(/>/, '&gt;');
+      sHtml = sHtml.replace(/</g, '&lt;'); // g = replace all hits, not only the first
+      sHtml = sHtml.replace(/>/g, '&gt;');
+
+      return sHtml;
+   }
+
+   /**
+    * This function tests, whether the given script is already loaded or not.
+    *
+    * @id 20160503°0231
+    * @status
+    * @callers ..
+    * @param {string} sWantedScript — The plain name of the wanted script (not a complete path)
+    * @returns {boolean} Flag telling whether the script is loaded or not.
+    */
+   , isScriptAlreadyLoaded : function (sWantedScript) // [Trekta.Utils.isScriptAlreadyLoaded]
+   {
+      var regexp = null;
+
+      // build the appropriate regex variable [seq 20160623°0311]
+      // note : See howto 20160621°0141 'programmatically build regex'
+      // note : "/" seems automatically replaced by "\/"!
+      var s = sWantedScript.replace(/\./g, "\\.");                     // e.g. '/slidegear.js' to '/slidegear\.js$'
+      s = s + '$';
+      regexp = new RegExp(s, '');                                      // e.g. /dafutils\.js$/
+
+      // algo 20160503°0241 (compare algo 20110820°2042)
+      var scripts = document.getElementsByTagName('SCRIPT');
+      if (scripts && scripts.length > 0) {
+         for (var i in scripts) {
+            if (scripts[i].src) {
+               if (scripts[i].src.match(regexp)) {
+                  return true;
+               }
+            }
+         }
+      }
+      return false;
+   }
+
+   /**
+    * This function loads the given script then calls the given function
+    *
+    * @id 20110821°0121
+    * @version 20181229°1941 now with parameter for onload callback function
+    * @status works
+    * @chain project 20181230°0211 http://www.trekta.biz/svn/demosjs/trunk/pullbehind
+    * @note About how exactly to call function(s) in the loaded script, see
+    *     issue 20160503°0211 and seq 20160624°0411 'pull-behind fancytree'.
+    * @note See howto 20181229°1943 'summary on pullbehind'
+    * @callers
+    *    • dafstart.js::callCanarySqueak()
+    *    • daftari.js seq 20160623°0251 'pull-behind slides'
+    *    • daftari.js seq 20160624°0411 'pull-behind fancytree'
+    * @param sScriptToLoad The path from page to script, e.g. "./../../daftari/js/daftaro/dafcanary.js", 'js/daftaro/dafcanary.js'
+    * @param callbackfunc The callback function for the script onload event
+    * @returns Success flag (so far just a dummy always true) e.g. function(){ DafCanary.squeak(); }
+    */
+   , pullScriptBehind : function // [Trekta.Utils.pullScriptBehind]
+                                  ( sScriptToLoad
+                                   , callbackfunc
+                                    )
+   {
+      // avoid multiple loading [seq 20110821°0122]
+      if ( Trekta.Utils.isScriptAlreadyLoaded(sScriptToLoad) ) {
+         if ( Trekta.Utils.bShow_Debug_Dialogs ) {
+            alert ("[Debug]\n\nScript is already loaded:\n\n" + sScriptToLoad);
+         }
+         callbackfunc();
+         return;
+      }
+
+      // bad workaround for s_DaftariBaseFolderRel mismatch [seq 20190211°0131]
+      //  The reason we need it is, that s_DaftariBaseFolderRel is the folder
+      //    where the calling script resides, not the Daftari base folder.
+      var sScriptSource = DafStart.Conf.s_DaftariBaseFolderRel + sScriptToLoad;
+      if (sScriptToLoad.indexOf('showdown/showdown') > 0) {
+         sScriptSource = sScriptToLoad; // e.g. "http://localhost/workspaces/daftaridev/trunk/daftari/js.libs/showdown/showdown.min.js"
+      }
+
+      // prepare the involved elements [seq 20110821°0123]
+      var head = document.getElementsByTagName('head')[0];
+      var script = document.createElement('script');
+
+      // set the trivial properties [seq 20110821°0124]
+      script.type = 'text/javascript';
+      script.src = sScriptSource; // DafStart.Conf.s_DaftariBaseFolderRel + sScriptToLoad;
+
+      // set the non-trivial but crucial property [line 20181229°1932]
+      // note : Remember todo 20181229°1931 'make pullbehind state-of-the-art'
+      script.onload = callbackfunc;
+
+      // ignit the pulling [seq 20110821°0125]
+      head.appendChild(script);
+
+      return true;
+   }
+
+   /**
+    * This function reads a file via Ajax
+    *
+    * @id 20140704°1011
+    * @status productive
+    * @note 20150515°173102 : This function seems to work even with IE8
+    * @note Remember issue 20140713°1121 'read file via filesystem protocol'
+    * @note Remember todo 20150517°0121 'implement local file reading after Dean Edwards 20150516°0612'
+    * @note This function does now work via filesystem protocol with Chrome.
+    * @ref http://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript [20160611°0341]
+    * @ref http://stackoverflow.com/questions/6338797/jquery-to-load-text-file-data [20140625°1731]
+    * @ref http://stackoverflow.com/questions/18440241/load-div-content-from-one-page-and-show-it-to-another [20140627°1111]
+    * @ref http://stackoverflow.com/questions/14446447/javascript-read-local-text-file [20140704°0842]
+    * @todo 20190211°0151 : Make all requests asynchronous (param bAsync = true).
+    * @callers
+    *     • Func 20190106°0615 slidegear.js::o2ReadSetup_ImageList : *.json
+    *     • daflingos.js::getLangFromCrumb                    : sitmaplangs.json // fails with async
+    *     • dafsitmap.js::sitmapWorkoff_process_Cakecrumbs1   : sitmapdaf.xml
+    *     • fadeinfiles.js::fadeInFiles_fillBehind           : given textfile
+    *     • fadeinfiles.js::fadeInFiles_fillPre()             : given textfile
+    * @param sFilename {String} — Path to file to be read
+    * @param bAsync {Boolean} — Request flavour flag (prefere asynchronous)
+    * @returns {String} The content of the wanted file
+    */
+   , readTextFile1 : function(sFilename, bAsync) // [Trekta.Utils.readTextFile1]
+   {
+      // () preparation
+      var sRead = '';
+
+      // () use a wrapper instead direct XMLHttpRequest
+      var xmlHttp = Trekta.Utils.getXMLHttp();
+
+      // () set request parameters
+      // See issue 20180304°0611 'Synchronous XMLHttpRequest deprecated'. But
+      //  async = 'true' works not for all, see issue 20181229°1911 'make async work'
+      if (bAsync) {
+         xmlHttp.open("GET", sFilename, true); // [line 20190211°0147]
+      }
+      else {
+         xmlHttp.open("GET", sFilename, false); // [line 20180304°0614]
+      }
+
+      // () probe the ongoing
+      xmlHttp.onreadystatechange = function () {
+         if ( xmlHttp.readyState === 4 ) {
+            if ( xmlHttp.status === 200 || xmlHttp.status === 0 ) {
+               sRead = xmlHttp.responseText;
+            }
+         }
+      };
+
+      // () finally perform the request
+      try {
+         // If file to read does not exist, we get exception "Failed to load
+         //  resource: the server responded with a status of 404 (Not Found)"
+         // See issue 20181228°0937 'try to look for file but without error 404'
+         xmlHttp.send(null);
+      }
+      catch (ex)
+      {
+         // note 20160624°0131 : To test below error messages, browse pages
+         // - file:///X:/.../daftari/manual/fadeinfiles.html with Firefox
+         // - file:///X:/.../daftari/manual/slideshow.html with Chrome
+         var sMsg = "<b>Sorry, some feature on this page does not work.</b>"
+                   + '\n File <tt>' + sFilename + '</tt> could not be read.' // [info 20160622°0131]
+                   + "\nYour browser said: "
+                    + '<tt>' + ex.message + '</tt>.' // e.g. "A network error occurred".
+                     ;
+
+         // ref : screenshot 20160911°1221 'Chrome debugger showing exception'
+         // ref : issue 20150516°0531 'Chrome cannot load local files'
+         if ( Trekta.Utils.bIs_Browser_Chrome && (location.protocol === 'file:') ) {
+            sMsg += "\nYour browser seems to be Chrome, and this does not read files via file protocol."
+                 + "\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Firefox or IE"
+                 + "\nor (2) view this page from <tt>localhost</tt> with a HTTP server."
+                  ;
+         }
+         else if ( Trekta.Utils.bIs_Browser_Firefox && (location.protocol === 'file:') ) {
+            sMsg += "\nYour browser seems to be <b>Firefox</b>, and this does not read files"
+                 + "\nwith a path going below the current directory via file protocol."
+                 + "\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Chrome or IE"
+                 + "\nor (2)  view this page from <tt>localhost</tt> with a HTTP server."
+                  ;
+         }
+         else {
+            sMsg += '\n [info 20160622°0131] Failed reading file ' + sFilename + '.';
+         }
+      }
+
+      return sRead;
+   }
+
+   /**
+    * This function returns the path to the given script .. using regex
+    *
+    * @id 20110820°2041
+    * @status working
+    * @callers •
+    * @param sScriptName {String} The name of the canary script, e.g. 'sitmapdaf.js'.
+    * @returns {String} The wanted path, where the given script resides, but
+    *    there are browser differences, e.g.
+    *     - FF etc : scripts[i].src = 'http://localhost/manual/daftari/daftari.js'
+    *     - IE     : scripts[i].src = '../daftari/daftari.js'
+    */
+   , retrieveScriptFolderAbs : function (sScriptName) // [Trekta.Utils.retrieveScriptFolderAbs]
+   {
+      var s = '';
+
+      // () prepare regex [seq 20160621°0142]
+      var regexMatch = / /;                                               // space between slashes prevents a syntax error
+      var regexReplace = / /;
+      s = sScriptName.replace(/\./g, "\\.") + "$";                        // e.g. 'dafutils.js' to 'dafutils\.js$'
+      regexMatch = new RegExp(s, '');                                     // e.g. /dafutils\.js$/
+      s = '(.*)' + s;                                                     // prepend group
+      regexReplace = new RegExp(s, '');                                   // e.g. /(.*)dafutils\.js$/ ('/' seems automatically replaced by '\/')
+
+      // () algo 20110820°2042 do the job (compare algo 20160503°0241)
+      var path = '';
+      var scripts = document.getElementsByTagName('SCRIPT');              // or 'script'
+      if (scripts && scripts.length > 0) {
+         for (var i in scripts) {
+            // note : There are browser differences, e.g.
+            //    • FF etc : scripts[i].src = 'http://localhost/manual/daftari/daftari.js'
+            //    • IE     : scripts[i].src = '../daftari/daftari.js'
+            if (scripts[i].src) {
+               if (scripts[i].src.match(regexMatch)) {                    // e.g. /dafstart\.js$/
+                  path = scripts[i].src.replace(regexReplace, '$1');      // e.g. /(.*)dafstart.js$/
+               }
+            }
+         }
+      }
+
+      return path; // e.g. "http://localhost/daftaridev/trunk/daftari/js/daftaro/"
+   }
+
+   /**
+    * This function tells the relative path from the page to the given given script
+    *
+    * This function is useful if the script uses resources, e.g. images,
+    *  which are located relative to the script, as typically is the case
+    *  within a project folder structure.
+    *
+    * @id 20160501°1611
+    * @ref See howto 20190209°0131 'retrieve this script path'
+    * @todo 20190316°0141 'call retrieveScriptFolderRel without canary'
+    *     Implement the possibility to call the function
+    *     without parameter. Then we have no canary to seach for in the script
+    *     tags, but we use the last from the list. This is the last one loaded,
+    *     and mostly means the calling script itself.
+    * @callers • dafstart.js from scriptlevel
+    * @param sCanary {String} Trailing part of the wanted script, e.g. '/js/daftaro/dafutils.js'
+    * @returns {String} The path to the folder where the given script resides
+                *           , e.g. "'/js/daftaro/dafutils.js'"
+    */
+   , retrieveScriptFolderRel : function (sCanary)
+   {
+      var s = '';
+
+      // () get the script tags list
+      var scripts = document.getElementsByTagName('script');
+
+      // () find the canary script tag
+      var script = null;
+      var bFound = false;
+      for (var i = 0; i < scripts.length; i++) {
+         if (scripts[i].src.indexOf(sCanary) > 0) {
+            script = scripts[i];
+            bFound = true;
+            break;
+         }
+      }
+
+      // paranoia
+      if (! bFound) {
+         s = '[20160501°1631] Fatal error'
+            + '\n' + 'The wanted script could not be found.'
+             + '\n' + 'It looks like the search string is wrong.'
+              + '\n\n' + 'search string = ' + sCanary
+               ;
+         alert(s);
+         return '';
+      }
+
+      // (.1) get the DOM internal absolute path
+      //  This is just for fun, not finally wanted.
+      s = script.src;
+      s = s.substring(0, (s.length - sCanary.length));         // used as canary is '/js/daftaro/dafutils.js'
+      Trekta.Utils.s_DaftariBaseFolderAbs = s;                 // e.g. "file:///G:/work/downtown/daftaridev/trunk/daftari/"
+
+      // (.2) get the script tag's literal path (algo 20111225°1251)
+      var sPathLiteral = '';
+      for (var i = 0; i < script.attributes.length; i++) {
+         if (script.attributes[i].name === 'src') {
+            sPathLiteral = script.attributes[i].value;
+            break;
+         }
+      }
+
+      // reduce from canary script path to folder only path [seq 20190316°0131]
+      // E.g. for sCanary "/js/daftaro/dafutils.js" :
+      //    • "./../../daftari/js/daftaro/dafutils.js" ⇒ "./../../daftari/"
+      //    • "./daftari/js/daftaro/dafutils.js"       ⇒ "./daftari/"
+      var sPathOnly = sPathLiteral.substring ( 0 , ( sPathLiteral.length - sCanary.length + 1 ) );
+
+      return sPathOnly;
+   }
+
+   /**
+    * This function daisychains the given function on the windows.onload events
+    *
+    * @id 20160614°0331
+    * @note Remember ref 20190328°0953 'mdn → addEventListener'
+    * @callers
+    * @param funczion {function} The function to be appended to the window.onload event
+    * @returns nothing
+    */
+   , windowOnloadDaisychain : function(funczion) // [Trekta.Utils.windowOnloadDaisychain]
+   {
+      // is the onload handler already used?
+      if ( window.onload ) {
+         // preserve existing function(s) and append our additional function
+         var ld = window.onload;
+         window.onload = function() {
+            ld();
+            funczion();
+         };
+      }
+      else {
+         // no other handlers are registered yet
+         window.onload = function() {
+            funczion();
+         };
+      }
+   }
+
+   /**
+    * This ~constant provides a flag whether the browser is Chrome or not
+    *
+    *  Explanation. The plain expression "navigator.appName.match(/Chrome/)"
+    *  results in either True or Null. But I prefere the result being either
+    *  True or False. This is achieved by wrapping the expression in the
+    *  ternary operator, manually replacing Null by false.
+    *
+    * @todo 20190209°0833 : For browser detection, Inconsequently for some we use
+    *    navigator.userAgent, for some we use navigator.appName. Standardize this.
+    * @id 20160622°0221
+    * @type Boolean
+    */
+   , bIs_Browser_Chrome : ( navigator.userAgent.match(/Chrome/) ? true : false ) // [Trekta.Utils.bIs_Browser_Chrome]
+
+   /**
+    * This ~constant provides a flag whether the browser is Internet Exporer or not
+    *
+    * @id 20150209°0941
+    * @todo 20190209°0837 : Refine algo. Formerly we used the plain
+    *    comparison 'if ( navigator.appName === "Microsoft Internet Explorer" )'.
+    *    For code, compare function getBrowserInfo() in jquery.fancytree.logger.js.
+    *    For code, compare function getIEVersion() in canvasgearexcanvas.js.
+    * @type Boolean
+    */
+   , bIs_Browser_Explorer : ( navigator.appName.match(/Explorer/) ? true : false ) // [Trekta.Utils.bIs_Browser_Explorer]
+
+   /**
+    * This ~constant provides a flag whether the browser is Firefox or not
+    *
+    * @id 20160624°0121
+    * @type Boolean
+    */
+   , bIs_Browser_Firefox : ( navigator.userAgent.match(/Firefox/) ? true : false ) // [Trekta.Utils.bIs_Browser_Firefox]
+
+   /**
+    * This property provides a flag whether the browser is Opera or not.
+    *  Just nice to know, Opera seems to need no more extras anymore (2019).
+    *
+    * @note 20190314°0411 : Opera 58 seem to need no more extra treatment.
+    * @note 20190314°0413 : In Opera 58 I saw this userAgent string
+    *     • "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+    *       (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.118"
+    * @id 20190107°0821
+    * @type Boolean
+    */
+   , bIs_Browser_Opera : ( navigator.userAgent.match(/(Opera)|(OPR)/) ? true : false ) // [Trekta.Utils.bIs_Browser_Opera]
+
+   /**
+    * This ~constant tells whether to pop up debug messages or not
+    *
+    * @id 20190311°1521
+    * @type Boolean
+    */
+   , bShow_Debug_Dialogs : false // [Trekta.Utils.bShow_Debug_Dialogs]
+
+};
+//~~~~~~~~~~~~~~~~~~~~~~~~~ Schnappel ~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// start mechanism [line 20190316°0231]
+Trekta.Utils.windowOnloadDaisychain(Cvgr.startCanvasGear);
+
+/* eof */

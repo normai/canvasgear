@@ -1,0 +1,74 @@
+
+   ref 20190324°0232 ''
+   url : https://simonwhitaker.github.io/github-fork-ribbon-css/﻿
+   title : Fork me on GitHub – CSS ribbon
+   chain : https://github.com/simonwhitaker/github-fork-ribbon-css [ref 20190324°0233]
+   chain : https://raw.githubusercontent.com/simonwhitaker/github-fork-ribbon-css/gh-pages/gh-fork-ribbon.css [ref 20190324°0234]
+   author :
+   ܀
+
+   ref 20140926°0621 'Krasimir: Simple command line parser in JS'
+   url : http://krasimirtsonev.com/blog/article/Simple-command-line-parser-in-JavaScript
+   title : Simple command line parser in JavaScript
+   author : Krasimir Tsonev
+   releasedate : ~2014
+   usage :
+   ܀
+
+   ref 20140829°0351 'stackoverflow : changing the color of a hr element' at
+   url : http://stackoverflow.com/questions/6382023/changing-the-color-of-a-hr-element
+   title : Changing the color of an hr element
+   note : display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0;
+   ܀
+
+   ref 20140815°0634
+   title: Article 'requestAnimationFrame for Smart Animating'
+   author : Paul Irish on 2011-Feb-22
+   url : http://www.paulirish.com/2011/requestanimationframe-for-smart-animating
+   note :
+   ܀
+
+   ref 20140815°0631
+   url : http://caniuse.com/#feat=requestanimationframe
+   note : canvas-2-pulse.html uses requestAnimationFrame.
+           For IE8, we need some replacement.
+   note :
+   ܀
+
+   ref 20140815°0543
+   title : Blog 'Create an animated PNG from a sequence of images using jQuery'
+             by John C. Molyneux, Tuesday, 13 December 2011
+   url : http://johncmolyneux.blogspot.de/2011/12/create-animated-png-from-sequence-of.html
+   ref : Google 'create animated png with javascript'
+   note :
+   ܀
+
+   ref 20140815°0542
+   title : Blog 'Javascript debugging in the browser console.'
+             by John C. Molyneux, Thursday, 17 July 2014
+   url : http://johncmolyneux.blogspot.de/2014/07/javascript-debugging-in-browser-console.html
+   ܀
+
+   ref 20140815°0541
+   url : http://spritely.net
+   ref : Google 'create animated png with javascript'
+   note : Animated backgrounds using CSS.
+   ܀
+
+   ref 20140815°0531
+   url : http://pasargad.cse.shirazu.ac.ir/~kazemi/PresentRTDataLineChart/chart.html
+   ref : Comment by alireza....@gmail.com, Sep 8, 2010 on
+          https://code.google.com/p/explorercanvas/wiki/Instructions
+   note : Simple example working also in IE8
+   note : Has extremely long loading time.
+   ܀
+
+   ref 20140815°0521
+   url : http://gnuzoo.org/rose/index.htm
+   ref : Comment by gnu...@gmail.com, Sep 14, 2010 on
+          https://code.google.com/p/explorercanvas/wiki/Instructions
+   note : Simple example working also in IE8
+   ܀
+
+   ———————————————————————
+   [file 20140903°0113] ܀Ω

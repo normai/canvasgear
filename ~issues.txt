@@ -1,0 +1,134 @@
+﻿
+   ****************
+   Issues and todos
+   ****************
+
+   issue 20160416°1321 'IE8 canvas Context.fillText not supported'
+   symptom : Text not drawn in IE8
+   location : file 20140916°0411 canvasgersalgos.js "iko.Context.fillText(..)"
+   ref : 20160419°1212 presents solutions
+       http://stackoverflow.com/questions/6039584/html5-canvas-excanvas-js-ie-text-not-showing-in-ie7
+   ref : 20160419°1213 https://code.google.com/archive/p/canvas-text/
+   ref : 20160419°1216 http://canvas-text.googlecode.com/svn-history/trunk/
+   finding : I tested versions 20160419°121502 and 20160419°122102 of excanvas.js,
+      and those did not work either. They just showed a differrent error in IE8.
+   solution : Possibly use canvas-text.js (just this may be too expensive).
+   status : open (and possibly will never be closed)
+   note :
+   ܀
+
+   issue 20150223°1851 'canvas inside paragraph'
+   text : IE8 and probably higher, do not render a canvas inside
+      a paragraph. (1) This is a drawback because until now, I usually placed
+      icons and images inside paragraphs. Those images cannot simply be
+      replaced by canvases. As a workaround, I placed the canvas inside
+      a dedicated floating div (css div.iconFloatLeft rule 20150223°1841°.
+      (2) And it is another drawback, because the Daftari page element
+      editor does (so far) not equip the div element with edit icons.
+   chain : issue 20150223°1821 'canvas inside paragraph does not work with IE'
+   note : As reference for the effect and how to cope, see page 20150223°1511
+      http://www.trekta.biz/svn/demomatrix/trunk/pages/sql/intro.html
+   status :
+   ܀
+
+   issue 20150223°1821 'canvas inside paragraph does not work with IE'
+   location : File canvasgear.js for IE
+   symptom : If embedding the canvas inside a <p> tag, IE9 will not show it.
+   problem : A 'div' inside a 'p' like '<p><div></div></p>' is not valid HTML.
+   see : ref 20150223°1831 'stackoverflow: div inside p is adding extra p'
+   see : ref 20150223°1813 'Rakesh Pai: IE runtime error using innerHTML'
+   workaround : Just wrap the canvas element plus it's command comment
+      into a div. No! This destroys the paragraphs 'iconfloatleft' style!
+   proposal : Perhaps a javascript preprocessor could find canvases directly
+      inside a paragraph, and wrap them with a div element.
+   status : Partially solved by workaround. Does work with IE10 but not IE9 and below.
+   ܀
+
+   todo 20140904°0711 'refactor property parsing'
+   todo : Refactor. Compact sequence 20140904°0651 to oneliners or
+      somehow eliminate the individual processing of each single property.
+      Or outsource above sequence to dedicated helper function. Or use
+      a loop over all object properties instead individual properties.
+   location : canvasgear/canvasgear.js
+   status : open
+   ܀
+
+   issue 20140901°0933 'Opera peculiar about capitals'
+   note : If above e.g. 'iko.width' is used instead 'iko.Width', Opera will
+      receive iPt1x/iPt1y as NaN and throw an exception here. If this line here
+      throws exception, far below lines will do so as well.
+   location : canvasgear.js, canvasgearalgos.js
+   solution : Use a try envelop on the first element. Questions are left open.
+   status :
+   ܀
+
+   issue 20140901°0911 'Opera fillRect() fail'
+   title : Opera fillRect() fail
+   location : canvasgear.js with Opera 10.53
+   descr : in line "iko.Context.fillRect(0, 0, iko.Canvas.Width, iko.Canvas.Height);",
+      Opera throws exception 'Error: NOT_SUPPORTED_ERR'.
+   workaround : Wrap line in try envelope. Disadvantage is, that
+      the background is no more filled with it's color.
+   note : At other locations, fillRect() obviously works fine in Opera.
+   finding 20140901°0921 : Opera seems being case sensitive with object
+      properties e.g. wrong 'iko.Canvas.Width' vs. right 'iko.Canvas.width'!
+   priority : Low
+   status : Open
+   ܀
+
+   issue 20140831°0631 'IE8 fails drawing canvas'
+   matter : Below this point (in references.html), in IE8 no more icons are drawn.
+   note : This has directly to do with debug sequence 20140817°2321 in canvasgearexcanvas.js.
+   note : Could not find out why.
+   workaround : None yet
+   ///status : Open.
+   status : Finished. We will no more support IE8
+   note :
+   ܀
+
+   issue 20140830°0231 'IE webcolors'
+   text : IE8 does not understand all webcolors. IE understands
+      e.g 'blue' but not 'lightblue'.
+   workaround : Use RGB values for all colors. Or implement a mapping function.
+   status :
+   ܀
+
+   issue 20140830o0221 °IE get HTML comment'
+   descript : About reading a HTML comment from various browsers
+   findings :
+      (1) A comment node cannot be directly found.
+      (2) It can be found in a node collection it's nodeType, which is 8.
+      (3) Having that node, IE and the others differ
+      (3.1) In IE, the comment can be read via n.innerHTML or n.nodeValue.
+      (3.2) In others, n.innerHTML yields 'undefined'.
+      (3.3) In others, the comment can be read via n.nodeValue.
+   location : File canvasgear.js seq 20140830o0211°
+   note : After sequence 20140830o0311° it looks as if the both browsers
+      understand nodeValue. Hm .. was this issue just some misconception?
+   status :
+   ܀
+
+   issue 20140828°1151 'IE canvas innerHTML'
+   symptoms : In IE, not individual algorithms are used, but one only.
+   location : File canvasgear.js seq 20140830°0211
+   finding : In IE, ico.Canvas.innerHTML does not yield a command like 'color=red',
+      but a string like "<DIV style="POSITION: absolute; WIDTH: 64px; HEIGHT: 64px"></DIV>"
+   workaround : Use something else to store the icon command, e.g. a comment
+   status :
+   ܀
+
+   issue 20140828°0751 'algo calling params quirk'
+   title : Algo calling params quirk
+   symptom : When calling the outsourced algorithm with the plain Ikon object
+      as parameter, only the first canvas is drawn, the other are skipped.
+   suspect : Parameter passing is not consequently done by reference.
+   workaround : Call it with the full Ikon objects array plus the index.
+   note : About failed attempts to pass the plain icon
+      - // var x = icos[iFor];
+      - // icos[iFor] = algoPulse(x);
+      - // algoPulse(icos[iFor]);
+   status : open
+   ܀
+
+   ———————————————————————
+   [file 20140903°0112] ܀Ω

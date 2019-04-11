@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <meta charset="UTF-8" /><!-- UTF-8-with-BOM -->
+   <title>CanvasGear → Demo1</title>
+
+   <script src="./../canvasgear.js"></script>
+   <!-- * [if lte IE 9]><script src="./canvasgearexcanvas.js"></script><![endif] * -->
+
+   <link rel="stylesheet" type="text/css" href="./gh-fork-ribbon.css"/>
+   <link rel="stylesheet" type="text/css" href="./stylescanvasgear.css"/>
+   <link rel="stylesheet" type="text/css" href="./stylesdaftari.css"/>
+
+   <style type="text/css" media="screen">
+      /* note : See ref 20140829°0351 'stackoverflow : changing the color of a hr element' */
+      hr.horizon { clear:left; border-bottom:0.2em solid #e0e0e0; border-top:1.2em solid transparent; } /* rule 20140829°0521 */
+
+      .shineover { position:relative; z-index:10001; } /* 20190324o0341 shine over the github badge */
+   </style>
+</head>
+
+<body class="BodyFaceCanvasGear" id="i20140815o0742">
+
+<!--[if lte IE 8]>
+<p style="width:31em; background-color:Yellow; border:3px solid Red; font-size:large; text-align:center; padding:0.7em; margin:0 1.7em 0 1.7em;" id="i20190316o0221">
+               Your browser is Internet Explorer version 8 or below,
+               <br />it will not show the page as intended.
+</p>
+<![endif]-->
+
+<div id="i20190324o0336">
+               <a class="github-fork-ribbon right-bottom fixed"
+                   href="https://github.com/normai/canavasgear/"
+                    data-ribbon="Fork me on GitHub"
+                     title="Fork me on GitHub"
+                      id="i20190324o0337"
+                       >Fork me on GitHub
+               </a>
+</div>
+
+<table width="100%" summary="Aerial Breadcrumbs" border="0">
+ <tr>
+  <td>
+       <a href="./index.html"><b>CanvasGear</b></a> &nbsp; → &nbsp;
+       <!-- a href="./demo1.html" --><b>Demo1</b><!-- /a --> &nbsp;
+       <a href="./demo2.html">Demo2</a> &nbsp;
+       <a href="./demo3.html">Demo3</a>
+  </td>
+  <td style="width:133px;">
+       <a href="./index.html"><img src="./img/20081114o1721.navi-arrow-left.png.gif" width="48" height="24" alt="Previous page" border="0" /></a>
+       <a href="./index.html"><img src="./img/20081114o172303.navi-arrow-up-wide.png.gif" width="24" height="24" alt="Home chapter" border="0" /></a>
+       <a href="./demo2.html"><img src="./img/20081114o1722.navi-arrow-right.png.gif" width="48" height="24" alt="Next page" border="0" /></a>
+  </td>
+ </tr>
+</table>
+
+<div id="i20140831o0752" style="text-align:right; float:right;">
+               <canvas data-cvgr="algo=triangle color=mediumspringgreen hertz=0.1" id="myCanvas21" height="98" width="98">[Canvas]</canvas>
+</div>
+
+<div class="ChapterFaceNormal" id="i20140828o2212">
+
+ <p class="topTitleCrumbs" id="i20140815o1232">
+               CanvasGear →
+ </p>
+
+ <h1 id="i20140815o1231">
+               Demo1
+ </h1>
+
+ <table id="i20140901o0413">
+
+  <tr id="i20140901o0424">
+   <td id="i20140901o0425">
+               develop <!-- pulse1 -->
+   </td>
+   <td id="i20140815o1431">
+               <canvas data-cvgr="algo=develop color=orange" id="myCanvas22" width="64" height="64">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20140901o0426">
+   <td id="i20140901o0433">
+               oblongrose
+   </td>
+   <td id="i20140815o1531">
+               <canvas data-cvgr="algo=oblongrose color=crimson" id="myCanvas23" width="64" height="64">[Canvas]</canvas>
+               <canvas data-cvgr="algo=oblongrose color=seagreen" id="i20140901o0341" width="48" height="48">[Canvas]</canvas>
+               <canvas data-cvgr="algo=oblongrose color=royalblue" id="i20140901o0342" width="32" height="32">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20140901o0434">
+   <td id="i20140901o0435">
+               pulse
+   </td>
+   <td id="i20140815o1521">
+               <canvas data-cvgr="algo=pulse" id="myCanvas24" width="64" height="64">[Canvas]</canvas>
+               <canvas data-cvgr="algo=pulse color=seagreen hertz=0.19" id="myCanvas25" width="48" height="48">[Canvas]</canvas>
+               <canvas data-cvgr="algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11" id="myCanvas26" width="32" height="32">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20140901o0414">
+   <td id="i20140901o0415">
+               triangle<br /> [wrong color]
+   </td>
+   <td id="i20140815o1451" style="clear:left;">
+               <canvas data-cvgr="algo=triangle" id="myCanvas27" width="64" height="64">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=turquoise hertz=1" id="i20140901o0311" width="56" height="56">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=mediumspringgreen hertz=0.25" id="i20140901o0312" width="48" height="48">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=aquamarine hertz=0.05" id="i20140901o0313" width="40" height="40">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=chartreuse hertz=-0.33" id="i20140901o0314" width="32" height="32">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20140901o0416">
+   <td id="i20140901o0423">
+               triangulum
+   </td>
+   <td id="i20140815o1541">
+               <canvas data-cvgr="algo=triangulum" id="myCanvas28" width="44" height="44">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum hertz=0.2 bgcolor=lemonchiffon color=crimson color2=red color3=royalblue" id="i20140901o0531" width="40" height="40">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum color=seagreen hertz=0.5 bgcolor=papayawhip" id="i20140901o0532" width="36" height="36">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum color=royalblue hertz=1 bgcolor=moccasin" id="i20140901o0533" width="32" height="32">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum color=maroon hertz=2 bgcolor=mistyrose" id="i20140901o0534" width="28" height="28">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20140901o0436">
+   <td id="i20140901o0443">
+               (default)<br /> [wrong color]
+   </td>
+   <td id="i20140901o0444">
+
+    <div class="useborder" id="i20140815o1441" style="float:left;">
+               <canvas data-cvgr="" width="180" height="180" style="float:left;" id="i20140828o0741">[Canvas]</canvas>
+        <p class="canvasattachedinfo" id ="i20140828o0741.info"><!-- canvas attached info paragraph -->
+               [This paragraph<br />shall be replaced<br />by the runtime info.]
+        </p>
+    </div>
+               &nbsp;
+               <canvas data-cvgr="color=#006699 shiftx=6 shifty=7" id="myCanvas29" width="48" height="48">[Canvas]</canvas>
+               <canvas data-cvgr="" width="32" height="32" id="myCanvas30">[CANVAS]</canvas>
+               <canvas data-cvgr="" width="24" height="24" id="myCanvas31">[Canvas]</canvas>
+               <canvas data-cvgr="color=#990066" width="20" height="20" id="myCanvas32">[Canvas]</canvas>
+   </td>
+  </tr>
+
+ </table>
+
+ <p id="i20140831o0521" style="clear:left;">
+               &nbsp;
+ </p>
+
+ <p id="i20140829o0531">
+               Here some controls:
+ </p>
+
+ <p id="i20140828o0651" style="color:magenta;"><!-- output status message -->
+               .<!-- This paragraph may be replaced from canvasgear.js -->
+ </p>
+
+ <div id="i20140829o0541">
+ <form name="FormAlgoMode" action="input_radio.htm" id="FormAlgoMode"><!-- id="i20140829o0542" -->
+  <p id="i20140829o0543">
+               Toggle mode :
+               <input type="radio" name="AlgoMode" value="Tip" onClick="Cvgr.Func.setRadiobutton();" id="i20140819o1821">Tip
+               <input type="radio" name="AlgoMode" value="Top"  onClick="Cvgr.Func.setRadiobutton();" id="i20140819o1822">Top
+               &nbsp; &nbsp; (no functionality behind this)
+  </p>
+ </form>
+ </div>
+
+</div>
+
+<p class="imprint shineover">
+               <a href="http://www.trilo.de/imprint.html" class="extern">Imprint</a>
+</p>
+<p class="footer shineover" id="i20140828o0631">
+               <span class="footerFileUrl">http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/<a href="http://http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/canvasgear/doc/demo1.html">demo1.html</a></span>
+               <span class="footerCopyright">©&nbsp;2014&nbsp;&#8209;&nbsp;2019&nbsp;Norbert&nbsp;C.&nbsp;Maier</span> —
+               <span class="footerLicense">Page&nbsp;license:&nbsp;<a href="https://creativecommons.org/licenses/by-sa/4.0/" class="extern" data-webshot="20180503°2122" id="i20181116o0543">CC&nbsp;BY&#8209;SA&nbsp;4.0</a></span> —
+               <span class="footerPageId">page 20140828°0631</span>
+</p>
+</body>
+</html>

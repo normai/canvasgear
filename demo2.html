@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <meta charset="UTF-8" /><!-- UTF-8-with-BOM -->
+   <title>CanvasGear → Demo2</title>
+
+   <script src="./../canvasgear.js"></script>
+   <!-- * [if lte IE 9]><script src="./canvasgearexcanvas.js"></script><![endif] * -->
+
+   <link rel="stylesheet" type="text/css" href="./gh-fork-ribbon.css"/>
+   <link rel="stylesheet" type="text/css" href="./stylescanvasgear.css"/>
+   <link rel="stylesheet" type="text/css" href="./stylesdaftari.css"/>
+
+   <style type="text/css" media="screen">
+      /* note : See ref 20140829°0351 'stackoverflow : changing the color of a hr element' */
+      hr.horizon { clear:left; border-bottom:0.2em solid #e0e0e0; border-top:1.2em solid transparent; } /* rule 20140829°0521 */
+
+      .shineover { position:relative; z-index:10001; } /* 20190324o0341 shine over the github badge */
+   </style>
+</head>
+
+<body class="BodyFaceCanvasGear" id="i20190324o0521">
+
+<!--[if lte IE 8]><p style="width:31em; background-color:Yellow; border:3px solid Red; font-size:large; text-align:center; padding:0.7em; margin:0 1.7em 0 1.7em;" id="i20190324o0522">
+               Your browser is Internet Explorer version 8 or below,
+               <br />it will not show the page as intended.
+</p>
+<![endif]-->
+
+<div id="i20190324o0523">
+               <a class="github-fork-ribbon right-bottom fixed"
+                   href="https://github.com/normai/canavasgear/"
+                    data-ribbon="Fork me on GitHub"
+                     title="Fork me on GitHub"
+                      id="i20190324o0524"
+                       >Fork me on GitHub
+               </a>
+</div>
+
+<table width="100%" summary="Aerial Breadcrumbs" border="0">
+ <tr>
+  <td>
+       <a href="./index.html"><b>CanvasGear</b></a> &nbsp; → &nbsp;
+       <a href="./demo1.html">Demo1</a> &nbsp;
+       <!-- a href="./demo2.html" --><b>Demo2</b><!-- /a --> &nbsp;
+       <a href="./demo3.html">Demo3</a>
+  </td>
+  <td style="width:133px;">
+       <a href="./demo1.html"><img src="./img/20081114o1721.navi-arrow-left.png.gif" width="48" height="24" alt="Previous page" border="0" /></a>
+       <a href="./index.html"><img src="./img/20081114o172303.navi-arrow-up-wide.png.gif" width="24" height="24" alt="Home chapter" border="0" /></a>
+       <a href="./demo3.html"><img src="./img/20081114o1722.navi-arrow-right.png.gif" width="48" height="24" alt="Next page" border="0" /></a>
+  </td>
+ </tr>
+</table>
+
+<div id="i20190324o0525" style="text-align:right; float:right;">
+               <canvas data-cvgr="algo=triangle color=mediumspringgreen hertz=0.1" id="i20190324o0526" height="98" width="98">[Canvas]</canvas>
+</div>
+
+<div class="ChapterFaceNormal" id="i20190324o0531">
+
+ <p class="topTitleCrumbs" id="i20190324o0532">
+               CanvasGear →
+ </p>
+
+ <h1 id="i20190324o0533">
+               Demo2
+ </h1>
+
+ <p id="i20140828o1932" style="clear:left;">
+               <b>Example</b>.
+               Below should appear 81 small animated canvases, acting as swarm.
+ </p>
+
+  <div style="text-align:right; vertical-align:top; float:left; border:0 solid transparent;" id="i20140828o1952">
+   <span class="elevate">1</span>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.110 SizeFactor=1.4" id="i20140828o1951" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.111" id="i20140828o2011" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.112" id="i20140828o2031" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.113 bgcolor=khaki" id="i20140828o2041" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.114" id="i20140828o2051" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.115" id="i20140828o2121" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.116" id="i20140828o2131" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.117" id="i20140828o2141" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.118" id="i20140828o2151" width="32" height="32">[Canvas]</canvas>
+  </div>
+
+  <div style="text-align:right; float:left; clear:left">
+   <span class="elevate">2</span>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.111" id="i20140829o1412" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.112" id="i20140829o1413" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.113" id="i20140829o1414" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.114" id="i20140829o1415" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.115" id="i20140829o1421" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.116" id="i20140829o1422" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.117" id="i20140829o1423" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.118" id="i20140829o1424" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=vwxyz color=orange hertz=0.119" id="i20140829o1425" width="32" height="32">[Canvas]</canvas>
+  </div>
+
+  <div style="text-align:right; float:left; clear:left">
+   <span class="elevate">3</span>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.112" id="i20140829o1432" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.113" id="i20140829o1433" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.114" id="i20140829o1434" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.115" id="i20140829o1435" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.116" id="i20140829o1441" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.117" id="i20140829o1442" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="     pulse color=orange hertz=0.118" id="i20140829o1443" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.119" id="i20140829o1444" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=vwxyz color=orange hertz=0.120" id="i20140829o1445" width="32" height="32">[Canvas]</canvas>
+  </div>
+
+  <div style="text-align:right; float:left; clear:left">
+   <span class="elevate">4</span>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.113" id="i20140829o1452" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.114" id="i20140829o1453" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.115" id="i20140829o1454" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.116" id="i20140829o1455" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.117" id="i20140829o1511" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.118" id="i20140829o1512" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.119" id="i20140829o1513" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.120" id="i20140829o1514" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=vwxyz color=orange hertz=0.121" id="i20140829o1515" width="32" height="32">[Canvas]</canvas>
+  </div>
+
+  <div style="text-align:right; float:left; clear:left">
+   <span class="elevate">5</span>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.114" id="i20140829o1522" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.115" id="i20140829o1523" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.116" id="i20140829o1534" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.117" id="i20140829o1535" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.118" id="i20140829o1536" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.119" id="i20140829o1537" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.120" id="i20140829o1538" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.121" id="i20140829o1539" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=vwxyz color=orange hertz=0.122" id="i20140829o1540" width="32" height="32">[Canvas]</canvas>
+  </div>
+
+  <div style="text-align:right; float:left; clear:left">
+   <span class="elevate">6</span>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.115" id="i20140829o1542" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.116" id="i20140829o1543" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.117" id="i20140829o1544" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.118" id="i20140829o1545" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.119" id="i20140829o1551" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.120" id="i20140829o1552" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.121" id="i20140829o1553" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.122" id="i20140829o1554" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=triangle color=hotpink hertz=0.2" id="i20140829o1555" width="32" height="32">[Canvas]</canvas>
+  </div>
+
+  <div style="text-align:right; float:left; clear:left">
+   <span class="elevate">7</span>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.116" id="i20140829o1912" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.117" id="i20140829o1913" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.118" id="i20140829o1914" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.119" id="i20140829o1915" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.120" id="i20140829o1921" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.121" id="i20140829o1922" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.122" id="i20140829o1923" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.123" id="i20140829o1924" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=triangle color=lightsalmon hertz=0.7" id="i20140829o1925" width="32" height="32">[Canvas]</canvas>
+  </div>
+
+  <div style="text-align:right; float:left; clear:left">
+   <span class="elevate">8</span>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.117" id="i20140829o1932" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.118" id="i20140829o1933" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.119" id="i20140829o1934" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.120" id="i20140829o1935" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.121" id="i20140829o1941" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.122" id="i20140829o1942" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.123" id="i20140829o1943" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.124" id="i20140829o1944" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=triangle color=lightsalmon hertz=0.7" id="i20140829o1945" width="32" height="32">[Canvas]</canvas>
+  </div>
+
+  <div style="text-align:right; float:left; clear:left">
+   <span class="elevate">9</span>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.118" id="i20140829o2012" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.119" id="i20140829o2013" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.120" id="i20140829o2014" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.121" id="i20140829o2015" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.122" id="i20140829o2021" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.123" id="i20140829o2022" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.124" id="i20140829o2023" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.125" id="i20140829o2024" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=triangle color=tomato hertz=-0.3" id="i20140829o2025" width="32" height="32">[Canvas]</canvas>
+  </div>
+
+ <p style="clear:both; padding-top:2.1em;" id="i20190328o0825">
+               <b>Example</b>.
+               Below should appear one pulsing horizontal bar.
+ </p>
+
+ <p id="i20190328o0811">
+   <canvas data-cvgr="algo=pulse color=LightBlue hertz=0.4  shiftx=7 shifty=-222" width="555" height="32" id="i20190328o0812">[Canvas]</canvas>
+ </p>
+
+ <p id="i20140830o0317" style="clear:left;">
+               &nbsp;
+ </p>
+
+</div>
+
+<p class="imprint shineover" id="i20190324o0534">
+               <a href="http://www.trilo.de/imprint.html" class="extern" id="i20190324o0535">Imprint</a>
+</p>
+<p class="footer shineover" id="i20190324o0536">
+               <span class="footerFileUrl">http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/<a href="http://http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/canvasgear/doc/demo2.html" id="i20190324o0537">demo2.html</a></span>
+               <span class="footerCopyright">©&nbsp;2014&nbsp;&#8209;&nbsp;2019&nbsp;Norbert&nbsp;C.&nbsp;Maier</span> —
+               <span class="footerLicense">Page&nbsp;license:&nbsp;<a href="https://creativecommons.org/licenses/by-sa/4.0/" class="extern" data-webshot="20180503°2122" id="i20181116o0543">CC&nbsp;BY&#8209;SA&nbsp;4.0</a></span> —
+               <span class="footerPageId">page 20190324°0511</span>
+</p>
+</body>
+</html>

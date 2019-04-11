@@ -1,0 +1,51 @@
+﻿/**
+ * file : stylescanvasgear.css
+ * id : 20140926°1141
+ * summary : This file provides the styles wanted by CanvasGear programmatically.
+ * license : MIT/X11 License
+ * copyright : Norbert C. Maier (http://www.trilo.de)
+ * authors :
+ * encoding : UTF-8-with-BOM
+ * note :
+ */
+
+
+/* rule 20180513°1631 (after 20140502°1911 BodyFaceLavender) */
+body.BodyFaceCanvasGear { background-color:Lavender; } /* #e6e6fa */
+
+/* rule 20140916°0641 canvas attached info paragraph */
+p.canvasattachedinfo {
+   background-color:lightgoldenrodyellow; float:left; margin-left:0.6em; margin-top:0em; max-width:24em;
+}
+
+/* rule 20140828°0422 */
+/* canvas { border: 3px #c0c0c0 solid;  vertical-align:top; } */
+canvas { }
+
+/**
+ * rule 20100826°2121)
+ * note : This name collides with the class in Daftari styles.css
+ */
+.timestamp { color:Turquoise; font-size:55%; font-family:Comic Sans MS,Arial }
+
+/* (20140828°0731) */
+.useborder { border-width:3px; border-color:lightgray; border-style:solid; }
+
+/* (rule 20140828°0641) no space above and below */
+.verticaltight { margin-top:0.1em; margin-bottom:0.1em; }
+
+/**
+ * rule 20140829°0521
+ * reference : Thread 'Changing the color of a hr element' [20140829°0351] at
+ *   http://stackoverflow.com/questions/6382023/changing-the-color-of-a-hr-element
+ *   display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0;
+ */
+hr.horizon { clear:left; border-bottom:0.2em solid #e0e0e0; border-top:1.2em solid transparent; }
+
+
+/* rule 20140902°0411 (20121111°1911) */
+hr.fatlavender {
+   border:0.2em solid Lavender; margin-top:2.2em; margin-bottom:0.9em;
+}
+
+/* eof */

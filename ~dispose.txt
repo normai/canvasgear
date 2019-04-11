@@ -1,0 +1,265 @@
+﻿
+
+   disposed 20140926°0832 from canvasgear.js
+   ⁞// function parseCmdStringOne()
+   ⁞/**
+   ⁞ * This function parses a commandstring.
+   ⁞ * @id 20140828°0841
+   ⁞ * @status ...
+   ⁞ * @callers ...
+   ⁞ * @todo This is an utility function, possibly shift to utility library.
+   ⁞ * @todo Improve ... e.g. allow leaving the leading and trailing blank ...
+   ⁞ * @ ref : About tokenizing with split() [20140828o0832]
+   ⁞ *     http://www.majstro.com/Web/Bedrijf/js/js_Global_String_split2.html
+   ⁞ * @param oProps - associative array to fill with key/value pairs
+   ⁞ * @param sCmd - the string to parse
+   ⁞ */
+   ⁞/*
+   ⁞function parseCmdStringOneELIMINATE(oProps, sCmd)
+   ⁞{
+   ⁞   var a1 = sCmd.split(" ");                           // delimiter is one blank
+   ⁞   for (var i = 0; i < a1.length; i++)
+   ⁞   {
+   ⁞      var a2 = a1[i].split("=");
+   ⁞      // is it a known key/value pair?
+   ⁞      if (a2.length == 2) {
+   ⁞         if (a2[0] == 'algo')    { oProps.AlgoName = a2[1]; }
+   ⁞         if (a2[0] == 'bgcolor') { oProps.BgColor  = a2[1]; }
+   ⁞         if (a2[0] == 'color')   { oProps.Color    = a2[1]; }
+   ⁞         if (a2[0] == 'color2')  { oProps.Color2   = a2[1]; }
+   ⁞         if (a2[0] == 'color3')  { oProps.Color3   = a2[1]; }
+   ⁞         if (a2[0] == 'hertz')   { oProps.Hertz    = a2[1]; }
+   ⁞         if (a2[0] == 'shiftx')  { oProps.ShiftX   = a2[1]; }
+   ⁞         if (a2[0] == 'shifty')  { oProps.ShiftY   = a2[1]; }
+   ⁞         if (a2[0] == 'speed')   { oProps.Speed    = a2[1]; }
+   ⁞      }
+   ⁞   }
+   ⁞   // supplement default values
+   ⁞   if (oProps.AlgoName == null) {
+   ⁞      oProps.AlgoName = 'default';
+   ⁞   }
+   ⁞   if (oProps.Color == null) {
+   ⁞      oProps.Color = '#bb1111';
+   ⁞   }
+   ⁞   if (oProps.Hertz == null) {
+   ⁞      oProps.Hertz = 0.2;
+   ⁞   }
+   ⁞   if (oProps.Speed == null) {
+   ⁞      oProps.Speed = 456;
+   ⁞   }
+   ⁞}
+   ⁞*/
+   ܀
+
+   disposed 20140926°0831 from canvasgear.js
+   ⁞/**
+   ⁞ * This function parses a commandstring.
+   ⁞ * @id 20140926°0541
+   ⁞ * @status
+   ⁞ * @callers
+   ⁞ * @todo This is an utility function, possibly shift to utility library.
+   ⁞ * @todo Improve ... e.g. allow leaving the leading and trailing blank ...
+   ⁞ * @ref : About tokenizing with split() [20140828°0832]
+   ⁞ *     http://www.majstro.com/Web/Bedrijf/js/js_Global_String_split2.html
+   ⁞ * @see ref 20140926°0621 'Krasimir : Simple command line parser in JS'
+   ⁞ * @note : This shall replace parseCmdStringOneELIMINATE()
+   ⁞ * @param oProps - associative array to fill with the wanted key/value pairs
+   ⁞ * @param sCmd - the string to parse for key/value pairs
+   ⁞ */
+   ⁞/*
+   ⁞function parseCmdStringTwoELIMINATE(oCmdELIM, sCmd)
+   ⁞{
+   ⁞   var a1 = sCmd.split(" ");
+   ⁞   var a2 = new Array();
+   ⁞   // unfinished
+   ⁞   var bQuot = false;
+   ⁞   for (var i = 0; i < a1.length; i++)
+   ⁞   {
+   ⁞      if (a1[i][0] == "\"") {
+   ⁞         bQuot = true;
+   ⁞      }
+   ⁞      if (a1[-1] == "\"") {
+   ⁞         bQuot = false;
+   ⁞      }
+   ⁞   }
+   ⁞   // the old job
+   ⁞   for (var i = 0; i < a1.length; i++)
+   ⁞   {
+   ⁞      var a3 = a1[i].split("=");
+   ⁞      // is it a key/value pair?
+   ⁞      if (a3.length == 2) {
+   ⁞         oCmdELIM[a3[0]] = a3[1];
+   ⁞      }
+   ⁞   }
+   ⁞}
+   ⁞*/
+   ܀
+
+   archived 20140926°0711
+   ⁞//--------------------------------------------------
+   ⁞/**
+   ⁞ * This is the archived version of the original CommandParser function.
+   ⁞ * @id 20140926°0631
+   ⁞ * @status
+   ⁞ * @callers
+   ⁞ * @see ref 20140926°0621 'Krasimir : Simple command line parser in JS'
+   ⁞ * @param str = The string to be parsed
+   ⁞ * @param lookForQuotes = Flag whether to process quotes or not
+   ⁞ */
+   ⁞var CommandParserARCHIVED = (function() {
+   ⁞   var parse = function(str, lookForQuotes) {
+   ⁞      var args = [];
+   ⁞      var readingPart = false;
+   ⁞      var part = '';
+   ⁞      ///for(var i=0; i                                //
+   ⁞      for ( var i = 0; i < str.length; i++) {          // reconstructed
+   ⁞         if ( str.charAt(i) === ' ' && !readingPart ) {
+   ⁞            args.push(part);
+   ⁞            part = '';
+   ⁞         } else {
+   ⁞            if ( str.charAt(i) === '\"' && lookForQuotes ) {
+   ⁞               readingPart = !readingPart;
+   ⁞            } else {
+   ⁞               part += str.charAt(i);
+   ⁞            }
+   ⁞         }
+   ⁞      }
+   ⁞      args.push(part);
+   ⁞      return args;
+   ⁞   }
+   ⁞   return {
+   ⁞       parse: parse
+   ⁞   }
+   ⁞})();
+   ⁞//--------------------------------------------------
+   ܀
+
+   dispose 20140926°0341 sequence from canvasgear.js
+   //
+   ⁞//// note 20140830°0251
+   ⁞//// note : Remember issue 20140830°0221 'IE get HTML comment'
+   ⁞//// note : Remember issue 20140828°1151 'IE canvas innerHTML'
+   ⁞//// note : Node type 8 is a comment node.
+   ⁞//// note : Remember sequence 20140830°0211, which was an alternative
+   ⁞////         way to search the comment node.
+   ⁞//if (false) {
+   ⁞//
+   ⁞//   // seq 20140830°0211
+   ⁞//   // This first retrieves all siblings, then findes the comment
+   ⁞//   //   node(s) within the siblings and reads it's value.
+   ⁞//   // note : This procedere has the disadvantage, that it works only
+   ⁞//   //    nice if the canvas is wrapped in a div, but no more if the
+   ⁞//   //    canvas is somewhere standalone. So try to change the algorithm
+   ⁞//   //    to one searching just the command immediately behind the icon.
+   ⁞//   var nSiblings = ico.Canvas.parentNode.childNodes;
+   ⁞//   for (var i2 = 0; i2 < nSiblings.length; i2++) {
+   ⁞//      if (nSiblings[i2].nodeType === 8) {
+   ⁞//         ico.Command = nSiblings[i2].nodeValue;
+   ⁞//      }
+   ⁞//   }
+   ⁞//}
+   ⁞//else {      //
+   ⁞//(seq 20140830°0311)
+   ܀
+
+   discard 20140830°0246
+   ⁞ // workaround for issue 20140828°1151 IE (seq 20140828°1251)
+   ⁞ // note : Not useful, makes IE freeze see screenshot 20140828°1321
+   ⁞ //   http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/img/20140828o1321.icondrawer--ie--get-comments.png
+   ⁞ /*
+   ⁞ var commentNodes = findComments(ico.Canvas);
+   ⁞ var iNodes = commentNodes.length;
+   ⁞ var sCmnt = '';
+   ⁞ for (i = 0; i < iNodes; i++) {
+   ⁞    sCmnt += commentNodes[i].nodeValue + '\n';
+   ⁞ }
+   ⁞ */
+   ref 20190324°0813 : Find the demo how to find comments in repo 20140713°1811
+        http://www.trekta.biz/svn/demosjs/trunk/findcomments/findcomments.html
+   ܀
+
+   discard 20140830°0245
+   ⁞//--------------------------------------------
+   ⁞// (IE8 experiment 20140829°1713)
+   ⁞// ref : http://www.mediaevent.de/javascript/DOM-Navigation.html (20140829o1732)
+   ⁞/*
+   ⁞////var jsdomThisDiv = document.getElementById('jsdomThisDiv');
+   ⁞var jsdomThisDiv = canvases[i];
+   ⁞var allNodes = jsdomThisDiv.childNodes;
+   ⁞var text = "";
+   ⁞for (var i2 = 0; i2 < allNodes.length; i2++) {
+   ⁞   text = text + allNodes[i2].tagName + " " + allNodes[i2].nodeName + "\n";
+   ⁞}
+   ⁞if (jsdomThisDiv.id == "id20140828o1951" ) {
+   ⁞   alert('Debug ' + i + ' node = ' + jsdomThisDiv.tagName + ' : ' + text); // 'DIV DIV'
+   ⁞}
+   ⁞*/
+   ⁞/*
+   ⁞var tgCanvas = canvases[i];
+   ⁞var tgCanvasContainer = tgCanvas.parentNode;
+   ⁞var allNodes = tgCanvasContainer.childNodes;
+   ⁞var text = "";
+   ⁞for (var i2 = 0; i2 < allNodes.length; i2++) {
+   ⁞   text = text + "\n - " + allNodes[i2].nodeType + " " + allNodes[i2].nodeName;
+   ⁞   if (allNodes[i2].nodeType === 8) {
+   ⁞       ////text = text + allNodes[i2].outerHTML; // works as expected
+   ⁞       text = text + " " + allNodes[i2].innerHTML; // in IE8, this yields the comment, in FF this yields 'undefined'
+   ⁞       //text = text + " " + allNodes[i2].innerText; // in IE8, this yields nothing
+   ⁞   }
+   ⁞}
+   ⁞if (tgCanvasContainer.id == "id20140828o1952" ) {
+   ⁞   alert('Debug ' + i + ' node = ' + tgCanvasContainer.tagName + ' : ' + text); // 'DIV DIV'
+   ⁞}
+   ⁞*/
+   ܀
+
+   discard 20140830°0244
+   ⁞//--------------------------------------------
+   ⁞// (IE8 experiment 20140829°1713)
+   ⁞// ref : http://www.bennadel.com/blog/1563-jquery-comments-plug-in-to-access-html-comments-for-dom-templating.htm (20140829o1721)
+   ⁞/*
+   ⁞var eFirst = canvases[i].nextSibling;
+   ⁞if (eFirst) {
+   ⁞   var iNType = eFirst.nodeType;              // noteType =
+   ⁞   var s125 = eFirst.innerHTML;               // = "1"
+   ⁞}
+   ⁞*/
+   ⁞//--------------------------------------------
+   ܀
+
+   discard 20140830°0243
+   ⁞//--------------------------------------------
+   ⁞// (IE8 experiment 20140829°1712)
+   ⁞// ref : http://stackoverflow.com/questions/11583271/how-to-load-the-content-of-a-file-into-variable-using-jquery-load-method (20140829o1725)
+   ⁞/*
+   ⁞var stuff;
+   ⁞$.get('index.html', function (response) {
+   ⁞   stuff = response; // in IE, stuff will remain 'undefined', in FF it is an 'Object {type="longString"}'
+   ⁞});
+   ⁞//while (! stuff) {
+   ⁞//   // will hang here
+   ⁞//}
+   ⁞alert('[Debug] ' + stuff);
+   ⁞*/
+   ⁞//--------------------------------------------
+   ܀
+
+   discard 20140830°0242
+   ⁞ // (IE8 experiment 20140829°1711)
+   ⁞ // e.g. s2 = "<canvas style="WIDTH: 98px; HEIGHT: 98px" id=myCanvas43
+   ⁞ //   width="98" height="98"><DIV style="POSITION: absolute;
+   ⁞ //   WIDTH: 98px; HEIGHT: 98px"></DIV></canvas>"
+   ⁞ //   this does not contain the wanted comment inside the canvas tag.
+   ⁞ var elParent = canvases[i].parentElement;
+   ⁞ var s2 = elParent.innerHTML;
+   ⁞ var s3 = elParent.innerText; // s3 = "";
+   ⁞ var s3 = document.getElementsByTagName('BODY')[0].innerHTML; // does not contain the canvas comments
+   ⁞ var es = canvases[i].childNodes;
+   ⁞ if (es) {
+   ⁞    var e123 = es[0];                  // noteType = 1
+   ⁞    var s4 = e123.innerHTML;           // = ""
+   ⁞ }
+   ܀
+
+   ———————————————————————
+   [file 20140830°0241] ܀Ω

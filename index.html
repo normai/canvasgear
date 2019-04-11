@@ -1,0 +1,404 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+   <meta charset="UTF-8" /><!-- UTF-8-with-BOM -->
+   <title>CanvasGear</title>
+
+   <script src="./../canvasgear.js"></script>
+
+   <!-- See ref 20190324°0232 https://simonwhitaker.github.io/github-fork-ribbon-css/  -->
+   <link rel="stylesheet" type="text/css" href="./gh-fork-ribbon.css"/>
+
+   <link rel="stylesheet" type="text/css" href="./stylescanvasgear.css"/>
+   <link rel="stylesheet" type="text/css" href="./stylesdaftari.css"/>
+
+   <style type="text/css" media="screen">
+      span.grey { color:Gray; } /* rule 20190324°0153 */
+      span.colred { color:Red; } /* rule 20190324°0154 */
+      span.elevate { position:relative; bottom:0.5em; } /* rule 20190324°0155 */
+
+      .imprint { position:relative; z-index:10001; } /* 20190324o0341 shine over the github badge */
+      .shineover { position:relative; z-index:10001; } /* 20190324o0341 shine over the github badge */
+   </style>
+</head>
+
+<body class="BodyFaceCanvasGear" id="i20140828o1921">
+
+<div id="i20190324o0336">
+               <a class="github-fork-ribbon right-bottom fixed"
+                   href="https://github.com/normai/canavasgear/"
+                    data-ribbon="Fork me on GitHub"
+                     title="Fork me on GitHub"
+                      id="i20190324o0337"
+                       >Fork me on GitHub
+               </a>
+</div>
+
+<table class="shineover" width="100%" summary="Aerial Breadcrumbs" border="0">
+ <tr>
+  <td>
+       <!-- a href="./index.html" --><b>CanvasGear</b><!-- /a --> &nbsp; → &nbsp;
+       <a href="./demo1.html">Demo1</a> &nbsp;
+       <a href="./demo2.html">Demo2</a> &nbsp;
+       <a href="./demo3.html">Demo3</a>
+  </td>
+  <td style="width:133px;">
+       <a href="./demo3.html"><img src="./img/20081114o1721.navi-arrow-left.png.gif" width="48" height="24" alt="Previous page" border="0" /></a>
+       <!-- a href="./index.html" --><img src="./img/20081114o172303.navi-arrow-up-wide.png.gif" width="24" height="24" alt="Home chapter" border="0" /><!-- /a -->
+       <a href="./demo1.html"><img src="./img/20081114o1722.navi-arrow-right.png.gif" width="48" height="24" alt="Next page" border="0" /></a>
+  </td>
+ </tr>
+</table>
+
+<div class="shineover" style="text-align:right; float:right;" id="i20140828o1922">
+   <canvas data-cvgr="algo=triangle color=mediumspringgreen hertz=0.1" id="myCanvas43" height="98" width="98">[Canvas]</canvas>
+</div>
+
+<div class="ChapterFaceNormal" id="i20140828o1923">
+
+ <h1 style="line-height:0.8em;" id="i20140828o1924">
+               CanvasGear Documentation
+       <br />
+           <span style="font-size:0.5em; font-weight:normal;">
+               Version ~0.1.6
+           </span>
+ </h1>
+
+ <h2 id="i20190324o0357">
+               (1) &nbsp; Overview
+ </h2>
+
+ <p id="i20140828o1941">
+               <b>Slogan</b>:
+               CanvasGear is a script to draw animated canvases
+               by just specifying some parameters in the HTML.
+ </p>
+
+ <p id="i20140901o0551">
+               <b>Project status</b> : Proof-of-concept
+ </p>
+
+ <p style="clear:both;" id="i20140901o0552">
+               <b>Features</b> :
+ </p>
+
+ <ul id="i20190328o0813">
+  <li id="i20190328o0814">
+               Provide easy way to add canvases to the page
+  </li>
+  <li id="i20190328o0815">
+               Applies predefined parameter controlled graphics algorithms
+  </li>
+  <li id="i20190328o0816">
+               Acts as framework for algorithms to be added easliy <i>(not ready)</i>
+  </li>
+  <li id="i20190328o0817">
+               No dependencies
+  </li>
+  <li id="i20140903o1631">
+               Works also with plain file protocol '<tt>file://</tt>'
+  </li>
+  <li id="i20190328o0822">
+               Details see section
+               <a href="#i20140902o1125" id="i20190328o0823">Features</a>
+  </li>
+ </ul>
+
+ <p id="i20190328o0818">
+               <b>Demo</b> :
+  <span style="padding-left:1.7em; position:relative; top:0.5em;">
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.110" id="i20140828o1951" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.111" id="i20140828o2011" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.112" id="i20140828o2031" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.113 bgcolor=khaki" id="i20140828o2041" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.114" id="i20140828o2051" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.115" id="i20140828o2121" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.116" id="i20140828o2131" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.117" id="i20140828o2141" width="32" height="32">[Canvas]</canvas>
+   <canvas data-cvgr="algo=pulse color=orange hertz=0.118" id="i20140828o2151" width="32" height="32">[Canvas]</canvas>
+  </span>
+ </p>
+
+ <p style="clear:both" id="i20140828o1931">
+               <b>Installation</b> :
+ </p>
+
+ <ul id="i20190324o0222">
+  <li id="i20190324o0223">
+               Copy <tt><a href="./../canvasgear.js">canvasgear.js</a></tt> in reach of your page.
+  </li>
+  <li id="i20190324o0224">
+               In the page provide the following elements:
+
+<pre class="codeSmall" id="i20140828o1942" style="background-color:#e8ffe8;">
+ <span class="grey">&lt;html&gt;</span>
+  <span class="grey">&lt;head&gt;</span>
+   <span class="grey">...</span>
+   <b>&lt;script src="./../canvasgear.js&gt;&lt;/script&gt;</b>            <span class="colred">&lt;!-- (1) Load script --&gt;</span>
+   <span class="grey">...</span>
+  <span class="grey">&lt;/head&gt;</span>
+  <span class="grey">&lt;body&gt;</span>
+   <b>&lt;canvas                                              <span class="colred">&lt;!-- (2) Put a canvas tag --&gt;</span>
+       data-cvgr="algo=pulse color=hotpink hertz=0.197" <span class="colred">&lt;!-- (3) Put the data-cvgr attribute --&gt;</span>
+       width="123" height="123"                         <span class="colred">&lt;!-- (4) Put width and height attribute --&gt;</span>
+       id="myCanvas44"&gt;                                 <span class="colred">&lt;!-- (5) Put an ID attribute --&gt;</span>
+   &lt;/canvas&gt;</b>
+  <span class="grey">&lt;/body&gt;</span>
+ <span class="grey">&lt;/html&gt;</span>
+</pre>
+
+  </li>
+  <li id="i20190324o0225">
+               What the canvas displays, is controlled by the parameters inside the <b><tt>data-cvgr</tt></b> tag.
+               Which parameters exactly are valid, please see the demo pages and the code.
+  </li>
+  <li id="i20140903o1621">
+               About how many canvases you can place on one page,
+               see section <a href="#i20140902o0711" id="i20190328o0824">Performance</a>.
+  </li>
+ </ul>
+
+ <p id="i20140828o1943">
+               <b>Compatibility</b> :
+               All recent browsers. Tested with
+               Chrome&nbsp;32, Edge&nbsp;42, Firefox&nbsp;30, IE&nbsp;9 and Opera&nbsp;36
+ </p>
+
+</div>
+
+<div class="ChapterFaceNormal" id="i20140902o1123">
+
+ <h2 id="i20140902o1125">
+               (2) &nbsp; Features
+ </h2>
+
+ <p id="i20140902o1126">
+               Subchapters :
+               <a href="#i20140828o1731">Framework</a> &nbsp;
+               <a href="#i20140828o0553">Speedometer</a> &nbsp;
+               <a href="#i20140828o0552">Swarm</a> &nbsp;
+               <a href="#i20140828o0554">Algorithms</a> &nbsp;
+               <a href="#i20140902o0711">Performance</a> &nbsp;
+ </p>
+
+ <p id="i20140828o1734">
+               CanvasGear sports the following features.
+ </p>
+
+ <h3 id="i20140828o1731">
+               (2.1) &nbsp; Framework
+ </h3>
+
+ <p id="i20140828o1735">
+               CanvasGear constitutes a small canvas drawing framework.
+ </p>
+
+ <p id="i20140828o1732">
+               It is an abstraction layer for canvas management.
+               CanvasGear provides the drawing control to the user
+               via a simplified UI or API: a commandline inside a comment behind the canvas tag.
+               This commandline specifies the algorithm to be used and its parameters.
+ </p>
+
+ <p id="i20140828o1733">
+               To the developer of an animation,
+               it provides an environment for an algorithm to run.
+               So only the algorithm has to be written,
+               and no more the peripheral mechanics.
+ </p>
+
+ <h3 id="i20140828o0553">
+               (2.2) &nbsp; Speedometer
+ </h3>
+
+ <p id="i20140828o1813">
+               CanvasGear provides browser independend timing.
+ </p>
+
+ <p id="i20140901o0541">
+               CanvasGear observes the actual browser's frame rate
+               and calculates the angle increment to achive 1 Hertz,
+               means one turn per second.
+ </p>
+
+ <p id="i20140903o1641">
+               This runtime-calculated increment can be used by the algorithms
+               to maintain a well defined <b>browser independend speed</b>.
+ </p>
+
+ <!-- p id="i20140828o1741" style="font-style:italic; color:gray; font-size:77%;">
+               So far there is the parameter 'hertz'
+               which serves for the timing, e.g. like 'hertz=1'.
+               And there is a factor for IE, which runs at a notably different speed.
+               Finally wanted is, to cleanup the factor chaos
+               to one well scaled value, e.g. 1 Hz.
+               Below is a rough speed to <b>Hz</b> table.
+ </p -->
+
+ <p id="i20140901o0542">
+               Example command: <span class="codeSmall">&lt;!-- algo=pulse hertz=0.5 --&gt;</span>.
+               This means a balloon which pulses one time every two seconds.
+ </p>
+
+ <h3 id="i20140828o0552">
+               (2.3) &nbsp; Swarm
+ </h3>
+
+ <p id="i20140902o1721">
+               CanvasGear allows many canvases with different parameters
+               on one page, e.g.
+               <a href="./index.html">index.html</a>.
+ </p>
+
+ <p id="i20140828o1812">
+               To draw many canvases on one page, just make sure
+               they have different IDs, like the following do:
+ </p>
+
+<pre class="codeSmall" id="i20140902o1731">
+ &lt;canvas id="myCnv44" width="28" height="28"&gt;&lt;/canvas&gt;&lt;!-- color=tomato hertz=0.1 --&gt;
+ &lt;canvas id="myCnv55" width="32" height="32"&gt;&lt;/canvas&gt;&lt;!-- color=turquoise hertz=0.2 --&gt;
+ &lt;canvas id="myCnv66" width="36" height="36"&gt;&lt;/canvas&gt;&lt;!-- color=#4169e1 hertz=0.3 --&gt;
+ &lt;canvas id="myCnv77" width="44" height="44"&gt;&lt;/canvas&gt;&lt;!-- algo=pulse hertz=1.4 --&gt;
+</pre>
+
+ <p id="i20140926o1041">
+               Having the parameters of the many canvases somehow correlated,
+               can result in swarm appearance.
+ </p>
+
+ <p class="ParaSmallGreen" id="i20160613o0341">
+               Developers note. This feature is a good candidate to apply
+               the <b>Flywight Pattern</b>. With normal objects per canvas,
+               the browser may soon hit it's memory limit. The Flywithg pattern
+               is a mechanism to save memory per object.
+               <span class="timestamp">(note 20160613°0351)</span>
+ </p>
+
+ <h3 id="i20140828o0554">
+               (2.4) &nbsp; Algorithms
+ </h3>
+
+ <h4 id="i20140926o1031">
+               (2.4.1) &nbsp; Available Algorithms
+ </h4>
+
+ <p id="i20140828o1814">
+               This are the algorithms provided so far :
+ </p>
+
+<pre id="i20140829o0431">
+   - [token]       [function]          [description]
+
+   - ballist       Cvgr.Algs.Bal.algoBallist  This draws a target with hits.
+   - develop       Cvgr.Func.algoDevelop      Temporary algorithm for development.
+   - oblongrose    Cvgr.Func.algoOblongrose   This draws a rose from rectangles.
+   - pulse         Cvgr.Func.algoPulse        This draws a pulsing balloon.
+   - triangle      Cvgr.Func.algoTriangle     This draws a triangle.
+   - triangulum    Cvgr.Func.algoTriangulum   This draws a swinging triangle.
+</pre>
+
+ <p id="i20140828o1815">
+               For how to add more algorithms, see the Algorithm Interface.
+ </p>
+
+ <h4 id="i20140902o1711">
+               (2.4.2) &nbsp; Algorithm Interface.
+ </h4>
+
+ <p id="i20140902o1712">
+               CanvasGear shall provide an interface for easy addition of new algorithms.
+               For details see the sourcecode.
+               <i>The interface is not ready.</i>
+ </p>
+
+</div>
+
+<div class="ChapterFaceNormal" id="i20140902o1223">
+
+ <h3 id="i20140902o0711">
+               (3) &nbsp; Performance
+ </h3>
+
+ <p id="i20140902o0712">
+               Using canvases, you can easily hit the limit,
+               when the browser is overwhelmed.
+               This is true for old browsers as well as for modern browsers.
+               Just increase the number of icons per page,
+               and the icons start jerking at some certain point.
+ </p>
+
+ <p id="i20140926o1021">
+               To deal with this limit, the limit first must be known.
+               So observing the <b>machine resources</b> is natural.
+ </p>
+
+ <p class="imageCenter" id="i20140926o1011">
+               <img src="./img/20140926o0942.taskman--ff-simple-to-canvasgear-2.png" width="404" height="195" alt="Image 20140926°0941" />
+       <br />
+               The CPU utilization when Firefox displays a simple page,
+               and then is switched to display page
+               <a href="./index.html">CanvasGear index</a> with 82 canvases.
+               This diagram tells that canvas drawing is resource intensive.
+ </p>
+
+ <p id="i20140902o1741">
+               CanvasGear provides a <b>debug output field</b> which
+               tells the current frame rate and other runtime information
+               to observe browser behaviour quantitatively.
+ </p>
+
+ <p id="i20140902o0713">
+               Here are some rough observations (2014):
+ </p>
+
+ <ul id="i20140902o0714">
+  <!-- li id="i20140902o0721">
+               .
+  </li -->
+  <li id="i20140902o0722">
+               With Chrome, Firefox, Opera 100 icons performe still smoothly,
+               but 200 icons will start to disturb.
+  </li>
+  <li id="i20140902o0723">
+               With IE8 on a 2.13 GHz 3.00 GB machine,
+               it still works with 100 icons on one page,
+               but performs no more smoothly
+               with e.g. two frames per second.
+  </li>
+ </ul>
+
+ <p id="i20140902o0731">
+               To increase performance,
+               a lot can be done by purposefull coding.
+               E.g. there may be found superfluos processes,
+               which can be optimized away.
+               (This is less a feature than an issue.)
+ </p>
+
+ <p id="i20140902o1242" style="color:magenta;"><!-- output status message -->
+               .<!-- This paragraph may be replaced from canvasgear.js -->
+ </p>
+
+</div>
+
+<p id="i20190324o0354" style="color:DarkSlateGray;">
+               Here is some material to be worked off
+               <a href="./remains.html" id="i20190324o0355">Remains</a>. &nbsp;
+</p>
+
+<p id="i20140902o1131" style="color:DarkSlateGray; font-size:small;">
+               eof
+</p>
+
+<p class="imprint" id="i20140828o1912">
+               <a href="http://www.trilo.de/imprint.html" class="extern">Imprint</a>
+</p>
+<p class="footer" id="i20140828o1911">
+               <span class="footerFileUrl">http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/<a href="http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/index.html">index.html</a></span>
+               <span class="footerCopyright">©&nbsp;2014&nbsp;&#8209;&nbsp;2019&nbsp;Norbert&nbsp;C.&nbsp;Maier</span> —
+               <span class="footerLicense">Page&nbsp;license:&nbsp;<a href="https://creativecommons.org/licenses/by-sa/4.0/" class="extern" data-webshot="20180503°2122" id="i20181116o0543">CC&nbsp;BY&#8209;SA&nbsp;4.0</a></span> —
+               <span class="footerPageId">page 20140828°1911</span>
+</p>
+</body>
+</html>

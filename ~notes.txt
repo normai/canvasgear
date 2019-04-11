@@ -1,0 +1,26 @@
+﻿
+   **************
+   Room for notes
+   **************
+
+   note 20140916°0731
+   matter : Remember series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11"
+   ܀
+
+   note 20140815°0731
+   matter : Coming from the example after (20140814°2211)
+      http://www.kirupa.com/html5/creating_simple_html5_canvas_animation.htm,
+      I want the following features to be changed:
+       - The JS code is inside the HTML, I want it as a separate JS file
+       - It is for modern browsers only, I want it for older browsers as well.
+   finding : The transition did not succeed on the first attempt. So I introduced
+      the file series canvas-2-pulse-v*.html to introduces the wanted features
+      step by step. The steps are:
+       - v1 : Pretty the original as is.
+       - v2 : Introcude excanvas.js
+       - v3 : Split file into HTML and JS
+       - v4 : ...
+   ܀
+
+   ———————————————————————
+   [file 20140903°0111] ܀Ω

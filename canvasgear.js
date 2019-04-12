@@ -278,7 +278,7 @@ Cvgr.startCanvasGear = function()
 
    // workaround missing requestAnimFrame [seq 20140815°0651]
    // See issue 20140815°0641 'browser is missing requestAnimationFrame'
-   // summary : This sequence provides a fallback for the possibly of 
+   // summary : This sequence provides a fallback for the possibly of
    //    a missing 'requestAnimationFrame' browser method.
    // ref : http://www.paulirish.com/2011/requestanimationframe-for-smart-animating [ref 20140815°0634]
    //--------------------------------------------------
@@ -539,298 +539,6 @@ Cvgr.Vars.timrs = [];
  */
 Cvgr.Vars.timSuccess = [];
 
-//////*****************************************************
-////// Algorithms
-//////*****************************************************
-////
-/////**
-//// * This function serves developing an algorithm
-//// *
-//// * @id 20140901°0521
-//// * @status
-//// * @note Sorrily, we must pass the icon via array plus index. All attempts
-//// *    to pass the plain icon failed. Not sure why [issue 20140828°0751]
-//// * @param icos The complete Cvgr.Vars.icos icons array (as workaround)
-//// * @param iFor The index into the icons array to the wanted icon
-//// */
-/////*
-////Cvgr.Func.algoDevelop = function(icos, iFor)
-////{
-////   // This shall become the 'lines' algorithm' [seq 20140901°0521]
-////
-////   // workaround for issue 20140828°0751
-////   var iko = icos[iFor];
-////
-////   // draw this algorithm only once [seq 20140916°1022`01]
-////   if (iko.DrawOnlyOnce)
-////   {
-////      return;
-////   }
-////   iko.DrawOnlyOnce = true;
-////
-////   // preparatory calculations [seq 20140916°0821]
-////   var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
-////
-////   // prepare canvas
-////   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-////   iko.Context.fillStyle = "#eeeeee";
-////   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-////
-////   // preparatory calculations
-////   var lins = new Array();
-////   var lin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, 'crimson');
-////   var lin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, 'seagreen');
-////   var lin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, 'royalblue');
-////   lins.push(lin1);
-////   lins.push(lin2);
-////   lins.push(lin3);
-////
-////   for (var i = 0; i < lins.length; i++)
-////   {
-////      iko.Context.beginPath();
-////      iko.Context.moveTo(lins[i].X1, lins[i].Y1);
-////      iko.Context.lineTo(lins[i].X2, lins[i].Y2);
-////      iko.Context.lineWidth = 3;
-////      iko.Context.strokeStyle = lins[i].Colo;
-////      iko.Context.stroke();
-////   }
-////};
-
-/////**
-//// * This function implements a drawing algorithm to draw a rose
-//// *
-//// * @id 20140828°1411
-//// * @status Not yet animated
-//// * @ref http://gnuzoo.org/rose/index.htm [20140815°0521]
-//// * @param {number} icos — This is Cvgr.Vars.icos[iFor] at the caller.
-//// * @param {number} iFor — The index into the icos array.
-//// */
-////Cvgr.Func.algoOblongrose = function(icos, iFor)
-////{
-////   var iko = icos[iFor]; // (workaround for issue 20140828°0751)
-////
-////   // draw this algorithm only once [seq 20140916°1022`02]
-////   if (iko.DrawOnlyOnce)
-////   {
-////      return;
-////   }
-////   iko.DrawOnlyOnce = true;
-////
-////   // preparatory calculations [seq 20140916°0822]
-////   var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
-////
-////   // prepare canvas
-////   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-////
-////   // set colors
-////   iko.Context.strokeStyle = iko.Color;
-////   iko.Context.fillStyle = '#ffff00';                                  // 'yellow' // not applied below
-////
-////   // set registration point
-////   iko.Context.translate(iSize / 2, iSize / 2);
-////
-////   var iNums = 16;
-////   for (var i = 0; i < iNums; i++)
-////   {
-////      iko.Context.rotate(2 * Math.PI / iNums);
-////      iko.Context.strokeRect(0, 0, iSize / 2, iSize / 6);
-////   }
-////};
-
-/////**
-//// * This function implements the pulse drawing algorithm v2
-//// *
-//// * @id 20140829°0511
-//// * @descript Features are:
-//// *    • Adjust the drawing size relative to the canvas size
-//// *    • Allow parameters 'shiftx' and 'shifty'
-//// *    • Use parameter 'hertz' instead of the old 'speed'
-//// * @status
-//// * @param {Array} icos — Array of icon objects, Cvgr.Vars.icos[iNdx] at the caller
-//// * @param {Integer} iNdx — The index into the array
-//// */
-////Cvgr.Func.algoPulse = function(icos, iNdx)
-////{
-////   var iko = icos[iNdx]; // workaround for issue 20140828°0751
-////
-////   // (.) prepare canvas
-////   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-////   iko.Context.fillStyle = "#f0f0f0";
-////   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-////
-////   // (.) calculate size
-////   var iRadius = (iko.Width > iko.Height) ? iko.Width : iko.Height;
-////   iRadius *= iko.SizeFactor; // [line 20190328°0835]
-////   iRadius = iRadius / 2;
-////
-////   // (.) calculate current radius
-////   var radius = 0;
-////   radius = iRadius * Math.abs(Math.cos(iko.Angle));
-////
-////   // (.) calculate position
-////   var iRadiX = iRadius + parseInt(iko.ShiftX, 10);
-////   var iRadiY = iRadius + parseInt(iko.ShiftY, 10);
-////
-////   // (.) draw
-////   iko.Context.beginPath();                            // circle
-////   iko.Context.arc ( iRadiX                            // x coordinate, e.g. 90
-////                    , iRadiY                           // y coordinate, e.g. 90
-////                     , radius                          // radius, e.g. 90
-////                      , 0                              // starting point angle in radians, starting east
-////                       , Math.PI * 2                   // endpoint angle in radians
-////                        , false                        // clockwise
-////                         );
-////
-////   // (.) finish
-////   iko.Context.closePath();
-////   iko.Context.fillStyle = iko.Color;
-////   iko.Context.fill();
-////
-////   // (.) calculate progression
-////   iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
-////   if (false) { // false
-////      if (iko.Angle > 2) { iko.Angle = 0; } // this works (see issue 20190329°0451)
-////   }
-////};
-
-/////**
-//// * This function implements a drawing algorithm for an ikon
-//// *
-//// * @id 20140828o°0851
-//// * @status proof-of-concept
-//// * @note Sorrily, we must pass the icon via array plus index. All attempts
-//// *     to pass the plain icon failed. No idea why. (issue 20140828°0751)
-//// * @ref Article 'Drawing shapes with canvas'
-//// *     https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Drawing_shapes [20140828°0911]
-//// * @ref Article 'Hwo do you rotate an HTML5 canvas around it's center' [20140901°0321]
-//// *     http://www.williammalone.com/briefs/how-to-rotate-html5-canvas-around-center
-//// * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
-//// * @param iFor {Integer} The index into the icon objects array
-//// */
-////Cvgr.Func.algoTriangle = function(icos, iNdx)
-////{
-////   var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
-////
-////   // preparatory calculations [seq 20140916°0823]
-////   var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
-////   var iPt1x = iSize * 0.5;
-////   var iPt1y = iSize * 0.01;
-////   var iPt2x = iSize * 0.8;
-////   var iPt2y = iSize * 0.9;
-////   var iPt3x = iSize * 0.2;
-////   var iPt3y = iPt2y;
-////
-////   // prepare canvas
-////   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);   // Opera works fine
-////
-////   // (.) rotation
-////   // (.1) set registration point
-////   iko.Context.translate(iSize / 2, iSize / 2);
-////   // (.2) rotate 1 degree
-////   iko.Context.rotate(Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz);    // 'Cvgr.Vars.nIncTurnsPerFrame * 4' is 1 rotation per second
-////   // (.3) move registration point back to the top left corner of canvas
-////   iko.Context.translate(-iSize / 2, -iSize / 2);
-////
-////   // note : Remember issue 20140901°0911 'Opera fillRect() fail'
-////
-////   // set background
-////   iko.Context.fillStyle = iko.BgColor;
-////   // (20140901°0912) try envelope against issue 20140901°0911 'Opera fillRect() fail'
-////   try
-////   {
-////      // Opera may throw 'object DOMException' here (issue 20140901°0911)
-////      iko.Context.fillRect(0, 0, iko.Width, iko.Height);
-////   }
-////   catch (e)
-////   {
-////      if ( Cvgr.Const.bShow_Debug_Dialogs )                            // toggle debug
-////      {
-////         alert('[debug 20140901°0913]\nException "' + e + '"');
-////      }
-////   }
-////
-////   // draw
-////   iko.Context.beginPath();
-////
-////   // (why the try see issue 20140901°0933)
-////   try
-////   {
-////      iko.Context.moveTo(iPt1x, iPt1y);
-////   }
-////   catch (e)
-////   {
-////      if ( Cvgr.Const.bShow_Debug_Dialogs )                            // debug toggle
-////      {
-////         alert('[debug 20140901°0932]\nException "' + e + '"');
-////      }
-////   }
-////   iko.Context.lineTo(iPt2x, iPt2y);
-////   iko.Context.lineTo(iPt3x, iPt3y);
-////   iko.Context.fillStyle = iko.Color;
-////   iko.Context.fill();
-////   iko.Context.closePath();
-////};
-
-/////**
-//// * This function implements the line drawing algorithm
-//// *
-//// * @id 20140828°1431
-//// * @status under construction
-//// * @ref http://stackoverflow.com/questions/3594653/html5-canvas-drawing-multicolored-lines [20140831o0741]
-//// * @ref http://html5tutorial.com/advanced-path-painting/ [20140831o0742]
-//// * @ref http://www.mysamplecode.com/2012/04/html5-canvas-draw-line-tutorial.html [20140831o0743] here I found the first example for multi colored lines
-//// * @ref http://www.peterkroener.de/eine-kleine-canvas-einfuehrung [20140828o1221]
-//// * @ref http://canvas.quaese.de/index.php?doc_id=36&nav=6,47 [20140828o1421]
-//// * @ref https://developer.mozilla.org/de/docs/Web/Guide/HTML/Canvas_tutorial/Applying_styles_and_colors [20140828o1422]
-//// * @note The statement 'fill() includes closePath()' is true only to some degree,
-//// *         e.g. *not* for drawing the final line to origin.
-//// * @param icos This is Cvgr.Vars.icos[iFor] at the caller.
-//// * @param iFor The index into the icos array.
-//// */
-////Cvgr.Func.algoTriangulum = function(icos, iFor)
-////{
-////   // workaround for issue 20140828°0751
-////   var iko = icos[iFor];
-////
-////   // preparatory calculations [seq 20140916°0824]
-////   var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
-////
-////   var nCurrAngle = iko.Angle;
-////   nCurrAngle = Math.sin (iko.Angle) * (iSize - 4) / 2 + iSize / 2;
-////
-////   // prepare canvas
-////   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-////   iko.Context.fillStyle = iko.BgColor;
-////   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-////
-////   // draw triangle
-////   iko.Context.beginPath();
-////   iko.Context.moveTo(3, 3);
-////   iko.Context.lineTo(iSize - 3, 3);
-////   iko.Context.lineTo(nCurrAngle, iSize - 5);
-////   iko.Context.fillStyle = iko.Color;
-////   iko.Context.fill();
-////   iko.Context.closePath();
-////   iko.Context.lineWidth = 2;
-////   iko.Context.strokeStyle = iko.Color2;
-////   iko.Context.stroke();
-////
-////   // draw line
-////   iko.Context.beginPath();
-////   iko.Context.moveTo(2, iSize - 2);
-////   iko.Context.lineTo(iSize - 2, iSize - 2);
-////   iko.Context.lineWidth = 3;
-////   iko.Context.strokeStyle = iko.Color3;
-////   iko.Context.stroke();
-////
-////   // maintain progress
-////   iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
-////   if (iko.Angle > iSize - 4) // This does just not work (see issue 20190329°0451)
-////   {
-////      iko.Angle = 0;
-////   }
-////};
-
 /**
  * This function is called when pulling-behind a non-immediate algorithm, it
  *  examines success, and in case of failure cares for a replacement algorithm.
@@ -899,11 +607,11 @@ Cvgr.Func.executeFrame = function()
    Cvgr.Vars.nIncTurnsPerFrame = 1 / Cvgr.Vars.iFramesPerTowSeconds;
 
    // note 20140916°1031 'known cornerstone values'
-   // At this runtime moment, those cornerstone values are known:
+   // At this runtime moment, the following cornerstone values are known:
    //  • Cvgr.Vars.nTrueAngleTurns : This is a value cycling between 0 and 0.999
    //      with one Hertz frequency independend of the browser.
    //  • Cvgr.Vars.nIncTurnsPerFrame : This value depends on the browser, it wobbles
-   //       around e.g. 0.017 to 0.020 with Chrome, or 0.021 to 0.023 with IE8.
+   //      around e.g. 0.017 to 0.020 with Chrome, or 0.021 to 0.023 with IE8.
 
    // (.4) output Page Debug Info [seq 20140916°1032]
    var elDbg = document.getElementById("Cvgr_DebugOutputArea");
@@ -953,48 +661,30 @@ Cvgr.Func.executeFrame = function()
       }
 
       // () execute algorithm [seq 20140815°1254]
-      // note : Remember issue 20140828°0751 'Algo calling params quirk' -- is it solved?
+      //  Remember issue 20140828°0751 'Algo calling params quirk' — is it solved?
+      // (.1) convenience
       var sAlgo = Cvgr.Vars.icos[iNdx].AlgoName;
-////      if (sAlgo === 'develop') {
-////         Cvgr.Func.algoDevelop(Cvgr.Vars.icos, iNdx);
-////      }
-////      if (sAlgo === 'oblongrose') {
-////         Cvgr.Func.algoOblongrose(Cvgr.Vars.icos, iNdx);
-////      }
-////      if (sAlgo === 'pulse') {
-////         Cvgr.Func.algoPulse(Cvgr.Vars.icos, iNdx);
-////      }
-////      else if ( sAlgo === 'triangle' ) {
-////         Cvgr.Func.algoTriangle(Cvgr.Vars.icos, iNdx);
-////      }
-////      else if (sAlgo === 'triangulum') {
-////         Cvgr.Func.algoTriangulum(Cvgr.Vars.icos, iNdx);
-////      }
-////      else {
 
-
-         // [condition 20190329°0411]
-         if ( sAlgo in Cvgr.Algos )
-         {
-            // call immediately [seq 20190329°0413]
-            Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
-         }
-         else
-         {
-            // try loading buddy module [seq 20190329°0415]
-            var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/treksvn/canvasgeardev/trunk/canvasgear/"
-            var sModNam = sPathAbs + 'canvasgear.' + sAlgo + '.js';
-            Cvgr.Vars.timSuccess.push(false); // pessimistic predetermination
-            Cvgr.Vars.timrs.push(setTimeout( Cvgr.Func.examineAlgo, 1357, (Cvgr.Vars.timrs.length - 1), iNdx ));
-            Trekta.Utils.pullScriptBehind ( sModNam , function()
-                                           { Cvgr.Func.executeFrameContinu( iNdx ); }
-                                            );
-         }
-
-////      }
+      // (.2) [condition 20190329°0411]
+      if ( sAlgo in Cvgr.Algos )
+      {
+         // (2.1) immediate call [seq 20190329°0413]
+         Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
+      }
+      else
+      {
+         // (2.2) load buddy module [seq 20190329°0415]
+         var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/treksvn/canvasgeardev/trunk/canvasgear/"
+         var sModNam = sPathAbs + 'canvasgear.' + sAlgo + '.js';
+         Cvgr.Vars.timSuccess.push(false); // pessimistic predetermination
+         Cvgr.Vars.timrs.push(setTimeout( Cvgr.Func.examineAlgo, 1357, (Cvgr.Vars.timrs.length - 1), iNdx ));
+         Trekta.Utils.pullScriptBehind ( sModNam , function()
+                                        { Cvgr.Func.executeFrameContinu( iNdx ); }
+                                         );
+      }
    }
 
-   // [line 20140815°1255]
+   // setup for animation [line 20140815°1255]
    window.requestAnimFrame(Cvgr.Func.executeFrame);
 };
 
@@ -1024,11 +714,6 @@ Cvgr.Func.executeFrameContinu = function(sAlgo, iNdx)
  */
 Cvgr.Func.setRadiobutton = function()
 {
-   ////if ( Cvgr.Const.bShow_Debug_Dialogs )
-   ////{
-   ////   alert("Debug 20140926°1131");
-   ////}
-
    // toggle [seq 20140819°1753]
    var sMsg = '[Debug 20140926°1131]\n\nNow radio-button algo-mode = ';
    if (document.FormAlgoMode.AlgoMode[0].checked)
@@ -1043,13 +728,10 @@ Cvgr.Func.setRadiobutton = function()
    }
 
    // debuge [seq 20140819°1755]
-   alert(sMsg);
-   ////// debug
-   ////if ( Cvgr.Const.bShow_Debug_Dialogs )
-   ////{
-   ////   var s = "[Debug] Radiobutton algo-mode is '" + s + "'.";
-   ////   document.getElementById("Cvgr_DebugOutputArea").innerHTML = s;
-   ////}
+   if ( Cvgr.Const.bShow_Debug_Dialogs )
+   {
+      alert(sMsg);
+   }
 
    return;
 };
@@ -1073,7 +755,7 @@ Cvgr.Func.startCanvasGear_setProperties = function()
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */
 /**
- * @id 20140916°0411
+ * @id 20140916°0411 namespace
  * @authors ncm
  * @encoding UTF-8-with-BOM
  */
@@ -1097,425 +779,416 @@ Cvgr.Algos = Cvgr.Algos || {};
  *
  * @id 20180619°0121
  */
-Cvgr.Algos.Ballist = Cvgr.Algos.Ballist || {};
-
-/**
- * This class provides a ring object for the Ballist algorithm
- *
- * @id 20140815°1221
- * @param sRingName {}
- * @param nRadiusAbs {}
- * @param sColorRing {}
- * @param sColorSpace {}
- */
-Cvgr.Algos.Ballist.Ring = function(sRingName, nRadiusAbs, sColorRing, sColorSpace ) {
-
-   // guarantee default values
-   // note : not sure this sequence yet works properly
-   if (sRingName === null) {
-      sRingName ='?';
-   }
-   if (nRadiusAbs === null) {
-      nRadiusAbs = 0.987;
-   }
-   if (sColorRing === null) {
-      sColorRing = 'gray';
-   }
-   if (sColorSpace === null) {
-      sColorSpace = 'white';
-   }
-
-   // set public properties
-   this.ringname = sRingName;                          // string e.g. '1', '2', ..
-   this.radiusAbs = nRadiusAbs;                        // number - radius absolute in meter
-   this.colorRing = sColorRing;                        // string - color of the ring, RGB or webcolor
-   this.colorSpace = sColorSpace;                      // string - color of the space for the ring RGB or webcolor
-};
-
-/*
- * This class provides a target object for the Ballist algorithm
- *
- * @id 20140916°0911
- * @param nRadius {} The target's radius in m, usually goes with lowest ring.
- */
- Cvgr.Algos.Ballist.Target = function() {
-
-   this.Diameter = 0.1;                                // diameter in meter [var 20140926°1151] the canvas scale shall be based on this
-   this.Naame = '<n/a>';                               // the discipline name
-   this.Shortnam = '<n/a>';                            //
-   this.rings = new Array();                           // array of rings, to be filled by somebody
-};
-
-/*
- * This function provides a hit object for the Ballist algorithm
- *
- * @id 20140916°0741
- * @param nRingval {}
- * @param nMinutes {}
- */
-Cvgr.Algos.Ballist.Hit = function(nRingval, nMinutes) {
-
-   // set source values
-   this.ringval = nRingval;                            // number - the ring value (assumed from 1.0 to 10.9)
-   this.minutes = nMinutes;                            // number - which minute on the clock
-
-   // calculate cartesian coordinates
-   var angle = this.minutes / 60 * Math.PI * 2;        // preliminary guess
-   angle = angle + Math.PI * 1.5;                      // shift the 0-Minute from east position to north position
-
-   // invert ring to radius
-   // note 20140917°0311 : The final coordinates can only be calculated
-   //    if the size of the target and the size of the canvas is known.
-   var nRadi = 10.9 - this.ringval;                    // invert ring value to a radius number
-   // //nRadi = nRadi * 0.2;                           // they calc from 1 to 10, we need from 1.1 to 10.9
-
-   var nEmpricHelper = 0.20;
-   var x = nRadi * Math.cos(angle) * nEmpricHelper;    // ELIMINATE empirical factor
-   var y = nRadi * Math.sin(angle) * nEmpricHelper;    // ELIMINATE empirical factor
-
-   this.X = x;                                         // number - calculated
-   this.Y = y;                                         // number - calculated
-};
-
-/**
- * This function .. is a test function
- *
- * @id 20140926°1211
- * @callers Only • func 20140916°0421 executeAlgorithm
- * @param {object} iko ...
- */
-Cvgr.Algos.Ballist.executeAlgorithm_drawDiagonal = function(iko)
-{
-   var nHeight = iko.Height;                           // pixel
-   var nWidth = iko.Width;                             // pixel
-   var nDist1 = 11;                                    // distance to the canvas border in pixel
-   var nDistTwo = nDist1 / 2;                          // half distance
-
-   ///var nSize = (nHeight + nWidth) / 2;              // calculate flat rate
-
-   // scale endpoints
-   var nX1 = nDist1;
-   var nY1 = nHeight - nDist1;
-   var nX2 = nWidth - nDist1;
-   var nY2 = nHeight - nDist1;
+Cvgr.Algos.Ballist = {
 
    /**
-    * This variable stores some kind of factor
+    * This class provides a ring object for the Ballist algorithm
     *
-    * @id 20140926°1212
-    * @note Not sure, what exactly this may be good for. Eliminate it?
+    * @id 20140815°1221
+    * @param sRingName {}
+    * @param nRadiusAbs {}
+    * @param sColorRing {}
+    * @param sColorSpace {}
     */
-   //var nSiz = 1;
-   //var iPt1x = nSiz * 9;
-   //var iPt1y = nSiz * iko.Height - 9;
-   //var iPt2x = nSiz * iko.Width - 9;
-   //var iPt2y = nSiz * iko.Height -9;
+   Ring : function(sRingName, nRadiusAbs, sColorRing, sColorSpace ) {
 
-   // draw [seq 20140926°1221]
-   // note : Sequence written after sequence in Cvgr.Func.algoTriangle().
-   iko.Context.beginPath();
+      // guarantee default values
+      // note : not sure this sequence yet works properly
+      if (sRingName === null) {
+         sRingName ='?';
+      }
+      if (nRadiusAbs === null) {
+         nRadiusAbs = 0.987;
+      }
+      if (sColorRing === null) {
+         sColorRing = 'gray';
+      }
+      if (sColorSpace === null) {
+         sColorSpace = 'white';
+      }
 
-   // (why the try see issue 20140901°0933)
-   try {
+      // set public properties
+      this.ringname = sRingName;                          // string e.g. '1', '2', ..
+      this.radiusAbs = nRadiusAbs;                        // number - radius absolute in meter
+      this.colorRing = sColorRing;                        // string - color of the ring, RGB or webcolor
+      this.colorSpace = sColorSpace;                      // string - color of the space for the ring RGB or webcolor
+   }
+
+   /*
+    * This class provides a target object for the Ballist algorithm
+    *
+    * @id 20140916°0911
+    * @param nRadius {} The target's radius in m, usually goes with lowest ring.
+    */
+    ,Target : function() {
+
+      this.Diameter = 0.1;                                // diameter in meter [var 20140926°1151] the canvas scale shall be based on this
+      this.Naame = '<n/a>';                               // the discipline name
+      this.Shortnam = '<n/a>';                            //
+      this.rings = new Array();                           // array of rings, to be filled by somebody
+   }
+
+   /*
+    * This function provides a hit object for the Ballist algorithm
+    *
+    * @id 20140916°0741
+    * @param nRingval {}
+    * @param nMinutes {}
+    */
+   ///Cvgr.Algos.Ballist.Hit = function(nRingval, nMinutes) {
+   , Hit : function(nRingval, nMinutes) {
+
+      // set source values
+      this.ringval = nRingval;                            // number - the ring value (assumed from 1.0 to 10.9)
+      this.minutes = nMinutes;                            // number - which minute on the clock
+
+      // calculate cartesian coordinates
+      var angle = this.minutes / 60 * Math.PI * 2;        // preliminary guess
+      angle = angle + Math.PI * 1.5;                      // shift the 0-Minute from east position to north position
+
+      // invert ring to radius
+      // note 20140917°0311 : The final coordinates can only be calculated
+      //    if the size of the target and the size of the canvas is known.
+      var nRadi = 10.9 - this.ringval;                    // invert ring value to a radius number
+      // //nRadi = nRadi * 0.2;                           // they calc from 1 to 10, we need from 1.1 to 10.9
+
+      var nEmpricHelper = 0.20;
+      var x = nRadi * Math.cos(angle) * nEmpricHelper;    // ELIMINATE empirical factor
+      var y = nRadi * Math.sin(angle) * nEmpricHelper;    // ELIMINATE empirical factor
+
+      this.X = x;                                         // number - calculated
+      this.Y = y;                                         // number - calculated
+   }
+
+   /**
+    * This function implements the drawing algorithm
+    *
+    * @id 20140916°0421
+    * @status under construction
+    * @note The statement 'fill() includes closePath()' is true only to some
+    *         degree, e.g. *not* for drawing the final line to origin.
+    * @note Compatibility: Seems not to work with IE8
+    * @callers • Cvgr.Func.executeFrame
+    * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
+    * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
+    */
+   , executeAlgorithm : function(icos, iNdx)
+   {
+      // prolog [seq 20140916°0432]
+      var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
+
+      // prolog - draw this algorithm only once [seq 20140916°1022`03]
+      // note : This does not prevent Taskmanager to raise CPU usage
+      //    to nearly hundred percent. But without single-paint mode,
+      //    it raises towards full hundred percent perhaps.
+      // todo : Implement flag as commandline option and process very early.
+      if (iko.DrawOnlyOnce) {
+         return;
+      }
+      iko.DrawOnlyOnce = true;
+
+      // preparatory calculations [line 20140916°0825]
+      var iSize = ((+iko.Width) + (+iko.Height)) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+
+      // calculate angle
+      //var nCurrAngle = iko.Angle;
+      //nCurrAngle = Math.sin (iko.Angle) * (iSize - 4) / 2 + iSize / 2;
+
+      // retrieve target [seq 20140916°0433]
+      var tgt = Cvgr.Algos.Ballist.executeAlgo_getTarget();
+
+      // retrieve series [seq 20140916°0434]
+      var hits = Cvgr.Algos.Ballist.executeAlgo_getSeries(iko.CmdHash2['series']);
+
+      // prepare canvas [seq 20140916°0435]
+      iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+      iko.Context.fillStyle = iko.BgColor;
+      iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+      // (.) calculate center point from canvas length and height [seq 20140916°0436]
+      // note : The calculation is redundant to 'iSize'.
+      var iCenterPoint = (iko.Width + iko.Height) / 4; // this is half iSize
+
+      // (.) adjust center position from possible shift [seq 20140916°0437]
+      var iRadiX = iCenterPoint;
+      var iRadiY = iCenterPoint;
+      if (iko.ShiftX !== null) {
+         var iRadiX = iCenterPoint + parseInt(iko.ShiftX, 10);
+      }
+      if (iko.ShiftY !== null) {
+         var iRadiY = iCenterPoint + parseInt(iko.ShiftY, 10);
+      }
+
+      // (.) paint rings [seq 20140916°0442]
+      for (var iLoop = 0; iLoop < tgt.rings.length; iLoop++) {
+
+         // (.) calculate current radius [seq 20140916°0443]
+         // todo: Replace fixed factor by calculated factor
+         var radius = iCenterPoint * tgt.rings[iLoop].radiusAbs * 12;
+
+         // (.) draw [seq 20140916°0444]
+         iko.Context.beginPath();                         // circle
+         iko.Context.arc ( iRadiX                         // x coordinate, e.g. 90
+                          , iRadiY                        // y coordinate, e.g. 90
+                           , radius                       // radius, e.g. 90
+                            , 0                           // starting point angle in radians, starting east
+                             , Math.PI * 2                // endpoint angle in radians
+                              , false                     // clockwise
+                               );
+
+         // (.) finish [seq 20140916°0445]
+         iko.Context.closePath();
+         iko.Context.strokeStyle = Trekta.Util2.colorNameToHex(tgt.rings[iLoop].colorRing);
+         iko.Context.lineWidth = 1;
+         iko.Context.stroke();
+      }
+
+      // (.) paint hits [seq 20140916°0446]
+      for (var i = 0; i < hits.length; i++) {
+
+         // (.) calculate radius [seq 20140916°0447]
+         radius = 6;
+
+         // (.) [seq 20140916°0448]
+         var iRadiX = iCenterPoint + hits[i].X * 50 + parseInt(iko.ShiftX, 10);
+         var iRadiY = iCenterPoint + hits[i].Y * 50 + parseInt(iko.ShiftY, 10);
+
+         // (.) draw hit [seq 20140916°0452]
+         iko.Context.beginPath();                 // circle
+         iko.Context.arc ( iRadiX                 // x coordinate
+                          , iRadiY                // y coordinate
+                           , radius               // radius, e.g. 90
+                            , 0                   // starting point angle in radians, starting east
+                             , Math.PI * 2        // endpoint angle in radians
+                              , false             // clockwise
+                               );
+
+         // (.) finish [seq 20140916°0453]
+         iko.Context.closePath();
+
+         iko.Context.strokeStyle = '#4169e1'; // 'royalblue';
+         iko.Context.lineWidth = 1;
+         iko.Context.stroke();
+      }
+
+      // [seq 20140916°0454]
+      Cvgr.Algos.Ballist.executeAlgo_drawDiagonal(iko);
+
+      // progress [seq 20140916°0455]
+      // note : Ballist algo is static anyway, progression is useless.
+      //  Note todo 20190329°0833 'centralize progression'
+      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+      if (iko.Angle > Math.PI * 4) {
+         iko.Angle = iko.Angle - Math.PI * 4;
+      }
+   }
+
+   /**
+    * This function .. is a test function
+    *
+    * @id 20140926°1211
+    * @callers Only • func 20140916°0421 executeAlgorithm
+    * @param {object} iko ...
+    */
+   , executeAlgo_drawDiagonal : function(iko)
+   {
+      // preparation [seq 20140926°1212]
+      var nHeight = iko.Height;                           // pixel — remember issue 20140901°0933 'Opera 10 peculiar about capitals'
+      var nWidth = iko.Width;                             // pixel
+      var nDist1 = 11;                                    // distance to the canvas border in pixel
+      var nDistTwo = nDist1 / 2;                          // half distance
+
+      ///var nSize = (nHeight + nWidth) / 2;              // calculate flat rate
+
+      // scale endpoints [seq 20140926°1213]
+      var nX1 = nDist1;
+      var nY1 = nHeight - nDist1;
+      var nX2 = nWidth - nDist1;
+      var nY2 = nHeight - nDist1;
+
+      // draw [seq 20140926°1221]
+      // note : Sequence written after sequence in Cvgr.Func.algoTriangle().
+      iko.Context.beginPath();
+
+      // do bulk work [seq 20140926°1214]
+      // Remember issue 20140901°0933 'Opera 10 peculiar about capitals'
       iko.Context.moveTo(nX1, nY1);
-   }
-   catch (e) {
-      alert('[debug 20140901°0932]\nException : \n\n"' + e + '"');
-      return;
-   }
-   iko.Context.lineTo(nX2, nY2);
+      iko.Context.lineTo(nX2, nY2);
 
-   iko.Context.moveTo(nX1, nY2 + nDistTwo);
-   iko.Context.lineTo(nX1, nY2 - nDistTwo);
+      iko.Context.moveTo(nX1, nY2 + nDistTwo);
+      iko.Context.lineTo(nX1, nY2 - nDistTwo);
 
-   iko.Context.moveTo(nX2, nY2 + nDistTwo);
-   iko.Context.lineTo(nX2, nY2 - nDistTwo);
+      iko.Context.moveTo(nX2, nY2 + nDistTwo);
+      iko.Context.lineTo(nX2, nY2 - nDistTwo);
 
-   iko.Context.strokeStyle = iko.Color; // ?
-   iko.Context.fillStyle = iko.Color;
-   iko.Context.fill();
+      iko.Context.strokeStyle = iko.Color;                             // ?
+      iko.Context.fillStyle = iko.Color;
+      iko.Context.fill();
 
-   iko.Context.closePath();
+      iko.Context.closePath();
 
-   iko.Context.strokeStyle = 'turquoise';                      // 'lightgreen'
-   iko.Context.lineWidth = 3;
-   iko.Context.stroke();
+      iko.Context.strokeStyle = 'turquoise';                           // 'lightgreen'
+      iko.Context.lineWidth = 3;
+      iko.Context.stroke();
 
-   if (true) {
+      // add ruler part one [seq 20140926°1215]
       var s = "~0.11 m";
-      iko.Context.font = "1.2em Arial";                        // e.g. "20px Times Roman", "1.2em Arial", "bold 14px verdana, sans-serif"
-      iko.Context.fillStyle = "turquoise";                     // "aquamarine" // "#ff0000"
-      iko.Context.fillText(s, nX1 + nDistTwo, nY1 - nDistTwo); // IE8 Error 'Object doesn't support this property or method' (see issue 20160416°1321)
-   }
+      iko.Context.font = "1.2em Arial";                                // e.g. "20px Times Roman", "1.2em Arial", "bold 14px verdana, sans-serif"
+      iko.Context.fillStyle = "turquoise";                             // "aquamarine" // "#ff0000"
+      iko.Context.fillText(s, nX1 + nDistTwo, nY1 - nDistTwo);         // IE8 Error 'Object doesn't support this property or method' (see issue 20160416°1321)
 
-   // todo : Outsource this sequence to a dedicated algorithm e.g. 'writetext' (20140926°1341)
-   if (true) {
-      // (issue 20140926°1321)
-      // Compatibility. IE8 does not understand the fillText() function.
+      /*
+      todo 20140926°1341
+      do : Outsource below sequence to a dedicated algorithm e.g. 'writetext'
+      status : open
+      */
 
+      // add ruler part two [seq 20140926°1216]
+      // note : Remember issue 20140926°1321 'IE8 fails with Context.fillText'
       if (iko.CmdHash2['text']) {
          iko.Context.fillStyle = "#102030";
          iko.Context.font = "1.2em Arial";                     // e.g. "20px Times Roman", "1.2em Arial"
          iko.Context.fillText(iko.CmdHash2['text'], 10, 20);   // e.g. "Hello.."
       }
    }
-};
 
-/**
- * This function .. is a private helper function
- * @id 20140926°0911
- * @status
- * @callers Only Cvgr.Algos.Ballist.executeAlgorithm
- * @param sSeries {} ..
- */
-Cvgr.Algos.Ballist.executeAlgorithm_getSeries = function(sSeries)
-{
-   var hits = new Array();
+   /**
+    * This function .. is a private helper function
+    * @id 20140926°0911
+    * @status
+    * @callers Only Cvgr.Algos.Ballist.executeAlgorithm
+    * @param sSeries {} ..
+    */
+   , executeAlgo_getSeries : function(sSeries)
+   {
+      var hits = new Array();
 
-   if (( typeof sSeries === 'undefined' ) || (sSeries.length < 1)) {
+      if (( typeof sSeries === 'undefined' ) || (sSeries.length < 1)) {
 
-      // hardcoded default hitlist [seq 20140916°0751]
-      var h = new Cvgr.Algos.Ballist.Hit(10.7, 55); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(9.3, 43); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.1, 0); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.2, 1); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.3, 3); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.4, 6); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.5, 10); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.6, 20); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.7, 30); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.8, 40); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.9, 50); hits.push(h);
+         // hardcoded default hitlist [seq 20140916°0751]
+         var h = new Cvgr.Algos.Ballist.Hit(10.7, 55); hits.push(h);
+         var h = new Cvgr.Algos.Ballist.Hit(9.3, 43); hits.push(h);
+         var h = new Cvgr.Algos.Ballist.Hit(2.1, 0); hits.push(h);
+         var h = new Cvgr.Algos.Ballist.Hit(2.2, 1); hits.push(h);
+         var h = new Cvgr.Algos.Ballist.Hit(2.3, 3); hits.push(h);
+         var h = new Cvgr.Algos.Ballist.Hit(2.4, 6); hits.push(h);
+         var h = new Cvgr.Algos.Ballist.Hit(2.5, 10); hits.push(h);
+         var h = new Cvgr.Algos.Ballist.Hit(2.6, 20); hits.push(h);
+         var h = new Cvgr.Algos.Ballist.Hit(2.7, 30); hits.push(h);
+         var h = new Cvgr.Algos.Ballist.Hit(2.8, 40); hits.push(h);
+         var h = new Cvgr.Algos.Ballist.Hit(2.9, 50); hits.push(h);
 
-      // retrieve series details ring-decimal/minutes-on-clock
-      // Commandlines e.g.:
-      //   - algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" id="i20140916o0731"
-      //   - <!-- algo=Ballist series="9.3/43 8.5/39 8.0/45 8.9/51 8.5/56 9.7/29 9.9/27 8.5/17 8.3/42 6.3/43 9.7/1 9.9/45 9.8/47 7.8/41 6.2/43 10.0/16 10.2/44 9.8/7 8.1/47 7.9/20 10.1/7 9.4/11 9.4/14 9.6/32 7/8/48 9.0/20 8.1/3 8.9/32 6.2/28 6.5/39" id="i20140914o1330" -->
-      //   - <!-- algo=Ballist series="10.4/40 10.3/42 10.6/47 10.3/56 9.2/11 9.7/16 9.6/34 9.1/39 9.9/54 9.9/58 8.4/48 8.6/50 8.6/53 7.4/54 6.5/55" id="i20140926o203021" -->
+         // retrieve series details ring-decimal/minutes-on-clock
+         // Commandlines e.g.:
+         //   - algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" id="i20140916o0731"
+         //   - <!-- algo=Ballist series="9.3/43 8.5/39 8.0/45 8.9/51 8.5/56 9.7/29 9.9/27 8.5/17 8.3/42 6.3/43 9.7/1 9.9/45 9.8/47 7.8/41 6.2/43 10.0/16 10.2/44 9.8/7 8.1/47 7.9/20 10.1/7 9.4/11 9.4/14 9.6/32 7/8/48 9.0/20 8.1/3 8.9/32 6.2/28 6.5/39" id="i20140914o1330" -->
+         //   - <!-- algo=Ballist series="10.4/40 10.3/42 10.6/47 10.3/56 9.2/11 9.7/16 9.6/34 9.1/39 9.9/54 9.9/58 8.4/48 8.6/50 8.6/53 7.4/54 6.5/55" id="i20140926o203021" -->
 
-      // read series from commandline [line 20140926°0851]
-      // // var a = iko.CmdHash2['series'];
-      // sSeries ..
+         // read series from commandline [line 20140926°0851]
+         // // var a = iko.CmdHash2['series'];
+         // sSeries ..
 
-   }
-   else {
-
-      // read from somewhere
-      // .. parse ..
-      var a1 = sSeries.split(" ");
-      for (var i = 0; i < a1.length; i++) {
-         var a2 = a1[i].split("/");
-         var h = new Cvgr.Algos.Ballist.Hit(a2[0], a2[1]); hits.push(h);
       }
+      else {
+
+         // read from somewhere
+         // .. parse ..
+         var a1 = sSeries.split(" ");
+         for (var i = 0; i < a1.length; i++) {
+            var a2 = a1[i].split("/");
+            var h = new Cvgr.Algos.Ballist.Hit(a2[0], a2[1]); hits.push(h);
+         }
+      }
+
+      return hits;
    }
 
-   return hits;
-};
+   /**
+    * This function delivers a target object depending on the given name
+    *
+    * @id 20140916°0921
+    * @status Under construction
+    * @note function Cvgr.Algos.Ballist.Ring(sRingName, nRadiusAbs, sColorRing, sColorSpace )
+    * @note The details are still be to adjusted.
+    * @param sTargetName {string} ..
+    */
+   , executeAlgo_getTarget : function(sTargetName)
+   {
+      var target = new Cvgr.Algos.Ballist.Target();
 
-/**
- * This function delivers a target object depending on the given name
- *
- * @id 20140916°0921
- * @status Under construction
- * @note function Cvgr.Algos.Ballist.Ring(sRingName, nRadiusAbs, sColorRing, sColorSpace )
- * @note The details are still be to adjusted.
- * @param sTargetName {string} ..
- */
- Cvgr.Algos.Ballist.executeAlgorithm_getTarget = function(sTargetName)
-{
-   var target = new Cvgr.Algos.Ballist.Target();
+      if (sTargetName === 'kkspp') {
+         // ref : http://commons.wikimedia.org/wiki/Category:Targets?uselang=de#mediaviewer/File:25_Meter_Precision_and_50_Meter_Pistol_Target.svg (20140926°1331)
+         target.Diameter = 0.500;
+         target.Naame = "Sportpistole 25 m Präzision";
+         target.Shortnam = sTargetName;
+         target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.025, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.050, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.075, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.100, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.125, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.150, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.175, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.200, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.225, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.250, 'blue' , 'white'));
+      }
+      else if (sTargetName === 'kkspd') {
+         target.Diameter = 0.500;
+         target.Naame = "Sportpistole 25 m Duell";
+         target.Shortnam = sTargetName;
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.050, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.100, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.150, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.200, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.250, 'blue' , 'black'));
+      }
+      else if (sTargetName === 'lg10m') {
+         target.Diameter = 0.050;
+         target.Naame = "Luftgewehr 10 m";
+         target.Shortnam = sTargetName;
+         target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.0025, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.0050, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.0075, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.0100, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.0125, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.0150, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.0175, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.0200, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.0225, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.0250, 'blue' , 'white'));
+      }
+      else if (sTargetName === 'lgdt10m') {
+         target.Diameter = 0.0100;
+         target.Naame = "Deutsche Luftgewehr-Scheibe 10 m";
+         target.Shortnam = sTargetName;
+         target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.0005, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.0010, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.0015, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.0020, 'blue' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.0025, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.0030, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.0035, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.0040, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.0045, 'blue' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.0050, 'blue' , 'white'));
+      }
+      else {
+         target.Diameter = 0.1500;
+         target.Naame = "Luftpistole 10 m";
+         target.Shortnam = 'lupi10m';
+         target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.0055, 'black', 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.0135, 'black', 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.0215, 'gray' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.0295, 'gray' , 'black'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.0375, 'gray' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.0455, 'gray' , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.0535, 'red'  , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.0615, 'red'  , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.0695, 'red'  , 'white'));
+         target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.0775, 'red'  , 'white'));
+      }
 
-   if (sTargetName === 'kkspp') {
-      // ref : http://commons.wikimedia.org/wiki/Category:Targets?uselang=de#mediaviewer/File:25_Meter_Precision_and_50_Meter_Pistol_Target.svg (20140926°1331)
-      target.Diameter = 0.500;
-      target.Naame = "Sportpistole 25 m Präzision";
-      target.Shortnam = sTargetName;
-      target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.025, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.050, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.075, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.100, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.125, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.150, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.175, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.200, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.225, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.250, 'blue' , 'white'));
-   }
-   else if (sTargetName === 'kkspd') {
-      target.Diameter = 0.500;
-      target.Naame = "Sportpistole 25 m Duell";
-      target.Shortnam = sTargetName;
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.050, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.100, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.150, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.200, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.250, 'blue' , 'black'));
-   }
-   else if (sTargetName === 'lg10m') {
-      target.Diameter = 0.050;
-      target.Naame = "Luftgewehr 10 m";
-      target.Shortnam = sTargetName;
-      target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.0025, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.0050, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.0075, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.0100, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.0125, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.0150, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.0175, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.0200, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.0225, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.0250, 'blue' , 'white'));
-   }
-   else if (sTargetName === 'lgdt10m') {
-      target.Diameter = 0.0100;
-      target.Naame = "Deutsche Luftgewehr-Scheibe 10 m";
-      target.Shortnam = sTargetName;
-      target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.0005, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.0010, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.0015, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.0020, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.0025, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.0030, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.0035, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.0040, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.0045, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.0050, 'blue' , 'white'));
-   }
-   else {
-      target.Diameter = 0.1500;
-      target.Naame = "Luftpistole 10 m";
-      target.Shortnam = 'lupi10m';
-      target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.0055, 'black', 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.0135, 'black', 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.0215, 'gray' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.0295, 'gray' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.0375, 'gray' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.0455, 'gray' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.0535, 'red'  , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.0615, 'red'  , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.0695, 'red'  , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.0775, 'red'  , 'white'));
-   }
-
-   return target;
-};
-
-/**
- * This function implements the drawing algorithm
- *
- * @id 20140916°0421
- * @status under construction
- * @note The statement 'fill() includes closePath()' is true only to some
- *         degree, e.g. *not* for drawing the final line to origin.
- * @note Compatibility: Seems not to work with IE8
- * @callers • Cvgr.Func.executeFrame
- * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
- * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
- */
-Cvgr.Algos.Ballist.executeAlgorithm = function(icos, iNdx)
-{
-   // prolog
-   var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
-
-   // prolog - draw this algorithm only once [seq 20140916°102203]
-   // note : This does not prevent Taskmanager to raise CPU usage
-   //    to nearly hundred percent. But without single-paint mode,
-   //    it raises towards full hundred percent perhaps.
-   // todo : Implement flag as commandline option and process very early.
-   if (iko.DrawOnlyOnce) {
-      return;
-   }
-   iko.DrawOnlyOnce = true;
-
-   // preparatory calculations (line 20140916°0825)
-   var iSize = ((+iko.Width) + (+iko.Height)) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
-
-   // calculate angle
-   //var nCurrAngle = iko.Angle;
-   //nCurrAngle = Math.sin (iko.Angle) * (iSize - 4) / 2 + iSize / 2;
-
-   // retrieve target
-   var tgt = Cvgr.Algos.Ballist.executeAlgo_getTarget();
-
-   // retrieve series
-   var hits = Cvgr.Algos.Ballist.executeAlgo_getSeries(iko.CmdHash2['series']);
-
-   // prepare canvas
-   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-   iko.Context.fillStyle = iko.BgColor;
-   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-
-   // (.) calculate center point from canvas length and height
-   // note : The calculation is redundant to 'iSize'.
-   var iCenterPoint = (iko.Width + iko.Height) / 4; // this is half iSize
-
-   // (.) adjust center position from possible shift
-   var iRadiX = iCenterPoint;
-   var iRadiY = iCenterPoint;
-   if (iko.ShiftX !== null) {
-      var iRadiX = iCenterPoint + parseInt(iko.ShiftX, 10);
-   }
-   if (iko.ShiftY !== null) {
-      var iRadiY = iCenterPoint + parseInt(iko.ShiftY, 10);
-   }
-
-   // (.) paint rings
-   for (var iLoop = 0; iLoop < tgt.rings.length; iLoop++) {
-
-      // (.) calculate current radius
-      // todo: Replace fixed factor by calculated factor
-      var radius = iCenterPoint * tgt.rings[iLoop].radiusAbs * 12;
-
-      // (.) draw
-      iko.Context.beginPath();                         // circle
-      iko.Context.arc ( iRadiX                         // x coordinate, e.g. 90
-                       , iRadiY                        // y coordinate, e.g. 90
-                        , radius                       // radius, e.g. 90
-                         , 0                           // starting point angle in radians, starting east
-                          , Math.PI * 2                // endpoint angle in radians
-                           , false                     // clockwise
-                            );
-
-      // (.) finish
-      iko.Context.closePath();
-      iko.Context.strokeStyle = Trekta.Util2.colorNameToHex(tgt.rings[iLoop].colorRing);
-      iko.Context.lineWidth = 1;
-      iko.Context.stroke();
-   }
-
-   // (.) paint hits
-   for (var i = 0; i < hits.length; i++) {
-
-      // (.) calculate radius
-      radius = 6;
-
-      var iRadiX = iCenterPoint + hits[i].X * 50 + parseInt(iko.ShiftX, 10);
-      var iRadiY = iCenterPoint + hits[i].Y * 50 + parseInt(iko.ShiftY, 10);
-
-      // (.) draw hit
-      iko.Context.beginPath();                 // circle
-      iko.Context.arc ( iRadiX                 // x coordinate
-                       , iRadiY                // y coordinate
-                        , radius               // radius, e.g. 90
-                         , 0                   // starting point angle in radians, starting east
-                          , Math.PI * 2        // endpoint angle in radians
-                           , false             // clockwise
-                            );
-
-      // (.) finish
-      iko.Context.closePath();
-
-      iko.Context.strokeStyle = '#4169e1'; // 'royalblue';
-      iko.Context.lineWidth = 1;
-      iko.Context.stroke();
-   }
-
-   Cvgr.Algos.Ballist.executeAlgo_drawDiagonal(iko);
-
-   // progress
-   iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
-   if (iko.Angle > iSize - 4) { // This does just not work (see issue 20190329°0451)
-      iko.Angle = 0;
+      return target;
    }
 };
 //======✂======================================================
@@ -1600,12 +1273,12 @@ Cvgr.Algos.oblongrose = {
     * @id 20140828°1411
     * @status Not yet animated
     * @ref http://gnuzoo.org/rose/index.htm [20140815°0521]
-    * @param {number} icos — This is Cvgr.Vars.icos[iFor] at the caller.
-    * @param {number} iFor — The index into the icos array.
+    * @param {number} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
+    * @param {number} iNdx — The index into the icos array.
     */
-   executeAlgorithm : function(icos, iFor)
+   executeAlgorithm : function(icos, iNdx)
    {
-      var iko = icos[iFor]; // workaround for issue 20140828°0751
+      var iko = icos[iNdx]; // workaround for issue 20140828°0751
 
       // draw this algorithm only once [seq 20140916°1022`02]
       if (iko.DrawOnlyOnce)
@@ -1659,27 +1332,28 @@ Cvgr.Algos.pulse = {
     */
    executeAlgorithm : function(icos, iNdx)
    {
+      // [seq 20140829°0512]
       var iko = icos[iNdx]; // workaround for issue 20140828°0751
 
-      // (.) prepare canvas
+      // (.) prepare canvas [seq 20140829°0513]
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
       iko.Context.fillStyle = "#f0f0f0";
       iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
-      // (.) calculate size
+      // (.) calculate size [seq 20140829°0514]
       var iRadius = (iko.Width > iko.Height) ? iko.Width : iko.Height;
       iRadius *= iko.SizeFactor; // [line 20190328°0835]
       iRadius = iRadius / 2;
 
-      // (.) calculate current radius
+      // (.) calculate current radius [seq 20140829°0515]
       var radius = 0;
       radius = iRadius * Math.abs(Math.cos(iko.Angle));
 
-      // (.) calculate position
+      // (.) calculate position [seq 20140829°0516]
       var iRadiX = iRadius + parseInt(iko.ShiftX, 10);
       var iRadiY = iRadius + parseInt(iko.ShiftY, 10);
 
-      // (.) draw
+      // (.) draw [seq 20140829°0517]
       iko.Context.beginPath();                            // circle
       iko.Context.arc ( iRadiX                            // x coordinate, e.g. 90
                        , iRadiY                           // y coordinate, e.g. 90
@@ -1689,16 +1363,26 @@ Cvgr.Algos.pulse = {
                            , false                        // clockwise
                             );
 
-      // (.) finish
+      // (.) finish [seq 20140829°0518]
       iko.Context.closePath();
       iko.Context.fillStyle = iko.Color;
       iko.Context.fill();
 
-      // (.) calculate progression
+      /*
+      todo 20190329°0833 'centralize progression'
+      matter : Sequence 20140829°0519 'calculate progression' and it's siblings
+         exists equally in most algos. This calculation should be done at only
+         one single place, at the caller.
+      location : At the bottom of most functions executeAlgorithm e.g. 20140829°0511
+      status : open
+      */
+
+      // (.) seq 20140829°0519 'calculate progression'
+      //  Note todo 20190329°0833 'centralize progression'
       iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
-      if (false) { // false
-         if (iko.Angle > 2) { iko.Angle = 0; } // this works (see issue 20190329°0451)
-      }
+      if (iko.Angle > Math.PI) {
+       iko.Angle = iko.Angle - Math.PI;
+     }
    }
 };
 
@@ -1722,9 +1406,8 @@ Cvgr.Algos.triangle = {
     * @ref Article 'Hwo do you rotate an HTML5 canvas around it's center' [20140901°0321]
     *     http://www.williammalone.com/briefs/how-to-rotate-html5-canvas-around-center
     * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
-    * @param iFor {Integer} The index into the icon objects array
+    * @param iNdx {Integer} The index into the icon objects array
     */
-   ////Cvgr.Func.algoTriangle = function(icos, iNdx)
    executeAlgorithm : function(icos, iNdx)
    {
       var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
@@ -1811,14 +1494,13 @@ Cvgr.Algos.triangulum = {
     * @ref https://developer.mozilla.org/de/docs/Web/Guide/HTML/Canvas_tutorial/Applying_styles_and_colors [20140828o1422]
     * @note The statement 'fill() includes closePath()' is true only to some degree,
     *         e.g. *not* for drawing the final line to origin.
-    * @param icos This is Cvgr.Vars.icos[iFor] at the caller.
-    * @param iFor The index into the icos array.
+    * @param icos This is Cvgr.Vars.icos[iNdx] at the caller.
+    * @param iNdx The index into the icos array.
     */
-   ////Cvgr.Func.algoTriangulum = function(icos, iFor)
-   executeAlgorithm : function(icos, iFor)
+   executeAlgorithm : function(icos, iNdx)
    {
       // workaround for issue 20140828°0751
-      var iko = icos[iFor];
+      var iko = icos[iNdx];
 
       // preparatory calculations [seq 20140916°0824]
       var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
@@ -1852,13 +1534,12 @@ Cvgr.Algos.triangulum = {
       iko.Context.stroke();
 
       // maintain progress
-      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
-      if (iko.Angle > iSize - 4) // This does just not work (see issue 20190329°0451)
-      {
-         iko.Angle = 0;
+      //  Note todo 20190329°0833 'centralize progression'
+      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+      if (iko.Angle > Math.PI * 4) {
+         iko.Angle = iko.Angle - Math.PI * 4;
       }
    }
-
 };
 
 
@@ -2066,7 +1747,7 @@ Trekta.Util2.Webcolors = function()
  * @status Working
  * @callers Only • CanvasGear
  * @note This helps to use webcolors with IE8.
- * @todo 20140926°1321 : Implement some validations because e.g. a color '1'
+ * @todo 20140926°1323 : Implement some validations because e.g. a color '1'
  *           as Cvgr.Algos.Ballist.Ring.color causes difficult to debug failures.
  * @todo 20180618°0731 : Shift this function into class Webcolors
  * @returns The wanted color hex value, e.g. '#FF0000' for 'red', or '#C0C0C0' silver for wrong names.
@@ -2371,7 +2052,7 @@ Trekta.Utils = Trekta.Utils || {
     * @callers : • Cvgr.Func.executeFrame
     * @todo  In FadeInFiles seq 20151106°1822 and seq 20151106°1821
     *            shall use this function here. [todo 20190328°0943]
-    * @param sHtml {String} The HTML fragment to be escaped 
+    * @param sHtml {String} The HTML fragment to be escaped
     * @returns {String} The wanted escaped HTML fragment
     */
    , htmlEscape : function(sHtml) // [Trekta.Utils.htmlEscape]

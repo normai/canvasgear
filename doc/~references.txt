@@ -1,4 +1,15 @@
 
+
+   ref 20190329°0542 'w3c: centering things'
+   objtype : ref.article
+   url : https://www.w3.org/Style/Examples/007/center.en.html
+   title : Centering Things
+   author : Bert Bos
+   releasedate : 2001-May-5, updated 2018-Sep-26
+   usage : page 20140828°0631 demo1.html
+   chain : refs 20180620°1113 20190107°0435 20190329°0542 are the same
+   ܀
+
    ref 20190329°0513 'stackoverflow : convert float number to whole'
    objtype : ref.thread
    url : https://stackoverflow.com/questions/596467/how-do-i-convert-a-float-number-to-a-whole-number-in-javascript

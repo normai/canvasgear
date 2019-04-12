@@ -3,6 +3,14 @@
    Issues and todos
    ****************
 
+   issue 20190329°0451 'iko.Angle does not reset'
+   matter : The angle does not reset as expected.
+   solution : See seq 20140829°0519 'calculate progression', it works with Math.PI
+   location : On the bottom of most functions executeAlgorithm,
+               e.g. func 20140829°0511 Cvgr.Algos.pulse.executeAlgorithm
+   status : finished
+   ܀
+
    issue 20190329°0421 'impossible index'
    matter : The function is called with iNdx = 2, when only two canvases
       exist on the page. How can this be? Where from comes this call?
@@ -53,6 +61,12 @@
    status : Partially solved by workaround. Does work with IE10 but not IE9 and below.
    ܀
 
+   issue 20140926°1321 'IE8 fails with Context.fillText'
+   matter : IE8 does not understand the Context.fillText() function.
+   location : func 20140926°1211 Cvgr.Algos.Ballist.executeAlgo_drawDiagonal
+   status : finished, IE8 no more supported
+   ܀
+
    todo 20140904°0711 'refactor property parsing'
    todo : Refactor. Compact sequence 20140904°0645 to one-liners or
       somehow eliminate the individual processing of each single property.
@@ -62,13 +76,13 @@
    status : open
    ܀
 
-   issue 20140901°0933 'Opera peculiar about capitals'
-   note : If above e.g. 'iko.width' is used instead 'iko.Width', Opera will
-      receive iPt1x/iPt1y as NaN and throw an exception here. If this line here
-      throws exception, far below lines will do so as well.
+   issue 20140901°0933 'Opera 10 peculiar about capitals'
+   note : If e.g. 'iko.width' was used instead 'iko.Width', Opera will
+      receive iPt1x/iPt1y as NaN and throw an exception here. If this
+      line here throws exception, far below lines will do so as well.
    location : canvasgear.js, canvasgear-ballist.js
-   solution : Use a try envelop on the first element. Questions are left open.
-   status :
+   solution : Use a try envelop on the first element.
+   status : Should be finished.
    ܀
 
    issue 20140901°0911 'Opera fillRect() fail'

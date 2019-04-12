@@ -103,15 +103,8 @@ Cvgr.Algos.Dummy.executeAlgorithm = function(icos, iNdx)
    iko.Context.lineWidth = 6;
    iko.Context.stroke();
 
-   /*
-   issue 20190329°0451 'iko.Angle does not reset'
-   matter : The angle does not reset. Why not?
-   answer : It only seemed so, because the angle in the debug display
-      was printed as integer, when it was a number of 1/10.
-   status : finished
-   */
-
    // progress [seq 20190329°0447]
+   //  Note todo 20190329°0833 'centralize progression'
    iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
    ///if (iko.Angle > iSize - 4) {
    ////if (iko.Angle > 16) { // Does this work? See issue 20190329°0451

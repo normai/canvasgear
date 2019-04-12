@@ -15,19 +15,16 @@
       /* note : See ref 20140829°0351 'stackoverflow : changing the color of a hr element' */
       hr.horizon { clear:left; border-bottom:0.2em solid #e0e0e0; border-top:1.2em solid transparent; } /* rule 20140829°0521 */
       .shineover { position:relative; z-index:10001; } /* 20190324o0341 shine over the github badge */
-      
-      td.DemoCell { border:1px dotted LightSlateGray; }
+
+      /* ruleset 20190329°0551 */ /* for flex see ref 20190329°0543 'w3c: centering things' */
+      td.DemoCell { border:0px dotted LightSlateGray; display:flex; align-items:center; }
+      td.DemoCellCode { font-size:small; color:Silver; font-family: monospace; white-space: nowrap; }
+      td.DemoCellCode b { color:DarkRed; font-weight:normal; } /* DarkSlateGray */
+      canvas { padding:0 0.2em 0 0.2em; }
    </style>
 </head>
 
 <body class="BodyFaceCanvasGear" id="i20140815o0742">
-
-<!--[if lte IE 8]>
-<p style="width:31em; background-color:Yellow; border:3px solid Red; font-size:large; text-align:center; padding:0.7em; margin:0 1.7em 0 1.7em;" id="i20190316o0221">
-               Your browser is Internet Explorer version 8 or below,
-               <br />it will not show the page as intended.
-</p>
-<![endif]-->
 
 <div id="i20190324o0336">
                <a class="github-fork-ribbon right-bottom fixed"
@@ -67,7 +64,7 @@
  </p>
 
  <h1 id="i20140815o1231">
-               Demo1
+               Demo One
  </h1>
 
  <table id="i20140901o0413">
@@ -77,8 +74,17 @@
                develop, Dummy
    </td>
    <td class="DemoCell" id="i20140815o1431">
-               <canvas data-cvgr="algo=develop color=orange" id="myCanvas22" width="64" height="64">[Canvas]</canvas>
-               <canvas data-cvgr="algo=Dummy color=Orange bgcolor=MistyRose" id="i20190329o0522" width="64" height="64">[Canvas]</canvas>
+               <canvas data-cvgr="algo=develop color=orange" width="64" height="64" id="myCanvas22">[Canvas]</canvas>
+               <canvas data-cvgr="algo=Dummy color=Orange bgcolor=MistyRose" width="64" height="64" id="i20190329o0522">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20190329o0532">
+   <td id="i20190329o0534">
+   </td>
+   <td class="DemoCellCode" id="i20190329o0535">
+       &lt;canvas <b>data-cvgr="algo=develop color=orange"</b> width="64" height="64" id="myCanvas22"&gt;[Canvas]&lt;/canvas&gt;
+       <br />&lt;canvas <b>data-cvgr="algo=Dummy color=Orange bgcolor=MistyRose"</b> width="64" height="64" id="i20190329o0522"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 
@@ -87,9 +93,19 @@
                oblongrose
    </td>
    <td class="DemoCell" id="i20140815o1531">
-               <canvas data-cvgr="algo=oblongrose color=crimson" id="myCanvas23" width="64" height="64">[Canvas]</canvas>
-               <canvas data-cvgr="algo=oblongrose color=seagreen" id="i20140901o0341" width="48" height="48">[Canvas]</canvas>
-               <canvas data-cvgr="algo=oblongrose color=royalblue" id="i20140901o0342" width="32" height="32">[Canvas]</canvas>
+               <canvas data-cvgr="algo=oblongrose color=crimson" width="64" height="64" id="myCanvas23">[Canvas]</canvas>
+               <canvas data-cvgr="algo=oblongrose color=seagreen" width="48" height="48" id="i20140901o0341">[Canvas]</canvas>
+               <canvas data-cvgr="algo=oblongrose color=royalblue" width="32" height="32" id="i20140901o0342">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20190329o0806">
+   <td id="i20190329o0807">
+   </td>
+   <td class="DemoCellCode" id="i20190329o0808">
+               &lt;canvas <b>data-cvgr="algo=oblongrose color=crimson"</b> width="64" height="64" id="myCanvas23"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=oblongrose color=seagreen"</b> width="48" height="48" id="i20140901o0341"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=oblongrose color=royalblue"</b> width="32" height="32" id="i20140901o0342"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 
@@ -98,22 +114,44 @@
                pulse
    </td>
    <td class="DemoCell" id="i20140815o1521">
-               <canvas data-cvgr="algo=pulse" id="myCanvas24" width="64" height="64">[Canvas]</canvas>
-               <canvas data-cvgr="algo=pulse color=seagreen hertz=0.19" id="myCanvas25" width="48" height="48">[Canvas]</canvas>
-               <canvas data-cvgr="algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11" id="myCanvas26" width="32" height="32">[Canvas]</canvas>
+               <canvas data-cvgr="algo=pulse" width="64" height="64" id="myCanvas24">[Canvas]</canvas>
+               <canvas data-cvgr="algo=pulse color=seagreen hertz=0.19" width="48" height="48" id="myCanvas25">[Canvas]</canvas>
+               <canvas data-cvgr="algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11" width="32" height="32" id="myCanvas26">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20190329o0812">
+   <td id="i20190329o0813">
+   </td>
+   <td class="DemoCellCode" id="i20190329o0814">
+               &lt;canvas <b>data-cvgr="algo=pulse"</b> width="64" height="64" id="myCanvas24"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=pulse color=seagreen hertz=0.19"</b> width="48" height="48" id="myCanvas25"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11"</b> width="32" height="32" id="myCanvas26"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 
   <tr id="i20140901o0414">
    <td id="i20140901o0415">
-               triangle [wrong color]
+               triangle
    </td>
    <td class="DemoCell" id="i20140815o1451" style="clear:left;">
-               <canvas data-cvgr="algo=triangle" id="myCanvas27" width="64" height="64">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangle color=turquoise hertz=1" id="i20140901o0311" width="56" height="56">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangle color=mediumspringgreen hertz=0.25" id="i20140901o0312" width="48" height="48">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangle color=aquamarine hertz=0.05" id="i20140901o0313" width="40" height="40">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangle color=chartreuse hertz=-0.33" id="i20140901o0314" width="32" height="32">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle" width="64" height="64" id="myCanvas27">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=turquoise hertz=1" width="56" height="56" id="i20140901o0311">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=mediumspringgreen hertz=0.25" width="48" height="48" id="i20140901o0312">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=aquamarine hertz=0.05" width="40" height="40" id="i20140901o0313">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=chartreuse hertz=-0.33" width="32" height="32" id="i20140901o0314">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20190329o0816">
+   <td id="i20190329o0817">
+   </td>
+   <td class="DemoCellCode" id="i20190329o0818">
+               &lt;canvas <b>data-cvgr="algo=triangle"</b> width="64" height="64" id="myCanvas27"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=turquoise hertz=1"</b> width="56" height="56" id="i20140901o0311"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=mediumspringgreen hertz=0.25"</b> width="48" height="48" id="i20140901o0312"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=aquamarine hertz=0.05"</b> width="40" height="40" id="i20140901o0313"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=chartreuse hertz=-0.33"</b> width="32" height="32" id="i20140901o0314"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 
@@ -122,17 +160,29 @@
                triangulum
    </td>
    <td class="DemoCell" id="i20140815o1541">
-               <canvas data-cvgr="algo=triangulum" id="myCanvas28" width="44" height="44">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangulum hertz=0.2 bgcolor=lemonchiffon color=crimson color2=red color3=royalblue" id="i20140901o0531" width="40" height="40">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangulum color=seagreen hertz=0.5 bgcolor=papayawhip" id="i20140901o0532" width="36" height="36">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangulum color=royalblue hertz=1 bgcolor=moccasin" id="i20140901o0533" width="32" height="32">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangulum color=maroon hertz=2 bgcolor=mistyrose" id="i20140901o0534" width="28" height="28">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum" width="44" height="44" id="myCanvas28">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum hertz=0.2 bgcolor=lemonchiffon color=crimson color2=red color3=royalblue" width="40" height="40" id="i20140901o0531">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum color=seagreen hertz=0.5 bgcolor=papayawhip" width="36" height="36" id="i20140901o0532">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum color=royalblue hertz=1 bgcolor=moccasin" width="32" height="32" id="i20140901o0533">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum color=maroon hertz=2 bgcolor=mistyrose" width="28" height="28" id="i20140901o0534">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20190329o0822">
+   <td id="i20190329o0823">
+   </td>
+   <td class="DemoCellCode" id="i20190329o0824">
+               &lt;canvas <b>data-cvgr="algo=triangulum"</b> width="44" height="44" id="myCanvas28"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangulum hertz=0.2 bgcolor=lemonchiffon color=crimson color2=red color3=royalblue"</b> width="40" height="40" id="i20140901o0531"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangulum color=seagreen hertz=0.5 bgcolor=papayawhip"</b> width="36" height="36" id="i20140901o0532"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangulum color=royalblue hertz=1 bgcolor=moccasin"</b> width="32" height="32" id="i20140901o0533"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangulum color=maroon hertz=2 bgcolor=mistyrose"</b> width="28" height="28" id="i20140901o0534"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 
   <tr id="i20140901o0436">
    <td style="max-width:7em;" id="i20140901o0443">
-               Canvases with wrong or missing algorithm definition
+               Invalid or missing definitions
    </td>
    <td class="DemoCell" id="i20140901o0444">
 
@@ -143,10 +193,22 @@
         </p>
     </div>
                &nbsp;
-               <canvas data-cvgr="color=Turquoise shiftx=-61 shifty=-35" id="myCanvas29" width="64" height="128">[Canvas]</canvas>
+               <canvas data-cvgr="color=Turquoise shiftx=-61 shifty=-35" width="64" height="128" id="myCanvas29">[Canvas]</canvas>
                <canvas data-cvgr="algo=Oha shiftx=-66" width="48" height="128" id="myCanvas30">[CANVAS]</canvas>
                <canvas data-cvgr="shiftx=-21" width="32" height="128" id="myCanvas31">[Canvas]</canvas>
                <canvas data-cvgr="color=Chocolate shiftx=-64" width="24" height="128" id="myCanvas32">[Canvas]</canvas>
+   </td>
+  </tr>
+
+  <tr id="i20190329o0826">
+   <td id="i20190329o0827">
+   </td>
+   <td class="DemoCellCode" id="i20190329o0828">
+               &lt;canvas <b>data-cvgr=""</b> width="128" height="128" style="float:left;" id="i20140828o0741"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="color=Turquoise shiftx=-61 shifty=-35"</b> width="64" height="128" id="myCanvas29"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=Oha shiftx=-66"</b> width="48" height="128" id="myCanvas30"&gt;[CANVAS]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="shiftx=-21"</b> width="32" height="128" id="myCanvas31"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="color=Chocolate shiftx=-64"</b> width="24" height="128" id="myCanvas32"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 
@@ -157,7 +219,7 @@
  </p>
 
  <p id="i20140829o0531">
-               Here some controls:
+               Page level debug area:
  </p>
 
  <p style="background-color:palegreen; color:darkmagenta; font-size:small;" data-idx="i20140828o0651" id="Cvgr_DebugOutputArea"><!-- output status message -->

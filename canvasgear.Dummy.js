@@ -1,7 +1,6 @@
-//---✂------✂------✂------✂------✂------✂------✂------✂----
-//------------------------- Schnippel -------------------------
+//======✂======================================================
 ﻿/*!
- * This module provides an algorithm for canvasgear.js.
+ * This module provides the Dummy algorithm
  *
  * version : 0.1.8 — 20190330°0711..
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
@@ -28,14 +27,14 @@ var Cvgr = Cvgr || {};
 Cvgr.Algos = Cvgr.Algos || {};
 
 /**
- * This namespace shall hold the Ballist algorithm
+ * This namespace shall hold the Dummy algorithm
  *
  * @id 20180619°0121
  */
-Cvgr.Algos.Ballist = Cvgr.Algos.Ballist || {};
+Cvgr.Algos.Dummy = Cvgr.Algos.Dummy || {};
 
 /**
- * This class provides a ring object for the Ballist algorithm
+ * This class provides a ring object for the Dummy algorithm
  *
  * @id 20140815°1221
  * @param sRingName {}
@@ -43,7 +42,7 @@ Cvgr.Algos.Ballist = Cvgr.Algos.Ballist || {};
  * @param sColorRing {}
  * @param sColorSpace {}
  */
-Cvgr.Algos.Ballist.Ring = function(sRingName, nRadiusAbs, sColorRing, sColorSpace ) {
+Cvgr.Algos.Dummy.Ring = function(sRingName, nRadiusAbs, sColorRing, sColorSpace ) {
 
    // guarantee default values
    // note : not sure this sequence yet works properly
@@ -68,12 +67,12 @@ Cvgr.Algos.Ballist.Ring = function(sRingName, nRadiusAbs, sColorRing, sColorSpac
 };
 
 /*
- * This class provides a target object for the Ballist algorithm
+ * This class provides a target object for the Dummy algorithm
  *
  * @id 20140916°0911
  * @param nRadius {} The target's radius in m, usually goes with lowest ring.
  */
- Cvgr.Algos.Ballist.Target = function() {
+ Cvgr.Algos.Dummy.Target = function() {
 
    this.Diameter = 0.1;                                // diameter in meter [var 20140926°1151] the canvas scale shall be based on this
    this.Naame = '<n/a>';                               // the discipline name
@@ -82,13 +81,13 @@ Cvgr.Algos.Ballist.Ring = function(sRingName, nRadiusAbs, sColorRing, sColorSpac
 };
 
 /*
- * This function provides a hit object for the Ballist algorithm
+ * This function provides a hit object for the Dummy algorithm
  *
  * @id 20140916°0741
  * @param nRingval {}
  * @param nMinutes {}
  */
-Cvgr.Algos.Ballist.Hit = function(nRingval, nMinutes) {
+Cvgr.Algos.Dummy.Hit = function(nRingval, nMinutes) {
 
    // set source values
    this.ringval = nRingval;                            // number - the ring value (assumed from 1.0 to 10.9)
@@ -119,7 +118,7 @@ Cvgr.Algos.Ballist.Hit = function(nRingval, nMinutes) {
  * @callers Only • func 20140916°0421 executeAlgorithm
  * @param {object} iko ...
  */
-Cvgr.Algos.Ballist.executeAlgo_drawDiagonal = function(iko)
+Cvgr.Algos.Dummy.executeAlgo_drawDiagonal = function(iko)
 {
    var nHeight = iko.Height;                           // pixel
    var nWidth = iko.Width;                             // pixel
@@ -200,33 +199,33 @@ Cvgr.Algos.Ballist.executeAlgo_drawDiagonal = function(iko)
  * This function .. is a private helper function
  * @id 20140926°0911
  * @status
- * @callers Only Cvgr.Algos.Ballist.executeAlgorithm
+ * @callers Only Cvgr.Algos.Dummy.executeAlgorithm
  * @param sSeries {} ..
  */
-Cvgr.Algos.Ballist.executeAlgo_getSeries = function(sSeries)
+Cvgr.Algos.Dummy.executeAlgo_getSeries = function(sSeries)
 {
    var hits = new Array();
 
    if (sSeries.length < 1) {
 
       // hardcoded default hitlist [seq 20140916°0751]
-      var h = new Cvgr.Algos.Ballist.Hit(10.7, 55); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(9.3, 43); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.1, 0); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.2, 1); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.3, 3); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.4, 6); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.5, 10); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.6, 20); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.7, 30); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.8, 40); hits.push(h);
-      var h = new Cvgr.Algos.Ballist.Hit(2.9, 50); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(10.7, 55); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(9.3, 43); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(2.1, 0); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(2.2, 1); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(2.3, 3); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(2.4, 6); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(2.5, 10); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(2.6, 20); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(2.7, 30); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(2.8, 40); hits.push(h);
+      var h = new Cvgr.Algos.Dummy.Hit(2.9, 50); hits.push(h);
 
       // retrieve series details ring-decimal/minutes-on-clock
       // Commandlines e.g.:
-      //   - algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" id="id20140916o0731"
-      //   - <!-- algo=Ballist series="9.3/43 8.5/39 8.0/45 8.9/51 8.5/56 9.7/29 9.9/27 8.5/17 8.3/42 6.3/43 9.7/1 9.9/45 9.8/47 7.8/41 6.2/43 10.0/16 10.2/44 9.8/7 8.1/47 7.9/20 10.1/7 9.4/11 9.4/14 9.6/32 7/8/48 9.0/20 8.1/3 8.9/32 6.2/28 6.5/39" id="id20140914o1330" -->
-      //   - <!-- algo=Ballist series="10.4/40 10.3/42 10.6/47 10.3/56 9.2/11 9.7/16 9.6/34 9.1/39 9.9/54 9.9/58 8.4/48 8.6/50 8.6/53 7.4/54 6.5/55" id="id20140926o203021" -->
+      //   - algo=Dummy series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" id="id20140916o0731"
+      //   - <!-- algo=Dummy series="9.3/43 8.5/39 8.0/45 8.9/51 8.5/56 9.7/29 9.9/27 8.5/17 8.3/42 6.3/43 9.7/1 9.9/45 9.8/47 7.8/41 6.2/43 10.0/16 10.2/44 9.8/7 8.1/47 7.9/20 10.1/7 9.4/11 9.4/14 9.6/32 7/8/48 9.0/20 8.1/3 8.9/32 6.2/28 6.5/39" id="id20140914o1330" -->
+      //   - <!-- algo=Dummy series="10.4/40 10.3/42 10.6/47 10.3/56 9.2/11 9.7/16 9.6/34 9.1/39 9.9/54 9.9/58 8.4/48 8.6/50 8.6/53 7.4/54 6.5/55" id="id20140926o203021" -->
 
       // read series from commandline [line 20140926°0851]
       // // var a = iko.CmdHash2['series'];
@@ -240,7 +239,7 @@ Cvgr.Algos.Ballist.executeAlgo_getSeries = function(sSeries)
       var a1 = sSeries.split(" ");
       for (var i = 0; i < a1.length; i++) {
          var a2 = a1[i].split("/");
-         var h = new Cvgr.Algos.Ballist.Hit(a2[0], a2[1]); hits.push(h);
+         var h = new Cvgr.Algos.Dummy.Hit(a2[0], a2[1]); hits.push(h);
       }
    }
 
@@ -252,84 +251,84 @@ Cvgr.Algos.Ballist.executeAlgo_getSeries = function(sSeries)
  *
  * @id 20140916°0921
  * @status Under construction
- * @note function Cvgr.Algos.Ballist.Ring(sRingName, nRadiusAbs, sColorRing, sColorSpace )
+ * @note function Cvgr.Algos.Dummy.Ring(sRingName, nRadiusAbs, sColorRing, sColorSpace )
  * @note The details are still be to adjusted.
  * @param sTargetName {string} ..
  */
- Cvgr.Algos.Ballist.executeAlgo_getTarget = function(sTargetName)
+ Cvgr.Algos.Dummy.executeAlgo_getTarget = function(sTargetName)
 {
-   var target = new Cvgr.Algos.Ballist.Target();
+   var target = new Cvgr.Algos.Dummy.Target();
 
    if (sTargetName === 'kkspp') {
       // ref : http://commons.wikimedia.org/wiki/Category:Targets?uselang=de#mediaviewer/File:25_Meter_Precision_and_50_Meter_Pistol_Target.svg (20140926°1331)
       target.Diameter = 0.500;
       target.Naame = "Sportpistole 25 m Präzision";
       target.Shortnam = sTargetName;
-      target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.025, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.050, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.075, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.100, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.125, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.150, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.175, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.200, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.225, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.250, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring('10', 0.025, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '9', 0.050, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '8', 0.075, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '7', 0.100, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '6', 0.125, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '5', 0.150, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '4', 0.175, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '3', 0.200, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '2', 0.225, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '1', 0.250, 'blue' , 'white'));
    }
    else if (sTargetName === 'kkspd') {
       target.Diameter = 0.500;
       target.Naame = "Sportpistole 25 m Duell";
       target.Shortnam = sTargetName;
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.050, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.100, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.150, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.200, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.250, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '5', 0.050, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '4', 0.100, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '3', 0.150, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '2', 0.200, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '1', 0.250, 'blue' , 'black'));
    }
    else if (sTargetName === 'lg10m') {
       target.Diameter = 0.050;
       target.Naame = "Luftgewehr 10 m";
       target.Shortnam = sTargetName;
-      target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.0025, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.0050, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.0075, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.0100, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.0125, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.0150, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.0175, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.0200, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.0225, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.0250, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring('10', 0.0025, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '9', 0.0050, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '8', 0.0075, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '7', 0.0100, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '6', 0.0125, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '5', 0.0150, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '4', 0.0175, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '3', 0.0200, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '2', 0.0225, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '1', 0.0250, 'blue' , 'white'));
    }
    else if (sTargetName === 'lgdt10m') {
       target.Diameter = 0.0100;
       target.Naame = "Deutsche Luftgewehr-Scheibe 10 m";
       target.Shortnam = sTargetName;
-      target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.0005, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.0010, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.0015, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.0020, 'blue' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.0025, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.0030, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.0035, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.0040, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.0045, 'blue' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.0050, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring('10', 0.0005, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '9', 0.0010, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '8', 0.0015, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '7', 0.0020, 'blue' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '6', 0.0025, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '5', 0.0030, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '4', 0.0035, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '3', 0.0040, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '2', 0.0045, 'blue' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '1', 0.0050, 'blue' , 'white'));
    }
    else {
       target.Diameter = 0.1500;
       target.Naame = "Luftpistole 10 m";
       target.Shortnam = 'lupi10m';
-      target.rings.push(new Cvgr.Algos.Ballist.Ring('10', 0.0055, 'black', 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '9', 0.0135, 'black', 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '8', 0.0215, 'gray' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '7', 0.0295, 'gray' , 'black'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '6', 0.0375, 'gray' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '5', 0.0455, 'gray' , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '4', 0.0535, 'red'  , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '3', 0.0615, 'red'  , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '2', 0.0695, 'red'  , 'white'));
-      target.rings.push(new Cvgr.Algos.Ballist.Ring( '1', 0.0775, 'red'  , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring('10', 0.0055, 'black', 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '9', 0.0135, 'black', 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '8', 0.0215, 'gray' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '7', 0.0295, 'gray' , 'black'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '6', 0.0375, 'gray' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '5', 0.0455, 'gray' , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '4', 0.0535, 'red'  , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '3', 0.0615, 'red'  , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '2', 0.0695, 'red'  , 'white'));
+      target.rings.push(new Cvgr.Algos.Dummy.Ring( '1', 0.0775, 'red'  , 'white'));
    }
 
    return target;
@@ -347,7 +346,7 @@ Cvgr.Algos.Ballist.executeAlgo_getSeries = function(sSeries)
  * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
  * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
  */
-Cvgr.Algos.Ballist.executeAlgorithm = function(icos, iNdx)
+Cvgr.Algos.Dummy.executeAlgorithm = function(icos, iNdx)
 {
    // prolog
    var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
@@ -370,10 +369,10 @@ Cvgr.Algos.Ballist.executeAlgorithm = function(icos, iNdx)
    //nCurrAngle = Math.sin (iko.Angle) * (iSize - 4) / 2 + iSize / 2;
 
    // retrieve target
-   var tgt = Cvgr.Algos.Ballist.executeAlgo_getTarget();
+   var tgt = Cvgr.Algos.Dummy.executeAlgo_getTarget();
 
    // retrieve series
-   var hits = Cvgr.Algos.Ballist.executeAlgo_getSeries(iko.CmdHash2['series']);
+   var hits = Cvgr.Algos.Dummy.executeAlgo_getSeries(iko.CmdHash2['series']);
 
    // prepare canvas
    iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
@@ -445,7 +444,7 @@ Cvgr.Algos.Ballist.executeAlgorithm = function(icos, iNdx)
       iko.Context.stroke();
    }
 
-   Cvgr.Algos.Ballist.executeAlgo_drawDiagonal(iko);
+   Cvgr.Algos.Dummy.executeAlgo_drawDiagonal(iko);
 
    // progress
    iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
@@ -453,7 +452,5 @@ Cvgr.Algos.Ballist.executeAlgorithm = function(icos, iNdx)
       iko.Angle = 0;
    }
 };
-
-//------------------------- Schnappel -------------------------
-//---✂------✂------✂------✂------✂------✂------✂------✂----
+//======✂======================================================
 /* eof */

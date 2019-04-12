@@ -85,13 +85,21 @@
    status : Open
    ܀
 
+   issue 20140901°0331 'IE8 demands extra plus sign'
+   matter :  The plus sign before iko.Width and iko.Height is wanted for
+       IE8, which will otherwise interpret that as string, and e.g.
+       iSize will have the value 3232 if width=64 and height=64.
+   location : e.g. line 20140916°0821
+       "var iSize = (+iko.Width + +iko.Height) / 2;"
+   status : IE8 is no more supported
+   ܀
+
    issue 20140831°0631 'IE8 fails drawing canvas'
    matter : Below this point (in references.html), in IE8 no more icons are drawn.
    note : This has directly to do with debug sequence 20140817°2321 in canvasgearexcanvas.js.
    note : Could not find out why.
    workaround : None yet
-   ///status : Open.
-   status : Finished. We will no more support IE8
+   status : Finished, IE8 is no more supported
    note :
    ܀
 

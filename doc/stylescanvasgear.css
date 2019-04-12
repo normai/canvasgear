@@ -15,7 +15,10 @@ body.BodyFaceCanvasGear { background-color:Lavender; } /* #e6e6fa */
 
 /* rule 20140916°0641 canvas attached info paragraph */
 p.Cvgr_CanvasAttachedInfoPara {
-   background-color:LightGoldenRodYellow; float:left; margin-left:0.6em; margin-top:0em; max-width:24em;
+   background-color:LightGoldenRodYellow; float:left;
+   margin-left:0.6em; margin-top:0em;
+   max-width:24em;
+   min-width:10.9em; /* empiric */
 }
 
 /* rule 20140828°0422 */

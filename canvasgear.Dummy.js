@@ -67,7 +67,7 @@ Cvgr.Algos.Dummy.executeAlgorithm = function(icos, iNdx)
 
    // prepare canvas [line 20190329°0441]
    iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-   iko.Context.fillStyle = 'MistyRose'; // iko.BgColor;
+   iko.Context.fillStyle = iko.BgColor; // 'MistyRose'; // iko.BgColor;
    iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
    // (.) calculate center point from canvas length and height [line 20190329°0442]
@@ -99,15 +99,23 @@ Cvgr.Algos.Dummy.executeAlgorithm = function(icos, iNdx)
 
    // (.) finish [seq 20190329°0446]
    //iko.Context.closePath();
-   iko.Context.strokeStyle = 'blue';
+   iko.Context.strokeStyle = iko.Color; // 'blue';
    iko.Context.lineWidth = 6;
    iko.Context.stroke();
 
+   /*
+   issue 20190329°0451 'iko.Angle does not reset'
+   matter : The angle does not reset. Why not?
+   answer : It only seemed so, because the angle in the debug display
+      was printed as integer, when it was a number of 1/10.
+   status : finished
+   */
+
    // progress [seq 20190329°0447]
    iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
-   ////if (iko.Angle > iSize - 4) {
-   if (iko.Angle > 16) {
-      // The angle does not reset. Why not? [issue 20190329°0451]
+   ///if (iko.Angle > iSize - 4) {
+   ////if (iko.Angle > 16) { // Does this work? See issue 20190329°0451
+   if (iko.Angle > 12345) {
       iko.Angle = 0;
    }
 };

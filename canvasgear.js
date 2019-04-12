@@ -539,307 +539,297 @@ Cvgr.Vars.timrs = [];
  */
 Cvgr.Vars.timSuccess = [];
 
-//*****************************************************
-// Algorithms
-//*****************************************************
+//////*****************************************************
+////// Algorithms
+//////*****************************************************
+////
+/////**
+//// * This function serves developing an algorithm
+//// *
+//// * @id 20140901°0521
+//// * @status
+//// * @note Sorrily, we must pass the icon via array plus index. All attempts
+//// *    to pass the plain icon failed. Not sure why [issue 20140828°0751]
+//// * @param icos The complete Cvgr.Vars.icos icons array (as workaround)
+//// * @param iFor The index into the icons array to the wanted icon
+//// */
+/////*
+////Cvgr.Func.algoDevelop = function(icos, iFor)
+////{
+////   // This shall become the 'lines' algorithm' [seq 20140901°0521]
+////
+////   // workaround for issue 20140828°0751
+////   var iko = icos[iFor];
+////
+////   // draw this algorithm only once [seq 20140916°1022`01]
+////   if (iko.DrawOnlyOnce)
+////   {
+////      return;
+////   }
+////   iko.DrawOnlyOnce = true;
+////
+////   // preparatory calculations [seq 20140916°0821]
+////   var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+////
+////   // prepare canvas
+////   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+////   iko.Context.fillStyle = "#eeeeee";
+////   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+////
+////   // preparatory calculations
+////   var lins = new Array();
+////   var lin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, 'crimson');
+////   var lin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, 'seagreen');
+////   var lin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, 'royalblue');
+////   lins.push(lin1);
+////   lins.push(lin2);
+////   lins.push(lin3);
+////
+////   for (var i = 0; i < lins.length; i++)
+////   {
+////      iko.Context.beginPath();
+////      iko.Context.moveTo(lins[i].X1, lins[i].Y1);
+////      iko.Context.lineTo(lins[i].X2, lins[i].Y2);
+////      iko.Context.lineWidth = 3;
+////      iko.Context.strokeStyle = lins[i].Colo;
+////      iko.Context.stroke();
+////   }
+////};
 
-/**
- * This function serves developing an algorithm
- *
- * @id 20140901°0521
- * @status
- * @note Sorrily, we must pass the icon via array plus index. All attempts
- *    to pass the plain icon failed. Not sure why [issue 20140828°0751]
- * @param icos The complete Cvgr.Vars.icos icons array (as workaround)
- * @param iFor The index into the icons array to the wanted icon
- */
-Cvgr.Func.algoDevelop = function(icos, iFor)
-{
-   // This shall become the 'lines' algorithm' [seq 20140901°0521]
+/////**
+//// * This function implements a drawing algorithm to draw a rose
+//// *
+//// * @id 20140828°1411
+//// * @status Not yet animated
+//// * @ref http://gnuzoo.org/rose/index.htm [20140815°0521]
+//// * @param {number} icos — This is Cvgr.Vars.icos[iFor] at the caller.
+//// * @param {number} iFor — The index into the icos array.
+//// */
+////Cvgr.Func.algoOblongrose = function(icos, iFor)
+////{
+////   var iko = icos[iFor]; // (workaround for issue 20140828°0751)
+////
+////   // draw this algorithm only once [seq 20140916°1022`02]
+////   if (iko.DrawOnlyOnce)
+////   {
+////      return;
+////   }
+////   iko.DrawOnlyOnce = true;
+////
+////   // preparatory calculations [seq 20140916°0822]
+////   var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+////
+////   // prepare canvas
+////   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+////
+////   // set colors
+////   iko.Context.strokeStyle = iko.Color;
+////   iko.Context.fillStyle = '#ffff00';                                  // 'yellow' // not applied below
+////
+////   // set registration point
+////   iko.Context.translate(iSize / 2, iSize / 2);
+////
+////   var iNums = 16;
+////   for (var i = 0; i < iNums; i++)
+////   {
+////      iko.Context.rotate(2 * Math.PI / iNums);
+////      iko.Context.strokeRect(0, 0, iSize / 2, iSize / 6);
+////   }
+////};
 
-   // workaround for issue 20140828°0751
-   var iko = icos[iFor];
+/////**
+//// * This function implements the pulse drawing algorithm v2
+//// *
+//// * @id 20140829°0511
+//// * @descript Features are:
+//// *    • Adjust the drawing size relative to the canvas size
+//// *    • Allow parameters 'shiftx' and 'shifty'
+//// *    • Use parameter 'hertz' instead of the old 'speed'
+//// * @status
+//// * @param {Array} icos — Array of icon objects, Cvgr.Vars.icos[iNdx] at the caller
+//// * @param {Integer} iNdx — The index into the array
+//// */
+////Cvgr.Func.algoPulse = function(icos, iNdx)
+////{
+////   var iko = icos[iNdx]; // workaround for issue 20140828°0751
+////
+////   // (.) prepare canvas
+////   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+////   iko.Context.fillStyle = "#f0f0f0";
+////   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+////
+////   // (.) calculate size
+////   var iRadius = (iko.Width > iko.Height) ? iko.Width : iko.Height;
+////   iRadius *= iko.SizeFactor; // [line 20190328°0835]
+////   iRadius = iRadius / 2;
+////
+////   // (.) calculate current radius
+////   var radius = 0;
+////   radius = iRadius * Math.abs(Math.cos(iko.Angle));
+////
+////   // (.) calculate position
+////   var iRadiX = iRadius + parseInt(iko.ShiftX, 10);
+////   var iRadiY = iRadius + parseInt(iko.ShiftY, 10);
+////
+////   // (.) draw
+////   iko.Context.beginPath();                            // circle
+////   iko.Context.arc ( iRadiX                            // x coordinate, e.g. 90
+////                    , iRadiY                           // y coordinate, e.g. 90
+////                     , radius                          // radius, e.g. 90
+////                      , 0                              // starting point angle in radians, starting east
+////                       , Math.PI * 2                   // endpoint angle in radians
+////                        , false                        // clockwise
+////                         );
+////
+////   // (.) finish
+////   iko.Context.closePath();
+////   iko.Context.fillStyle = iko.Color;
+////   iko.Context.fill();
+////
+////   // (.) calculate progression
+////   iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+////   if (false) { // false
+////      if (iko.Angle > 2) { iko.Angle = 0; } // this works (see issue 20190329°0451)
+////   }
+////};
 
-   // draw this algorithm only once [seq 20140916°1022`01]
-   if (iko.DrawOnlyOnce)
-   {
-      return;
-   }
-   iko.DrawOnlyOnce = true;
+/////**
+//// * This function implements a drawing algorithm for an ikon
+//// *
+//// * @id 20140828o°0851
+//// * @status proof-of-concept
+//// * @note Sorrily, we must pass the icon via array plus index. All attempts
+//// *     to pass the plain icon failed. No idea why. (issue 20140828°0751)
+//// * @ref Article 'Drawing shapes with canvas'
+//// *     https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Drawing_shapes [20140828°0911]
+//// * @ref Article 'Hwo do you rotate an HTML5 canvas around it's center' [20140901°0321]
+//// *     http://www.williammalone.com/briefs/how-to-rotate-html5-canvas-around-center
+//// * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
+//// * @param iFor {Integer} The index into the icon objects array
+//// */
+////Cvgr.Func.algoTriangle = function(icos, iNdx)
+////{
+////   var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
+////
+////   // preparatory calculations [seq 20140916°0823]
+////   var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+////   var iPt1x = iSize * 0.5;
+////   var iPt1y = iSize * 0.01;
+////   var iPt2x = iSize * 0.8;
+////   var iPt2y = iSize * 0.9;
+////   var iPt3x = iSize * 0.2;
+////   var iPt3y = iPt2y;
+////
+////   // prepare canvas
+////   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);   // Opera works fine
+////
+////   // (.) rotation
+////   // (.1) set registration point
+////   iko.Context.translate(iSize / 2, iSize / 2);
+////   // (.2) rotate 1 degree
+////   iko.Context.rotate(Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz);    // 'Cvgr.Vars.nIncTurnsPerFrame * 4' is 1 rotation per second
+////   // (.3) move registration point back to the top left corner of canvas
+////   iko.Context.translate(-iSize / 2, -iSize / 2);
+////
+////   // note : Remember issue 20140901°0911 'Opera fillRect() fail'
+////
+////   // set background
+////   iko.Context.fillStyle = iko.BgColor;
+////   // (20140901°0912) try envelope against issue 20140901°0911 'Opera fillRect() fail'
+////   try
+////   {
+////      // Opera may throw 'object DOMException' here (issue 20140901°0911)
+////      iko.Context.fillRect(0, 0, iko.Width, iko.Height);
+////   }
+////   catch (e)
+////   {
+////      if ( Cvgr.Const.bShow_Debug_Dialogs )                            // toggle debug
+////      {
+////         alert('[debug 20140901°0913]\nException "' + e + '"');
+////      }
+////   }
+////
+////   // draw
+////   iko.Context.beginPath();
+////
+////   // (why the try see issue 20140901°0933)
+////   try
+////   {
+////      iko.Context.moveTo(iPt1x, iPt1y);
+////   }
+////   catch (e)
+////   {
+////      if ( Cvgr.Const.bShow_Debug_Dialogs )                            // debug toggle
+////      {
+////         alert('[debug 20140901°0932]\nException "' + e + '"');
+////      }
+////   }
+////   iko.Context.lineTo(iPt2x, iPt2y);
+////   iko.Context.lineTo(iPt3x, iPt3y);
+////   iko.Context.fillStyle = iko.Color;
+////   iko.Context.fill();
+////   iko.Context.closePath();
+////};
 
-   // preparatory calculations [seq 20140916°0821]
-   var iSize = (+iko.Width + +iko.Height) / 2;                         // [see note 20140901°0331]
-
-   // prepare canvas
-   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-   iko.Context.fillStyle = "#eeeeee";
-   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-
-   // preparatory calculations
-   var lins = new Array();
-   var lin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, 'crimson');
-   var lin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, 'seagreen');
-   var lin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, 'royalblue');
-   lins.push(lin1);
-   lins.push(lin2);
-   lins.push(lin3);
-
-   for (var i = 0; i < lins.length; i++)
-   {
-      iko.Context.beginPath();
-      iko.Context.moveTo(lins[i].X1, lins[i].Y1);
-      iko.Context.lineTo(lins[i].X2, lins[i].Y2);
-      iko.Context.lineWidth = 3;
-      iko.Context.strokeStyle = lins[i].Colo;
-      iko.Context.stroke();
-   }
-};
-
-/**
- * This function implements a drawing algorithm to draw a rose
- *
- * @id 20140828°1411
- * @status Not yet animated
- * @ref http://gnuzoo.org/rose/index.htm [20140815°0521]
- * @param {number} icos — This is Cvgr.Vars.icos[iFor] at the caller.
- * @param {number} iFor — The index into the icos array.
- */
-Cvgr.Func.algoOblongrose = function(icos, iFor)
-{
-   var iko = icos[iFor]; // (workaround for issue 20140828°0751)
-
-   // draw this algorithm only once [seq 20140916°1022`02]
-   if (iko.DrawOnlyOnce)
-   {
-      return;
-   }
-   iko.DrawOnlyOnce = true;
-
-   // preparatory calculations [seq 20140916°0822]
-   var iSize = (+iko.Width + +iko.Height) / 2;                         // [see note 20140901°0331]
-
-   // prepare canvas
-   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-
-   // set colors
-   iko.Context.strokeStyle = iko.Color;
-   iko.Context.fillStyle = '#ffff00';                                  // 'yellow' // not applied below
-
-   // set registration point
-   iko.Context.translate(iSize / 2, iSize / 2);
-
-   var iNums = 16;
-   for (var i = 0; i < iNums; i++)
-   {
-      iko.Context.rotate(2 * Math.PI / iNums);
-      iko.Context.strokeRect(0, 0, iSize / 2, iSize / 6);
-   }
-};
-
-/**
- * This function implements the pulse drawing algorithm v2
- *
- * @id 20140829°0511
- * @descript Features are:
- *    - It adjusts the drawing size relative to the canvas size.
- *    - It allows parameters 'shiftx' and 'shifty'.
- *    - It uses parameter 'hertz' instead of the old 'speed'
- * @status
- * @param {number} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
- * @param {number} iNdx — This is the index into the array.
- */
-Cvgr.Func.algoPulse = function(icos, iNdx)
-{
-   var iko = icos[iNdx]; // workaround for issue 20140828°0751
-
-   // (.) prepare canvas
-   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-   iko.Context.fillStyle = "#f0f0f0";
-   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-
-   // (.) calculate size
-   var iRadius = (iko.Width > iko.Height) ? iko.Width : iko.Height;
-   iRadius *= iko.SizeFactor; // [line 20190328°0835]
-   iRadius = iRadius / 2;
-
-   // (.) calculate current radius
-   var radius = 0;
-   radius = iRadius * Math.abs(Math.cos(iko.Angle));
-
-   // (.) calculate position
-   var iRadiX = iRadius + parseInt(iko.ShiftX, 10);
-   var iRadiY = iRadius + parseInt(iko.ShiftY, 10);
-
-   // (.) draw
-   iko.Context.beginPath();                            // circle
-   iko.Context.arc ( iRadiX                            // x coordinate, e.g. 90
-                    , iRadiY                           // y coordinate, e.g. 90
-                     , radius                          // radius, e.g. 90
-                      , 0                              // starting point angle in radians, starting east
-                       , Math.PI * 2                   // endpoint angle in radians
-                        , false                        // clockwise
-                         );
-
-   // (.) finish
-   iko.Context.closePath();
-   iko.Context.fillStyle = iko.Color;
-   iko.Context.fill();
-
-   // (.) calculate progression
-   iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
-};
-
-   /*
-   note 20140901°0331 'IE8 demands extra plus sign'
-   matter :  The plus sign before iko.Width and iko.Height is wanted for
-       IE8, which will otherwise interpret that as string, and e.g.
-       iSize will have the value 3232 if width=64 and height=64.
-   status : IE8 is no more supported
-   */
-
-/**
- * This function implements a drawing algorithm for an ikon
- *
- * @id 20140828o°0851
- * @status proof-of-concept
- * @note Sorrily, we must pass the icon via array plus index. All attempts
- *     to pass the plain icon failed. No idea why. (issue 20140828°0751)
- * @ref Article 'Drawing shapes with canvas'
- *     https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Drawing_shapes [20140828°0911]
- * @ref Article 'Hwo do you rotate an HTML5 canvas around it's center' [20140901°0321]
- *     http://www.williammalone.com/briefs/how-to-rotate-html5-canvas-around-center
- * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
- * @param iFor {Integer} The index into the icon objects array
- */
-Cvgr.Func.algoTriangle = function(icos, iNdx)
-{
-   var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
-
-   // preparatory calculations [seq 20140916°0823]
-   //  See note 20140901°0331 about '+'
-   var iSize = (+iko.Width + +iko.Height) / 2;
-   var iPt1x = iSize * 0.5;
-   var iPt1y = iSize * 0.01;
-   var iPt2x = iSize * 0.8;
-   var iPt2y = iSize * 0.9;
-   var iPt3x = iSize * 0.2;
-   var iPt3y = iPt2y;
-
-   // prepare canvas
-   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);   // Opera works fine
-
-   // (.) rotation
-   // (.1) set registration point
-   iko.Context.translate(iSize / 2, iSize / 2);
-   // (.2) rotate 1 degree
-   iko.Context.rotate(Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz);    // 'Cvgr.Vars.nIncTurnsPerFrame * 4' is 1 rotation per second
-   // (.3) move registration point back to the top left corner of canvas
-   iko.Context.translate(-iSize / 2, -iSize / 2);
-
-   // note : Remember issue 20140901°0911 'Opera fillRect() fail'
-
-   // set background
-   iko.Context.fillStyle = iko.BgColor;
-   // (20140901°0912) try envelope against issue 20140901°0911 'Opera fillRect() fail'
-   try
-   {
-      // Opera may throw 'object DOMException' here (issue 20140901°0911)
-      iko.Context.fillRect(0, 0, iko.Width, iko.Height);
-   }
-   catch (e)
-   {
-      if ( Cvgr.Const.bShow_Debug_Dialogs )                            // toggle debug
-      {
-         alert('[debug 20140901°0913]\nException "' + e + '"');
-      }
-   }
-
-   // draw
-   iko.Context.beginPath();
-
-   // (why the try see issue 20140901°0933)
-   try
-   {
-      iko.Context.moveTo(iPt1x, iPt1y);
-   }
-   catch (e)
-   {
-      if ( Cvgr.Const.bShow_Debug_Dialogs )                            // debug toggle
-      {
-         alert('[debug 20140901°0932]\nException "' + e + '"');
-      }
-   }
-   iko.Context.lineTo(iPt2x, iPt2y);
-   iko.Context.lineTo(iPt3x, iPt3y);
-   iko.Context.fillStyle = iko.Color;
-   iko.Context.fill();
-   iko.Context.closePath();
-};
-
-/**
- * This function implements the line drawing algorithm
- *
- * @id 20140828°1431
- * @status under construction
- * @ref http://stackoverflow.com/questions/3594653/html5-canvas-drawing-multicolored-lines [20140831o0741]
- * @ref http://html5tutorial.com/advanced-path-painting/ [20140831o0742]
- * @ref http://www.mysamplecode.com/2012/04/html5-canvas-draw-line-tutorial.html [20140831o0743] here I found the first example for multi colored lines
- * @ref http://www.peterkroener.de/eine-kleine-canvas-einfuehrung [20140828o1221]
- * @ref http://canvas.quaese.de/index.php?doc_id=36&nav=6,47 [20140828o1421]
- * @ref https://developer.mozilla.org/de/docs/Web/Guide/HTML/Canvas_tutorial/Applying_styles_and_colors [20140828o1422]
- * @note The statement 'fill() includes closePath()' is true only to some degree,
- *         e.g. *not* for drawing the final line to origin.
- * @param icos This is Cvgr.Vars.icos[iFor] at the caller.
- * @param iFor The index into the icos array.
- */
-Cvgr.Func.algoTriangulum = function(icos, iFor)
-{
-   // workaround for issue 20140828°0751
-   var iko = icos[iFor];
-
-   // preparatory calculations [seq 20140916°0824]
-   //  See note 20140901°0331
-   var iSize = (+iko.Width + +iko.Height) / 2;
-
-   var nCurrAngle = iko.Angle;
-   nCurrAngle = Math.sin (iko.Angle) * (iSize - 4) / 2 + iSize / 2;
-
-   // prepare canvas
-   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-   iko.Context.fillStyle = iko.BgColor;
-   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-
-   // draw triangle
-   iko.Context.beginPath();
-   iko.Context.moveTo(3, 3);
-   iko.Context.lineTo(iSize - 3, 3);
-   iko.Context.lineTo(nCurrAngle, iSize - 5);
-   iko.Context.fillStyle = iko.Color;
-   iko.Context.fill();
-   iko.Context.closePath();
-   iko.Context.lineWidth = 2;
-   iko.Context.strokeStyle = iko.Color2;
-   iko.Context.stroke();
-
-   // draw line
-   iko.Context.beginPath();
-   iko.Context.moveTo(2, iSize - 2);
-   iko.Context.lineTo(iSize - 2, iSize - 2);
-   iko.Context.lineWidth = 3;
-   iko.Context.strokeStyle = iko.Color3;
-   iko.Context.stroke();
-
-   // maintain progress
-   iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
-   if (iko.Angle > iSize - 4)
-   {
-      iko.Angle = 0;
-   }
-};
-
-//*****************************************************
-// Utility functions
-//*****************************************************
+/////**
+//// * This function implements the line drawing algorithm
+//// *
+//// * @id 20140828°1431
+//// * @status under construction
+//// * @ref http://stackoverflow.com/questions/3594653/html5-canvas-drawing-multicolored-lines [20140831o0741]
+//// * @ref http://html5tutorial.com/advanced-path-painting/ [20140831o0742]
+//// * @ref http://www.mysamplecode.com/2012/04/html5-canvas-draw-line-tutorial.html [20140831o0743] here I found the first example for multi colored lines
+//// * @ref http://www.peterkroener.de/eine-kleine-canvas-einfuehrung [20140828o1221]
+//// * @ref http://canvas.quaese.de/index.php?doc_id=36&nav=6,47 [20140828o1421]
+//// * @ref https://developer.mozilla.org/de/docs/Web/Guide/HTML/Canvas_tutorial/Applying_styles_and_colors [20140828o1422]
+//// * @note The statement 'fill() includes closePath()' is true only to some degree,
+//// *         e.g. *not* for drawing the final line to origin.
+//// * @param icos This is Cvgr.Vars.icos[iFor] at the caller.
+//// * @param iFor The index into the icos array.
+//// */
+////Cvgr.Func.algoTriangulum = function(icos, iFor)
+////{
+////   // workaround for issue 20140828°0751
+////   var iko = icos[iFor];
+////
+////   // preparatory calculations [seq 20140916°0824]
+////   var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+////
+////   var nCurrAngle = iko.Angle;
+////   nCurrAngle = Math.sin (iko.Angle) * (iSize - 4) / 2 + iSize / 2;
+////
+////   // prepare canvas
+////   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+////   iko.Context.fillStyle = iko.BgColor;
+////   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+////
+////   // draw triangle
+////   iko.Context.beginPath();
+////   iko.Context.moveTo(3, 3);
+////   iko.Context.lineTo(iSize - 3, 3);
+////   iko.Context.lineTo(nCurrAngle, iSize - 5);
+////   iko.Context.fillStyle = iko.Color;
+////   iko.Context.fill();
+////   iko.Context.closePath();
+////   iko.Context.lineWidth = 2;
+////   iko.Context.strokeStyle = iko.Color2;
+////   iko.Context.stroke();
+////
+////   // draw line
+////   iko.Context.beginPath();
+////   iko.Context.moveTo(2, iSize - 2);
+////   iko.Context.lineTo(iSize - 2, iSize - 2);
+////   iko.Context.lineWidth = 3;
+////   iko.Context.strokeStyle = iko.Color3;
+////   iko.Context.stroke();
+////
+////   // maintain progress
+////   iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
+////   if (iko.Angle > iSize - 4) // This does just not work (see issue 20190329°0451)
+////   {
+////      iko.Angle = 0;
+////   }
+////};
 
 /**
  * This function is called when pulling-behind a non-immediate algorithm, it
@@ -925,10 +915,10 @@ Cvgr.Func.executeFrame = function()
       s += "<br />Start time = " + Cvgr.Vars.iTimeStart + " = " + Cvgr.Vars.iTimeStart.valueOf() + ";";
       s += "<br />Current time = " + iTimeCurr;
       s += "<br />Elapsed seconds (every two) = " + iElapsedTwoSeconds + ";";
-      s += "<br />Frames per seconds (total, average since start) = " + iFramesPerSecondTotal;
-      s += "<br />Frames per seconds (for the last two seconds) = " + Cvgr.Vars.iFramesPerTowSeconds;
-      s += "<br />True angle for 1 Hz (turns) = " + Cvgr.Vars.nTrueAngleTurns + ";";
-      s += "<br />Increment per frame (turns) = " + Cvgr.Vars.nIncTurnsPerFrame + ";";
+      s += "<br />Frames per seconds (total, average since start) = " + iFramesPerSecondTotal.toFixed(9);
+      s += "<br />Frames per seconds (for the last two seconds) = " + Cvgr.Vars.iFramesPerTowSeconds.toFixed(9);
+      s += "<br />True angle for 1 Hz (turns) = " + Cvgr.Vars.nTrueAngleTurns.toFixed(9) + ";";
+      s += "<br />Increment per frame (turns) = " + Cvgr.Vars.nIncTurnsPerFrame.toFixed(9) + ";";
       elDbg.innerHTML = s;
    }
 
@@ -941,16 +931,13 @@ Cvgr.Func.executeFrame = function()
 
       // (x) output canvas status [seq 20140815°1253]
       // The id of the output element has to be the id of the canvas with added '.info'.
+      // See ref 20190329°0513 'stackoverflow : convert float number to whole'
       var sIde = Cvgr.Vars.icos[iNdx].Ide + '.info';
       var el = document.getElementById(sIde);                          // <!-- canvas attached info paragraph -->
       if (el !== null)
       {
-         var sOut = '<small>CanvasGear Canvas Debug Info :';
-         var i = 1;
-         // note : Possibilities to get integers were e.g. ceil, floor, round, trunc.
-         // see : ref 20190329°0513 'stackoverflow : convert float number to whole'
-         i = Math.floor( Cvgr.Vars.icos[iNdx].Angle * 10);
-         sOut += "<br />iko.Angle = " + i
+         var sOut = '<small>Canvas Debug Info :';
+         sOut += "<br />iko.Angle = " + Cvgr.Vars.icos[iNdx].Angle.toFixed(9) + ' '
                +  "<br />iko.Color = " + Cvgr.Vars.icos[iNdx].Color
                 + "<br />iko.Height = " + Cvgr.Vars.icos[iNdx].Height
                  + "<br />iko.Mode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip')
@@ -968,28 +955,23 @@ Cvgr.Func.executeFrame = function()
       // () execute algorithm [seq 20140815°1254]
       // note : Remember issue 20140828°0751 'Algo calling params quirk' -- is it solved?
       var sAlgo = Cvgr.Vars.icos[iNdx].AlgoName;
-      if (sAlgo === 'develop') {
-         Cvgr.Func.algoDevelop(Cvgr.Vars.icos, iNdx);
-      }
-      else if (sAlgo === 'oblongrose') {
-         Cvgr.Func.algoOblongrose(Cvgr.Vars.icos, iNdx);
-      }
-      else if (sAlgo === 'pulse') {
-         Cvgr.Func.algoPulse(Cvgr.Vars.icos, iNdx);
-      }
-      else if ( sAlgo === 'triangle' ) {
-         Cvgr.Func.algoTriangle(Cvgr.Vars.icos, iNdx);
-      }
-      else if (sAlgo === 'triangulum') {
-         Cvgr.Func.algoTriangulum(Cvgr.Vars.icos, iNdx);
-      }
-      else {
-         
-         // This processes • Ballist
+////      if (sAlgo === 'develop') {
+////         Cvgr.Func.algoDevelop(Cvgr.Vars.icos, iNdx);
+////      }
+////      if (sAlgo === 'oblongrose') {
+////         Cvgr.Func.algoOblongrose(Cvgr.Vars.icos, iNdx);
+////      }
+////      if (sAlgo === 'pulse') {
+////         Cvgr.Func.algoPulse(Cvgr.Vars.icos, iNdx);
+////      }
+////      else if ( sAlgo === 'triangle' ) {
+////         Cvgr.Func.algoTriangle(Cvgr.Vars.icos, iNdx);
+////      }
+////      else if (sAlgo === 'triangulum') {
+////         Cvgr.Func.algoTriangulum(Cvgr.Vars.icos, iNdx);
+////      }
+////      else {
 
-         ////if (false) {
-         ////   Cvgr.Func.algoPulse(Cvgr.Vars.icos, iNdx); // original line for replacement algo
-         ////}
 
          // [condition 20190329°0411]
          if ( sAlgo in Cvgr.Algos )
@@ -1009,7 +991,7 @@ Cvgr.Func.executeFrame = function()
                                             );
          }
 
-      }
+////      }
    }
 
    // [line 20140815°1255]
@@ -1104,14 +1086,14 @@ Cvgr.Func.startCanvasGear_setProperties = function()
 var Cvgr = Cvgr || {};
 
 /**
- * This namespace shall hold algorithms
+ * This namespace holds algorithms
  *
  * @id 20180619°0111
  */
 Cvgr.Algos = Cvgr.Algos || {};
 
 /**
- * This namespace shall hold the Ballist algorithm
+ * This namespace holds the Ballist algorithm
  *
  * @id 20180619°0121
  */
@@ -1134,7 +1116,7 @@ Cvgr.Algos.Ballist.Ring = function(sRingName, nRadiusAbs, sColorRing, sColorSpac
       sRingName ='?';
    }
    if (nRadiusAbs === null) {
-      nRadiusAbs = 0.987;                              //  m
+      nRadiusAbs = 0.987;
    }
    if (sColorRing === null) {
       sColorRing = 'gray';
@@ -1202,7 +1184,7 @@ Cvgr.Algos.Ballist.Hit = function(nRingval, nMinutes) {
  * @callers Only • func 20140916°0421 executeAlgorithm
  * @param {object} iko ...
  */
-Cvgr.Algos.Ballist.executeAlgo_drawDiagonal = function(iko)
+Cvgr.Algos.Ballist.executeAlgorithm_drawDiagonal = function(iko)
 {
    var nHeight = iko.Height;                           // pixel
    var nWidth = iko.Width;                             // pixel
@@ -1286,11 +1268,10 @@ Cvgr.Algos.Ballist.executeAlgo_drawDiagonal = function(iko)
  * @callers Only Cvgr.Algos.Ballist.executeAlgorithm
  * @param sSeries {} ..
  */
-Cvgr.Algos.Ballist.executeAlgo_getSeries = function(sSeries)
+Cvgr.Algos.Ballist.executeAlgorithm_getSeries = function(sSeries)
 {
    var hits = new Array();
 
-   ////if (sSeries.length < 1) {
    if (( typeof sSeries === 'undefined' ) || (sSeries.length < 1)) {
 
       // hardcoded default hitlist [seq 20140916°0751]
@@ -1340,7 +1321,7 @@ Cvgr.Algos.Ballist.executeAlgo_getSeries = function(sSeries)
  * @note The details are still be to adjusted.
  * @param sTargetName {string} ..
  */
- Cvgr.Algos.Ballist.executeAlgo_getTarget = function(sTargetName)
+ Cvgr.Algos.Ballist.executeAlgorithm_getTarget = function(sTargetName)
 {
    var target = new Cvgr.Algos.Ballist.Target();
 
@@ -1447,7 +1428,7 @@ Cvgr.Algos.Ballist.executeAlgorithm = function(icos, iNdx)
    iko.DrawOnlyOnce = true;
 
    // preparatory calculations (line 20140916°0825)
-   var iSize = ((+iko.Width) + (+iko.Height)) / 2; // (see note 20140901°0331)
+   var iSize = ((+iko.Width) + (+iko.Height)) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
 
    // calculate angle
    //var nCurrAngle = iko.Angle;
@@ -1533,11 +1514,353 @@ Cvgr.Algos.Ballist.executeAlgorithm = function(icos, iNdx)
 
    // progress
    iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
-   if (iko.Angle > iSize - 4) {
+   if (iko.Angle > iSize - 4) { // This does just not work (see issue 20190329°0451)
       iko.Angle = 0;
    }
 };
 //======✂======================================================
+
+
+//~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/**
+ * This namespace holds the 'develop' algorithm
+ *
+ * @id 20190329°0711
+ */
+Cvgr.Algos.develop = {
+
+   /**
+    * This function serves developing an algorithm
+    *
+    * @id 20140901°0521
+    * @status
+    * @note We must pass the icon via array plus index, instead the direct
+    *    single object. See issue 20140828°0751 'algo calling params quirk'
+    * @callers • Cvgr.Func.executeFrame
+    * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
+    * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
+    */
+   executeAlgorithm : function(icos, iNdx)
+   {
+      // This shall become the 'lines' algorithm' [seq 20140901°0521]
+
+      // workaround for issue 20140828°0751
+      var iko = icos[iNdx];
+
+
+      // draw this algorithm only once [seq 20140916°1022`01]
+      if (iko.DrawOnlyOnce)
+      {
+         return;
+      }
+      iko.DrawOnlyOnce = true;
+
+      // preparatory calculations [seq 20140916°0821]
+      var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+
+      // prepare canvas
+      iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+      iko.Context.fillStyle = "#eeeeee";
+      iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+      // preparatory calculations
+      var lins = new Array();
+      var lin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, 'crimson');
+      var lin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, 'seagreen');
+      var lin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, 'royalblue');
+      lins.push(lin1);
+      lins.push(lin2);
+      lins.push(lin3);
+
+      for (var i = 0; i < lins.length; i++)
+      {
+         iko.Context.beginPath();
+         iko.Context.moveTo(lins[i].X1, lins[i].Y1);
+         iko.Context.lineTo(lins[i].X2, lins[i].Y2);
+         iko.Context.lineWidth = 3;
+         iko.Context.strokeStyle = lins[i].Colo;
+         iko.Context.stroke();
+      }
+   }
+};
+//~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//++++++✂++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * This namespace holds the 'oblongrose' algorithm
+ *
+ * @id 20190329°0711
+ */
+Cvgr.Algos.oblongrose = {
+
+   /**
+    * This function implements a drawing algorithm to draw a rose
+    *
+    * @id 20140828°1411
+    * @status Not yet animated
+    * @ref http://gnuzoo.org/rose/index.htm [20140815°0521]
+    * @param {number} icos — This is Cvgr.Vars.icos[iFor] at the caller.
+    * @param {number} iFor — The index into the icos array.
+    */
+   executeAlgorithm : function(icos, iFor)
+   {
+      var iko = icos[iFor]; // workaround for issue 20140828°0751
+
+      // draw this algorithm only once [seq 20140916°1022`02]
+      if (iko.DrawOnlyOnce)
+      {
+         return;
+      }
+      iko.DrawOnlyOnce = true;
+
+      // preparatory calculations [seq 20140916°0822]
+      var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+
+      // prepare canvas
+      iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+      // set colors
+      iko.Context.strokeStyle = iko.Color;
+      iko.Context.fillStyle = '#ffff00';                                  // 'yellow' // not applied below
+
+      // set registration point
+      iko.Context.translate(iSize / 2, iSize / 2);
+
+      var iNums = 16;
+      for (var i = 0; i < iNums; i++)
+      {
+         iko.Context.rotate(2 * Math.PI / iNums);
+         iko.Context.strokeRect(0, 0, iSize / 2, iSize / 6);
+      }
+   }
+};
+//++++++✂++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+/**
+ * This namespace holds the 'pulse' algorithm
+ *
+ * @id 20190329°0731
+ */
+Cvgr.Algos.pulse = {
+
+   /**
+    * This function implements the pulse drawing algorithm
+    *
+    * @id 20140829°0511
+    * @descript Features are:
+    *    • Adjust the drawing size relative to the canvas size
+    *    • Allow parameters 'shiftx' and 'shifty'
+    *    • Use parameter 'hertz' instead of the old 'speed'
+    * @status
+    * @param {Array} icos — Array of icon objects, Cvgr.Vars.icos[iNdx] at the caller
+    * @param {Integer} iNdx — The index into the array
+    */
+   executeAlgorithm : function(icos, iNdx)
+   {
+      var iko = icos[iNdx]; // workaround for issue 20140828°0751
+
+      // (.) prepare canvas
+      iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+      iko.Context.fillStyle = "#f0f0f0";
+      iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+      // (.) calculate size
+      var iRadius = (iko.Width > iko.Height) ? iko.Width : iko.Height;
+      iRadius *= iko.SizeFactor; // [line 20190328°0835]
+      iRadius = iRadius / 2;
+
+      // (.) calculate current radius
+      var radius = 0;
+      radius = iRadius * Math.abs(Math.cos(iko.Angle));
+
+      // (.) calculate position
+      var iRadiX = iRadius + parseInt(iko.ShiftX, 10);
+      var iRadiY = iRadius + parseInt(iko.ShiftY, 10);
+
+      // (.) draw
+      iko.Context.beginPath();                            // circle
+      iko.Context.arc ( iRadiX                            // x coordinate, e.g. 90
+                       , iRadiY                           // y coordinate, e.g. 90
+                        , radius                          // radius, e.g. 90
+                         , 0                              // starting point angle in radians, starting east
+                          , Math.PI * 2                   // endpoint angle in radians
+                           , false                        // clockwise
+                            );
+
+      // (.) finish
+      iko.Context.closePath();
+      iko.Context.fillStyle = iko.Color;
+      iko.Context.fill();
+
+      // (.) calculate progression
+      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+      if (false) { // false
+         if (iko.Angle > 2) { iko.Angle = 0; } // this works (see issue 20190329°0451)
+      }
+   }
+};
+
+
+/**
+ * This namespace holds the 'triangle' algorithm
+ *
+ * @id 20190329°0741
+ */
+Cvgr.Algos.triangle = {
+
+   /**
+    * This function implements a drawing algorithm for an ikon
+    *
+    * @id 20140828o°0851
+    * @status proof-of-concept
+    * @note Sorrily, we must pass the icon via array plus index. All attempts
+    *     to pass the plain icon failed. No idea why. (issue 20140828°0751)
+    * @ref Article 'Drawing shapes with canvas'
+    *     https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Drawing_shapes [20140828°0911]
+    * @ref Article 'Hwo do you rotate an HTML5 canvas around it's center' [20140901°0321]
+    *     http://www.williammalone.com/briefs/how-to-rotate-html5-canvas-around-center
+    * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
+    * @param iFor {Integer} The index into the icon objects array
+    */
+   ////Cvgr.Func.algoTriangle = function(icos, iNdx)
+   executeAlgorithm : function(icos, iNdx)
+   {
+      var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
+
+      // preparatory calculations [seq 20140916°0823]
+      var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+      var iPt1x = iSize * 0.5;
+      var iPt1y = iSize * 0.01;
+      var iPt2x = iSize * 0.8;
+      var iPt2y = iSize * 0.9;
+      var iPt3x = iSize * 0.2;
+      var iPt3y = iPt2y;
+
+      // prepare canvas
+      iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);   // Opera works fine
+
+      // (.) rotation
+      // (.1) set registration point
+      iko.Context.translate(iSize / 2, iSize / 2);
+      // (.2) rotate 1 degree
+      iko.Context.rotate(Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz);    // 'Cvgr.Vars.nIncTurnsPerFrame * 4' is 1 rotation per second
+      // (.3) move registration point back to the top left corner of canvas
+      iko.Context.translate(-iSize / 2, -iSize / 2);
+
+      // note : Remember issue 20140901°0911 'Opera fillRect() fail'
+
+      // set background
+      iko.Context.fillStyle = iko.BgColor;
+      // (20140901°0912) try envelope against issue 20140901°0911 'Opera fillRect() fail'
+      try
+      {
+         // Opera may throw 'object DOMException' here (issue 20140901°0911)
+         iko.Context.fillRect(0, 0, iko.Width, iko.Height);
+      }
+      catch (e)
+      {
+         if ( Cvgr.Const.bShow_Debug_Dialogs )                            // toggle debug
+         {
+            alert('[debug 20140901°0913]\nException "' + e + '"');
+         }
+      }
+
+      // draw
+      iko.Context.beginPath();
+
+      // (why the try see issue 20140901°0933)
+      try
+      {
+         iko.Context.moveTo(iPt1x, iPt1y);
+      }
+      catch (e)
+      {
+         if ( Cvgr.Const.bShow_Debug_Dialogs )                            // debug toggle
+         {
+            alert('[debug 20140901°0932]\nException "' + e + '"');
+         }
+      }
+      iko.Context.lineTo(iPt2x, iPt2y);
+      iko.Context.lineTo(iPt3x, iPt3y);
+      iko.Context.fillStyle = iko.Color;
+      iko.Context.fill();
+      iko.Context.closePath();
+   }
+
+};
+
+/**
+ * This namespace holds the 'triangulum' algorithm
+ *
+ * @id 20190329°0751
+ */
+Cvgr.Algos.triangulum = {
+
+   /**
+    * This function implements the line drawing algorithm
+    *
+    * @id 20140828°1431
+    * @status under construction
+    * @ref http://stackoverflow.com/questions/3594653/html5-canvas-drawing-multicolored-lines [20140831o0741]
+    * @ref http://html5tutorial.com/advanced-path-painting/ [20140831o0742]
+    * @ref http://www.mysamplecode.com/2012/04/html5-canvas-draw-line-tutorial.html [20140831o0743] here I found the first example for multi colored lines
+    * @ref http://www.peterkroener.de/eine-kleine-canvas-einfuehrung [20140828o1221]
+    * @ref http://canvas.quaese.de/index.php?doc_id=36&nav=6,47 [20140828o1421]
+    * @ref https://developer.mozilla.org/de/docs/Web/Guide/HTML/Canvas_tutorial/Applying_styles_and_colors [20140828o1422]
+    * @note The statement 'fill() includes closePath()' is true only to some degree,
+    *         e.g. *not* for drawing the final line to origin.
+    * @param icos This is Cvgr.Vars.icos[iFor] at the caller.
+    * @param iFor The index into the icos array.
+    */
+   ////Cvgr.Func.algoTriangulum = function(icos, iFor)
+   executeAlgorithm : function(icos, iFor)
+   {
+      // workaround for issue 20140828°0751
+      var iko = icos[iFor];
+
+      // preparatory calculations [seq 20140916°0824]
+      var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+
+      var nCurrAngle = iko.Angle;
+      nCurrAngle = Math.sin (iko.Angle) * (iSize - 4) / 2 + iSize / 2;
+
+      // prepare canvas
+      iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+      iko.Context.fillStyle = iko.BgColor;
+      iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+      // draw triangle
+      iko.Context.beginPath();
+      iko.Context.moveTo(3, 3);
+      iko.Context.lineTo(iSize - 3, 3);
+      iko.Context.lineTo(nCurrAngle, iSize - 5);
+      iko.Context.fillStyle = iko.Color;
+      iko.Context.fill();
+      iko.Context.closePath();
+      iko.Context.lineWidth = 2;
+      iko.Context.strokeStyle = iko.Color2;
+      iko.Context.stroke();
+
+      // draw line
+      iko.Context.beginPath();
+      iko.Context.moveTo(2, iSize - 2);
+      iko.Context.lineTo(iSize - 2, iSize - 2);
+      iko.Context.lineWidth = 3;
+      iko.Context.strokeStyle = iko.Color3;
+      iko.Context.stroke();
+
+      // maintain progress
+      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * 4 * iko.Hertz;
+      if (iko.Angle > iSize - 4) // This does just not work (see issue 20190329°0451)
+      {
+         iko.Angle = 0;
+      }
+   }
+
+};
+
 
 //------✂------------------------------------------------------
 // id : block 20190329°0131

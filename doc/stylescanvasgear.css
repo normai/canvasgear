@@ -14,8 +14,8 @@
 body.BodyFaceCanvasGear { background-color:Lavender; } /* #e6e6fa */
 
 /* rule 20140916°0641 canvas attached info paragraph */
-p.canvasattachedinfo {
-   background-color:lightgoldenrodyellow; float:left; margin-left:0.6em; margin-top:0em; max-width:24em;
+p.Cvgr_CanvasAttachedInfoPara {
+   background-color:LightGoldenRodYellow; float:left; margin-left:0.6em; margin-top:0em; max-width:24em;
 }
 
 /* rule 20140828°0422 */
@@ -29,7 +29,7 @@ canvas { }
 .timestamp { color:Turquoise; font-size:55%; font-family:Comic Sans MS,Arial }
 
 /* (20140828°0731) */
-.useborder { border-width:3px; border-color:lightgray; border-style:solid; }
+.CvgrUseBorder { border-width:3px; border-color:lightgray; border-style:solid; } /* useborder */
 
 /* (rule 20140828°0641) no space above and below */
 .verticaltight { margin-top:0.1em; margin-bottom:0.1em; }

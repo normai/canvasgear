@@ -1,4 +1,12 @@
 
+   ref 20190329°0513 'stackoverflow : convert float number to whole'
+   objtype : ref.thread
+   url : https://stackoverflow.com/questions/596467/how-do-i-convert-a-float-number-to-a-whole-number-in-javascript
+   title : How do I convert a float number to a whole number in JavaScript?
+   releasedate : 2009-Feb-27
+   usage :
+   ܀
+
    ref 20190324°0232 ''
    url : https://simonwhitaker.github.io/github-fork-ribbon-css/﻿
    title : Fork me on GitHub – CSS ribbon

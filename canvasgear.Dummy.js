@@ -206,7 +206,8 @@ Cvgr.Algos.Dummy.executeAlgo_getSeries = function(sSeries)
 {
    var hits = new Array();
 
-   if (sSeries.length < 1) {
+   ////if (sSeries.length < 1) {
+   if (( typeof sSeries === 'undefined' ) || (sSeries.length < 1)) {
 
       // hardcoded default hitlist [seq 20140916°0751]
       var h = new Cvgr.Algos.Dummy.Hit(10.7, 55); hits.push(h);
@@ -220,16 +221,6 @@ Cvgr.Algos.Dummy.executeAlgo_getSeries = function(sSeries)
       var h = new Cvgr.Algos.Dummy.Hit(2.7, 30); hits.push(h);
       var h = new Cvgr.Algos.Dummy.Hit(2.8, 40); hits.push(h);
       var h = new Cvgr.Algos.Dummy.Hit(2.9, 50); hits.push(h);
-
-      // retrieve series details ring-decimal/minutes-on-clock
-      // Commandlines e.g.:
-      //   - algo=Dummy series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" id="id20140916o0731"
-      //   - <!-- algo=Dummy series="9.3/43 8.5/39 8.0/45 8.9/51 8.5/56 9.7/29 9.9/27 8.5/17 8.3/42 6.3/43 9.7/1 9.9/45 9.8/47 7.8/41 6.2/43 10.0/16 10.2/44 9.8/7 8.1/47 7.9/20 10.1/7 9.4/11 9.4/14 9.6/32 7/8/48 9.0/20 8.1/3 8.9/32 6.2/28 6.5/39" id="id20140914o1330" -->
-      //   - <!-- algo=Dummy series="10.4/40 10.3/42 10.6/47 10.3/56 9.2/11 9.7/16 9.6/34 9.1/39 9.9/54 9.9/58 8.4/48 8.6/50 8.6/53 7.4/54 6.5/55" id="id20140926o203021" -->
-
-      // read series from commandline [line 20140926°0851]
-      // // var a = iko.CmdHash2['series'];
-      // sSeries ..
 
    }
    else {
@@ -348,13 +339,21 @@ Cvgr.Algos.Dummy.executeAlgo_getSeries = function(sSeries)
  */
 Cvgr.Algos.Dummy.executeAlgorithm = function(icos, iNdx)
 {
+   // issue 20190329°0421 'impossible index'
+   // matter : This function is called with iNdx = 2, when only two canvases
+   //    exist on the page. How can this be? Where from comes this call?
+   // workaround : As a quick-n-dirty remedy I just try a condition
+   if ( iNdx >= icos.length) {
+      // impossible index
+      return;
+   }
+
    // prolog
    var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
 
    // prolog - draw this algorithm only once [seq 20140916°102203]
-   // note : This does not prevent Taskmanager to raise CPU usage
-   //    to nearly hundred percent. But without single-paint mode,
-   //    it raises towards full hundred percent perhaps.
+   // note : This does not prevent Taskmanager show CPU usage nearly hundred
+   //   percent. Without single-paint mode, it raises full hundred percent.
    // todo : Implement flag as commandline option and process very early.
    if (iko.DrawOnlyOnce) {
       return;

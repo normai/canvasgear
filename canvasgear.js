@@ -112,7 +112,7 @@ Cvgr.Vars.iTimeStartMs = Cvgr.Vars.iTimeStart.getMilliseconds();
 
 // initialize controls [seq 20140926°0811]
 // note : This should be done after the document is completely loaded.
-Cvgr.Vars.radiobuttn = document.getElementById("id20140819o1822"); // top
+Cvgr.Vars.radiobuttn = document.getElementById("i20140819o1822"); // top
 if (Cvgr.Vars.radiobuttn !== null)
 {
    Cvgr.Vars.radiobuttn.checked = true;
@@ -262,8 +262,8 @@ Cvgr.startCanvasGear = function()
     */
    window.onload = function()
    {
-      var bt1 = document.getElementById("id20140819o1821");
-      var bt2 = document.getElementById("id20140819o1822");
+      var bt1 = document.getElementById("i20140819o1821");
+      var bt2 = document.getElementById("i20140819o1822");
       bt1.onclick = Cvgr.Func.setRadiobutton;
       bt2.onclick = Cvgr.Func.setRadiobutton;
    };
@@ -409,7 +409,7 @@ Cvgr.startCanvasGear = function()
       // (M.3) determine Color [seq 20140904°0648]
       if ((ico.CmdHash2['color'] === undefined) || (ico.CmdHash2['color'] === null) || (ico.CmdHash2['color'] === ''))
       {
-         ico.Color = '#404040';
+         ico.Color = 'LightSlateGray'; // '#404040'
       }
       else
       {
@@ -423,7 +423,7 @@ Cvgr.startCanvasGear = function()
       // (M.4) determine Color2 [seq 20140904°0649]
       if (ico.Color.substr(0, 1) !== '#')
       {
-         ico.Color2 = '#606060';
+         ico.Color2 = 'SlateGray'; // '#606060'
       }
       else
       {
@@ -437,7 +437,7 @@ Cvgr.startCanvasGear = function()
       // (M.5) determine Color3 [seq 20140904°0650]
       if ((ico.CmdHash2['color3'] === undefined) ||  (ico.CmdHash2['color3'] === null) ||  (ico.CmdHash2['color3'] === ''))
       {
-         ico.Color3 = '#808080';
+         ico.Color3 = 'DarkSlateGray'; // '#808080'
       }
       else
       {
@@ -524,6 +524,20 @@ Cvgr.Vars.iFramesInLastTwoSeconds = 0;                 //
 Cvgr.Vars.iFramesPerTowSeconds = 0;                    //
 Cvgr.Vars.nTrueAngleTurns = 0;                         // wanted browser independend angle in turns for 1 Hz
 Cvgr.Vars.nIncTurnsPerFrame = 0;                       // increment turns per frame for 1 Hz
+
+/**
+ * This array stores the timers to examine the non-immediate algorithms
+ *
+ * id 20190329°0431
+ */
+Cvgr.Vars.timrs = [];
+
+/**
+ * This array stores success flags associated with the examination timers
+ *
+ * id 20190329°0433
+ */
+Cvgr.Vars.timSuccess = [];
 
 //*****************************************************
 // Algorithms
@@ -824,6 +838,28 @@ Cvgr.Func.algoTriangulum = function(icos, iFor)
 //*****************************************************
 
 /**
+ * This function is called when pulling-behind a non-immediate algorithm, it
+ *  examines success, and in case of failure cares for a replacement algorithm.
+ *
+ * @id 20190329°0441
+ * @param {String} sAlgo —
+ * @param {Integer} iMyNdx —
+ */
+Cvgr.Func.examineAlgo = function(iMyNdx, iIcoNdx)
+{
+   // retrieve algo name
+   var sAlgo = Cvgr.Vars.icos[iIcoNdx].AlgoName;
+
+   // does this algo now exist? If not, set replacement dummy algo
+   if ( sAlgo in Cvgr.Algos ) {
+      Cvgr.Vars.timSuccess[iMyNdx] = true;
+   }
+   else {
+      Cvgr.Vars.icos[iIcoNdx].AlgoName = 'pulse';
+   }
+};
+
+/**
  * This function performs the continuous drawing
  *
  * @id 20140815°1221
@@ -842,7 +878,7 @@ Cvgr.Func.executeFrame = function()
    var iFramesPerSecondTotal = Cvgr.Vars.iFrameNo / iElapsedMs * 1000;
    var iElapsedTwoSeconds = Math.floor( iElapsedMs / 2000 ) * 2;
 
-   // (.2) calculate periodic measurment
+   // (.2) perform periodic measurment
    if ( Cvgr.Vars.iMarkLastTwoSecond < iElapsedTwoSeconds )
    {
       Cvgr.Vars.iMarkLastTwoSecond = iElapsedTwoSeconds;
@@ -868,28 +904,28 @@ Cvgr.Func.executeFrame = function()
    }
    Cvgr.Vars.nIncTurnsPerFrame = 1 / Cvgr.Vars.iFramesPerTowSeconds;
 
-   // (note 20140916°1031) Now this cornerstones are known:
-   // - Cvgr.Vars.nTrueAngleTurns : This is a value cycling between 0 and 0.999
+   // note 20140916°1031 'known cornerstone values'
+   // At this runtime moment, those cornerstone values are known:
+   //  • Cvgr.Vars.nTrueAngleTurns : This is a value cycling between 0 and 0.999
    //      with one Hertz frequency independend of the browser.
-   // - Cvgr.Vars.nIncTurnsPerFrame : This value depends on the browser, it stays
-   //      fluctuates around e.g. 0.017 to 0.020 with Chrome,
-   //      or 0.021 to 0.023 with IE8.
+   //  • Cvgr.Vars.nIncTurnsPerFrame : This value depends on the browser, it wobbles
+   //       around e.g. 0.017 to 0.020 with Chrome, or 0.021 to 0.023 with IE8.
 
    // (.4) output Page Debug Info [seq 20140916°1032]
-   var el = document.getElementById("id20140828o0651");                // <!-- output status message -->
-   if (el !== null)
+   var elDbg = document.getElementById("Cvgr_DebugOutputArea");
+   if (elDbg !== null)
    {
       var s = "<b>CanvasGear Debug Info</b> :";
       s += " AlgoMode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip') + "; ";
       s += " Frame number = " + Cvgr.Vars.iFrameNo + ";";
-      s += "<br />Start time = " + Cvgr.Vars.iTimeStart + " = " + Cvgr.Vars.iTimeStart.valueOf() + ";"; // issue 20180619°0221 'difference between time and time.valueOf()'
-      s += "<br />Current time = " + iTimeCurr; // + " = " + iTimeCurr.valueOf() + ";";
+      s += "<br />Start time = " + Cvgr.Vars.iTimeStart + " = " + Cvgr.Vars.iTimeStart.valueOf() + ";";
+      s += "<br />Current time = " + iTimeCurr;
       s += "<br />Elapsed seconds (every two) = " + iElapsedTwoSeconds + ";";
       s += "<br />Frames per seconds (total, average since start) = " + iFramesPerSecondTotal;
       s += "<br />Frames per seconds (for the last two seconds) = " + Cvgr.Vars.iFramesPerTowSeconds;
       s += "<br />True angle for 1 Hz (turns) = " + Cvgr.Vars.nTrueAngleTurns + ";";
       s += "<br />Increment per frame (turns) = " + Cvgr.Vars.nIncTurnsPerFrame + ";";
-      el.innerHTML = s;
+      elDbg.innerHTML = s;
    }
 
    // process each canvas on the page [seq 20140815°1252]
@@ -905,21 +941,24 @@ Cvgr.Func.executeFrame = function()
       var el = document.getElementById(sIde);                          // <!-- canvas attached info paragraph -->
       if (el !== null)
       {
-         var s = '<small>CanvasGear Canvas Debug Info :';
+         var sOut = '<small>CanvasGear Canvas Debug Info :';
          var i = 1;
-         i = Math.floor( Cvgr.Vars.icos[iNdx].Angle * 10);             // convert from number to int, also floor and round were available
-         s += "<br />iko.Angle = " + i;
-         s += "<br />iko.Color = " + Cvgr.Vars.icos[iNdx].Color;
-         s += "<br />iko.Height = " + Cvgr.Vars.icos[iNdx].Height;
-         s += "<br />iko.Mode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip');
-         s += "<br />iko.Width = " + Cvgr.Vars.icos[iNdx].Width;
+         // note : Possibilities to get integers were e.g. ceil, floor, round, trunc.
+         // see : ref 20190329°0513 'stackoverflow : convert float number to whole'
+         i = Math.floor( Cvgr.Vars.icos[iNdx].Angle * 10);
+         sOut += "<br />iko.Angle = " + i
+               +  "<br />iko.Color = " + Cvgr.Vars.icos[iNdx].Color
+                + "<br />iko.Height = " + Cvgr.Vars.icos[iNdx].Height
+                 + "<br />iko.Mode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip')
+                  + "<br />iko.Width = " + Cvgr.Vars.icos[iNdx].Width
+                   ;
          for ( ki in Cvgr.Vars.icos[iNdx].CmdHash2 )
          {
             var sValEscaped = Trekta.Utils.htmlEscape(Cvgr.Vars.icos[iNdx].CmdHash2[ki]);
-            s += "<br /> [cmd] " + ki + " = " + sValEscaped;
+            sOut += "<br /> [cmd] " + ki + " = " + sValEscaped;
          }
-         s += "</small>";
-         el.innerHTML = s;
+         sOut += "</small>";
+         el.innerHTML = sOut;
       }
 
       // () execute algorithm [seq 20140815°1254]
@@ -934,24 +973,6 @@ Cvgr.Func.executeFrame = function()
       else if (sAlgo === 'pulse') {
          Cvgr.Func.algoPulse(Cvgr.Vars.icos, iNdx);
       }
-      else if ( sAlgo === 'Ballist' )
-      {
-         if ( sAlgo in Cvgr.Algos )
-         {
-            Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
-         }
-         else
-         {
-            // [seq 20190329°0141]
-            // check : s = Trekta.Utils.retrieveScriptFolderRel('canvasgear.js'); // e.g. "./../c" WRONG
-            var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/treksvn/canvasgeardev/trunk/canvasgear/"
-            var sModNam = sPathAbs + 'canvasgear.' + sAlgo + '.js';
-            Trekta.Utils.pullScriptBehind ( sModNam , function() {
-                                           Cvgr.Func.executeFrameContinu( sAlgo, iNdx );
-                                            });
-         }
-
-      }
       else if ( sAlgo === 'triangle' ) {
          Cvgr.Func.algoTriangle(Cvgr.Vars.icos, iNdx);
       }
@@ -959,7 +980,31 @@ Cvgr.Func.executeFrame = function()
          Cvgr.Func.algoTriangulum(Cvgr.Vars.icos, iNdx);
       }
       else {
-         Cvgr.Func.algoPulse(Cvgr.Vars.icos, iNdx);
+         
+         // This processes • Ballist
+
+         ////if (false) {
+         ////   Cvgr.Func.algoPulse(Cvgr.Vars.icos, iNdx); // original line for replacement algo
+         ////}
+
+         // [condition 20190329°0411]
+         if ( sAlgo in Cvgr.Algos )
+         {
+            // call immediately [seq 20190329°0413]
+            Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
+         }
+         else
+         {
+            // try loading buddy module [seq 20190329°0415]
+            var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/treksvn/canvasgeardev/trunk/canvasgear/"
+            var sModNam = sPathAbs + 'canvasgear.' + sAlgo + '.js';
+            Cvgr.Vars.timSuccess.push(false); // pessimistic predetermination
+            Cvgr.Vars.timrs.push(setTimeout( Cvgr.Func.examineAlgo, 1357, (Cvgr.Vars.timrs.length - 1), iNdx ));
+            Trekta.Utils.pullScriptBehind ( sModNam , function()
+                                           { Cvgr.Func.executeFrameContinu( iNdx ); }
+                                            );
+         }
+
       }
    }
 
@@ -971,7 +1016,7 @@ Cvgr.Func.executeFrame = function()
  * This function is called possibly only after wanted script is pulled-behind
  *
  * @id 20190329°0211
- * @callers •
+ * @callers Only • pullScriptBehind callback
  */
 Cvgr.Func.executeFrameContinu = function(sAlgo, iNdx)
 {
@@ -988,36 +1033,37 @@ Cvgr.Func.executeFrameContinu = function(sAlgo, iNdx)
  * This function is the radiobuttons 'onClick' event handler
  *
  * @id 20140819°1751
- * @status
- * @callers : This is called when selecting a radiobutton
- * @param
+ * @status Dummy function
+ * @callers This is called when selecting a radiobutton
  */
 Cvgr.Func.setRadiobutton = function()
 {
-   var s = "";
+   ////if ( Cvgr.Const.bShow_Debug_Dialogs )
+   ////{
+   ////   alert("Debug 20140926°1131");
+   ////}
 
-   if ( Cvgr.Const.bShow_Debug_Dialogs )
-   {
-      alert("Debug 20140926°1131");
-   }
-
+   // toggle [seq 20140819°1753]
+   var sMsg = '[Debug 20140926°1131]\n\nNow radio-button algo-mode = ';
    if (document.FormAlgoMode.AlgoMode[0].checked)
    {
       Cvgr.Vars.bFlagTipTopTest = false;
-      s = document.FormAlgoMode.AlgoMode[0].value;
+      sMsg += document.FormAlgoMode.AlgoMode[0].value;
    }
    else
    {
       Cvgr.Vars.bFlagTipTopTest = true;
-      s = document.FormAlgoMode.AlgoMode[1].value;
+      sMsg += document.FormAlgoMode.AlgoMode[1].value;
    }
 
-   // debug
-   if ( Cvgr.Const.bShow_Debug_Dialogs )
-   {
-      var s = "[Debug] Radiobutton algo-mode is '" + s + "'.";
-      document.getElementById("id20140828o0651").innerHTML = s;        // <!-- output debug messages -->
-   }
+   // debuge [seq 20140819°1755]
+   alert(sMsg);
+   ////// debug
+   ////if ( Cvgr.Const.bShow_Debug_Dialogs )
+   ////{
+   ////   var s = "[Debug] Radiobutton algo-mode is '" + s + "'.";
+   ////   document.getElementById("Cvgr_DebugOutputArea").innerHTML = s;
+   ////}
 
    return;
 };
@@ -1240,7 +1286,8 @@ Cvgr.Algos.Ballist.executeAlgo_getSeries = function(sSeries)
 {
    var hits = new Array();
 
-   if (sSeries.length < 1) {
+   ////if (sSeries.length < 1) {
+   if (( typeof sSeries === 'undefined' ) || (sSeries.length < 1)) {
 
       // hardcoded default hitlist [seq 20140916°0751]
       var h = new Cvgr.Algos.Ballist.Hit(10.7, 55); hits.push(h);
@@ -1257,9 +1304,9 @@ Cvgr.Algos.Ballist.executeAlgo_getSeries = function(sSeries)
 
       // retrieve series details ring-decimal/minutes-on-clock
       // Commandlines e.g.:
-      //   - algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" id="id20140916o0731"
-      //   - <!-- algo=Ballist series="9.3/43 8.5/39 8.0/45 8.9/51 8.5/56 9.7/29 9.9/27 8.5/17 8.3/42 6.3/43 9.7/1 9.9/45 9.8/47 7.8/41 6.2/43 10.0/16 10.2/44 9.8/7 8.1/47 7.9/20 10.1/7 9.4/11 9.4/14 9.6/32 7/8/48 9.0/20 8.1/3 8.9/32 6.2/28 6.5/39" id="id20140914o1330" -->
-      //   - <!-- algo=Ballist series="10.4/40 10.3/42 10.6/47 10.3/56 9.2/11 9.7/16 9.6/34 9.1/39 9.9/54 9.9/58 8.4/48 8.6/50 8.6/53 7.4/54 6.5/55" id="id20140926o203021" -->
+      //   - algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" id="i20140916o0731"
+      //   - <!-- algo=Ballist series="9.3/43 8.5/39 8.0/45 8.9/51 8.5/56 9.7/29 9.9/27 8.5/17 8.3/42 6.3/43 9.7/1 9.9/45 9.8/47 7.8/41 6.2/43 10.0/16 10.2/44 9.8/7 8.1/47 7.9/20 10.1/7 9.4/11 9.4/14 9.6/32 7/8/48 9.0/20 8.1/3 8.9/32 6.2/28 6.5/39" id="i20140914o1330" -->
+      //   - <!-- algo=Ballist series="10.4/40 10.3/42 10.6/47 10.3/56 9.2/11 9.7/16 9.6/34 9.1/39 9.9/54 9.9/58 8.4/48 8.6/50 8.6/53 7.4/54 6.5/55" id="i20140926o203021" -->
 
       // read series from commandline [line 20140926°0851]
       // // var a = iko.CmdHash2['series'];
@@ -1725,7 +1772,7 @@ Trekta.Util2.colorNameToHex = function(sName) {
  * @note Code after ref 20140926°0621 'Krasimir: Simple command line parser in JS'
  * @note Test input
  *    - <!-- algo="triangle" color=mediumspringgreen hertz=0.1 -->
- *    - <!-- algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" shiftx=20 shifty=20 id="id20140916o0731" -->
+ *    - <!-- algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" shiftx=20 shifty=20 id="i20140916o0731" -->
  *    - <!-- algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11 -->
  *    -
  */

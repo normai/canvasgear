@@ -14,8 +14,9 @@
    <style type="text/css" media="screen">
       /* note : See ref 20140829°0351 'stackoverflow : changing the color of a hr element' */
       hr.horizon { clear:left; border-bottom:0.2em solid #e0e0e0; border-top:1.2em solid transparent; } /* rule 20140829°0521 */
-
       .shineover { position:relative; z-index:10001; } /* 20190324o0341 shine over the github badge */
+      
+      td.DemoCell { border:1px dotted LightSlateGray; }
    </style>
 </head>
 
@@ -62,7 +63,7 @@
 <div class="ChapterFaceNormal" id="i20140828o2212">
 
  <p class="topTitleCrumbs" id="i20140815o1232">
-               CanvasGear →
+               <a href="./index.html" id="i20190329o0452">CanvasGear</a> →
  </p>
 
  <h1 id="i20140815o1231">
@@ -75,7 +76,7 @@
    <td id="i20140901o0425">
                develop <!-- pulse1 -->
    </td>
-   <td id="i20140815o1431">
+   <td class="DemoCell" id="i20140815o1431">
                <canvas data-cvgr="algo=develop color=orange" id="myCanvas22" width="64" height="64">[Canvas]</canvas>
    </td>
   </tr>
@@ -84,7 +85,7 @@
    <td id="i20140901o0433">
                oblongrose
    </td>
-   <td id="i20140815o1531">
+   <td class="DemoCell" id="i20140815o1531">
                <canvas data-cvgr="algo=oblongrose color=crimson" id="myCanvas23" width="64" height="64">[Canvas]</canvas>
                <canvas data-cvgr="algo=oblongrose color=seagreen" id="i20140901o0341" width="48" height="48">[Canvas]</canvas>
                <canvas data-cvgr="algo=oblongrose color=royalblue" id="i20140901o0342" width="32" height="32">[Canvas]</canvas>
@@ -95,7 +96,7 @@
    <td id="i20140901o0435">
                pulse
    </td>
-   <td id="i20140815o1521">
+   <td class="DemoCell" id="i20140815o1521">
                <canvas data-cvgr="algo=pulse" id="myCanvas24" width="64" height="64">[Canvas]</canvas>
                <canvas data-cvgr="algo=pulse color=seagreen hertz=0.19" id="myCanvas25" width="48" height="48">[Canvas]</canvas>
                <canvas data-cvgr="algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11" id="myCanvas26" width="32" height="32">[Canvas]</canvas>
@@ -106,7 +107,7 @@
    <td id="i20140901o0415">
                triangle<br /> [wrong color]
    </td>
-   <td id="i20140815o1451" style="clear:left;">
+   <td class="DemoCell" id="i20140815o1451" style="clear:left;">
                <canvas data-cvgr="algo=triangle" id="myCanvas27" width="64" height="64">[Canvas]</canvas>
                <canvas data-cvgr="algo=triangle color=turquoise hertz=1" id="i20140901o0311" width="56" height="56">[Canvas]</canvas>
                <canvas data-cvgr="algo=triangle color=mediumspringgreen hertz=0.25" id="i20140901o0312" width="48" height="48">[Canvas]</canvas>
@@ -119,7 +120,7 @@
    <td id="i20140901o0423">
                triangulum
    </td>
-   <td id="i20140815o1541">
+   <td class="DemoCell" id="i20140815o1541">
                <canvas data-cvgr="algo=triangulum" id="myCanvas28" width="44" height="44">[Canvas]</canvas>
                <canvas data-cvgr="algo=triangulum hertz=0.2 bgcolor=lemonchiffon color=crimson color2=red color3=royalblue" id="i20140901o0531" width="40" height="40">[Canvas]</canvas>
                <canvas data-cvgr="algo=triangulum color=seagreen hertz=0.5 bgcolor=papayawhip" id="i20140901o0532" width="36" height="36">[Canvas]</canvas>
@@ -129,22 +130,22 @@
   </tr>
 
   <tr id="i20140901o0436">
-   <td id="i20140901o0443">
-               (default)<br /> [wrong color]
+   <td style="max-width:7em;" id="i20140901o0443">
+               Icons with wrong or missing algorithm definition
    </td>
-   <td id="i20140901o0444">
+   <td class="DemoCell" id="i20140901o0444">
 
-    <div class="useborder" id="i20140815o1441" style="float:left;">
-               <canvas data-cvgr="" width="180" height="180" style="float:left;" id="i20140828o0741">[Canvas]</canvas>
-        <p class="canvasattachedinfo" id ="i20140828o0741.info"><!-- canvas attached info paragraph -->
-               [This paragraph<br />shall be replaced<br />by the runtime info.]
+    <div class="CvgrUseBorder" id="i20140815o1441" style="float:left;">
+               <canvas data-cvgr="" width="128" height="128" style="float:left;" id="i20140828o0741">[Canvas]</canvas>
+        <p class="Cvgr_CanvasAttachedInfoPara" id ="i20140828o0741.info">
+               [CanvasInfoPara]
         </p>
     </div>
                &nbsp;
-               <canvas data-cvgr="color=#006699 shiftx=6 shifty=7" id="myCanvas29" width="48" height="48">[Canvas]</canvas>
-               <canvas data-cvgr="" width="32" height="32" id="myCanvas30">[CANVAS]</canvas>
-               <canvas data-cvgr="" width="24" height="24" id="myCanvas31">[Canvas]</canvas>
-               <canvas data-cvgr="color=#990066" width="20" height="20" id="myCanvas32">[Canvas]</canvas>
+               <canvas data-cvgr="color=Turquoise shiftx=-61 shifty=-35" id="myCanvas29" width="64" height="128">[Canvas]</canvas>
+               <canvas data-cvgr="algo=Oha shiftx=-66" width="48" height="128" id="myCanvas30">[CANVAS]</canvas>
+               <canvas data-cvgr="shiftx=-21" width="32" height="128" id="myCanvas31">[Canvas]</canvas>
+               <canvas data-cvgr="color=Chocolate shiftx=-64" width="24" height="128" id="myCanvas32">[Canvas]</canvas>
    </td>
   </tr>
 
@@ -158,7 +159,7 @@
                Here some controls:
  </p>
 
- <p id="i20140828o0651" style="color:magenta;"><!-- output status message -->
+ <p style="background-color:palegreen; color:darkmagenta; font-size:small;" data-idx="i20140828o0651" id="Cvgr_DebugOutputArea"><!-- output status message -->
                .<!-- This paragraph may be replaced from canvasgear.js -->
  </p>
 

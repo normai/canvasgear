@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.1.8 — 20190330°0711..
+ * version : 0.1.8.. — 20190330°0711...
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -42,14 +42,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.1.8'
+    versionnumber : '0.1.8..'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190330°0711..'
+   , versiontimestamp : '20190330°0711...'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -689,6 +689,14 @@ Cvgr.Func.algoPulse = function(icos, iNdx)
    iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
 };
 
+   /*
+   note 20140901°0331 'IE8 demands extra plus sign'
+   matter :  The plus sign before iko.Width and iko.Height is wanted for
+       IE8, which will otherwise interpret that as string, and e.g.
+       iSize will have the value 3232 if width=64 and height=64.
+   status : IE8 is no more supported
+   */
+
 /**
  * This function implements a drawing algorithm for an ikon
  *
@@ -697,19 +705,15 @@ Cvgr.Func.algoPulse = function(icos, iNdx)
  * @note Sorrily, we must pass the icon via array plus index. All attempts
  *     to pass the plain icon failed. No idea why. (issue 20140828°0751)
  * @ref Article 'Drawing shapes with canvas'
- *     https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Drawing_shapes [20140828o0911]
- * @ref Article 'Hwo do you rotate an HTML5 canvas around it's center' [20140901o0321]
+ *     https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Drawing_shapes [20140828°0911]
+ * @ref Article 'Hwo do you rotate an HTML5 canvas around it's center' [20140901°0321]
  *     http://www.williammalone.com/briefs/how-to-rotate-html5-canvas-around-center
- * @note [note 20140901°0331]
- *     The plus sign before iko.Width and iko.Height is wanted for
- *     IE8, which will otherwise interpret that as string, and e.g.
- *     iSize will have the value 3232 if width=64 and height=64.
- * @param icos {} This is Cvgr.Vars.icos[iFor] at the caller.
- * @param iFor {} ..
+ * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
+ * @param iFor {Integer} The index into the icon objects array
  */
-Cvgr.Func.algoTriangle = function(icos, iFor)
+Cvgr.Func.algoTriangle = function(icos, iNdx)
 {
-   var iko = icos[iFor]; // (workaround for issue 20140828°0751)
+   var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
 
    // preparatory calculations [seq 20140916°0823]
    //  See note 20140901°0331 about '+'
@@ -1079,7 +1083,7 @@ Cvgr.Func.startCanvasGear_setProperties = function()
 };
 
 //======✂======================================================
-﻿/*!
+﻿/* !
  * This module provides algorithm 'Ballist'
  *
  * version : 0.1.8 — 20190330°0711..

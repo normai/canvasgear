@@ -3,6 +3,15 @@
    Issues and todos
    ****************
 
+   issue 20190329°0421 'impossible index'
+   matter : The function is called with iNdx = 2, when only two canvases
+      exist on the page. How can this be? Where from comes this call?
+   workaround : As a quick-n-dirty remedy I just try a condition
+   location : func executeAlgorithm called by Cvgr.Func.executeFrame
+   priority : high
+   status : open
+   ܀
+
    issue 20160416°1321 'IE8 canvas Context.fillText not supported'
    symptom : Text not drawn in IE8
    location : file 20140916°0411 canvasgersalgos.js "iko.Context.fillText(..)"

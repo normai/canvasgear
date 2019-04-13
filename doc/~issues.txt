@@ -3,6 +3,14 @@
    Issues and todos
    ****************
 
+   todo 20190329°0833 'centralize progression'
+   matter : Sequence 20140829°0519 'calculate progression' and it's siblings
+      exists equally in most algos. This calculation should be done at only
+      one single place, at the caller.
+   location : At the bottom of most functions executeAlgorithm e.g. 20140829°0511
+   status : open
+   ܀
+
    issue 20190329°0451 'iko.Angle does not reset'
    matter : The angle does not reset as expected.
    solution : See seq 20140829°0519 'calculate progression', it works with Math.PI

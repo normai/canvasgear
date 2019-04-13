@@ -65,6 +65,16 @@
            </span>
  </h1>
 
+ <p id="i20140902o1126">
+               1   <a href="#i20190324o0357" id="i20190329o1012"><b>Overview</b></a> &nbsp;
+               2   <a href="#i20140902o1125" id="i20190329o1013"><b>Features</b></a> &nbsp;
+               2.1 <a href="#i20140828o1731" id="i20190329o1014">Framework</a> &nbsp;
+               2.2 <a href="#i20140828o0553" id="i20190329o1015">Speedometer</a> &nbsp;
+               2.3 <a href="#i20140828o0552" id="i20190329o1016">Swarm</a> &nbsp;
+               3   <a href="#i20140828o0554" id="i20190329o1017"><b>Algorithms</b></a> &nbsp;
+               4   <a href="#i20140902o0711" id="i20190329o1018"><b>Performance</b></a> &nbsp;
+ </p>
+
  <h2 id="i20190324o0357">
                (1) &nbsp; Overview
  </h2>
@@ -173,15 +183,6 @@
                (2) &nbsp; Features
  </h2>
 
- <p id="i20140902o1126">
-               Subchapters :
-               <a href="#i20140828o1731">Framework</a> &nbsp;
-               <a href="#i20140828o0553">Speedometer</a> &nbsp;
-               <a href="#i20140828o0552">Swarm</a> &nbsp;
-               <a href="#i20140828o0554">Algorithms</a> &nbsp;
-               <a href="#i20140902o0711">Performance</a> &nbsp;
- </p>
-
  <p id="i20140828o1734">
                CanvasGear sports the following features.
  </p>
@@ -276,41 +277,47 @@
                <span class="timestamp">(note 20160613°0351)</span>
  </p>
 
- <h3 id="i20140828o0554">
-               (2.4) &nbsp; Algorithms
- </h3>
+</div>
 
- <h4 id="i20140926o1031">
-               (2.4.1) &nbsp; Available Algorithms
- </h4>
+<div class="ChapterFaceNormal" id="i20190329o1023">
+
+ <h2 id="i20140828o0554">
+               (3) &nbsp; Algorithms
+ </h2>
+
+ <h3 id="i20140926o1031">
+               (3.1) &nbsp; Available Algorithms
+ </h3>
 
  <p id="i20140828o1814">
                This are the algorithms provided so far :
  </p>
 
 <pre style="font-size:small;" id="i20140829o0431">
-   - [token]       [function]                     [description]
-
-   - ballist       Cvgr.Algos.ballist.executeAlgorithm  This draws a shooting target with hits
-   - develop       Cvgr.Func.algoDevelop                Temporary algorithm for development
-   - oblongrose    Cvgr.Func.algoOblongrose             This draws a rose from rectangles
-   - pulse         Cvgr.Func.algoPulse                  This draws a pulsing balloon
-   - triangle      Cvgr.Func.algoTriangle               This draws a triangle
-   - triangulum    Cvgr.Func.algoTriangulum             This draws a swinging triangle
+   algoritm      function                                description
+   ------------  --------------------------------------  ---------------------------------------------
+ • Ballist       Cvgr.Algos.Ballist.executeAlgorithm     This draws a shooting target with hits, also
+                                                            intended for geological structure diagrams
+ • develop       Cvgr.Algos.develop.executeAlgorithm     Temporary algorithm for development
+ • oblongrose    Cvgr.Algos.oblongrose.executeAlgorithm  This draws a rose from rectangles
+ • pulse         Cvgr.Algos.pulse.executeAlgorithm       This draws a pulsing balloon
+ • Template      Cvgr.Algos.Template.executeAlgorithm    The graphics in script canvasgear.Template.js
+ • triangle      Cvgr.Algos.triangle.executeAlgorithm    This draws a triangle
+ • triangulum    Cvgr.Algos.triangulum.executeAlgorithm  This draws a swinging triangle
 </pre>
 
  <p id="i20140828o1815">
                For how to add more algorithms, see the Algorithm Interface.
  </p>
 
- <h4 id="i20140902o1711">
-               (2.4.2) &nbsp; Algorithm Interface.
- </h4>
+ <h3 id="i20140902o1711">
+               (3.2) &nbsp; Algorithm Interface
+ </h3>
 
  <p id="i20140902o1712">
-               CanvasGear shall provide an interface for easy addition of new algorithms.
-               For details see the sourcecode.
-               <i>The interface is not ready.</i>
+               CanvasGear provides an interface for easy addition of new algorithms.
+               For details see the sourcecode,
+               notably file <tt>canvasgear.Template.js</tt>.
  </p>
 
 </div>
@@ -318,15 +325,15 @@
 <div class="ChapterFaceNormal" id="i20140902o1223">
 
  <h3 id="i20140902o0711">
-               (3) &nbsp; Performance
+               (4) &nbsp; Performance
  </h3>
 
  <p id="i20140902o0712">
                Using canvases, you can easily hit the limit,
-               when the browser is overwhelmed.
-               This is true for old browsers as well as for modern browsers.
+               where the browser is overwhelmed.
+               This is true for old as well as new browsers.
                Just increase the number of icons per page,
-               and the icons start jerking at some certain point.
+               and at some point the icons start jerking.
  </p>
 
  <p id="i20140926o1021">
@@ -334,12 +341,12 @@
                So observing the <b>machine resources</b> is natural.
  </p>
 
- <p class="imageCenter" id="i20140926o1011">
+ <p class="imageCenter" style="max-width:533px; margin:auto;" id="i20140926o1011">
                <img src="./img/20140926o0942.taskman--ff-simple-to-canvasgear-2.png" width="404" height="195" alt="Image 20140926°0941" />
        <br />
-               The CPU utilization when Firefox displays a simple page,
-               and then is switched to display page
-               <a href="./index.html">CanvasGear index</a> with 82 canvases.
+               The CPU utilization while Firefox (in 2014) displays a simple page first,
+               and then switches to page
+               <a href="./demo2.html">CanvasGear Demo Two</a> with more than 81 canvases.
                This diagram tells that canvas drawing is resource intensive.
  </p>
 
@@ -350,22 +357,17 @@
  </p>
 
  <p id="i20140902o0713">
-               Here are some rough observations (2014):
+               Here are some rough observations (in 2014):
  </p>
 
  <ul id="i20140902o0714">
-  <!-- li id="i20140902o0721">
-               .
-  </li -->
   <li id="i20140902o0722">
                With Chrome, Firefox, Opera 100 icons performe still smoothly,
-               but 200 icons will start to disturb.
+               but 200 icons will start to jerk.
   </li>
   <li id="i20140902o0723">
-               With IE8 on a 2.13 GHz 3.00 GB machine,
-               it still works with 100 icons on one page,
-               but performs no more smoothly
-               with e.g. two frames per second.
+               With IE8 on a 2.13 GHz 3.00 GB machine, 100 icons on a page do still work,
+               but perform no more smoothly, the framerate dropped to about two frames per second.
   </li>
  </ul>
 
@@ -374,7 +376,7 @@
                a lot can be done by purposefull coding.
                E.g. there may be found superfluos processes,
                which can be optimized away.
-               (This is less a feature than an issue.)
+               This is less a feature, more a refacturing issue.
  </p>
 
  <p id="i20140902o1242" style="color:magenta;"><!-- output status message -->
@@ -384,9 +386,8 @@
 </div>
 
 <p id="i20190324o0354" style="color:DarkSlateGray;">
-               In the
-               <a href="./attic.html" id="i20190324o0355">Attic</a>
-               is some obsolete material archived.
+               Some obsolete material is archived in the
+               <a href="./attic.html" id="i20190324o0355">Attic</a> page.
 </p>
 
 <p id="i20140902o1131" style="color:DarkSlateGray; font-size:small;">

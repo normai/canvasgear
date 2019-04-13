@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.1.8... — 20190330°0711...
+ * version : 0.1.8.x — 20190330°0711...
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -41,7 +41,7 @@ var Cvgr = {};
 */
 
 /**
- * This namespace shall be a dummy for possible external algorithms
+ * This namespace holds the individual and possibly external algorithm namespaces
  *
  * @id 20180619°0111`02
  */
@@ -219,7 +219,7 @@ Cvgr.Objs.Ikon = function()
  * @param {number} iWidth — Optional, width in pixel (ES6 default params do not
  *                work in IE, see issue 20190312°0251 'IE fails with default params')
  */
-Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iWidth)
+Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iThick)
 {
    // workaround for missing default parameter [seq 20190312°0253]
    //  Remember issue 20190312°0251 'IE fails with default params'
@@ -232,7 +232,7 @@ Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iWidth)
    this.X2 = iX2;
    this.Y2 = iY2;
    this.Colo = Trekta.Util2.colorNameToHex(sColor);
-   this.Width = iWidth;
+   this.Width = iThick;
 };
 
 /**
@@ -328,8 +328,8 @@ Cvgr.startCanvasGear = function()
       ico.Canvas = canvases[i];
       ico.Context = canvases[i].getContext('2d');
       ico.Ide = canvases[i].id;
-      ico.Width = ico.Canvas.height;
-      ico.Height = ico.Canvas.width;
+      ico.Width = ico.Canvas.width;
+      ico.Height = ico.Canvas.height;
 
       // () get commandline [seq 20140830°0311]
       if ( ico.Canvas['attributes']['data-cvgr'] !== undefined ) {
@@ -560,7 +560,8 @@ Cvgr.Func.executeFramContinue = function(sAlgo, iNdx)
    //    intertweened, the exact callings may get a bit complicated.
    if (sAlgo in Cvgr.Algos) {
       // finally do the wanted algo [line 20190329°0215]
-      Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
+      ////Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
+      Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos[iNdx]);
    }
 };
 
@@ -709,7 +710,8 @@ Cvgr.Func.executeFrame = function()
       if ( sAlgo in Cvgr.Algos )
       {
          // (2.1) immediate call [seq 20190329°0413]
-         Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
+         ////Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
+         Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos[iNdx]);
       }
       else
       {
@@ -901,12 +903,12 @@ Cvgr.Algos.Ballist = {
     * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
     */
-   , executeAlgorithm : function(icos, iNdx)
+   , executeAlgorithm : function(iko) //// function(icos, iNdx)
    {
       'use strict'; // [line 20190329°0843`15]
 
       // prologue [seq 20140916°0432]
-      var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
+      ////var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
 
       // prolog - draw this algorithm only once [seq 20140916°1022`03]
       // note : This does not prevent Taskmanager to raise CPU usage
@@ -919,7 +921,7 @@ Cvgr.Algos.Ballist = {
       iko.DrawOnlyOnce = true;
 
       // preparatory calculations [line 20140916°0825]
-      var iSize = ((+iko.Width) + (+iko.Height)) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+      //var iSize = ((+iko.Width) + (+iko.Height)) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
 
       // calculate angle
       //var nCurrAngle = iko.Angle;
@@ -1008,7 +1010,8 @@ Cvgr.Algos.Ballist = {
       // progress [seq 20140916°0455]
       // note : Ballist algo is static anyway, progression is useless.
       //  Note todo 20190329°0833 'centralize progression'
-      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+      ////iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
       if (iko.Angle > Math.PI * 4) {
          iko.Angle = iko.Angle - Math.PI * 4;
       }
@@ -1249,16 +1252,14 @@ Cvgr.Algos.develop = {
     * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
     */
-   executeAlgorithm : function(icos, iNdx)
+   executeAlgorithm : function(iko) //// function(icos, iNdx)
    {
-
       'use strict'; // [line 20190329°0843`22]
 
       // This shall become the 'lines' algorithm' [seq 20140901°0521]
 
       // workaround for issue 20140828°0751
-      var iko = icos[iNdx];
-
+      ////var iko = icos[iNdx];
 
       // draw this algorithm only once [seq 20140916°1022`01]
       if (iko.DrawOnlyOnce)
@@ -1315,11 +1316,11 @@ Cvgr.Algos.oblongrose = {
     * @param {number} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param {number} iNdx — The index into the icos array.
     */
-   executeAlgorithm : function(icos, iNdx)
+   executeAlgorithm : function(iko) //// function(icos, iNdx)
    {
       'use strict'; // [line 20190329°0843`23]
 
-      var iko = icos[iNdx]; // workaround for issue 20140828°0751
+      ////var iko = icos[iNdx]; // workaround for issue 20140828°0751
 
       // draw this algorithm only once [seq 20140916°1022`02]
       if (iko.DrawOnlyOnce)
@@ -1371,12 +1372,12 @@ Cvgr.Algos.pulse = {
     * @param {Array} icos — Array of icon objects, Cvgr.Vars.icos[iNdx] at the caller
     * @param {Integer} iNdx — The index into the array
     */
-   executeAlgorithm : function(icos, iNdx)
+   executeAlgorithm : function(iko) //// function(icos, iNdx)
    {
       'use strict'; // [line 20190329°0843`24]
 
       // [seq 20140829°0512]
-      var iko = icos[iNdx]; // workaround for issue 20140828°0751
+      ////var iko = icos[iNdx]; // workaround for issue 20140828°0751
 
       // (.) prepare canvas [seq 20140829°0513]
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
@@ -1411,21 +1412,13 @@ Cvgr.Algos.pulse = {
       iko.Context.fillStyle = iko.Color;
       iko.Context.fill();
 
-      /*
-      todo 20190329°0833 'centralize progression'
-      matter : Sequence 20140829°0519 'calculate progression' and it's siblings
-         exists equally in most algos. This calculation should be done at only
-         one single place, at the caller.
-      location : At the bottom of most functions executeAlgorithm e.g. 20140829°0511
-      status : open
-      */
-
       // (.) seq 20140829°0519 'calculate progression'
       //  Note todo 20190329°0833 'centralize progression'
-      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+      ////iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
       if (iko.Angle > Math.PI) {
-       iko.Angle = iko.Angle - Math.PI;
-     }
+         iko.Angle = iko.Angle - Math.PI;
+      }
    }
 };
 
@@ -1451,11 +1444,11 @@ Cvgr.Algos.triangle = {
     * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param iNdx {Integer} The index into the icon objects array
     */
-   executeAlgorithm : function(icos, iNdx)
+   executeAlgorithm : function(iko) //// function(icos, iNdx)
    {
       'use strict'; // [line 20190329°0843`25]
 
-      var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
+      ////var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
 
       // preparatory calculations [seq 20140916°0823]
       var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
@@ -1542,12 +1535,12 @@ Cvgr.Algos.triangulum = {
     * @param icos This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param iNdx The index into the icos array.
     */
-   executeAlgorithm : function(icos, iNdx)
+   executeAlgorithm : function(iko) /// function(icos, iNdx)
    {
       'use strict'; // [line 20190329°0843`26]
 
       // workaround for issue 20140828°0751
-      var iko = icos[iNdx];
+      ////var iko = icos[iNdx];
 
       // preparatory calculations [seq 20140916°0824]
       var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
@@ -1582,7 +1575,8 @@ Cvgr.Algos.triangulum = {
 
       // maintain progress
       //  Note todo 20190329°0833 'centralize progression'
-      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+      ////iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
+      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
       if (iko.Angle > Math.PI * 4) {
          iko.Angle = iko.Angle - Math.PI * 4;
       }
@@ -1971,8 +1965,8 @@ Trekta.Util2.CmdlinParser = ( function()
 //~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // summary : This area is shared via cutnpaste by those scripts:
 //            • dafutils.js • canvasgear.js • slidegear.js
-// id : area 20190329°0221
-// version : 20190329°0913 20190329°0221
+// id : area 20190106°0307
+// version : 20190329°0913
 
 /**
  * This namespace shall be root namespace
@@ -2008,7 +2002,7 @@ Trekta.Utils = Trekta.Utils || {
       // read URL of this page
       // Values are e.g.
       //    • 'http://localhost/eps/index.html?XDEBUG_SESSION_START=netbeans-xdebug#'
-      //    • 'file:///G:/work/downtown/daftaridev/trunk/daftari/moonbouncy.html' (not yet working)
+      //    • 'file:///G:/work/daftaridev/trunk/daftari/moonbouncy.html' (not yet working)
       var sUrl = document.location.href;
 
       // remove possible query after the file name

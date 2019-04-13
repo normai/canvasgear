@@ -1,7 +1,7 @@
 ﻿/*!
  * This script provides the CanvasGear Template algorithm [file 20190329°0611]
  *
- * version : 0.1.9 — 20190330°0157
+ * version : 0.1.9 — 20190330°0757
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */

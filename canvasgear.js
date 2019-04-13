@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.1.8.. — 20190330°0711...
+ * version : 0.1.8... — 20190330°0711...
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -14,6 +14,8 @@
  * @note Use canvas class 'skipthis' to skip canvas not to be process by CanvasGear
  * @note Search ✂
  */
+
+'use strict'; // [line 20190329°0843]
 
 /**
  * This namespace constitutes the CanvasGear root namespace
@@ -127,6 +129,7 @@ if (Cvgr.Vars.radiobuttn !== null)
  */
 Cvgr.Objs.Ikon = function()
 {
+
    // public properties, to be set by user via HTML comment
    this.AlgoName = 'default';         // string - algorithm (workaround for Algo) [prop 20140916°0512]
    this.BgColor = 'Red'; // set color here has no effect // string - background color as RGB or webcolor [prop 20140916°0513]
@@ -549,6 +552,7 @@ Cvgr.Vars.timSuccess = [];
  */
 Cvgr.Func.examineAlgo = function(iMyNdx, iIcoNdx)
 {
+
    // retrieve algo name
    var sAlgo = Cvgr.Vars.icos[iIcoNdx].AlgoName;
 
@@ -570,6 +574,7 @@ Cvgr.Func.examineAlgo = function(iMyNdx, iIcoNdx)
  */
 Cvgr.Func.executeFrame = function()
 {
+
    // () output page status [seq 20140815°1251]
    // (.1) calculate each frame
    Cvgr.Vars.iFrameNo++;
@@ -696,6 +701,7 @@ Cvgr.Func.executeFrame = function()
  */
 Cvgr.Func.executeFrameContinu = function(sAlgo, iNdx)
 {
+
    // perhaps the alog is not yet ready [condi 20190329°0213]
    // note : With the both requestAnimFrame and pullScriptBehind
    //    intertweened, the exact callings may get a bit complicated.
@@ -706,7 +712,7 @@ Cvgr.Func.executeFrameContinu = function(sAlgo, iNdx)
 };
 
 /**
- * This function is the radiobuttons 'onClick' event handler
+ * This function constitutes the radiobuttons 'onClick' event handler
  *
  * @id 20140819°1751
  * @status Dummy function
@@ -714,6 +720,7 @@ Cvgr.Func.executeFrameContinu = function(sAlgo, iNdx)
  */
 Cvgr.Func.setRadiobutton = function()
 {
+
    // toggle [seq 20140819°1753]
    var sMsg = '[Debug 20140926°1131]\n\nNow radio-button algo-mode = ';
    if (document.FormAlgoMode.AlgoMode[0].checked)
@@ -792,6 +799,8 @@ Cvgr.Algos.Ballist = {
     */
    Ring : function(sRingName, nRadiusAbs, sColorRing, sColorSpace ) {
 
+      'use strict'; // [line 20190329°0843`12]
+
       // guarantee default values
       // note : not sure this sequence yet works properly
       if (sRingName === null) {
@@ -820,7 +829,9 @@ Cvgr.Algos.Ballist = {
     * @id 20140916°0911
     * @param nRadius {} The target's radius in m, usually goes with lowest ring.
     */
-    ,Target : function() {
+   , Target : function() {
+
+      'use strict'; // [line 20190329°0843`13]
 
       this.Diameter = 0.1;                                // diameter in meter [var 20140926°1151] the canvas scale shall be based on this
       this.Naame = '<n/a>';                               // the discipline name
@@ -835,8 +846,9 @@ Cvgr.Algos.Ballist = {
     * @param nRingval {}
     * @param nMinutes {}
     */
-   ///Cvgr.Algos.Ballist.Hit = function(nRingval, nMinutes) {
    , Hit : function(nRingval, nMinutes) {
+
+      'use strict'; // [line 20190329°0843`14]
 
       // set source values
       this.ringval = nRingval;                            // number - the ring value (assumed from 1.0 to 10.9)
@@ -874,7 +886,9 @@ Cvgr.Algos.Ballist = {
     */
    , executeAlgorithm : function(icos, iNdx)
    {
-      // prolog [seq 20140916°0432]
+      'use strict'; // [line 20190329°0843`15]
+
+      // prologue [seq 20140916°0432]
       var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
 
       // prolog - draw this algorithm only once [seq 20140916°1022`03]
@@ -992,6 +1006,8 @@ Cvgr.Algos.Ballist = {
     */
    , executeAlgo_drawDiagonal : function(iko)
    {
+      'use strict'; // [line 20190329°0843`16]
+
       // preparation [seq 20140926°1212]
       var nHeight = iko.Height;                           // pixel — remember issue 20140901°0933 'Opera 10 peculiar about capitals'
       var nWidth = iko.Width;                             // pixel
@@ -1061,6 +1077,9 @@ Cvgr.Algos.Ballist = {
     */
    , executeAlgo_getSeries : function(sSeries)
    {
+
+      'use strict'; // [line 20190329°0843`17]
+
       var hits = new Array();
 
       if (( typeof sSeries === 'undefined' ) || (sSeries.length < 1)) {
@@ -1114,6 +1133,8 @@ Cvgr.Algos.Ballist = {
     */
    , executeAlgo_getTarget : function(sTargetName)
    {
+      'use strict'; // [line 20190329°0843`18]
+
       var target = new Cvgr.Algos.Ballist.Target();
 
       if (sTargetName === 'kkspp') {
@@ -1215,6 +1236,9 @@ Cvgr.Algos.develop = {
     */
    executeAlgorithm : function(icos, iNdx)
    {
+
+      'use strict'; // [line 20190329°0843`22]
+
       // This shall become the 'lines' algorithm' [seq 20140901°0521]
 
       // workaround for issue 20140828°0751
@@ -1278,6 +1302,8 @@ Cvgr.Algos.oblongrose = {
     */
    executeAlgorithm : function(icos, iNdx)
    {
+      'use strict'; // [line 20190329°0843`23]
+
       var iko = icos[iNdx]; // workaround for issue 20140828°0751
 
       // draw this algorithm only once [seq 20140916°1022`02]
@@ -1332,6 +1358,8 @@ Cvgr.Algos.pulse = {
     */
    executeAlgorithm : function(icos, iNdx)
    {
+      'use strict'; // [line 20190329°0843`24]
+
       // [seq 20140829°0512]
       var iko = icos[iNdx]; // workaround for issue 20140828°0751
 
@@ -1410,6 +1438,8 @@ Cvgr.Algos.triangle = {
     */
    executeAlgorithm : function(icos, iNdx)
    {
+      'use strict'; // [line 20190329°0843`25]
+
       var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
 
       // preparatory calculations [seq 20140916°0823]
@@ -1499,6 +1529,8 @@ Cvgr.Algos.triangulum = {
     */
    executeAlgorithm : function(icos, iNdx)
    {
+      'use strict'; // [line 20190329°0843`26]
+
       // workaround for issue 20140828°0751
       var iko = icos[iNdx];
 
@@ -1545,7 +1577,7 @@ Cvgr.Algos.triangulum = {
 
 //------✂------------------------------------------------------
 // id : block 20190329°0131
-// version : 20190329°0141
+// version : 20190329°0912 20190329°0141
 // summary : This block is to be shared by scripts via cutnpaste
 // callers : So far only • canvasgear.js
 // note : Other commandline parser exist e.g. in terminal.js
@@ -1571,6 +1603,8 @@ Trekta.Util2 = Trekta.Util2 || {};
  */
 Trekta.Util2.Webcolors = function()
 {
+   'use strict'; // [line 20190329°0843`27]
+
    // Pink colors
    this.pink                 = '#ffc0cb';      // Pink                  FF C0 CB    255 192 203
    this.lightpink            = '#ffb6c1';      // LightPink             FF B6 C1    255 182 193
@@ -1755,6 +1789,8 @@ Trekta.Util2.Webcolors = function()
  */
 Trekta.Util2.colorNameToHex = function(sName) {
 
+   'use strict'; // [line 20190329°0843`28]
+
    var cols = new Trekta.Util2.Webcolors;
    var sCol = '';
 
@@ -1786,6 +1822,10 @@ Trekta.Util2.colorNameToHex = function(sName) {
  */
 Trekta.Util2.CmdlinParser = ( function()
 {
+
+   'use strict'; // [line 20190329°0843`11]
+   var parse = null; // wanted with strict mode [line 20190329°0853]
+
    /**
     * This function parses a commandline
     *
@@ -1796,6 +1836,7 @@ Trekta.Util2.CmdlinParser = ( function()
     * @param bProcessQuotes {boolean} Flag whether to process quotes or not
     * @returns
     */
+   ////parse = function(sCmdlin, bProcessQuotes)
    parse = function(sCmdlin, bProcessQuotes)
    {
       // paranoia — advisably
@@ -1913,9 +1954,10 @@ Trekta.Util2.CmdlinParser = ( function()
 
 
 //~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// summary : This area is shared via cutnpaste by those:
+// summary : This area is shared via cutnpaste by those scripts:
 //            • dafutils.js • canvasgear.js • slidegear.js
-// version : 20190329°0221
+// id : area 20190329°0221
+// version : 20190329°0913 20190329°0221
 
 /**
  * This namespace shall be root namespace
@@ -1946,6 +1988,8 @@ Trekta.Utils = Trekta.Utils || {
     */
    getFileNameFull : function() // [Trekta.Utils.getFileNameFull]
    {
+      'use strict'; // [line 20190329°0843`32]
+
       // read URL of this page
       // Values are e.g.
       //    • 'http://localhost/eps/index.html?XDEBUG_SESSION_START=netbeans-xdebug#'
@@ -1970,6 +2014,8 @@ Trekta.Utils = Trekta.Utils || {
     */
    , getFilenamePlain : function() // [Trekta.Utils.getFileNameFull]
    {
+      'use strict'; // [line 20190329°0843`33]
+
       var sUrl = Trekta.Utils.getFileNameFull(); // e.g 'daftari/daftari/login.html' (in FF)
 
       // fix issue 20181228°0931 'slideshow fails' [seq 20181228°0935]
@@ -1994,6 +2040,8 @@ Trekta.Utils = Trekta.Utils || {
     */
    , getXMLHttp : function() // [Trekta.Utils.getFileNameFull]
    {
+      'use strict'; // [line 20190329°0843`34]
+
       var xmlHttp;
 
       // () seqence 20150515°1612 'browser switch'
@@ -2057,6 +2105,8 @@ Trekta.Utils = Trekta.Utils || {
     */
    , htmlEscape : function(sHtml) // [Trekta.Utils.htmlEscape]
    {
+      'use strict'; // [line 20190329°0843`35]
+
       sHtml = sHtml.replace(/</g, '&lt;'); // g = replace all hits, not only the first
       sHtml = sHtml.replace(/>/g, '&gt;');
 
@@ -2074,6 +2124,8 @@ Trekta.Utils = Trekta.Utils || {
     */
    , isScriptAlreadyLoaded : function (sWantedScript) // [Trekta.Utils.isScriptAlreadyLoaded]
    {
+      'use strict'; // [line 20190329°0843`36]
+
       var regexp = null;
 
       // build the appropriate regex variable [seq 20160623°0311]
@@ -2119,6 +2171,8 @@ Trekta.Utils = Trekta.Utils || {
                                   , callbackfunc
                                    )
    {
+      'use strict'; // [line 20190329°0843`37]
+
       // avoid multiple loading [seq 20110821°0122]
       if ( Trekta.Utils.isScriptAlreadyLoaded(sScriptToLoad) ) {
          if ( Trekta.Utils.bShow_Debug_Dialogs ) {
@@ -2188,6 +2242,8 @@ Trekta.Utils = Trekta.Utils || {
     */
    , readTextFile1 : function(sFilename, bAsync) // [Trekta.Utils.readTextFile1]
    {
+      'use strict'; // [line 20190329°0843`38]
+
       // () preparation
       var sRead = '';
 
@@ -2268,6 +2324,8 @@ Trekta.Utils = Trekta.Utils || {
     */
    , retrieveScriptFolderAbs : function (sScriptName) // [Trekta.Utils.retrieveScriptFolderAbs]
    {
+      'use strict'; // [line 20190329°0843`42]
+
       var s = '';
 
       // () prepare regex [seq 20160621°0142]
@@ -2318,6 +2376,8 @@ Trekta.Utils = Trekta.Utils || {
     */
    , retrieveScriptFolderRel : function (sCanary)
    {
+      'use strict'; // [line 20190329°0843`43]
+
       var s = '';
 
       // () get the script tags list
@@ -2380,6 +2440,8 @@ Trekta.Utils = Trekta.Utils || {
     */
    , windowOnloadDaisychain : function(funczion) // [Trekta.Utils.windowOnloadDaisychain]
    {
+      'use strict'; // [line 20190329°0843`44]
+
       // is the onload handler already used?
       if ( window.onload ) {
          // preserve existing function(s) and append our additional function

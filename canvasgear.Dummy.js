@@ -1,4 +1,3 @@
-//======✂======================================================
 ﻿/*!
  * This module provides the Dummy algorithm
  *
@@ -12,24 +11,20 @@
  * @encoding UTF-8-with-BOM
  */
 
-/**
- * This namespace constitutes the CanvasGear namespace
- *
- * @id 20190329°0621 (parent 20180618°0622)
- */
-var Cvgr = Cvgr || {};
+'use strict'; // [line 20190329°0844]
 
-/**
- * This namespace holds the algorithms
- *
- * @id 20190329°0622 (parent 20180619°0111)
- */
+ // Formal integration [seq 20190329°0621] (after 20180618°0622/20180619°0111)
+var Cvgr = Cvgr || {};
 Cvgr.Algos = Cvgr.Algos || {};
 
+//------✂------------------------------------------------------
 /**
- * This namespace holds the respectively named algorithm. If you have
- *  copied canvasgear.Dummy.js to another file, e.g. canvasgear.MyAlgo.js, then
- *  rename this namespace and it's members respectively, e.g. Cvgr.Algos.MyAlgo
+ * This namespace holds the respectively named algorithm.
+ *
+ * Usage. This is a template to spawn algorithm modules from.
+ *  If you have copied canvasgear.Dummy.js to another file,
+ *  e.g. canvasgear.MyAlgo.js, then rename this namespace and
+ *  it's members respectively, e.g. Cvgr.Algos.MyAlgo etc.
  *
  * @id 20190329°0623
  */
@@ -112,5 +107,5 @@ Cvgr.Algos.Dummy.executeAlgorithm = function(icos, iNdx)
       iko.Angle = 0;
    }
 };
-//======✂======================================================
+//------✂------------------------------------------------------
 /* eof */

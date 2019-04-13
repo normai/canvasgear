@@ -3,6 +3,15 @@
    Issues and todos
    ****************
 
+   todo 20190330°0121 'register test buttons cleanup'
+   matter : Anonymous function 20140819°1811 registers an event handler
+      pretty bold. But that handler is never called, because startCanvasGear()
+      is executed only after the onload event was fired?
+   do : Cleanup this. But the test buttons work anyway, do they? Why?
+   location : Function 20140815°1241 startCanvasGear
+   status : open
+   ܀
+
    todo 20190329°1045 'commandline and default values'
    text : The commandline should be evaluated only after the algorithm is
       known, and the algo default properties are assigned. This makes a clear

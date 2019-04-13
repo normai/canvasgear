@@ -15,7 +15,7 @@ Cvgr.Algos = Cvgr.Algos || {};
 
 //------✂------------------------------------------------------
 /**
- * This namespace holds the respectively named algorithm.
+ * This namespace holds the Template algorithm, or any renamed one
  *
  * Usage. This is a template to spawn algorithm modules from.
  *  If you have copied canvasgear.Template.js to another file,
@@ -24,27 +24,20 @@ Cvgr.Algos = Cvgr.Algos || {};
  *
  * @id 20190329°0623
  */
-Cvgr.Algos.Template = Cvgr.Algos.Template || {};
+////Cvgr.Algos.Template = Cvgr.Algos.Template || {};
+Cvgr.Algos.Template = {};
 
 /**
  * This function implements the drawing algorithm
  *
  * @id 20190329°0631
  * @callers Only • Cvgr.Func.executeFrame
+ * @note See issue 20190329°0421 'impossible index', is it solved?
  * @param {Array} icos — This is Cvgr.Vars.icos[iNdx] at the caller
  * @param {Integer} iNdx — The index into the Cvgr.Vars.icos array
  */
-Cvgr.Algos.Template.executeAlgorithm = function(iko) //// function(icos, iNdx)
+Cvgr.Algos.Template.executeAlgorithm = function(iko)
 {
-   //// // hold off impossible index [seq 20190329°0423]
-   //// // See issue 20190329°0421 'impossible index'
-   //// if ( iNdx >= icos.length) {
-   ////    return;
-   //// }
-
-   //// convenience, get the pure Ikon object [line 20190329°0425]
-   ////  Workaround for issue 20140828°0751 'algo calling params quirk'
-   //////var iko = icos[iNdx];
 
    // prologue - draw this algorithm only once [seq 20190329°0427]
    // note : This does not prevent Taskmanager show CPU usage nearly hundred
@@ -74,7 +67,7 @@ Cvgr.Algos.Template.executeAlgorithm = function(iko) //// function(icos, iNdx)
    iCenterY = (iko.ShiftY !== null) ? iCenterY + parseInt(iko.ShiftY, 10) : iCenterY;
 
    // (.) calculate radius [seq 20190329°0444]
-   var nRadius = ( (iko.Width + iko.Height) / 4) * 0.66;
+   var nRadius = ( (iko.Width + iko.Height) / 4) * 0.33; //// 0.66;
 
    // (.) draw something [seq 20190329°0445]
    iko.Context.beginPath();
@@ -94,7 +87,6 @@ Cvgr.Algos.Template.executeAlgorithm = function(iko) //// function(icos, iNdx)
 
    // progress [seq 20190329°0447]
    //  Remember todo 20190329°0833 'centralize progression'
-   ////iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
    iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
    if (iko.Angle > Math.PI * 2) {
       iko.Angle = iko.Angle - Math.PI * 2;

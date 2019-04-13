@@ -3,6 +3,18 @@
    Room for any notes
    ******************
 
+   feature 20190330°0141 'external Template overwrites built-in one'
+   matter : The Template algo exists in two flavours, the built-in and the
+      external one. If the both are present, means if file canvasgear.Template.js
+      is copied parallel to canvasgear.js, the code of the external file shall
+      be executed, not that of the built-in Template algo of canvasgear.js.
+      But if no canvasgear.Template.js exists, the built-in code shall work.
+   note : To make this work in general, we had to make the pull-behind test
+      for each algo existing on the page. This can become pretty expensive.
+      So best we suffice with this mechanism restriced to the Template algo.
+   status : Works for Template algo, but not others. Is not wanted in general.
+   ܀
+
    note 20190329°1043 'the icon properties so far'
    text : Here are the object properties at the moment when
       func 20190330°0111 startCanvasGr_evalCmdlin is called :
@@ -29,6 +41,18 @@
       ⯈ __proto__   : Object
       • this        : undefined
    ref : Screenshot 20190329o1053.chrome--debug--ikon-props.png [ref 20190329°1053]
+   ܀
+
+   feature 20180619°0115 'discontinue IE8 support'
+   text : Support for IE8 is discontinued
+   note :
+   ܀
+
+   feature 20180619°0113 'supply external algorithm scripts'
+   text :  With the Algo namespace we created the mean to automatically
+      assign algorithms after their name. With the pull-behind mechanism,
+      those named algorithms can be provided afterwards externally.
+   note :
    ܀
 
    note 20140916°0731

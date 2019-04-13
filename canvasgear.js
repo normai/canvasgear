@@ -24,22 +24,6 @@
  */
 var Cvgr = {};
 
-/*
-   feature 20180619°0113 'supply external algorithm scripts'
-   text :  With the Algo namespace we created the mean to automatically
-      assign algorithms after their name. With the pull-behind mechanism,
-      those named algorithms can be provided afterwards externally.
-   note :
-   ܀
-*/
-
-/*
-   feature 20180619°0115 'discontinue IE8 support'
-   text : Support for IE8 is discontinued
-   note :
-   ܀
-*/
-
 /**
  * This namespace holds the individual and possibly external algorithm namespaces
  *
@@ -108,6 +92,14 @@ Cvgr.Vars =
    bFlagTipTopTest : false
 
    /**
+    * This flag solves the tricky implications with the introduction of
+    *  feature 20190330°0141 'external Template overwrites built-in one'
+    *
+    * @id 20190330°0143
+    */
+   , bIsNotFirstFrame : false
+
+   /**
     * This number stores the CanvasGear start seconds
     *
     * @id 20180618°0643
@@ -170,7 +162,7 @@ Cvgr.Objs.Ikon = function()
 {
 
    // public properties, to be set by user via HTML comment
-   this.AlgoName = 'default';         // string - algorithm (workaround for Algo) [prop 20140916°0512]
+   this.AlgoName = 'pulse';           // string - algorithm (workaround for Algo) [prop 20140916°0512]
    this.BgColor = 'Red'; // setting color here has no effect // string - background color as RGB or webcolor [prop 20140916°0513]
    this.Color = '';                   // string - RGB or webcolor                 // fix 20180618°071103 ineffective [prop 20140916°0514]
    this.Color2 = '';                  // string - RGB or webcolor                 // fix 20180618°071104 ineffective [prop 20140916°0515]
@@ -273,9 +265,10 @@ Cvgr.startCanvasGear = function()
 {
 
    /**
-    * This anonymous function registers the test page radiobutton click handler
+    * This anonymous function might register the test radiobutton click handler.
     *
     * @id 20140819°1811
+    * @see todo 20190330°0121 'register test buttons cleanup'
     * @note Does not work as expected. We need still onclick in HTML.
     * @note This can also be defined outside this function on script level.
     * @note Experimental shutdown 20170302°0321 did not work as expected
@@ -356,9 +349,6 @@ Cvgr.startCanvasGear = function()
       //  See todo 20190329°1045 'commandline and default values'
       Cvgr.startCanvasGr_evalCmdlin(ico);
 
-      ////// (N) .. [line 20140904°0655]
-      ////Cvgr.Func.startCanvasGear_setProperties();
-
       // (O) put it on array of canvases [line 20140904°0656]
       Cvgr.Vars.icos.push(ico);
    }
@@ -366,6 +356,7 @@ Cvgr.startCanvasGear = function()
    // [line 20140904°0657]
    canvases = null; // deleting a canvas is perhaps not a good idea
 
+   //// SHUT THIS DOWN
    // initialize canvasgearexcanvas.js [seq 20140815°0651]
    if ( typeof window.bIs_IE8_ExcanvasLoaded !== 'undefined' ) {
       if (bIs_IE8_LocalExcanvasLoaded) {
@@ -394,9 +385,9 @@ Cvgr.startCanvasGr_evalCmdlin = function(ico)
 {
 
    // (M.1) determine AlgoName [seq 20140904°0646]
-   if ((ico.CmdHash2['algo'] === undefined) || (ico.CmdHash2['algo'] === null) ||  (ico.CmdHash2['algo'] === ''))
+   if ((ico.CmdHash2['algo'] === undefined) || (ico.CmdHash2['algo'] === null) || (ico.CmdHash2['algo'] === ''))
    {
-      ico.AlgoName = 'default';
+      ////ico.AlgoName = 'default';
    }
    else
    {
@@ -562,12 +553,12 @@ Cvgr.Func.examineAlgo = function(iMyNdx, iIcoNdx)
  */
 Cvgr.Func.executeFramContinue = function(sAlgo, iNdx)
 {
+Cvgr.Vars.bIsNotFirstFrame = true;
    // the alog might be not yet ready [condi 20190329°0213]
    // note : With the both requestAnimFrame plus pullScriptBehind
    //    intertweened, the exact callings may get a bit complicated.
    if (sAlgo in Cvgr.Algos) {
       // finally do the wanted algo [line 20190329°0215]
-      ////Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
       Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos[iNdx]);
    }
 };
@@ -713,7 +704,12 @@ Cvgr.Func.executeFrame = function()
       var sAlgo = Cvgr.Vars.icos[iNdx].AlgoName;
 
       // (.2) [condition 20190329°0411]
-      if ( sAlgo in Cvgr.Algos )
+      // note : Oops, the condition got a tricky with the feature request
+      //  to use the external Template algo if available, otherwise use the
+      //  built-in one. So simple was it before : "if (sAlgo in Cvgr.Algos)"
+      if ( ( (sAlgo in Cvgr.Algos) && (sAlgo !== 'Template') )
+          || ( Cvgr.Vars.bIsNotFirstFrame && sAlgo === 'Template' )
+           )
       {
          // (2.1) immediate call [seq 20190329°0413]
          Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos[iNdx]);
@@ -766,16 +762,6 @@ Cvgr.Func.setRadiobutton = function()
 
    return;
 };
-
-/////**
-//// * This function ... is a helper function
-//// *
-//// * @id 20140916°1041
-//// */
-////Cvgr.Func.startCanvasGear_setProperties = function()
-////{
-////   // space for outsourced sequence from above ...
-////};
 
 //======✂======================================================
 ﻿/* !
@@ -908,12 +894,9 @@ Cvgr.Algos.Ballist = {
     * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
     */
-   , executeAlgorithm : function(iko) //// function(icos, iNdx)
+   , executeAlgorithm : function(iko)
    {
       'use strict'; // [line 20190329°0843`15]
-
-      // prologue [seq 20140916°0432]
-      ////var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
 
       // prolog - draw this algorithm only once [seq 20140916°1022`03]
       // note : This does not prevent Taskmanager to raise CPU usage
@@ -1015,7 +998,6 @@ Cvgr.Algos.Ballist = {
       // progress [seq 20140916°0455]
       // note : Ballist algo is static anyway, progression is useless.
       //  Note todo 20190329°0833 'centralize progression'
-      ////iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
       iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
       if (iko.Angle > Math.PI * 4) {
          iko.Angle = iko.Angle - Math.PI * 4;
@@ -1238,6 +1220,87 @@ Cvgr.Algos.Ballist = {
 //======✂======================================================
 
 
+//------✂------------------------------------------------------
+/**
+ * This namespace holds the Template algorithm, or any renamed one
+ *
+ * Usage. This is a template to spawn algorithm modules from.
+ *  If you have copied canvasgear.Template.js to another file,
+ *  e.g. canvasgear.MyAlgo.js, then rename this namespace and
+ *  it's members respectively, e.g. Cvgr.Algos.MyAlgo etc.
+ *
+ * @id 20190330°0131 (after 20190329°0623)
+ */
+Cvgr.Algos.Template = Cvgr.Algos.Template || {};
+
+/**
+ * This function implements the drawing algorithm
+ *
+ * @id 20190329°0631
+ * @callers Only • Cvgr.Func.executeFrame
+ * @note See issue 20190329°0421 'impossible index', is it solved?
+ * @param {Array} icos — This is Cvgr.Vars.icos[iNdx] at the caller
+ * @param {Integer} iNdx — The index into the Cvgr.Vars.icos array
+ */
+Cvgr.Algos.Template.executeAlgorithm = function(iko)
+{
+
+   // prologue - draw this algorithm only once [seq 20190329°0427]
+   // note : This does not prevent Taskmanager show CPU usage nearly hundred
+   //   percent. Without single-paint mode, it raises full hundred percent.
+   // todo : Implement this flag as algo property and process very early.
+   if (iko.DrawOnlyOnce) {
+      return;
+   }
+   iko.DrawOnlyOnce = false; // true; // false
+
+   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   // Above were the formal lines, below comes the wanted fuctionality
+   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   // prepare canvas [seq 20190329°0441]
+   iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+   iko.Context.fillStyle = iko.BgColor;
+   iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+   // (.) calculate center position [line 20190329°0442]
+   // note : The calculation is redundant to 'iSize'.
+   var iCenterX = iko.Width / 2;
+   var iCenterY = iko.Height / 2;
+
+   // (.) adjust center position by shift [seq 20190329°0443]
+   iCenterX = (iko.ShiftX !== null) ? iCenterX + parseInt(iko.ShiftX, 10) : iCenterX;
+   iCenterY = (iko.ShiftY !== null) ? iCenterY + parseInt(iko.ShiftY, 10) : iCenterY;
+
+   // (.) calculate radius [seq 20190329°0444]
+   var nRadius = ( (iko.Width + iko.Height) / 4) * 0.66;
+
+   // (.) draw something [seq 20190329°0445]
+   iko.Context.beginPath();
+   iko.Context.arc ( iCenterX                                  // center x coordinate
+                    , iCenterY                                 // center y coordinate
+                     , nRadius                                 // radius
+                      , 0.1 + iko.Angle                        // start angle in radians
+                       , (Math.PI * 2) * 0.8  + iko.Angle      // stop angle in radians
+                        , false                                // clockwise
+                         );
+
+   // (.) finish [seq 20190329°0446]
+   //iko.Context.closePath();
+   iko.Context.strokeStyle = iko.Color;
+   iko.Context.lineWidth = 6;
+   iko.Context.stroke();
+
+   // progress [seq 20190329°0447]
+   //  Remember todo 20190329°0833 'centralize progression'
+   iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
+   if (iko.Angle > Math.PI * 2) {
+      iko.Angle = iko.Angle - Math.PI * 2;
+   }
+};
+//------✂------------------------------------------------------
+
+
 //~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /**
  * This namespace holds the 'develop' algorithm
@@ -1250,9 +1313,7 @@ Cvgr.Algos.develop = {
     * This function serves developing an algorithm
     *
     * @id 20140901°0521
-    * @status
-    ////* @note We must pass the icon via array plus index, instead the direct
-    ////*    single object. See issue 20140828°0751 'algo calling params quirk'
+    * @status Under construction
     * @callers • Cvgr.Func.executeFrame
     * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
@@ -1273,7 +1334,7 @@ Cvgr.Algos.develop = {
 
       // prepare canvas
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-      iko.Context.fillStyle = iko.BgColor; //// "#eeeeee";
+      iko.Context.fillStyle = iko.BgColor;
       iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
       // preparatory calculations
@@ -1330,11 +1391,9 @@ Cvgr.Algos.oblongrose = {
     * @param {number} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param {number} iNdx — The index into the icos array.
     */
-   executeAlgorithm : function(iko) //// function(icos, iNdx)
+   executeAlgorithm : function(iko)
    {
       'use strict'; // [line 20190329°0843`23]
-
-      ////var iko = icos[iNdx]; // workaround for issue 20140828°0751
 
       // draw this algorithm only once [seq 20140916°1022`02]
       if (iko.DrawOnlyOnce) {
@@ -1385,12 +1444,9 @@ Cvgr.Algos.pulse = {
     * @param {Array} icos — Array of icon objects, Cvgr.Vars.icos[iNdx] at the caller
     * @param {Integer} iNdx — The index into the array
     */
-   executeAlgorithm : function(iko) //// function(icos, iNdx)
+   executeAlgorithm : function(iko)
    {
       'use strict'; // [line 20190329°0843`24]
-
-      // [seq 20140829°0512]
-      ////var iko = icos[iNdx]; // workaround for issue 20140828°0751
 
       // (.) prepare canvas [seq 20140829°0513]
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
@@ -1427,14 +1483,12 @@ Cvgr.Algos.pulse = {
 
       // (.) seq 20140829°0519 'calculate progression'
       //  Note todo 20190329°0833 'centralize progression'
-      ////iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
       iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
       if (iko.Angle > Math.PI) {
          iko.Angle = iko.Angle - Math.PI;
       }
    }
 };
-
 
 /**
  * This namespace holds the 'triangle' algorithm
@@ -1448,18 +1502,14 @@ Cvgr.Algos.triangle = {
     *
     * @id 20140828o°0851
     * @status proof-of-concept
-    ////* @note Sorrily, we must pass the icon via array plus index. All attempts
-    ////*     to pass the plain icon failed. No idea why. (issue 20140828°0751)
     * @see ref 20140828°0911 'MDN: Drawing shapes with canvas'
     * @see ref 20140901°0321 'William Malone: rotate canvas'
     * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param iNdx {Integer} The index into the icon objects array
     */
-   executeAlgorithm : function(iko) //// function(icos, iNdx)
+   executeAlgorithm : function(iko)
    {
       'use strict'; // [line 20190329°0843`25]
-
-      ////var iko = icos[iNdx]; // (workaround for issue 20140828°0751)
 
       // preparatory calculations [seq 20140916°0823]
       var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
@@ -1550,9 +1600,6 @@ Cvgr.Algos.triangulum = {
    {
       'use strict'; // [line 20190329°0843`26]
 
-      // workaround for issue 20140828°0751
-      ////var iko = icos[iNdx];
-
       // preparatory calculations [seq 20140916°0824]
       var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
 
@@ -1586,14 +1633,12 @@ Cvgr.Algos.triangulum = {
 
       // maintain progress
       //  Note todo 20190329°0833 'centralize progression'
-      ////iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * icos[iNdx].Hertz;
       iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
       if (iko.Angle > Math.PI * 4) {
          iko.Angle = iko.Angle - Math.PI * 4;
       }
    }
 };
-
 
 //------✂------------------------------------------------------
 // id : block 20190329°0131

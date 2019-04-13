@@ -24,7 +24,6 @@ Cvgr.Algos = Cvgr.Algos || {};
  *
  * @id 20190329°0623
  */
-////Cvgr.Algos.Template = Cvgr.Algos.Template || {};
 Cvgr.Algos.Template = {};
 
 /**
@@ -39,17 +38,13 @@ Cvgr.Algos.Template = {};
 Cvgr.Algos.Template.executeAlgorithm = function(iko)
 {
 
-   // prologue - draw this algorithm only once [seq 20190329°0427]
-   // note : This does not prevent Taskmanager show CPU usage nearly hundred
-   //   percent. Without single-paint mode, it raises full hundred percent.
-   // todo : Implement this flag as algo property and process very early.
-   if (iko.DrawOnlyOnce) {
-      return;
-   }
-   iko.DrawOnlyOnce = false; // true; // false
+   // prologue — no-animation flag [seq 20190329°0427]
+   // todo : Make this flag an algo property and process it before here
+   if (iko.DrawOnlyOnce) { return; }
 
    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   // Above were the formal lines, below comes the wanted fuctionality
+   // Above were formal lines, below comes wanted fuctionality.
+   // Have fun experimenting with your modifications.
    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
    // prepare canvas [seq 20190329°0441]
@@ -67,7 +62,7 @@ Cvgr.Algos.Template.executeAlgorithm = function(iko)
    iCenterY = (iko.ShiftY !== null) ? iCenterY + parseInt(iko.ShiftY, 10) : iCenterY;
 
    // (.) calculate radius [seq 20190329°0444]
-   var nRadius = ( (iko.Width + iko.Height) / 4) * 0.33; //// 0.66;
+   var nRadius = ( (iko.Width + iko.Height) / 4) * 0.44; //// 0.66;
 
    // (.) draw something [seq 20190329°0445]
    iko.Context.beginPath();

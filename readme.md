@@ -3,35 +3,35 @@
 **Slogan** : Draw animated canvases by specifying parameters in a data attribute
 
 **Features** :
-- Paint canvases controlled by parameters in a data attribute
-- Acts as framework to supplement new graphic algorithms easliy
-- Provides the ready mechanisms for cyclically animated canvases
-- No dependencies
+- Paints canvases after parameters in a data attribute
+- Acts as framework for writing graphic algorithms
+- Provides mechanism for cyclically animated canvases
+- Has no dependencies
 - Browser compatibility from IE 9 up
 
-**Status** : Works fine but has only a few boring algorithms on board
+**Status** : Works, but has only few boring algorithms on board
 
 **Demos** : [http://www.trekta.biz/../canvasgear/doc/index.html](http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/index.html).
 
 **Installation** :
-- Copy [`canvasgear.min.js`](./canvasgear.js) to your web folder
-- Equip your HTML file like follows :<span style="line-height:0.1em; font-family:monospace">
- <br>
- <br> &nbsp; &lt;head&gt;
- <br> &nbsp; &nbsp; &nbsp; . . .
- <br> &nbsp; &nbsp; &nbsp; <b>&lt;script src="./canvasgear.min.js"&gt;&lt;/script&gt;</b> &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;!-- 1. load script --&gt;
- <br> &nbsp; &nbsp; &nbsp; . . .
- <br> &nbsp; &lt;/head&gt;
- <br> &nbsp; &lt;body&gt;
- <br> &nbsp; &nbsp; &nbsp; . . .
- <br> &nbsp; &nbsp; &nbsp; &lt;canvas &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;!-- 2. Put a canvas tag --&gt;
- <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>data-cvgr="algo=pulse color=hotpink hertz=0.197"</b> &nbsp; &lt;!-- 3. Put the data-cvgr attribute --&gt;
- <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; width="123" height="123" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;!-- 4. Put width and height attribute --&gt;
- <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; id="myCanvas44"&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;!-- 5. Put an ID attribute --&gt;
- <br> &nbsp; &nbsp; &nbsp; &lt;/canvas&gt;
- <br> &nbsp; &nbsp; &nbsp; . . .
- <br> &nbsp; &lt;/body&gt;</span>
-
+- Copy [`canvasgear.min.js`](./canvasgear.min.js) to your web folder
+- Equip your HTML file like follows :
+```
+      <head>
+         ...
+         <script src="./canvasgear.min.js"></script>          <!-- 1. load script -->
+         ...
+      </head>
+      <body>
+         ...
+         <canvas                                              <!-- 2. Put a canvas tag -->
+            data-cvgr="algo=pulse color=hotpink hertz=0.197"  <!-- 3. Put the data-cvgr attribute -->
+            width="123" height="123"                          <!-- 4. Put width and height attribute -->
+            id="myCanvas44">                                  <!-- 5. Put an ID attribute -->
+         </canvas>
+         ...
+      </body>
+```
 - Now the defined canvas should appear on the page
 - If you like experimenting, additionally copy [`canvasgear.Template.js`](./canvasgear.Template.js)
 

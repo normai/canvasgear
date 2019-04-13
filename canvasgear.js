@@ -1246,17 +1246,13 @@ Cvgr.Algos.Template = Cvgr.Algos.Template || {};
 Cvgr.Algos.Template.executeAlgorithm = function(iko)
 {
 
-   // prologue - draw this algorithm only once [seq 20190329°0427]
-   // note : This does not prevent Taskmanager show CPU usage nearly hundred
-   //   percent. Without single-paint mode, it raises full hundred percent.
-   // todo : Implement this flag as algo property and process very early.
-   if (iko.DrawOnlyOnce) {
-      return;
-   }
-   iko.DrawOnlyOnce = false; // true; // false
+   // prologue — no-animation flag [seq 20190329°0427]
+   // todo : Make this flag an algo property and process it before here
+   if (iko.DrawOnlyOnce) { return; }
 
    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   // Above were the formal lines, below comes the wanted fuctionality
+   // Above were formal lines, below comes wanted fuctionality.
+   // Have fun experimenting with your modifications.
    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
    // prepare canvas [seq 20190329°0441]

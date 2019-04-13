@@ -37,6 +37,12 @@
    usage :
    ܀
 
+   ref 20140901°0321 'William Malone: rotate canvas'
+   title : Article 'Hwo do you rotate an HTML5 canvas around it's center'
+   url : http://www.williammalone.com/briefs/how-to-rotate-html5-canvas-around-center
+   tags : canvas canvas.rotate
+   ܀
+
    ref ~20140831°0623 'whatwg group : canvas specifications'
    about : Lookup 'official' canvas specifications at the WHATWG group on
    url : http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting.html
@@ -72,6 +78,12 @@
    url : http://stackoverflow.com/questions/6382023/changing-the-color-of-a-hr-element
    title : Changing the color of an hr element
    note : display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0;
+   ܀
+
+   ref 20140828°0911 'MDN : Drawing shapes with canvas'
+   url : https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Drawing_shapes
+   title : Article 'Drawing shapes with canvas'
+   tags : canvas
    ܀
 
    ref 20140828°0832 'majstro: tokenizing with split'

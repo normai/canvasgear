@@ -3,6 +3,19 @@
    Issues and todos
    ****************
 
+   todo 20190329°1045 'commandline and default values'
+   text : The commandline should be evaluated only after the algorithm is
+      known, and the algo default properties are assigned. This makes a clear
+      cascaded order, where just each later value overwrite the earlier one.
+   finding : It may be not soo simple, because at least the algorithm name
+      must have been read already from the commandline, before the others
+      values can be processed. And only if the algo name is know, possibly
+      a pull-behind with unclear result happens.
+   finding : The bulk commandline interpretation should ideally happen
+      after the pull-behind process has settled.
+   status : open
+   ܀
+
    todo 20190329°0833 'centralize progression'
    matter : Sequence 20140829°0519 'calculate progression' and it's siblings
       exists equally in most algos. This calculation should be done at only
@@ -204,8 +217,6 @@
    ref 20190324°0813 : A demo how to find comments is now in repo 20140713°1811
         http://www.trekta.biz/svn/demosjs/trunk/findcomments/findcomments.html
    status : Finished with ref 20190324°0813
-
-
    ܀
 
    issue 20140828°0751 'algo calling params quirk'
@@ -218,7 +229,8 @@
       - // var x = icos[iFor];
       - // icos[iFor] = algoPulse(x);
       - // algoPulse(icos[iFor]);
-   status : open
+   note 20190329°1033 : Issue seems finished but I do not know why, and what it was before.
+   status : seems finished (note 20190329°1033)
    ܀
 
    issue 20140828°0541 'IE8 is drawing outside the canvas'

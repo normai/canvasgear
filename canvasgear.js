@@ -325,162 +325,39 @@ Cvgr.startCanvasGear = function()
 
       // () create Ikon object for this one canvas [seq 20140815°0944]
       var ico = new Cvgr.Objs.Ikon();
+
+      // () basic properties setting [seq 20140815°0945]
+      //  The values which are known from the canvas
       ico.Canvas = canvases[i];
       ico.Context = canvases[i].getContext('2d');
       ico.Ide = canvases[i].id;
       ico.Width = ico.Canvas.width;
       ico.Height = ico.Canvas.height;
 
-      // () get commandline [seq 20140830°0311]
-      if ( ico.Canvas['attributes']['data-cvgr'] !== undefined ) {
-         // new style [line 20180619°0211]
-         ico.Command = ico.Canvas['attributes']['data-cvgr'].value;
-      }
-      else {
-         // old style
-         ico.Command = Cvgr.Func.findComments3(ico.Canvas.nextSibling);
-      }
-      // now string ico.Command is known, e.g. "algo=pulse hertz=111 color=orange"
+      // () read commandline [line 20140830°0311 v 20180619°0211]
+      ico.Command = ico.Canvas['attributes']['data-cvgr'].value;
+      // Now ico.Command is known, e.g. "algo=pulse hertz=111 color=orange"
 
-      // () parse commandline [seq 20140815°0945]
+      // () parse commandline [line 20140815°0946]
       ico.CmdHash2 = Trekta.Util2.CmdlinParser.parse(ico.Command, true);
-
 
       // provide array with known keys [seq 20140926°0331]
       // see : ref 20140926°0351 'Stacko : For-each on array'
       // see : ref 20140926°0352 'Stackoverflow : Check key in object'
       // see : ref 20111031°1322 'Harms & Diaz : JavaScript object oriented ...'
+      /*
       var keys = new Array ( 'algo', 'class', 'height', 'id', 'width', 'Algo'
                             , 'Bgcolor', 'Color', 'Color2', 'Color3', 'Hertz'
                              , 'Shiftx', 'Shifty', 'Speed'
                               );
-      // // () collect the icon's properties [seq 20140815°0946]
-      // // (.1) extract some dedicated properties from the original canvas element
-      // ico.Ide = canvases[i].id;
-      // ico.Height = canvases[i].height;
-      // ico.Width = canvases[i].width;
-      // ...
+      */
 
+      // (M) line 20140904°0645 'assign commandline values'
+      //  See todo 20190329°1045 'commandline and default values'
+      Cvgr.startCanvasGr_evalCmdlin(ico);
 
-      // (M) read properties from commandline [seq 20140904°0645]
-      //  See todo 20140904°0711 'refactor property parsing'
-      // (M.1) determine AlgoName [seq 20140904°0646]
-      if ((ico.CmdHash2['algo'] === undefined) || (ico.CmdHash2['algo'] === null) ||  (ico.CmdHash2['algo'] === ''))
-      {
-         ico.AlgoName = 'default';
-      }
-      else
-      {
-         ico.AlgoName = ico.CmdHash2['algo'];
-      }
-
-      // (M.2) determine BgColor [seq 20140904°0647]
-      if ( (ico.CmdHash2['bgcolor'] === null)
-          || (ico.CmdHash2['bgcolor'] === undefined)
-           || (ico.CmdHash2['bgcolor'] === '')
-            ) // [fix 20180618°0711`01]
-      {
-         ico.BgColor = 'Transparent'; // #f0f0f0
-      }
-      else
-      {
-         ico.BgColor = ico.CmdHash2['bgcolor'];
-         if (ico.BgColor.substr(0, 1) !== '#')
-         {
-            ico.BgColor = Trekta.Util2.colorNameToHex(ico.BgColor);
-         }
-      }
-
-      // (M.3) determine Color [seq 20140904°0648]
-      if ((ico.CmdHash2['color'] === undefined) || (ico.CmdHash2['color'] === null) || (ico.CmdHash2['color'] === ''))
-      {
-         ico.Color = 'LightSlateGray'; // '#404040'
-      }
-      else
-      {
-         ico.Color = ico.CmdHash2['color'] || '';                      // [fix 20180618°0711`07]
-         if (ico.Color.substr(0, 1) !== '#')
-         {
-            ico.Color = Trekta.Util2.colorNameToHex(ico.Color);
-         }
-      }
-
-      // (M.4) determine Color2 [seq 20140904°0649]
-      if (ico.Color.substr(0, 1) !== '#')
-      {
-         ico.Color2 = 'SlateGray'; // '#606060'
-      }
-      else
-      {
-         ico.Color2 = ico.CmdHash2['color2'] || '';                    // [fix 20180618°0711`06]
-         if (ico.Color2.substr(0, 1) !== '#')                          // [fix 20180618°0711`02]
-         {
-            ico.Color2 = Trekta.Util2.colorNameToHex(ico.Color2);
-         }
-      }
-
-      // (M.5) determine Color3 [seq 20140904°0650]
-      if ((ico.CmdHash2['color3'] === undefined) ||  (ico.CmdHash2['color3'] === null) ||  (ico.CmdHash2['color3'] === ''))
-      {
-         ico.Color3 = 'DarkSlateGray'; // '#808080'
-      }
-      else
-      {
-         ico.Color3 = ico.CmdHash2['color3'] || '';
-         if (ico.Color3.substr(0, 1) !== '#')
-         {
-            ico.Color3 = Trekta.Util2.colorNameToHex(ico.Color3);
-         }
-      }
-
-      // (M.6) determine Hertz [seq 20140904°0651]
-      if ((ico.CmdHash2['hertz'] === undefined) || (ico.CmdHash2['hertz'] === null) || (ico.CmdHash2['hertz'] === ''))
-      {
-         ico.Hertz = 0.2;
-      }
-      else
-      {
-         ico.Hertz = ico.CmdHash2['hertz'];
-      }
-
-      // (M.7) determine ShiftX (pixel) [seq 20140904°0652]
-      if ((ico.CmdHash2['shiftx'] === undefined) || (ico.CmdHash2['shiftx'] === null) || (ico.CmdHash2['shiftx'] === ''))
-      {
-         ico.ShiftX = 0;
-      }
-      else
-      {
-         ico.ShiftX = ico.CmdHash2['shiftx'];
-      }
-
-      // (M.8) determine ShiftY (pixel) [seq 20140904°0653]
-      if ((ico.CmdHash2['shifty'] === undefined) || (ico.CmdHash2['shifty'] === null) || (ico.CmdHash2['shifty'] === ''))
-      {
-         ico.ShiftY = 0;
-      }
-      else
-      {
-         ico.ShiftY = ico.CmdHash2['shifty'];
-      }
-
-      // (M.9) determine Speed [seq 20140904°0654]
-      if ((ico.CmdHash2['speed'] === undefined) || (ico.CmdHash2['speed'] === null) || (ico.CmdHash2['speed'] === ''))
-      {
-         ico.Speed = 444;
-      }
-      else
-      {
-         ico.Speed = ico.CmdHash2['speed'];
-      }
-
-      // (M.10) determine SizeFactor [seq 20190328°0833]
-      ico.SizeFactor = ('SizeFactor' in ico.CmdHash2)
-                      ? ico.CmdHash2['SizeFactor']
-                       : 1.0
-                        ;
-
-      // (N) .. [line 20140904°0655]
-      Cvgr.Func.startCanvasGear_setProperties();
+      ////// (N) .. [line 20140904°0655]
+      ////Cvgr.Func.startCanvasGear_setProperties();
 
       // (O) put it on array of canvases [line 20140904°0656]
       Cvgr.Vars.icos.push(ico);
@@ -500,6 +377,136 @@ Cvgr.startCanvasGear = function()
 
    // ignit continuous drawing [seq 20140815°0947]
    Cvgr.Func.executeFrame();
+};
+
+/**
+ * This function evaluates the commandline.
+ *  This is a sequence outsourced from func startCanvasGear
+ *
+ * @id 20190330°0111
+ * @see note 20190329°1043 'the icon properties so far'
+ * @see todo 20190329°1045 'commandline and default values'
+ * @see todo 20140904°0711 'refactor property parsing'
+ * @callers The page's body tag onload event or the onload event daisychain.
+ *
+ */
+Cvgr.startCanvasGr_evalCmdlin = function(ico)
+{
+
+   // (M.1) determine AlgoName [seq 20140904°0646]
+   if ((ico.CmdHash2['algo'] === undefined) || (ico.CmdHash2['algo'] === null) ||  (ico.CmdHash2['algo'] === ''))
+   {
+      ico.AlgoName = 'default';
+   }
+   else
+   {
+      ico.AlgoName = ico.CmdHash2['algo'];
+   }
+
+   // (M.2) determine BgColor [seq 20140904°0647]
+   if ( (ico.CmdHash2['bgcolor'] === null)
+       || (ico.CmdHash2['bgcolor'] === undefined)
+        || (ico.CmdHash2['bgcolor'] === '')
+         ) // [fix 20180618°0711`01]
+   {
+      ico.BgColor = 'Transparent'; // #f0f0f0
+   }
+   else
+   {
+      ico.BgColor = ico.CmdHash2['bgcolor'];
+      if (ico.BgColor.substr(0, 1) !== '#')
+      {
+         ico.BgColor = Trekta.Util2.colorNameToHex(ico.BgColor);
+      }
+   }
+
+   // (M.3) determine Color [seq 20140904°0648]
+   if ((ico.CmdHash2['color'] === undefined) || (ico.CmdHash2['color'] === null) || (ico.CmdHash2['color'] === ''))
+   {
+      ico.Color = 'LightSlateGray'; // '#404040'
+   }
+   else
+   {
+      ico.Color = ico.CmdHash2['color'] || '';                      // [fix 20180618°0711`07]
+      if (ico.Color.substr(0, 1) !== '#')
+      {
+         ico.Color = Trekta.Util2.colorNameToHex(ico.Color);
+      }
+   }
+
+   // (M.4) determine Color2 [seq 20140904°0649]
+   if (ico.Color.substr(0, 1) !== '#')
+   {
+      ico.Color2 = 'SlateGray'; // '#606060'
+   }
+   else
+   {
+      ico.Color2 = ico.CmdHash2['color2'] || '';                    // [fix 20180618°0711`06]
+      if (ico.Color2.substr(0, 1) !== '#')                          // [fix 20180618°0711`02]
+      {
+         ico.Color2 = Trekta.Util2.colorNameToHex(ico.Color2);
+      }
+   }
+
+   // (M.5) determine Color3 [seq 20140904°0650]
+   if ((ico.CmdHash2['color3'] === undefined) ||  (ico.CmdHash2['color3'] === null) ||  (ico.CmdHash2['color3'] === ''))
+   {
+      ico.Color3 = 'DarkSlateGray'; // '#808080'
+   }
+   else
+   {
+      ico.Color3 = ico.CmdHash2['color3'] || '';
+      if (ico.Color3.substr(0, 1) !== '#')
+      {
+         ico.Color3 = Trekta.Util2.colorNameToHex(ico.Color3);
+      }
+   }
+
+   // (M.6) determine Hertz [seq 20140904°0651]
+   if ((ico.CmdHash2['hertz'] === undefined) || (ico.CmdHash2['hertz'] === null) || (ico.CmdHash2['hertz'] === ''))
+   {
+      ico.Hertz = 0.2;
+   }
+   else
+   {
+      ico.Hertz = ico.CmdHash2['hertz'];
+   }
+
+   // (M.7) determine ShiftX (pixel) [seq 20140904°0652]
+   if ((ico.CmdHash2['shiftx'] === undefined) || (ico.CmdHash2['shiftx'] === null) || (ico.CmdHash2['shiftx'] === ''))
+   {
+      ico.ShiftX = 0;
+   }
+   else
+   {
+      ico.ShiftX = ico.CmdHash2['shiftx'];
+   }
+
+   // (M.8) determine ShiftY (pixel) [seq 20140904°0653]
+   if ((ico.CmdHash2['shifty'] === undefined) || (ico.CmdHash2['shifty'] === null) || (ico.CmdHash2['shifty'] === ''))
+   {
+      ico.ShiftY = 0;
+   }
+   else
+   {
+      ico.ShiftY = ico.CmdHash2['shifty'];
+   }
+
+   // (M.9) determine Speed [seq 20140904°0654]
+   if ((ico.CmdHash2['speed'] === undefined) || (ico.CmdHash2['speed'] === null) || (ico.CmdHash2['speed'] === ''))
+   {
+      ico.Speed = 444;
+   }
+   else
+   {
+      ico.Speed = ico.CmdHash2['speed'];
+   }
+
+   // (M.10) determine SizeFactor [seq 20190328°0833]
+   ico.SizeFactor = ('SizeFactor' in ico.CmdHash2)
+                   ? ico.CmdHash2['SizeFactor']
+                    : 1.0
+                     ;
 };
 
 // helper variables for browser independend angle calculation
@@ -575,7 +582,7 @@ Cvgr.Func.executeFramContinue = function(sAlgo, iNdx)
 Cvgr.Func.executeFram_PrintInfo = function(iNdx)
 {
 
-   // (x) output canvas status [seq 20140815°1253]
+   // (x) output canvas status [seq 20140815°1251]
    // The ID of the output element has to be the ID of the canvas with added '.info'.
    // See ref 20190329°0513 'stackoverflow : convert float number to whole'
    var sIde = Cvgr.Vars.icos[iNdx].Ide + '.info'; // Cvgr_CanvasAttachedInfoPara
@@ -636,23 +643,22 @@ Cvgr.Func.executeFram_PrintPageInfo = function(iTimeCurr, iElapsedTwoSeconds, iF
  * This function performs the continuous drawing
  *
  * @id 20140815°1221
- * @callers This is called once by start function Cvgr.startCanvasGear(),
- *    and then periodically by the browser's requestAnimFrame()
+ * @callers • once from function Cvgr.startCanvasGear()
+ *           • then periodically via requestAnimFrame()
  */
 Cvgr.Func.executeFrame = function()
 {
 
-   // () output page status [seq 20140815°1251]
-   // (.1) calculate each frame
+   // (P) output page status [seq 20140815°1247]
+   // (P.1) calculate each frame [seq 20140815°1252]
    Cvgr.Vars.iFrameNo++;
    var iTimeCurr = new Date();
    iTimeCurr.getTime();
-   //var iTimeCurrMs = iTimeCurr.getMilliseconds();
    var iElapsedMs = iTimeCurr - Cvgr.Vars.iTimeStart;
    var iFramesPerSecondTotal = Cvgr.Vars.iFrameNo / iElapsedMs * 1000;
    var iElapsedTwoSeconds = Math.floor( iElapsedMs / 2000 ) * 2;
 
-   // (.2) perform periodic measurment
+   // (P.2) perform periodic measurment [seq 20140815°1253]
    if ( Cvgr.Vars.iMarkLastTwoSecond < iElapsedTwoSeconds )
    {
       Cvgr.Vars.iMarkLastTwoSecond = iElapsedTwoSeconds;
@@ -661,8 +667,8 @@ Cvgr.Func.executeFrame = function()
       Cvgr.Vars.iMarkLastTwoSecondFrame = Cvgr.Vars.iFrameNo;
    }
 
-   // (.3) calculate true angle
-   // (.3.1) handle border situation
+   // (P.3) calculate true angle [seq 20140815°1254]
+   // (P.3.1) handle border situation
    if (Cvgr.Vars.iFramesPerTowSeconds < 0.001)
    {
       // The calculated speed is not available on start, there is not yet a
@@ -670,7 +676,7 @@ Cvgr.Func.executeFrame = function()
       // is pretty imprecise, sometime half, sometime double the final value.
       Cvgr.Vars.iFramesPerTowSeconds = iFramesPerSecondTotal * 2;
    }
-   // (.3.2) perform calculation
+   // (P.3.2) perform calculation [seq 20140815°1255]
    Cvgr.Vars.nTrueAngleTurns = Cvgr.Vars.nTrueAngleTurns + (1 / Cvgr.Vars.iFramesPerTowSeconds);
    if (Cvgr.Vars.nTrueAngleTurns > 1)
    {
@@ -685,23 +691,23 @@ Cvgr.Func.executeFrame = function()
    //  • Cvgr.Vars.nIncTurnsPerFrame : This value depends on the browser, it wobbles
    //      around e.g. 0.017 to 0.020 with Chrome, or 0.021 to 0.023 with IE8.
 
-   // (.4) debug output page status [line 20190329°0933] Cvgr_DebugPageOutputArea
+   // (P.4) debug output page status [line 20190329°0933] Cvgr_DebugPageOutputArea
    Cvgr.Func.executeFram_PrintPageInfo ( iTimeCurr
                                         , iElapsedTwoSeconds
                                          , iFramesPerSecondTotal
                                           );
    
-   // process each canvas on the page [seq 20140815°1252]
+   // process each canvas on the page [seq 20140815°1256]
    for (var iNdx = 0; iNdx < Cvgr.Vars.icos.length; iNdx++)
    {
       // flag to skip icon
-      // prolog - draw this algorithm only once [seq 20140916°102204]
+      // prologue - draw this algorithm only once [seq 20140916°102204]
       // todo : Implement here flag from commandline
 
       // () debug output canvas status [line 20190329°0923]
       Cvgr.Func.executeFram_PrintInfo(iNdx);
 
-      // () execute algorithm [seq 20140815°1254]
+      // () execute algorithm [seq 20140815°1257]
       //  Remember issue 20140828°0751 'Algo calling params quirk' — is it solved?
       // (.1) convenience
       var sAlgo = Cvgr.Vars.icos[iNdx].AlgoName;
@@ -710,7 +716,6 @@ Cvgr.Func.executeFrame = function()
       if ( sAlgo in Cvgr.Algos )
       {
          // (2.1) immediate call [seq 20190329°0413]
-         ////Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
          Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos[iNdx]);
       }
       else
@@ -718,7 +723,7 @@ Cvgr.Func.executeFrame = function()
          // (2.2) load buddy module [seq 20190329°0415]
          var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/treksvn/canvasgeardev/trunk/canvasgear/"
          var sModNam = sPathAbs + 'canvasgear.' + sAlgo + '.js';
-         Cvgr.Vars.timSuccess.push(false); // pessimistic predetermination
+         Cvgr.Vars.timSuccess.push(false);                             // pessimistic predetermination
          Cvgr.Vars.timrs.push(setTimeout( Cvgr.Func.examineAlgo, 1357, (Cvgr.Vars.timrs.length - 1), iNdx ));
          Trekta.Utils.pullScriptBehind ( sModNam , function()
                                         { Cvgr.Func.executeFramContinue( iNdx ); }
@@ -726,7 +731,7 @@ Cvgr.Func.executeFrame = function()
       }
    }
 
-   // setup for animation [line 20140815°1255]
+   // setup for animation [line 20140815°1258]
    window.requestAnimFrame(Cvgr.Func.executeFrame);
 };
 
@@ -762,15 +767,15 @@ Cvgr.Func.setRadiobutton = function()
    return;
 };
 
-/**
- * This function ... is a helper function
- *
- * @id 20140916°1041
- */
-Cvgr.Func.startCanvasGear_setProperties = function()
-{
-   // space for outsourced sequence from above ...
-};
+/////**
+//// * This function ... is a helper function
+//// *
+//// * @id 20140916°1041
+//// */
+////Cvgr.Func.startCanvasGear_setProperties = function()
+////{
+////   // space for outsourced sequence from above ...
+////};
 
 //======✂======================================================
 ﻿/* !
@@ -1246,24 +1251,19 @@ Cvgr.Algos.develop = {
     *
     * @id 20140901°0521
     * @status
-    * @note We must pass the icon via array plus index, instead the direct
-    *    single object. See issue 20140828°0751 'algo calling params quirk'
+    ////* @note We must pass the icon via array plus index, instead the direct
+    ////*    single object. See issue 20140828°0751 'algo calling params quirk'
     * @callers • Cvgr.Func.executeFrame
     * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
     */
-   executeAlgorithm : function(iko) //// function(icos, iNdx)
+   executeAlgorithm : function(iko) // [Cvgr.Algos.develop.executeAlgorithm]
    {
       'use strict'; // [line 20190329°0843`22]
 
-      // This shall become the 'lines' algorithm' [seq 20140901°0521]
-
-      // workaround for issue 20140828°0751
-      ////var iko = icos[iNdx];
-
       // draw this algorithm only once [seq 20140916°1022`01]
-      if (iko.DrawOnlyOnce)
-      {
+      // Remember issue ..
+      if (iko.DrawOnlyOnce) {
          return;
       }
       iko.DrawOnlyOnce = true;
@@ -1273,7 +1273,7 @@ Cvgr.Algos.develop = {
 
       // prepare canvas
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-      iko.Context.fillStyle = "#eeeeee";
+      iko.Context.fillStyle = iko.BgColor; //// "#eeeeee";
       iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
       // preparatory calculations
@@ -1294,6 +1294,20 @@ Cvgr.Algos.develop = {
          iko.Context.strokeStyle = lins[i].Colo;
          iko.Context.stroke();
       }
+   }
+
+   /**
+    * This object can define default properties for this algorithm.
+    *  Use the same names as are used on the data-cvgr commandline.
+    *
+    * @id 20140901°0521
+    */
+   , defaultProperties : { // [Cvgr.Algos.develop.defaultProperties]
+      bgcolor : 'LightCyan'
+      , color1 : 'LightCoral' // 'Red'
+      , color2 : 'PaleGreen' // 'Green'
+      , color3 : 'LightBlue' // 'Blue'
+      , DrawOnlyOnce : true // it is static, not animated
    }
 };
 //~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1323,8 +1337,7 @@ Cvgr.Algos.oblongrose = {
       ////var iko = icos[iNdx]; // workaround for issue 20140828°0751
 
       // draw this algorithm only once [seq 20140916°1022`02]
-      if (iko.DrawOnlyOnce)
-      {
+      if (iko.DrawOnlyOnce) {
          return;
       }
       iko.DrawOnlyOnce = true;
@@ -1435,12 +1448,10 @@ Cvgr.Algos.triangle = {
     *
     * @id 20140828o°0851
     * @status proof-of-concept
-    * @note Sorrily, we must pass the icon via array plus index. All attempts
-    *     to pass the plain icon failed. No idea why. (issue 20140828°0751)
-    * @ref Article 'Drawing shapes with canvas'
-    *     https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Drawing_shapes [20140828°0911]
-    * @ref Article 'Hwo do you rotate an HTML5 canvas around it's center' [20140901°0321]
-    *     http://www.williammalone.com/briefs/how-to-rotate-html5-canvas-around-center
+    ////* @note Sorrily, we must pass the icon via array plus index. All attempts
+    ////*     to pass the plain icon failed. No idea why. (issue 20140828°0751)
+    * @see ref 20140828°0911 'MDN: Drawing shapes with canvas'
+    * @see ref 20140901°0321 'William Malone: rotate canvas'
     * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param iNdx {Integer} The index into the icon objects array
     */

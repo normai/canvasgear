@@ -3,6 +3,34 @@
    Room for any notes
    ******************
 
+   note 20190329°1043 'the icon properties so far'
+   text : Here are the object properties at the moment when
+      func 20190330°0111 startCanvasGr_evalCmdlin is called :
+      • AlgoName    : "devault
+      • Angle       : 0
+      • BgColor     : "Red"
+      ⯈ Canvas      : canvas#myCanvas21
+      ⯈ CmdHash2    : [algo: "triangle", ...] 
+      • Color       : ""
+      • Color2      : ""
+      • Color3      : ""
+      • Command     : "..."
+      ⯈ Context     : CanvasRenderingContext2D { ... }
+      • DrawOnlyOnce : false
+      • Height      : 98
+      • Hertz       : null
+      • Ide         : "myCanvas21"
+      • ShiftX      : null
+      • ShiftY      : null
+      • SizeFactor  : null
+      • Speed       : null
+      • Width       : 98
+      • iDrawCount  : 0
+      ⯈ __proto__   : Object
+      • this        : undefined
+   ref : Screenshot 20190329o1053.chrome--debug--ikon-props.png [ref 20190329°1053]
+   ܀
+
    note 20140916°0731
    matter : Remember series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11"
    ܀

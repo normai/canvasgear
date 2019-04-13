@@ -36,17 +36,17 @@ Cvgr.Algos.Template = Cvgr.Algos.Template || {};
  */
 Cvgr.Algos.Template.executeAlgorithm = function(iko) //// function(icos, iNdx)
 {
-   // // hold off impossible index [seq 20190329°0423]
-   // // See issue 20190329°0421 'impossible index'
-   // if ( iNdx >= icos.length) {
-   //    return;
-   // }
+   //// // hold off impossible index [seq 20190329°0423]
+   //// // See issue 20190329°0421 'impossible index'
+   //// if ( iNdx >= icos.length) {
+   ////    return;
+   //// }
 
-   // convenience, get the pure Ikon object [line 20190329°0425]
-   //  Workaround for issue 20140828°0751 'algo calling params quirk'
-//   var iko = icos[iNdx];
+   //// convenience, get the pure Ikon object [line 20190329°0425]
+   ////  Workaround for issue 20140828°0751 'algo calling params quirk'
+   //////var iko = icos[iNdx];
 
-   // prolog - draw this algorithm only once [seq 20190329°0427]
+   // prologue - draw this algorithm only once [seq 20190329°0427]
    // note : This does not prevent Taskmanager show CPU usage nearly hundred
    //   percent. Without single-paint mode, it raises full hundred percent.
    // todo : Implement this flag as algo property and process very early.

@@ -1,4 +1,24 @@
 ﻿
+
+
+
+
+```
+      <head>
+         ...
+         script src="./canvasgear.min.js"></script>          <!-- (1) load script -->
+         ...
+      </head>
+      <body>
+         ...
+         <canvas                                              <!-- (2) Put a canvas tag -->
+             data-cvgr="algo=pulse color=hotpink hertz=0.197" <!-- (3) Put the data-cvgr attribute -->
+             width="123" height="123"                         <!-- (4) Put width and height attribute -->
+             id="myCanvas44">                                 <!-- (5) Put an ID attribute -->
+         </canvas>
+         ...
+      </body>
+```
    ܀
 
    ———————————————————————

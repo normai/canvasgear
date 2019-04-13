@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.1.8.x — 20190330°0711...
+ * version : 0.1.9 — 20190330°0157
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -375,6 +375,7 @@ Cvgr.startCanvasGear = function()
  *  This is a sequence outsourced from func startCanvasGear
  *
  * @id 20190330°0111
+ * @see todo 20190330°0151 'read properties in lump-sum'
  * @see note 20190329°1043 'the icon properties so far'
  * @see todo 20190329°1045 'commandline and default values'
  * @see todo 20140904°0711 'refactor property parsing'

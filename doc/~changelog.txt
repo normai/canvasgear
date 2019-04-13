@@ -1,6 +1,6 @@
 
-   v0.1..
-   • Introduce automatic algorithm-module loading
+   release 0.1.9 — 20190330°0157
+   • Introduce automatic algorithm module loading
    •
 
    release CanvasGear v0.1.7 — 20190330°0711 (2019-Apr-11)

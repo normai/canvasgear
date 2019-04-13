@@ -3,6 +3,14 @@
    Issues and todos
    ****************
 
+   todo 20190330°0151 'read properties in lump-sum'
+   location : Function 20190330°0111 startCanvasGr_evalCmdlin
+   matter : The properties are precessed humble one by one.
+   do : Process properties in lump-sum treatment
+   chain : todo 20190329°1045 'commandline and default values'
+   status : open
+   ܀
+
    todo 20190330°0121 'register test buttons cleanup'
    matter : Anonymous function 20140819°1811 registers an event handler
       pretty bold. But that handler is never called, because startCanvasGear()
@@ -22,6 +30,7 @@
       a pull-behind with unclear result happens.
    finding : The bulk commandline interpretation should ideally happen
       after the pull-behind process has settled.
+   chain : todo 20190330°0151 'read properties in lump-sum'
    status : open
    ܀
 

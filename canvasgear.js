@@ -24,6 +24,22 @@
  */
 var Cvgr = {};
 
+/*
+   feature 20180619°0113 'supply external algorithm scripts'
+   text :  With the Algo namespace we created the mean to automatically
+      assign algorithms after their name. With the pull-behind mechanism,
+      those named algorithms can be provided afterwards externally.
+   note :
+   ܀
+*/
+
+/*
+   feature 20180619°0115 'discontinue IE8 support'
+   text : Support for IE8 is discontinued
+   note :
+   ܀
+*/
+
 /**
  * This namespace shall be a dummy for possible external algorithms
  *
@@ -121,18 +137,41 @@ if (Cvgr.Vars.radiobuttn !== null)
 }
 
 /**
+ * This class represents an algorithm object
+ *
+ * This shall store a drawing algorithm which acts on an Ikon object.
+ * This design proposal is probably obsolete because replaced by namespace Algos.
+ *
+ * @id 20140815°1231
+ * @status Under construction, implementation yet unclear
+ * @note Compare ...
+ */
+Cvgr.Objs.Algo = function()
+{
+   this.Canvas = null;                                 // Canvas object - the canvas tag [prop 20140916°0552]
+   this.Context = null;                                // Context object - attached to canvas [prop 20140916°0553]
+   this.Funktion = null;                               // function - ... [prop 20140916°0554]
+   this.Ikon = null;                                   // Ikon object - ...  [prop 20140916°0555]
+   this.draw = function x()                            // function - The wanted algorithm  [prop 20140916°0556]
+   {
+      // The drawing function shall be provided by the caller
+   };
+};
+
+/**
  * This class represents an icon object
  *
  * @id 20140815°1221
  * @note Line 'this.Algo = Cvgr.Func.algoPulse;' is bad, it makes
  *        the script disappear [note 20140828°0722]
+ * @callers Only • func 20140815°1241 startCanvasGear
  */
 Cvgr.Objs.Ikon = function()
 {
 
    // public properties, to be set by user via HTML comment
    this.AlgoName = 'default';         // string - algorithm (workaround for Algo) [prop 20140916°0512]
-   this.BgColor = 'Red'; // set color here has no effect // string - background color as RGB or webcolor [prop 20140916°0513]
+   this.BgColor = 'Red'; // setting color here has no effect // string - background color as RGB or webcolor [prop 20140916°0513]
    this.Color = '';                   // string - RGB or webcolor                 // fix 20180618°071103 ineffective [prop 20140916°0514]
    this.Color2 = '';                  // string - RGB or webcolor                 // fix 20180618°071104 ineffective [prop 20140916°0515]
    this.Color3 = '';                  // string - RGB or webcolor (nowhere used)  // fix 20180618°071105 ineffective [prop 20140916°0516]
@@ -149,11 +188,11 @@ Cvgr.Objs.Ikon = function()
    this.Width = null;                 // int - canvas width (in pixel) [prop 20140916°0525]
 
    // private properties, set program internally
-   this.Algo = null;                   // Algo - drawing algorithm (not yet used?) [prop 20140916°0526]
+//   this.Algo = null;                   // Algo - drawing algorithm (not yet used?) [prop 20140916°0526]
    this.Angle = 0;                     // private [prop 20140916°0527]
    this.Canvas = null;                 // object - the canvas tag DOM element [prop 20140916°0528]
    this.CmdHash2 = null;               // object/array - the commandline as an associative array [var 20140926°0651]
-   this.Command = null;                // string - the commandline as read from the html comment [prop 20140916°0532]
+   this.Command = ''; // null;         // string - the commandline as read from the html comment [prop 20140916°0532]
    this.Context = null;                // object - attached to canvas [prop 20140916°0533]
    this.DrawOnlyOnce = false;          // object - flag [prop 20140916°1021]
    this.iDrawCount = 0;                // integer how often the icon is drawn completely [prop 20140916°0534]
@@ -164,26 +203,6 @@ Cvgr.Objs.Ikon = function()
    //    // The drawing function must be provided by the caller?
    //    // ...;
    // };
-};
-
-/**
- * This class represents an algorithm object
- *
- * @id 20140815°1231
- * @descr It shall store a drawing algorithm which acts on an Ikon object.
- * @status Under construction, implementation yet unclear
- * @note Compare ...
- */
-Cvgr.Objs.Algo = function()
-{
-   this.Canvas = null;                                 // Canvas object - the canvas tag [prop 20140916°0552]
-   this.Context = null;                                // Context object - attached to canvas [prop 20140916°0553]
-   this.Funktion = null;                               // function - ... [prop 20140916°0554]
-   this.Ikon = null;                                   // Ikon object - ...  [prop 20140916°0555]
-   this.draw = function x()                            // function - The wanted algorithm  [prop 20140916°0556]
-   {
-      // The drawing function must be provided by the caller?
-   };
 };
 
 /**
@@ -261,7 +280,7 @@ Cvgr.startCanvasGear = function()
     * @note This can also be defined outside this function on script level.
     * @note Experimental shutdown 20170302°0321 did not work as expected
     * @todo 20160612°0341 : This function will destroy any already existing
-    *     onload handlers. Use func 20160614°0331windowOnloadDaisychain!
+    *     onload handlers. Use func 20160614°0331 windowOnloadDaisychain!
     */
    window.onload = function()
    {
@@ -271,19 +290,11 @@ Cvgr.startCanvasGear = function()
       bt2.onclick = Cvgr.Func.setRadiobutton;
    };
 
-   /*
-   issue 20140815°0641 'browser is missing requestAnimationFrame'
-   matter : Method requestAnimationFrame does not exist in IE8.
-   workaround : Use the fallback shim layer by Paul Irish (seq 20140815°0651).
-   note 20190324°0143 : The method comes with IE10, IE9 is still missing it.
-   status : Leave as is until also IE9 support shall be dropped.
-   */
-
-   // workaround missing requestAnimFrame [seq 20140815°0651]
-   // See issue 20140815°0641 'browser is missing requestAnimationFrame'
-   // summary : This sequence provides a fallback for the possibly of
-   //    a missing 'requestAnimationFrame' browser method.
-   // ref : http://www.paulirish.com/2011/requestanimationframe-for-smart-animating [ref 20140815°0634]
+   // seq 20140815°0651 'workaround for missing requestAnimFrame'
+   //  This provides a fallback for possibly missing requestAnimationFrame method.
+   // see : issue 20140815°0641 'browser is missing requestAnimationFrame'
+   // see : ref 20140815°0634 'paul irish : requestAnimationFrame'
+   // see : ref 20140815°0635 'paul irish : requestAnimationFrame shim'
    //--------------------------------------------------
    // shim layer with setTimeout fallback
    window.requestAnimFrame = (function()
@@ -303,22 +314,22 @@ Cvgr.startCanvasGear = function()
    var canvases = document.getElementsByTagName("canvas");
    // note : canvases is of type 'HTMLCollection[]' now
 
-   // () loop over canvases and provide each one Icon object [seq 20140815°0942]
+   // () loop over canvases and provide an Ikon object for each [seq 20140815°0942]
    for (var i = 0; i < canvases.length; i++)
    {
-      // () possibly skip this canvas
+      // () possibly skip this canvas [seq 20140815°0943]
       // if the string 'skipthis' is found in the canvas HTML element
       if (canvases[i].outerHTML.indexOf("skipthis") > -1 ) {
          continue;
       }
 
-      // () create Ikon object for this one canvas
+      // () create Ikon object for this one canvas [seq 20140815°0944]
       var ico = new Cvgr.Objs.Ikon();
       ico.Canvas = canvases[i];
       ico.Context = canvases[i].getContext('2d');
+      ico.Ide = canvases[i].id;
       ico.Width = ico.Canvas.height;
       ico.Height = ico.Canvas.width;
-      ico.Command = "";
 
       // () get commandline [seq 20140830°0311]
       if ( ico.Canvas['attributes']['data-cvgr'] !== undefined ) {
@@ -331,10 +342,10 @@ Cvgr.startCanvasGear = function()
       }
       // now string ico.Command is known, e.g. "algo=pulse hertz=111 color=orange"
 
-      // () parse commandline
+      // () parse commandline [seq 20140815°0945]
       ico.CmdHash2 = Trekta.Util2.CmdlinParser.parse(ico.Command, true);
 
-      //+++++++++++++++++++++++++++++++++++++++++++++++
+
       // provide array with known keys [seq 20140926°0331]
       // see : ref 20140926°0351 'Stacko : For-each on array'
       // see : ref 20140926°0352 'Stackoverflow : Check key in object'
@@ -343,42 +354,13 @@ Cvgr.startCanvasGear = function()
                             , 'Bgcolor', 'Color', 'Color2', 'Color3', 'Hertz'
                              , 'Shiftx', 'Shifty', 'Speed'
                               );
+      // // () collect the icon's properties [seq 20140815°0946]
+      // // (.1) extract some dedicated properties from the original canvas element
+      // ico.Ide = canvases[i].id;
+      // ico.Height = canvases[i].height;
+      // ico.Width = canvases[i].width;
+      // ...
 
-      // () collect the icon's properties
-      // (.1) extract some dedicated properties from the original canvas element
-      ico.Ide = canvases[i].id;
-      ico.Height = canvases[i].height;
-      ico.Width = canvases[i].width;
-
-      if ( Cvgr.Const.bShow_Debug_Dialogs )                            // toggle debug output
-      {
-         var sMsg = "Dedicated properties :";
-         sMsg += "\n[x] ico.Canvas = " + ico.Canvas;
-         sMsg += "\n[x] ico.Height = " + ico.Height;
-         sMsg += "\n[x] ico.Ide = " + ico.Ide;                         // ico.Ide = canvases[i].id
-         sMsg += "\n[x] ico.Width = " + ico.Width;
-
-         // (.2) provide values from the canvas element
-         // note canvases[i] has a list of about 175 properties, ID is the last one,
-         //    and it is correctly assigned. But height and with have assigned nothing.
-         sMsg += "\n\nElement properties :";
-         for ( sKey in canvases[i] )
-         {
-            if (keys.indexOf(sKey) > (-1))
-            {
-               sMsg += "\n[c] " + sKey + " = " + canvases[i][sKey];
-            }
-         }
-
-         // (.3) provide values from the commandline
-         sMsg += "\n\nCommandline values :";
-         for(sKey in ico.CmdHash2 )
-         {
-            sMsg += "\n[o] " + sKey + " = " + ico.CmdHash2[sKey];
-         }
-         alert("[Debug 20140926°0332] Canvas element:\n" + sMsg);
-      }
-      //+++++++++++++++++++++++++++++++++++++++++++++++
 
       // (M) read properties from commandline [seq 20140904°0645]
       //  See todo 20140904°0711 'refactor property parsing'
@@ -516,17 +498,17 @@ Cvgr.startCanvasGear = function()
       }
    }
 
-   // ignit continuous drawing
+   // ignit continuous drawing [seq 20140815°0947]
    Cvgr.Func.executeFrame();
 };
 
 // helper variables for browser independend angle calculation
-Cvgr.Vars.iMarkLastTwoSecond = 0;                      //
-Cvgr.Vars.iMarkLastTwoSecondFrame = 0;                 //
-Cvgr.Vars.iFramesInLastTwoSeconds = 0;                 //
-Cvgr.Vars.iFramesPerTowSeconds = 0;                    //
-Cvgr.Vars.nTrueAngleTurns = 0;                         // wanted browser independend angle in turns for 1 Hz
-Cvgr.Vars.nIncTurnsPerFrame = 0;                       // increment turns per frame for 1 Hz
+Cvgr.Vars.iMarkLastTwoSecond = 0;                      // [var 20140815°0932]
+Cvgr.Vars.iMarkLastTwoSecondFrame = 0;                 // [var 20140815°0933]
+Cvgr.Vars.iFramesInLastTwoSeconds = 0;                 // [var 20140815°0934]
+Cvgr.Vars.iFramesPerTowSeconds = 0;                    // [var 20140815°0935]
+Cvgr.Vars.nTrueAngleTurns = 0;                         // [var 20140815°0936] wanted browser independend angle in turns for 1 Hz
+Cvgr.Vars.nIncTurnsPerFrame = 0;                       // [var 20140815°0937] increment turns per frame for 1 Hz
 
 /**
  * This array stores the timers to examine the non-immediate algorithms
@@ -562,6 +544,90 @@ Cvgr.Func.examineAlgo = function(iMyNdx, iIcoNdx)
    }
    else {
       Cvgr.Vars.icos[iIcoNdx].AlgoName = 'pulse';
+   }
+};
+
+/**
+ * This function is called possibly only after wanted script is pulled-behind
+ *
+ * @id 20190329°0211
+ * @callers Only • pullScriptBehind callback
+ */
+Cvgr.Func.executeFramContinue = function(sAlgo, iNdx)
+{
+   // the alog might be not yet ready [condi 20190329°0213]
+   // note : With the both requestAnimFrame plus pullScriptBehind
+   //    intertweened, the exact callings may get a bit complicated.
+   if (sAlgo in Cvgr.Algos) {
+      // finally do the wanted algo [line 20190329°0215]
+      Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
+   }
+};
+
+/**
+ * This function prints to the Cvgr_CanvasAttachedInfoPara field
+ *
+ * @id 20190329°0921
+ * @callers Only • executeFrame()
+ * @param {Integer} iNdx
+ */
+Cvgr.Func.executeFram_PrintInfo = function(iNdx)
+{
+
+   // (x) output canvas status [seq 20140815°1253]
+   // The ID of the output element has to be the ID of the canvas with added '.info'.
+   // See ref 20190329°0513 'stackoverflow : convert float number to whole'
+   var sIde = Cvgr.Vars.icos[iNdx].Ide + '.info'; // Cvgr_CanvasAttachedInfoPara
+   var el = document.getElementById(sIde);
+   if (el !== null)
+   {
+      // prepare print variable [seq 20140815°1311]
+      var sOut = '<small>Canvas Debug Info :';
+
+      // print fixed value set [seq 20140815°1313]
+      sOut += "<br />iko.Angle = " + Cvgr.Vars.icos[iNdx].Angle.toFixed(9) + ' '
+            +  "<br />iko.Color = " + Cvgr.Vars.icos[iNdx].Color
+             + "<br />iko.Height = " + Cvgr.Vars.icos[iNdx].Height
+              + "<br />iko.Mode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip')
+               + "<br />iko.Width = " + Cvgr.Vars.icos[iNdx].Width
+                ;
+
+      // print commandline args [seq 20140815°1315]
+      for ( var ki in Cvgr.Vars.icos[iNdx].CmdHash2 )
+      {
+         var sValEscaped = Trekta.Utils.htmlEscape(Cvgr.Vars.icos[iNdx].CmdHash2[ki]);
+         sOut += "<br /> [cmd] " + ki + " = " + sValEscaped;
+      }
+
+      // finish printing [seq 20140815°1317]
+      sOut += "</small>";
+      el.innerHTML = sOut;
+   }
+};
+
+/**
+ * This function prints to the page debug info
+ *
+ * @id 20190329°0931
+ * @callers Only • executeFrame()
+ */
+Cvgr.Func.executeFram_PrintPageInfo = function(iTimeCurr, iElapsedTwoSeconds, iFramesPerSecondTotal)
+{
+   // (.4) output Page Debug Info [seq 20140916°1032]
+   var elDbg = document.getElementById("Cvgr_DebugPageOutputArea");
+   if (elDbg !== null)
+   {
+      var s = "<b>CanvasGear Debug Info</b> :";
+      s += " AlgoMode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip') + "; ";
+      s += " Frame number = " + Cvgr.Vars.iFrameNo + ";";
+      s += "<br />Start time = " + Cvgr.Vars.iTimeStart + " = " + Cvgr.Vars.iTimeStart.valueOf() + ";";
+      s += "<br />Current time = " + iTimeCurr;
+      s += "<br />Elapsed seconds (every two) = " + iElapsedTwoSeconds + ";";
+      s += "<br />Frames per seconds (total, average since start) = " + iFramesPerSecondTotal.toFixed(9);
+      s += "<br />Frames per seconds (for the last two seconds) = " + Cvgr.Vars.iFramesPerTowSeconds.toFixed(9);
+      s += "<br />True angle for 1 Hz (turns) = " + Cvgr.Vars.nTrueAngleTurns.toFixed(9) + ";";
+      s += "<br />Increment per frame (turns) = " + Cvgr.Vars.nIncTurnsPerFrame.toFixed(9) + ";";
+      elDbg.innerHTML = s;
    }
 };
 
@@ -618,23 +684,12 @@ Cvgr.Func.executeFrame = function()
    //  • Cvgr.Vars.nIncTurnsPerFrame : This value depends on the browser, it wobbles
    //      around e.g. 0.017 to 0.020 with Chrome, or 0.021 to 0.023 with IE8.
 
-   // (.4) output Page Debug Info [seq 20140916°1032]
-   var elDbg = document.getElementById("Cvgr_DebugOutputArea");
-   if (elDbg !== null)
-   {
-      var s = "<b>CanvasGear Debug Info</b> :";
-      s += " AlgoMode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip') + "; ";
-      s += " Frame number = " + Cvgr.Vars.iFrameNo + ";";
-      s += "<br />Start time = " + Cvgr.Vars.iTimeStart + " = " + Cvgr.Vars.iTimeStart.valueOf() + ";";
-      s += "<br />Current time = " + iTimeCurr;
-      s += "<br />Elapsed seconds (every two) = " + iElapsedTwoSeconds + ";";
-      s += "<br />Frames per seconds (total, average since start) = " + iFramesPerSecondTotal.toFixed(9);
-      s += "<br />Frames per seconds (for the last two seconds) = " + Cvgr.Vars.iFramesPerTowSeconds.toFixed(9);
-      s += "<br />True angle for 1 Hz (turns) = " + Cvgr.Vars.nTrueAngleTurns.toFixed(9) + ";";
-      s += "<br />Increment per frame (turns) = " + Cvgr.Vars.nIncTurnsPerFrame.toFixed(9) + ";";
-      elDbg.innerHTML = s;
-   }
-
+   // (.4) debug output page status [line 20190329°0933] Cvgr_DebugPageOutputArea
+   Cvgr.Func.executeFram_PrintPageInfo ( iTimeCurr
+                                        , iElapsedTwoSeconds
+                                         , iFramesPerSecondTotal
+                                          );
+   
    // process each canvas on the page [seq 20140815°1252]
    for (var iNdx = 0; iNdx < Cvgr.Vars.icos.length; iNdx++)
    {
@@ -642,28 +697,8 @@ Cvgr.Func.executeFrame = function()
       // prolog - draw this algorithm only once [seq 20140916°102204]
       // todo : Implement here flag from commandline
 
-      // (x) output canvas status [seq 20140815°1253]
-      // The id of the output element has to be the id of the canvas with added '.info'.
-      // See ref 20190329°0513 'stackoverflow : convert float number to whole'
-      var sIde = Cvgr.Vars.icos[iNdx].Ide + '.info';
-      var el = document.getElementById(sIde);                          // <!-- canvas attached info paragraph -->
-      if (el !== null)
-      {
-         var sOut = '<small>Canvas Debug Info :';
-         sOut += "<br />iko.Angle = " + Cvgr.Vars.icos[iNdx].Angle.toFixed(9) + ' '
-               +  "<br />iko.Color = " + Cvgr.Vars.icos[iNdx].Color
-                + "<br />iko.Height = " + Cvgr.Vars.icos[iNdx].Height
-                 + "<br />iko.Mode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip')
-                  + "<br />iko.Width = " + Cvgr.Vars.icos[iNdx].Width
-                   ;
-         for ( ki in Cvgr.Vars.icos[iNdx].CmdHash2 )
-         {
-            var sValEscaped = Trekta.Utils.htmlEscape(Cvgr.Vars.icos[iNdx].CmdHash2[ki]);
-            sOut += "<br /> [cmd] " + ki + " = " + sValEscaped;
-         }
-         sOut += "</small>";
-         el.innerHTML = sOut;
-      }
+      // () debug output canvas status [line 20190329°0923]
+      Cvgr.Func.executeFram_PrintInfo(iNdx);
 
       // () execute algorithm [seq 20140815°1254]
       //  Remember issue 20140828°0751 'Algo calling params quirk' — is it solved?
@@ -684,31 +719,13 @@ Cvgr.Func.executeFrame = function()
          Cvgr.Vars.timSuccess.push(false); // pessimistic predetermination
          Cvgr.Vars.timrs.push(setTimeout( Cvgr.Func.examineAlgo, 1357, (Cvgr.Vars.timrs.length - 1), iNdx ));
          Trekta.Utils.pullScriptBehind ( sModNam , function()
-                                        { Cvgr.Func.executeFrameContinu( iNdx ); }
+                                        { Cvgr.Func.executeFramContinue( iNdx ); }
                                          );
       }
    }
 
    // setup for animation [line 20140815°1255]
    window.requestAnimFrame(Cvgr.Func.executeFrame);
-};
-
-/**
- * This function is called possibly only after wanted script is pulled-behind
- *
- * @id 20190329°0211
- * @callers Only • pullScriptBehind callback
- */
-Cvgr.Func.executeFrameContinu = function(sAlgo, iNdx)
-{
-
-   // perhaps the alog is not yet ready [condi 20190329°0213]
-   // note : With the both requestAnimFrame and pullScriptBehind
-   //    intertweened, the exact callings may get a bit complicated.
-   if (sAlgo in Cvgr.Algos) {
-      // finally do the wanted algo [line 20190329°0215]
-      Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos, iNdx);
-   }
 };
 
 /**
@@ -1013,8 +1030,6 @@ Cvgr.Algos.Ballist = {
       var nWidth = iko.Width;                             // pixel
       var nDist1 = 11;                                    // distance to the canvas border in pixel
       var nDistTwo = nDist1 / 2;                          // half distance
-
-      ///var nSize = (nHeight + nWidth) / 2;              // calculate flat rate
 
       // scale endpoints [seq 20140926°1213]
       var nX1 = nDist1;
@@ -1603,7 +1618,7 @@ Trekta.Util2 = Trekta.Util2 || {};
  */
 Trekta.Util2.Webcolors = function()
 {
-   'use strict'; // [line 20190329°0843`27]
+   'use strict'; // [line 20190329°0845`12]
 
    // Pink colors
    this.pink                 = '#ffc0cb';      // Pink                  FF C0 CB    255 192 203
@@ -1789,7 +1804,7 @@ Trekta.Util2.Webcolors = function()
  */
 Trekta.Util2.colorNameToHex = function(sName) {
 
-   'use strict'; // [line 20190329°0843`28]
+   'use strict'; // [line 20190329°0845`13]
 
    var cols = new Trekta.Util2.Webcolors;
    var sCol = '';
@@ -1813,7 +1828,8 @@ Trekta.Util2.colorNameToHex = function(sName) {
  * @status Works fine for key/value pairs only. Limitation: This detects
  *    only key/value pairs, but not single command options.
  * @callers So far only • CanvasGear
- * @note Code after ref 20140926°0621 'Krasimir: Simple command line parser in JS'
+ * @note Code inspired by ref 20140926°0621 'Krasimir: Simple command line parser in JS'
+ * @note See also ref 20140828°0832 'majstro: tokenizing with split'
  * @note Test input
  *    - <!-- algo="triangle" color=mediumspringgreen hertz=0.1 -->
  *    - <!-- algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" shiftx=20 shifty=20 id="i20140916o0731" -->
@@ -1823,7 +1839,7 @@ Trekta.Util2.colorNameToHex = function(sName) {
 Trekta.Util2.CmdlinParser = ( function()
 {
 
-   'use strict'; // [line 20190329°0843`11]
+   'use strict'; // [line 20190329°0845`14]
    var parse = null; // wanted with strict mode [line 20190329°0853]
 
    /**
@@ -1836,7 +1852,6 @@ Trekta.Util2.CmdlinParser = ( function()
     * @param bProcessQuotes {boolean} Flag whether to process quotes or not
     * @returns
     */
-   ////parse = function(sCmdlin, bProcessQuotes)
    parse = function(sCmdlin, bProcessQuotes)
    {
       // paranoia — advisably
@@ -1988,7 +2003,7 @@ Trekta.Utils = Trekta.Utils || {
     */
    getFileNameFull : function() // [Trekta.Utils.getFileNameFull]
    {
-      'use strict'; // [line 20190329°0843`32]
+      'use strict'; // [line 20190329°0847`12]
 
       // read URL of this page
       // Values are e.g.
@@ -2014,7 +2029,7 @@ Trekta.Utils = Trekta.Utils || {
     */
    , getFilenamePlain : function() // [Trekta.Utils.getFileNameFull]
    {
-      'use strict'; // [line 20190329°0843`33]
+      'use strict'; // [line 20190329°0847`13]
 
       var sUrl = Trekta.Utils.getFileNameFull(); // e.g 'daftari/daftari/login.html' (in FF)
 
@@ -2040,7 +2055,7 @@ Trekta.Utils = Trekta.Utils || {
     */
    , getXMLHttp : function() // [Trekta.Utils.getFileNameFull]
    {
-      'use strict'; // [line 20190329°0843`34]
+      'use strict'; // [line 20190329°0847`14]
 
       var xmlHttp;
 
@@ -2105,7 +2120,7 @@ Trekta.Utils = Trekta.Utils || {
     */
    , htmlEscape : function(sHtml) // [Trekta.Utils.htmlEscape]
    {
-      'use strict'; // [line 20190329°0843`35]
+      'use strict'; // [line 20190329°0847`15]
 
       sHtml = sHtml.replace(/</g, '&lt;'); // g = replace all hits, not only the first
       sHtml = sHtml.replace(/>/g, '&gt;');
@@ -2124,7 +2139,7 @@ Trekta.Utils = Trekta.Utils || {
     */
    , isScriptAlreadyLoaded : function (sWantedScript) // [Trekta.Utils.isScriptAlreadyLoaded]
    {
-      'use strict'; // [line 20190329°0843`36]
+      'use strict'; // [line 20190329°0847`16]
 
       var regexp = null;
 
@@ -2171,7 +2186,7 @@ Trekta.Utils = Trekta.Utils || {
                                   , callbackfunc
                                    )
    {
-      'use strict'; // [line 20190329°0843`37]
+      'use strict'; // [line 20190329°0847`17]
 
       // avoid multiple loading [seq 20110821°0122]
       if ( Trekta.Utils.isScriptAlreadyLoaded(sScriptToLoad) ) {
@@ -2242,7 +2257,7 @@ Trekta.Utils = Trekta.Utils || {
     */
    , readTextFile1 : function(sFilename, bAsync) // [Trekta.Utils.readTextFile1]
    {
-      'use strict'; // [line 20190329°0843`38]
+      'use strict'; // [line 20190329°0847`18]
 
       // () preparation
       var sRead = '';
@@ -2324,7 +2339,7 @@ Trekta.Utils = Trekta.Utils || {
     */
    , retrieveScriptFolderAbs : function (sScriptName) // [Trekta.Utils.retrieveScriptFolderAbs]
    {
-      'use strict'; // [line 20190329°0843`42]
+      'use strict'; // [line 20190329°0847`22]
 
       var s = '';
 
@@ -2376,7 +2391,7 @@ Trekta.Utils = Trekta.Utils || {
     */
    , retrieveScriptFolderRel : function (sCanary)
    {
-      'use strict'; // [line 20190329°0843`43]
+      'use strict'; // [line 20190329°0847`23]
 
       var s = '';
 
@@ -2440,7 +2455,7 @@ Trekta.Utils = Trekta.Utils || {
     */
    , windowOnloadDaisychain : function(funczion) // [Trekta.Utils.windowOnloadDaisychain]
    {
-      'use strict'; // [line 20190329°0843`44]
+      'use strict'; // [line 20190329°0847`24]
 
       // is the onload handler already used?
       if ( window.onload ) {

@@ -1,4 +1,7 @@
 
+   **********
+   References
+   **********
 
    ref 20190329°0542 'w3c: centering things'
    objtype : ref.article
@@ -34,17 +37,77 @@
    usage :
    ܀
 
+   ref ~20140831°0623 'whatwg group : canvas specifications'
+   about : Lookup 'official' canvas specifications at the WHATWG group on
+   url : http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting.html
+   tags : canvas
+   note :
+   ܀
+
+   ref 20140831°0622 'William Malone: Drawing library'
+   about : Canvas drawing library
+   url : http://blocksjs.com/
+   author : William Mallone.
+   tags : canvas
+   ܀
+
+   ref 20140831°0611 'William Malone : Canvas tutorials'
+   about : Very good canvas tutorials are found on William Malones site
+   url : http://www.williammalone.com"
+   note : As well he maintains several canvas projects on github.
+   tags : canvas
+   ܀
+
+   ref 20140830°1222 'eric meyer: colorblender'
+   url :  http://meyerweb.com/eric/tools/color-blend/
+   title : Colorblender
+   author : Eric Meyer
+   note : It runs under the Creative Commons Attribution-ShareAlike 1.0 License
+             http://creativecommons.org/licenses/by-sa/1.0/ (ref 20140830°1223)
+   note : Nothing from this is yet implemented
+   tags : thirdparty
+   ܀
+
    ref 20140829°0351 'stackoverflow : changing the color of a hr element' at
    url : http://stackoverflow.com/questions/6382023/changing-the-color-of-a-hr-element
    title : Changing the color of an hr element
    note : display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0;
    ܀
 
-   ref 20140815°0634
+   ref 20140828°0832 'majstro: tokenizing with split'
+   about : About tokenizing with split()
+   url : http://www.majstro.com/Web/Bedrijf/js/js_Global_String_split2.html
+   title : Majstro-Aplikaĵoj → JavaScript example: string.split(delimiter, limit)
+   chain : ws 20190329°0943, ws 20190329°0944, ws 20190329°0945
+   tags : JavaScript, Strings
+   ܀
+
+   ref 20140819°1832 'radiobutton value'
+   about : Thread 'Value von radiobutton abrufen'
+   url : http://forum.de.selfhtml.org/archiv/2011/4/t204453"
+   usage : Was consulted for the anonymous function 20140819°1811
+   tags : canvas
+   ܀
+
+   ref 20140819°1831 'radiobutton onclick'
+   about : Thread 'Calling onclick on a radiobutton list using javascript'
+   url : http://stackoverflow.com/questions/362614/calling-onclick-on-a-radiobutton-list-using-javascript
+   usage : Was consulted for the anonymous function 20140819°1811
+   tags : canvas
+   ܀
+
+   ref 20140815°0635 'paul irish : requestAnimationFrame shim'
+   url : https://gist.github.com/paulirish/1579671 [ref 20140815°0635]
+   note : Here comes the requestAnimationFrame shim from
+   chain : ref 20140815°0634
+   ܀
+
+   ref 20140815°0634 'paul irish : requestAnimationFrame'
    title: Article 'requestAnimationFrame for Smart Animating'
    author : Paul Irish on 2011-Feb-22
    url : http://www.paulirish.com/2011/requestanimationframe-for-smart-animating
-   note :
+   chain : 20140815°0635
+   tags : third-party-product
    ܀
 
    ref 20140815°0631
@@ -82,11 +145,19 @@
    note : Has extremely long loading time.
    ܀
 
-   ref 20140815°0521
+   ref 20140815°0521 'gnuzoo: rose'
    url : http://gnuzoo.org/rose/index.htm
-   ref : Comment by gnu...@gmail.com, Sep 14, 2010 on
-          https://code.google.com/p/explorercanvas/wiki/Instructions
-   note : Simple example working also in IE8
+   note : See comment by gnu...@gmail.com, Sep 14, 2010 on
+            https://code.google.com/p/explorercanvas/wiki/Instructions
+   note : Simple example working also in IE8. Here comes the rose algorithm from.
+   avail : no more (~2018)
+   tags : thirdparty
+   ܀
+
+   ref 20140814°2211 'initial example file'
+   url : http://www.kirupa.com/html5/creating_simple_html5_canvas_animation.htm
+   note : Here comes the initial example file from
+   tags : thirdparty
    ܀
 
    ———————————————————————

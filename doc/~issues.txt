@@ -34,6 +34,13 @@
    note :
    ܀
 
+   issue 20140815°0641 'browser is missing requestAnimationFrame'
+   matter : Method requestAnimationFrame does not exist in IE8
+   location : canvasgear.js seq 20140815°0651 'workaround for missing requestAnimFrame'
+   workaround : Use the fallback shim layer by Paul Irish (seq 20140815°0651).
+   note 20190324°0143 : The method comes with IE10, IE9 is still missing it.
+   status : Leave as is until also IE9 support shall be dropped.
+
    issue 20150223°1851 'canvas inside paragraph'
    text : IE8 and probably higher, do not render a canvas inside
       a paragraph. (1) This is a drawback because until now, I usually placed
@@ -99,22 +106,45 @@
    status : Open
    ܀
 
+   todo 20140901°0633 'support svg rendering'
+   do : Write algorithm to draw verctor graphics from graphic files like *.svg.
+   status : open
+   ܀
+
+   todo 20140901°0631 ''
+   do : Allow algorithms be provided in separate files.
+   status : done with feature 20180619°0113 'supply external algorithm scripts'
+   ܀
+
+   todo 20140901°0621 'gereralize features e.g. rotation'
+   do : Generalize features. E.g. make the rotate function not part of one specific
+         algorithm, but make a rotation applied to all algorithms like an overlay.
+   status :
+   ܀
+
+   todo 20140901°0611 ''
+   matter : JavaScript advanced programming. Currently, different algorithms
+      are called via a switch, depending on the given token from the commandline.
+   do : Make the algorithm function a property of the icon, so it can
+         directly be called without any switch.
+   status :
+   ܀
+
    issue 20140901°0331 'IE8 demands extra plus sign'
    matter :  The plus sign before iko.Width and iko.Height is wanted for
        IE8, which will otherwise interpret that as string, and e.g.
        iSize will have the value 3232 if width=64 and height=64.
    location : e.g. line 20140916°0821
        "var iSize = (+iko.Width + +iko.Height) / 2;"
-   status : IE8 is no more supported
+   status : Finished (feature 20180619°0115 'discontinue IE8 support')
    ܀
 
    issue 20140831°0631 'IE8 fails drawing canvas'
-   matter : Below this point (in references.html), in IE8 no more icons are drawn.
+   matter : Below this point (in page 20140902°1311 attic.html), IE8 draws no more icons.
    note : This has directly to do with debug sequence 20140817°2321 in canvasgearexcanvas.js.
    note : Could not find out why.
    workaround : None yet
-   status : Finished, IE8 is no more supported
-   note :
+   status : Finished (feature 20180619°0115 'discontinue IE8 support')
    ܀
 
    issue 20140830°0231 'IE webcolors'
@@ -165,7 +195,7 @@
       http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/img/20140828o1321.icondrawer--ie--get-comments.png
    ref 20190324°0813 : A demo how to find comments is now in repo 20140713°1811
         http://www.trekta.biz/svn/demosjs/trunk/findcomments/findcomments.html
-   status : Finished with 20190324°0813, IE8 is no more supported
+   status : Finished with ref 20190324°0813
 
 
    ܀
@@ -182,6 +212,25 @@
       - // algoPulse(icos[iFor]);
    status : open
    ܀
+
+   issue 20140828°0541 'IE8 is drawing outside the canvas'
+   matter : If painting outside the canvas, two different behaviours result:
+      (1) IE8: The object is painted even outside the canvas borders. This is what IE does.
+      (2) Chrome, FF, Opera: The object outside the canvas borders is clipped.
+   note : One question is, whether for the outborder parts, the calculations are done
+      or skipped. The answer were interesting for resource and performance understanding.
+   ref : Screenshots see ..
+   status : finished
+   ܀
+
+   todo 20140815°1141
+   do : Outsource drawing code from the time loop to a dedicated function,
+         which can serve as the Algo property of the Ikon object.
+   status : done
+   ܀
+
+
+
 
    ———————————————————————
    [file 20140903°0112] ܀Ω

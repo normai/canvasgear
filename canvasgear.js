@@ -44,14 +44,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.1.8..'
+    versionnumber : '0.1.9'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190330°0711...'
+   , versiontimestamp : '20190330°0157'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -1240,8 +1240,7 @@ Cvgr.Algos.Template = Cvgr.Algos.Template || {};
  * @id 20190329°0631
  * @callers Only • Cvgr.Func.executeFrame
  * @note See issue 20190329°0421 'impossible index', is it solved?
- * @param {Array} icos — This is Cvgr.Vars.icos[iNdx] at the caller
- * @param {Integer} iNdx — The index into the Cvgr.Vars.icos array
+ * @param {Object} iko — The Icon object to paint
  */
 Cvgr.Algos.Template.executeAlgorithm = function(iko)
 {

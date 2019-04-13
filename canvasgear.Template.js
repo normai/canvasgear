@@ -32,8 +32,7 @@ Cvgr.Algos.Template = {};
  * @id 20190329°0631
  * @callers Only • Cvgr.Func.executeFrame
  * @note See issue 20190329°0421 'impossible index', is it solved?
- * @param {Array} icos — This is Cvgr.Vars.icos[iNdx] at the caller
- * @param {Integer} iNdx — The index into the Cvgr.Vars.icos array
+ * @param {Object} iko — The Icon object to paint
  */
 Cvgr.Algos.Template.executeAlgorithm = function(iko)
 {

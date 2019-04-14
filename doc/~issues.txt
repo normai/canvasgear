@@ -3,6 +3,35 @@
    Issues and todos
    ****************
 
+   issue 20190330°0355 'callback parameters useless'
+   matter : Providing the callback for pullScriptBehind seems useless,
+      because we call that three times, giving as parameter a variable,
+      which has the values 0, then 1, then 2. But when the callback is
+      fired three times, it always gets the parameter 2.
+   note : Looks like it has to do with value versus reference. A partial
+      brute force solution comes with array 20190330°0415 aDebugCallback.
+      The parameters in the sucessive calls must not come from one variable,
+      but must somehow be galvanically isolated, each created on it's own.
+   status : open
+   ܀
+
+   issue 20190330°0351 'activation flag flavours'
+   matter : Flag20190330°0143 bIsFirstFrame might not suffice.
+       Due to the pull-behind and execute-frame-continue mechanisms,
+       this pure frame-specific flag seems not suffice our needs.
+   matter : Perhaps we better switch a flags like bIsDefaultValuesDone
+   matter : Perhaps additionally we need algo-specific flag like bIsAlgoActivated
+   note : See properties 20190330°0352 and 20190330°0353
+   status : processing
+   ܀
+
+   issue 20190330°0331 'pull-behind only only per algo'
+   matter : Do the pull-behind only once for one algo, even if that algo appears
+      multiple times on the page. Otherwise curious script abortion observed.
+   note : This was seen on page 20190324°0511 demo2.html
+   status : under construction
+   ܀
+
    todo 20190330°0151 'read properties in lump-sum'
    location : Function 20190330°0111 startCanvasGr_evalCmdlin
    matter : The properties are precessed humble one by one.

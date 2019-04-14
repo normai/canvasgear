@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.0.b — 20190330°0757..
+ * version : 0.2.0.c — 20190330°0757..
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -91,13 +91,16 @@ Cvgr.Vars =
     */
    bFlagTipTopTest : false
 
+
    /**
     * This flag solves the tricky implications with the introduction of
     *  feature 20190330°0141 'external Template overwrites built-in one'
     *
+    * See issue 20190330°0351 'activation flag flavours'
+    *
     * @id 20190330°0143
     */
-   , bIsNotFirstFrame : false
+   , bIsFirstFrame : true
 
    /**
     * This number stores the CanvasGear start seconds
@@ -163,7 +166,7 @@ Cvgr.Objs.Ikon = function()
 
    // public properties, to be set by user via HTML comment
    this.AlgoName = ''; // 'pulse'     // string - algorithm (workaround for Algo) [prop 20140916°0512]
-   this.BgColor = 'Tomato'; // setting color here has no effect? // string - background color as RGB or webcolor [prop 20140916°0513]
+   this.BgColor = 'Transparent'; // setting color here has no effect? // string - background color as RGB or webcolor [prop 20140916°0513]
    this.Color = '';                   // string - RGB or webcolor                 // fix 20180618°071103 ineffective [prop 20140916°0514]
    this.Color2 = '';                  // string - RGB or webcolor                 // fix 20180618°071104 ineffective [prop 20140916°0515]
    this.Color3 = '';                  // string - RGB or webcolor (nowhere used)  // fix 20180618°071105 ineffective [prop 20140916°0516]
@@ -190,6 +193,8 @@ Cvgr.Objs.Ikon = function()
 
    this.SizeFactor = 1;                // [prop 20190330°0321]
 
+   this.bIsDefaultSettingDone = false;                 // [prop 20190330°0352] important moment, now the icon is available
+   ////this.bIsCommandlineReadingDone = false;             // [prop 20190330°0353]
 };
 
 /**
@@ -367,7 +372,7 @@ Cvgr.startCanvasGr_evalCmdlin = function(ico)
 
 ////// 20190330°0315 shutdown in favour of func 20190330°0241 setlleAlgoProperties
 ////return;
-
+/*
    // (M.2) determine BgColor [seq 20140904°0647]
    if ( (ico.CmdsHash['bgcolor'] === null)
        || (ico.CmdsHash['bgcolor'] === undefined)
@@ -384,7 +389,7 @@ Cvgr.startCanvasGr_evalCmdlin = function(ico)
          ico.BgColor = Trekta.Util2.colorNameToHex(ico.BgColor);
       }
    }
-
+*/
    // (M.3) determine Color [seq 20140904°0648]
    if ((ico.CmdsHash['color'] === undefined) || (ico.CmdsHash['color'] === null) || (ico.CmdsHash['color'] === ''))
    {
@@ -413,22 +418,22 @@ Cvgr.startCanvasGr_evalCmdlin = function(ico)
       }
    }
 
-   // (M.5) determine Color3 [seq 20140904°0650]
-   if ((ico.CmdsHash['color3'] === undefined) ||  (ico.CmdsHash['color3'] === null) ||  (ico.CmdsHash['color3'] === ''))
-   {
-      ico.Color3 = 'DarkSlateGray'; // '#808080'
-   }
-   else
-   {
-      ico.Color3 = ico.CmdsHash['color3'] || '';
-      if (ico.Color3.substr(0, 1) !== '#')
-      {
-         ico.Color3 = Trekta.Util2.colorNameToHex(ico.Color3);
-      }
-   }
-
 // 20190330°0315 shutdown in favour of func 20190330°0241 setlleAlgoProperties
 return;
+
+   ////// (M.5) determine Color3 [seq 20140904°0650]
+   ////if ((ico.CmdsHash['color3'] === undefined) ||  (ico.CmdsHash['color3'] === null) ||  (ico.CmdsHash['color3'] === ''))
+   ////{
+   ////   ico.Color3 = 'DarkSlateGray'; // '#808080'
+   ////}
+   ////else
+   ////{
+   ////   ico.Color3 = ico.CmdsHash['color3'] || '';
+   ////   if (ico.Color3.substr(0, 1) !== '#')
+   ////   {
+   ////      ico.Color3 = Trekta.Util2.colorNameToHex(ico.Color3);
+   ////   }
+   ////}
 
    ////// (M.6) determine Hertz [seq 20140904°0651]
    ////if ((ico.CmdsHash['hertz'] === undefined) || (ico.CmdsHash['hertz'] === null) || (ico.CmdsHash['hertz'] === ''))
@@ -478,6 +483,20 @@ return;
 
 };
 
+Cvgr.Vars.aDebugCallback = []; // [var 20190330°0415]
+Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( 0, 'a' ); });
+Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( 1, 'b' ); });
+Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( 2, 'c' ); });
+Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( 3, 'd' ); });
+Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( 4, 'e' ); });
+Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( 5, 'f' ); });
+Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( 6, 'g' ); });
+Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( 7, 'h' ); });
+Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( 8, 'i' ); });
+Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( 9, 'j' ); });
+Cvgr.Vars.aDebugCbAlgoNam = ['','','','','','','','','','']; // [var 20190330°0418]
+
+
 /**
  * This array stores the AlgoName of the pulled-behind script
  *
@@ -512,12 +531,14 @@ Cvgr.Vars.aPullTimrs = [];
 Cvgr.Vars.aPullSuccess = [];
 
 // helper variables for browser independend angle calculation
-Cvgr.Vars.iMarkLastTwoSecond = 0;                      // [var 20140815°0932]
-Cvgr.Vars.iMarkLastTwoSecondFrame = 0;                 // [var 20140815°0933]
 Cvgr.Vars.iFramesInLastTwoSeconds = 0;                 // [var 20140815°0934]
 Cvgr.Vars.iFramesPerTowSeconds = 0;                    // [var 20140815°0935]
-Cvgr.Vars.nTrueAngleTurns = 0;                         // [var 20140815°0936] wanted browser independend angle in turns for 1 Hz
+Cvgr.Vars.iMarkLastTwoSecond = 0;                      // [var 20140815°0932]
+Cvgr.Vars.iMarkLastTwoSecondFrame = 0;                 // [var 20140815°0933]
 Cvgr.Vars.nIncTurnsPerFrame = 0;                       // [var 20140815°0937] increment turns per frame for 1 Hz
+Cvgr.Vars.nTrueAngleTurns = 0;                         // [var 20140815°0936] wanted browser independend angle in turns for 1 Hz
+
+Cvgr.Vars.sDebugPageHelper = ''; // [var 20190330°0411]
 
 /**
  * This function is called when pulling-behind a non-immediate algorithm, it
@@ -552,14 +573,15 @@ Cvgr.Func.examineAlgo = function(iMyNdx, iko)
  * @id 20190329°0211
  * @callers Only • pullScriptBehind callback
  */
-//Cvgr.Func.executeFramContinue = function(iko)
-Cvgr.Func.executeFramContinue = function(iko)
+Cvgr.Func.executeFramContinue = function(iNdxPiggy, sDbg) //// function(iko) // iNdxPiggy is useless, it is always the maximum e.g. 2 on page demo1.html
 {
+   // Remember issue 20190330°0355 'callback parameter useless', it is not yet solved.
 
    // special IE paranoia [seq 20190330°0251]
    //  How is it possible that iko.AlgoName does not exist? Who is the caller?
    // note : Testing with "if (! 'AlgoName' in iko)" yields error in IE9..11
    // I do not want this variable, just need something to access iko.AlgoName.
+   /*
    var sAlgoNam = '';
    try {
       sAlgoNam = iko.AlgoName;
@@ -567,20 +589,46 @@ Cvgr.Func.executeFramContinue = function(iko)
    catch(err) {
       return;
    }
+   */
 
-   // the algo might be not yet ready [condi 20190329°0213]
-   // note : With the both requestAnimFrame plus pullScriptBehind
-   //    intertweened, the exact callings may get a bit complicated.
-   if (sAlgoNam in Cvgr.Algos) {
-      // finally do the wanted algo [line 20190329°0215]
-      if ( ! Cvgr.Vars.bIsNotFirstFrame ) {
-         Cvgr.Func.settleAlgoProperties(iko);
+   // fulfill [seq 20190330°0345] issue 20190330°0331 'pull-behind only only per algo'
+   // Curiously, it works also without this further processing at
+   //   all. Does it? Why? Is this processing here superfluous?
+   var sAlgoNam = Cvgr.Vars.aPullAlgos[iNdxPiggy];
+   var sAlgoNamDbg = sDbg; // looks like this helps with issue 20190330°0355 'callback parameter useless'
+//Cvgr.Vars.sDebugPageHelper += '<br /> — pullScriptBehind ' + iModuleIndex + ' ' + sAlgo;
+  Cvgr.Vars.sDebugPageHelper += '<br /> — executeFramConti ' + iNdxPiggy + ' ' + sAlgoNamDbg;
+
+   var ar = Cvgr.Vars.aPullPiggy[iNdxPiggy];
+ var sDbg33 = Cvgr.Vars.aDebugCbAlgoNam[iNdxPiggy];
+ Cvgr.Vars.sDebugPageHelper += '<br /> — &nbsp; &nbsp; &nbsp; &nbsp; piggy.length = ' + ar.length + ' ' + sDbg33;
+
+   ////for (var iko in a) {
+   for (var i = 0; i < ar.length; i++) {
+      var iko = ar[i];
+
+ ////Cvgr.Vars.sDebugPageHelper += '<br /> — &nbsp; &nbsp; &nbsp; &nbsp; icon = ' + iko.Ide + ' ' + iko.AlgoName;
+
+////try {
+////if ( iko.AlgoName in Cvgr.Algos) { } else { return; } ////  issue 20190330°0355 'callback parameter useless'
+////} catch (err) { return; }
+
+
+      // the algo might be not yet ready [condi 20190329°0213]
+      // note : With the both requestAnimFrame plus pullScriptBehind
+      //    intertweened, the exact callings may get a bit complicated.
+      if (sAlgoNam in Cvgr.Algos) {
+         // finally do the wanted algo [line 20190329°0215]
+         ////if ( Cvgr.Vars.bIsFirstFrame ) {
+         if ( ! iko.bIsDefaultSettingDone ) {
+            Cvgr.Func.settleAlgoProperties(iko);
+         }
+         Cvgr.Algos[iko.AlgoName].executeAlgorithm(iko);
       }
-      Cvgr.Algos[iko.AlgoName].executeAlgorithm(iko);
    }
 
    // [line 20190330°0145]
-   Cvgr.Vars.bIsNotFirstFrame = true;
+   Cvgr.Vars.bIsFirstFrame = false;
 };
 
 /**
@@ -590,7 +638,7 @@ Cvgr.Func.executeFramContinue = function(iko)
  * @callers Only • executeFrame()
  * @param {Integer} iNdx
  */
-Cvgr.Func.executeFram_PrintInfo = function(iNdx)
+Cvgr.Func.executeFram_PrintInfoCanvas = function(iNdx)
 {
 
    // (x) output canvas status [seq 20140815°1251]
@@ -630,7 +678,10 @@ Cvgr.Func.executeFram_PrintInfo = function(iNdx)
  * @id 20190329°0931
  * @callers Only • executeFrame()
  */
-Cvgr.Func.executeFram_PrintPageInfo = function(iTimeCurr, iElapsedTwoSeconds, iFramesPerSecondTotal)
+Cvgr.Func.executeFram_PrintInfoPage = function ( iTimeCurr
+                                                , iElapsedTwoSeconds
+                                                 , iFramesPerSecondTotal
+                                                  )
 {
    // (.4) output Page Debug Info [seq 20140916°1032]
    var elDbg = document.getElementById("Cvgr_DebugPageOutputArea");
@@ -646,6 +697,7 @@ Cvgr.Func.executeFram_PrintPageInfo = function(iTimeCurr, iElapsedTwoSeconds, iF
       s += "<br />Frames per seconds (for the last two seconds) = " + Cvgr.Vars.iFramesPerTowSeconds.toFixed(9);
       s += "<br />True angle for 1 Hz (turns) = " + Cvgr.Vars.nTrueAngleTurns.toFixed(9) + ";";
       s += "<br />Increment per frame (turns) = " + Cvgr.Vars.nIncTurnsPerFrame.toFixed(9) + ";";
+      s += "<br />" + Cvgr.Vars.sDebugPageHelper;
       elDbg.innerHTML = s;
    }
 };
@@ -703,7 +755,7 @@ Cvgr.Func.executeFrame = function()
    //      around e.g. 0.017 to 0.020 with Chrome, or 0.021 to 0.023 with IE8.
 
    // (P.4) debug output page status [line 20190329°0933] Cvgr_DebugPageOutputArea
-   Cvgr.Func.executeFram_PrintPageInfo ( iTimeCurr
+   Cvgr.Func.executeFram_PrintInfoPage ( iTimeCurr
                                         , iElapsedTwoSeconds
                                          , iFramesPerSecondTotal
                                           );
@@ -715,46 +767,53 @@ Cvgr.Func.executeFrame = function()
       var iko = Cvgr.Vars.icos[iNdx];
 
       // () debug output canvas status [line 20190329°0923]
-      Cvgr.Func.executeFram_PrintInfo(iNdx);
+      Cvgr.Func.executeFram_PrintInfoCanvas(iNdx);
 
       // () execute algorithm [seq 20140815°1257]
       //  Remember issue 20140828°0751 'Algo calling params quirk' — is it solved?
       // (.1) convenience
       var sAlgo = iko.AlgoName;
 
+if (sAlgo === 'MyAlgo') {
+   var xDbg = '';
+}
+
       // (.2) [condition 20190329°0411]
       // note : The condition got tricky with feature 20190330°0141 'external algo
       //  overwrites built-in one'. Before, it was just : "if (sAlgo in Cvgr.Algos)"
       if ( ( (sAlgo in Cvgr.Algos) && (sAlgo !== 'Template') )
-          || ( Cvgr.Vars.bIsNotFirstFrame && sAlgo === 'Template' )
+          ////|| ( ! Cvgr.Vars.bIsFirstFrame )
+          || ( iko.bIsDefaultSettingDone )
            )
       {
+
          // (2.1) immediate call [seq 20190329°0413]
-         if (! Cvgr.Vars.bIsNotFirstFrame) {
+         ////if (Cvgr.Vars.bIsFirstFrame) {
+         if ( ! iko.bIsDefaultSettingDone ) { //// hm..
             Cvgr.Func.settleAlgoProperties(iko);
          }
-         Cvgr.Algos[sAlgo].executeAlgorithm(iko);
+         try {
+            Cvgr.Algos[sAlgo].executeAlgorithm(iko);
+         } catch(err) {
+            // it is e.g. the non-existent 'Oha' algorithm, note yet
+            //  exchanged to the default algo. Just skip this.
+         }
       }
       else
       {
-         /*
-         issue 20190330°0331 'pull-behind only only per algo'
-         matter : Do the pull-behind only once for one algo, even if that algo appears
-            multiple times on the page. Otherwise curious script abortion observed.
-         note : This was seen on page 20190324°0511 demo2.html
-         status : open
-         */
-
          // was this algo already processed? [seq 20190330°0343]
          var iNdxPiggy = Cvgr.Vars.aPullAlgos.indexOf(sAlgo);
          if ( iNdxPiggy >= 0 ) {
-            Cvgr.Vars.aPullPiggy[iNdxPiggy].push(iko);
+            if (Cvgr.Vars.iFrameNo < 2 ) { //// pull-behind requests are only done in the first round
+               Cvgr.Vars.aPullPiggy[iNdxPiggy].push(iko);
+            }
             continue;
          }
 
          // (2.2) load buddy module [seq 20190329°0415]
          var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/canvasgear/"
          var sModuleName = sPathAbs + 'canvasgear.' + sAlgo + '.js';
+         var iModuleIndex = Cvgr.Vars.aPullAlgos.length;
 
          // create piggy array set [seq 20190330°0344]
          //  Try solving issue 20190330°0331 'pull-behind only only per algo'
@@ -768,9 +827,48 @@ Cvgr.Func.executeFrame = function()
                                     , 1357
                                      , (Cvgr.Vars.aPullTimrs.length - 1), iko
                                       ));
-         Trekta.Utils.pullScriptBehind ( sModuleName , function()
-                                        { Cvgr.Func.executeFramContinue( iko ); }
-                                         );
+
+
+// each time create new
+////var sDbg22 = sAlgo;
+////var fCallback = function() { Cvgr.Func.executeFramContinue( iModuleIndex, sDbg22 ); };
+////Cvgr.Vars.aDebugCallback.push(function() { Cvgr.Func.executeFramContinue( iModuleIndex, sDbg22 ); });
+
+// brute force debug issue 20190330°0355 'callback parameter useless'
+Cvgr.Vars.sDebugPageHelper += '<br /> — pullScriptBehind ' + iModuleIndex + ' ' + sAlgo;
+Cvgr.Vars.aDebugCbAlgoNam[iModuleIndex] = sAlgo;
+////if (true) {
+         // Remember issue 20190330°0355 'callback parameter useless', it is not yet solved.
+         ////var sDbg = sAlgo;
+         ////Trekta.Utils.pullScriptBehind ( sModuleName , function() //// function(iModuleIndex)
+         ////                               { Cvgr.Func.executeFramContinue( iModuleIndex, sDbg ); } //// iModuleIndex is always 2 //// (iko)
+         ////                                );
+         //Trekta.Utils.pullScriptBehind ( sModuleName , fCallback );
+         Trekta.Utils.pullScriptBehind ( sModuleName , Cvgr.Vars.aDebugCallback[iModuleIndex] ); // heureka, this works as wanted [note 20190330°0417]
+////} else {
+////switch (iModuleIndex) {
+////   case 0 :
+////         var sDbg = sDbg22;
+////         Trekta.Utils.pullScriptBehind ( sModuleName , function() //// function(iModuleIndex)
+////                                        { Cvgr.Func.executeFramContinue( 0, sDbg ); } //// iModuleIndex is always 2 //// (iko)
+////                                        );
+////   case 1 :
+////         var sDbg = sDbg22;
+////         Trekta.Utils.pullScriptBehind ( sModuleName , function() //// function(iModuleIndex)
+////                                        { Cvgr.Func.executeFramContinue( 1 , sDbg ); } //// iModuleIndex is always 2 //// (iko)
+////                                         );
+////   case 2 :
+////         var sDbg = sDbg22;
+////         Trekta.Utils.pullScriptBehind ( sModuleName , function() //// function(iModuleIndex)
+////                                        { Cvgr.Func.executeFramContinue( 2, sDbg ); } //// iModuleIndex is always 2 //// (iko)
+////                                         );
+////   default :
+////         var sDbg = sDbg22;
+////         Trekta.Utils.pullScriptBehind ( sModuleName , function() //// function(iModuleIndex)
+////                                        { Cvgr.Func.executeFramContinue( iModuleIndex , sDbg ); } //// iModuleIndex is always 2 //// (iko)
+////                                         );
+////}}
+
       }
    }
 
@@ -791,26 +889,27 @@ Cvgr.Func.executeFrame = function()
  */
 Cvgr.Func.settleAlgoProperties = function(iko)
 {
-   //return;
-
-   // // provide array with known keys [seq 20140926°0331]
-   // var keys = new Array ( 'algo', 'class', 'height', 'id', 'width', 'Algo'
-   //                         , 'Bgcolor', 'Color', 'Color2', 'Color3', 'Hertz'
-   //                          , 'Shiftx', 'Shifty', 'Speed'
-   //                           );
-
-   // tokens different from property names [seq 20190330°0313]
+   // translate tokens to property names [seq 20190330°0313]
    var oTokToProp = {
       algo : 'AlgoName'
+      , bgcolor : 'BgColor'
       , height : 'Height'
       , hertz : 'Hertz'
       , width : 'Width'
-   }
+   };
 
    // get any default properties [line 20190330°0243]
    // About JavaScript syntax — Curiously, here it causes no error, if the
    //  algorithm namespace has no defaultProperties defined, not even in IE9.
+try { //  issue 20190330°0355 'callback parameter useless'
    var oDefaults = Cvgr.Algos[iko.AlgoName].defaultProperties;
+} catch (err) {
+   return;
+}
+
+////if ( iko.AlgoName === 'MyAlgo' ) {
+////   var s = iko.Ide;
+////}
 
    // apply default value to Ikon object [line 20190330°0245]
    for (var sKey in oDefaults) {
@@ -820,7 +919,7 @@ Cvgr.Func.settleAlgoProperties = function(iko)
    // overwrite with commandline values [seq 20190330°0247]
    for ( var sKeySrc in iko.CmdsHash) {
 
-      // possibly translate
+      // translate
       var sKeyTgt = sKeySrc;
       if (sKeySrc in oTokToProp) {
          sKeyTgt = oTokToProp[sKeySrc];
@@ -829,7 +928,9 @@ Cvgr.Func.settleAlgoProperties = function(iko)
       // write
       iko[sKeyTgt] = iko.CmdsHash[sKeySrc];
    }
-var xDbg = '';
+
+   // set signal [line 20190330°0344]
+   iko.bIsDefaultSettingDone = true;
 };
 
 /**

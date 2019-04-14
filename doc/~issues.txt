@@ -3,25 +3,35 @@
    Issues and todos
    ****************
 
+   todo 20190330°0423 'catch callback stockpile array overflow'
+   matter : The brute force solution of issue 20190330°0355 'callback parameters
+      useless' involves a hardcoded array with callbacks. This will come short
+      if a page has many external or wrong algorithms.
+   do : Implement detecting and processing the possible over-use of this array.
+        It suffices, if the affected icons just do not get their wanted external
+        algo, but fall back to the default algoritm.
+   status : open
+   ܀
+
    issue 20190330°0355 'callback parameters useless'
    matter : Providing the callback for pullScriptBehind seems useless,
       because we call that three times, giving as parameter a variable,
       which has the values 0, then 1, then 2. But when the callback is
       fired three times, it always gets the parameter 2.
    note : Looks like it has to do with value versus reference. A partial
-      brute force solution comes with array 20190330°0415 aDebugCallback.
+      brute force solution comes with array 20190330°0415 aCallbackStockpile.
       The parameters in the sucessive calls must not come from one variable,
       but must somehow be galvanically isolated, each created on it's own.
-   status : open
+   status : solved brute force, no elegant solution yet
    ܀
 
    issue 20190330°0351 'activation flag flavours'
-   matter : Flag20190330°0143 bIsFirstFrame might not suffice.
+   matter : Flag 20190330°0143 bIsFirstFrame does not suffice.
        Due to the pull-behind and execute-frame-continue mechanisms,
        this pure frame-specific flag seems not suffice our needs.
    matter : Perhaps we better switch a flags like bIsDefaultValuesDone
    matter : Perhaps additionally we need algo-specific flag like bIsAlgoActivated
-   note : See properties 20190330°0352 and 20190330°0353
+   note : See property 20190330°0353 bIsDefaultSettingDone
    status : processing
    ܀
 
@@ -37,7 +47,7 @@
    matter : The properties are precessed humble one by one.
    do : Process properties in lump-sum treatment
    chain : todo 20190329°1045 'commandline and default values'
-   status : open
+   status : under construction (see func 20190330°0241 settleAlgoProperties)
    ܀
 
    todo 20190330°0121 'register test buttons cleanup'
@@ -46,20 +56,6 @@
       is executed only after the onload event was fired?
    do : Cleanup this. But the test buttons work anyway, do they? Why?
    location : Function 20140815°1241 startCanvasGear
-   status : open
-   ܀
-
-   todo 20190329°1045 'commandline and default values'
-   text : The commandline should be evaluated only after the algorithm is
-      known, and the algo default properties are assigned. This makes a clear
-      cascaded order, where just each later value overwrite the earlier one.
-   finding : It may be not soo simple, because at least the algorithm name
-      must have been read already from the commandline, before the others
-      values can be processed. And only if the algo name is know, possibly
-      a pull-behind with unclear result happens.
-   finding : The bulk commandline interpretation should ideally happen
-      after the pull-behind process has settled.
-   chain : todo 20190330°0151 'read properties in lump-sum'
    status : open
    ܀
 
@@ -91,7 +87,6 @@
       and those did not work either. They just showed a differrent error in IE8.
    solution : Possibly use canvas-text.js (just this may be too expensive).
    status : open (and possibly will never be closed)
-   note :
    ܀
 
    issue 20140815°0641 'browser is missing requestAnimationFrame'
@@ -100,6 +95,7 @@
    workaround : Use the fallback shim layer by Paul Irish (seq 20140815°0651).
    note 20190324°0143 : The method comes with IE10, IE9 is still missing it.
    status : Leave as is until also IE9 support shall be dropped.
+   ܀
 
    issue 20150223°1851 'canvas inside paragraph'
    text : IE8 and probably higher, do not render a canvas inside
@@ -126,30 +122,6 @@
    proposal : Perhaps a javascript preprocessor could find canvases directly
       inside a paragraph, and wrap them with a div element.
    status : Partially solved by workaround. Does work with IE10 but not IE9 and below.
-   ܀
-
-   issue 20140926°1321 'IE8 fails with Context.fillText'
-   matter : IE8 does not understand the Context.fillText() function.
-   location : func 20140926°1211 Cvgr.Algos.Ballist.executeAlgo_drawDiagonal
-   status : finished, IE8 no more supported
-   ܀
-
-   todo 20140904°0711 'refactor property parsing'
-   todo : Refactor. Compact sequence 20140904°0645 to one-liners or
-      somehow eliminate the individual processing of each single property.
-      Or outsource above sequence to dedicated helper function. Or use
-      a loop over all object properties instead individual properties.
-   location : canvasgear/canvasgear.js
-   status : open
-   ܀
-
-   issue 20140901°0933 'Opera 10 peculiar about capitals'
-   note : If e.g. 'iko.width' was used instead 'iko.Width', Opera will
-      receive iPt1x/iPt1y as NaN and throw an exception here. If this
-      line here throws exception, far below lines will do so as well.
-   location : canvasgear.js, canvasgear-ballist.js
-   solution : Use a try envelop on the first element.
-   status : Should be finished.
    ܀
 
    issue 20140901°0911 'Opera fillRect() fail'
@@ -190,106 +162,12 @@
    status :
    ܀
 
-   issue 20140901°0331 'IE8 demands extra plus sign'
-   matter :  The plus sign before iko.Width and iko.Height is wanted for
-       IE8, which will otherwise interpret that as string, and e.g.
-       iSize will have the value 3232 if width=64 and height=64.
-   location : e.g. line 20140916°0821
-       "var iSize = (+iko.Width + +iko.Height) / 2;"
-   status : Finished (feature 20180619°0115 'discontinue IE8 support')
-   ܀
-
-   issue 20140831°0631 'IE8 fails drawing canvas'
-   matter : Below this point (in page 20140902°1311 attic.html), IE8 draws no more icons.
-   note : This has directly to do with debug sequence 20140817°2321 in canvasgearexcanvas.js.
-   note : Could not find out why.
-   workaround : None yet
-   status : Finished (feature 20180619°0115 'discontinue IE8 support')
-   ܀
-
    issue 20140830°0231 'IE webcolors'
    text : IE8 does not understand all webcolors. IE understands
       e.g 'blue' but not 'lightblue'.
    workaround : Use RGB values for all colors. Or implement a mapping function.
    status :
    ܀
-
-   issue 20140830°0221 'IE get HTML comment'
-   summary : About reading a HTML comment from various browsers
-   findings :
-      (1) A comment node cannot be directly found.
-      (2) It can be found in a node collection it's nodeType, which is 8.
-      (3) Having that node, IE and the others differ
-      (3.1) In IE, the comment can be read via n.innerHTML or n.nodeValue.
-      (3.2) In others, n.innerHTML yields 'undefined'.
-      (3.3) In others, the comment can be read via n.nodeValue.
-   location : File canvasgear.js seq 20140830°0211
-   note : After sequence 20140830°0311, it looks as if the both browsers
-      understand nodeValue. Possibly, this issue was just a misconception?
-   status : Finished
-   ܀
-
-   issue 20140829°0331 'Color and stroke select on canvas'.
-   matter : When drawing on a canvas, a line is started with beginPath,
-      the color and the stroke can be set. On one canvas, only one style
-      seems possible, but more styles are wanted.
-   ref : Screenshot 20140829°0322. Note icons one and **two**. It tries
-          to draw two objects, a triangle and a line. It has only one color
-          and stroke, not different, as should. How to write code to put two
-          objects on one canvas?
-   todo : Clear whether this is just a coding particularity, or whether
-       a canvas can indeed display only one color and stroke. Perhaps
-       it has to do with layers or the like. [todo 20140829°0315]
-   status : Probably finished
-   ܀
-
-   issue 20140828°1151 'IE8 canvas innerHTML unusable'
-   matter : With IE8, the canvas property 'innerHTML' is unusable. With workaround
-      func 20140828°1231 findComments1 or func 20140828°1241 findComments2 applied,
-      IE8 may display the dialog as in screenshot 20140828°1321.
-   solution : See sequence/function 20140830°0311.
-   location : File canvasgear.js seq 20140830°0211
-   workaround : Use something else to store the icon command, e.g.
-       a comment like in seq 20140828°1251 (discarded 20140830°0246)
-   note : Workaround was not useful, makes IE freeze see screenshot 20140828°1321
-      http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/img/20140828o1321.icondrawer--ie--get-comments.png
-   ref 20190324°0813 : A demo how to find comments is now in repo 20140713°1811
-        http://www.trekta.biz/svn/demosjs/trunk/findcomments/findcomments.html
-   status : Finished with ref 20190324°0813
-   ܀
-
-   issue 20140828°0751 'algo calling params quirk'
-   title : Algo calling params quirk
-   symptom : When calling the outsourced algorithm with the plain Ikon object
-      as parameter, only the first canvas is drawn, the other are skipped.
-   suspect : Parameter passing is not consequently done by reference.
-   workaround : Call it with the full Ikon objects array plus the index.
-   note : About failed attempts to pass the plain icon
-      - // var x = icos[iFor];
-      - // icos[iFor] = algoPulse(x);
-      - // algoPulse(icos[iFor]);
-   note 20190329°1033 : Issue seems finished but I do not know why, and what it was before.
-   status : seems finished (note 20190329°1033)
-   ܀
-
-   issue 20140828°0541 'IE8 is drawing outside the canvas'
-   matter : If painting outside the canvas, two different behaviours result:
-      (1) IE8: The object is painted even outside the canvas borders. This is what IE does.
-      (2) Chrome, FF, Opera: The object outside the canvas borders is clipped.
-   note : One question is, whether for the outborder parts, the calculations are done
-      or skipped. The answer were interesting for resource and performance understanding.
-   ref : Screenshots see ..
-   status : finished
-   ܀
-
-   todo 20140815°1141
-   do : Outsource drawing code from the time loop to a dedicated function,
-         which can serve as the Algo property of the Ikon object.
-   status : done
-   ܀
-
-
-
 
    ———————————————————————
    [file 20140903°0112] ܀Ω

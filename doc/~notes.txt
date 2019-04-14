@@ -41,6 +41,8 @@
       ⯈ __proto__   : Object
       • this        : undefined
    ref : Screenshot 20190329o1053.chrome--debug--ikon-props.png [ref 20190329°1053]
+   note : Func 20190330°0111 startCanvasGr_evalCmdlin is replaced
+           by function 20190330°0241 settleAlgoProperties
    ܀
 
    feature 20180619°0115 'discontinue IE8 support'

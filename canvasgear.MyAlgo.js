@@ -1,7 +1,7 @@
 ﻿/*!
  * This script provides the CanvasGear Template algorithm [file 20190329°0611]
  *
- * version : 0.2.0.b — 20190330°0757..
+ * version : 0.2.0.c — 20190330°0447
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */
@@ -61,7 +61,7 @@ Cvgr.Algos.MyAlgo.executeAlgorithm = function(iko)
    iCenterY = (iko.ShiftY !== null) ? iCenterY + parseInt(iko.ShiftY, 10) : iCenterY;
 
    // (.) calculate radius [seq 20190329°0444]
-   var nRadius = ( (iko.Width + iko.Height) / 4) * 0.44; //// 0.66;
+   var nRadius = ( (iko.Width + iko.Height) / 4) * 0.44;
 
    // (.) draw something [seq 20190329°0445]
    iko.Context.beginPath();

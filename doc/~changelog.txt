@@ -1,6 +1,6 @@
 ﻿
 
-   log 20190330°0913 0.2.0.c
+   log 20190330°1314 0.2.0.c
    • External template algo overwrites internal
 
    release 0.1.9 — 20190330°0757

@@ -22,7 +22,7 @@
       • Angle       : 0
       • BgColor     : "Red"
       ⯈ Canvas      : canvas#myCanvas21
-      ⯈ CmdHash2    : [algo: "triangle", ...] 
+      ⯈ CmdsHash    : [algo: "triangle", ...] 
       • Color       : ""
       • Color2      : ""
       • Color3      : ""

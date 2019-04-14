@@ -42,14 +42,6 @@
    status : open
    ܀
 
-   issue 20190329°0451 'iko.Angle does not reset'
-   matter : The angle does not reset as expected.
-   solution : See seq 20140829°0519 'calculate progression', it works with Math.PI
-   location : On the bottom of most functions executeAlgorithm,
-               e.g. func 20140829°0511 Cvgr.Algos.pulse.executeAlgorithm
-   status : finished
-   ܀
-
    issue 20190329°0421 'impossible index'
    matter : The function is called with iNdx = 2, when only two canvases
       exist on the page. How can this be? Where from comes this call?

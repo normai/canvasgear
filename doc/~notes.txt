@@ -3,7 +3,7 @@
    Room for any notes
    ******************
 
-   feature 20190330°0141 'external Template overwrites built-in one'
+   feature 20190330°0141 'external algo overwrites built-in one'
    matter : The Template algo exists in two flavours, the built-in and the
       external one. If the both are present, means if file canvasgear.Template.js
       is copied parallel to canvasgear.js, the code of the external file shall

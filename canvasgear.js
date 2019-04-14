@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.0.a — 20190330°0757..
+ * version : 0.2.0.b — 20190330°0757..
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -44,7 +44,7 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.0.a'
+    versionnumber : '0.2.0.b'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
@@ -167,12 +167,12 @@ Cvgr.Objs.Ikon = function()
    this.Color = '';                   // string - RGB or webcolor                 // fix 20180618°071103 ineffective [prop 20140916°0514]
    this.Color2 = '';                  // string - RGB or webcolor                 // fix 20180618°071104 ineffective [prop 20140916°0515]
    this.Color3 = '';                  // string - RGB or webcolor (nowhere used)  // fix 20180618°071105 ineffective [prop 20140916°0516]
-   this.Hertz = null;                 // number - frequency in Hz [prop 20140916°0517]
+   this.Hertz = 0.1; // null;                 // number - frequency in Hz [prop 20140916°0517]
    this.Ide = null;                   // string - canvas id from html [prop 20140926°0311]
-   this.ShiftX = null;                // int - horizontal offset (in pixel) [prop 20140916°0518]
-   this.ShiftY = null;                // int - vertical offset (in pixel) [prop 20140916°0522]
+   this.ShiftX = 0; // null;                // int - horizontal offset (in pixel) [prop 20140916°0518]
+   this.ShiftY = 0; // null;                // int - vertical offset (in pixel) [prop 20140916°0522]
    this.SizeFactor = null;            // number - enlarge or reduce relative to automatic size [prop 20190328°0831]
-   this.Speed = null;                 // number - use empirical values, shall be replaced by Hertz [prop 20140916°0523]
+   // // this.Speed = null; // seems unused // number - use empirical values, shall be replaced by Hertz [prop 20140916°0523]
 
    // constant properties, set from the canvas HTML attributes
    // // this.Diameter;               // number - canvas size (in meter) [var 20140926°1331]
@@ -188,12 +188,8 @@ Cvgr.Objs.Ikon = function()
    this.DrawOnlyOnce = false;          // object - flag [prop 20140916°1021]
    this.iDrawCount = 0;                // integer how often the icon is drawn completely [prop 20140916°0534]
 
-   // // experimental function, not yet active (syntax wrong) [func 20140916°0541]
-   // this.draw1 = function x()           // funct - algorithm
-   // {
-   //    // The drawing function must be provided by the caller?
-   //    // ...;
-   // };
+   this.SizeFactor = 1;                // [prop 20190330°0321]
+
 };
 
 /**
@@ -333,25 +329,7 @@ Cvgr.startCanvasGear = function()
       // () parse commandline [line 20140815°0946]
       ico.CmdsHash = Trekta.Util2.CmdlinParser.parse(ico.Command, true);
 
-      // provide array with known keys [seq 20140926°0331]
-      // see : ref 20140926°0351 'Stacko : For-each on array'
-      // see : ref 20140926°0352 'Stackoverflow : Check key in object'
-      // see : ref 20111031°1322 'Harms & Diaz : JavaScript object oriented ...'
-      /*
-      var keys = new Array ( 'algo', 'class', 'height', 'id', 'width', 'Algo'
-                            , 'Bgcolor', 'Color', 'Color2', 'Color3', 'Hertz'
-                             , 'Shiftx', 'Shifty', 'Speed'
-                              );
-      */
-
-      ////// special condition with IE9 [seq 20190330°0232] ???
-      ////if ( typeof ico.CmdsHash['algo'] === 'undefined' ) {
-      ////   ico.CmdsHash['algo'] = '';
-      ////}
-
-      // retrieve AlgoName in advance [line 20190330°0221]
-      ////ico.AlgoName = (ico.CmdsHash['algo'] !== '')
-      ////ico.AlgoName = ((ico.CmdsHash['algo'] !== '') || (ico.CmdsHash['algo'] !== 'undefined'))
+      // retrieve AlgoName in advance [line 20190330°0221 (after seq 20140904°0646)]
       ico.AlgoName = ( ( 'algo' in ico.CmdsHash ) && (ico.CmdsHash['algo'] !== '') )
                     ? ico.CmdsHash['algo']
                      : 'pulse'
@@ -367,16 +345,6 @@ Cvgr.startCanvasGear = function()
 
    // [line 20140904°0657]
    canvases = null; // deleting a canvas is no good idea, better set it null
-
-   //// shutdown 20190330°0228
-   ////// initialize canvasgearexcanvas.js [seq 20140815°0651]
-   ////if ( typeof window.bIs_IE8_ExcanvasLoaded !== 'undefined' ) {
-   ////   if (bIs_IE8_LocalExcanvasLoaded) {
-   ////      for (var i = 0; i < Cvgr.Vars.icos.length; i++) {
-   ////         G_vmlCanvasManager.initElement(Cvgr.Vars.icos[i].Canvas);
-   ////      }
-   ////   }
-   ////}
 
    // ignit continuous drawing [seq 20140815°0947]
    Cvgr.Func.executeFrame();
@@ -397,15 +365,8 @@ Cvgr.startCanvasGear = function()
 Cvgr.startCanvasGr_evalCmdlin = function(ico)
 {
 
-   // (M.1) determine AlgoName [seq 20140904°0646]
-   ////if ((ico.CmdsHash['algo'] === undefined) || (ico.CmdsHash['algo'] === null) || (ico.CmdsHash['algo'] === ''))
-   ////{
-   ////   ////ico.AlgoName = 'default';
-   ////}
-   ////else
-   ////{
-   ////   ico.AlgoName = ico.CmdsHash['algo'];
-   ////}
+////// 20190330°0315 shutdown in favour of func 20190330°0241 setlleAlgoProperties
+////return;
 
    // (M.2) determine BgColor [seq 20140904°0647]
    if ( (ico.CmdsHash['bgcolor'] === null)
@@ -466,52 +427,89 @@ Cvgr.startCanvasGr_evalCmdlin = function(ico)
       }
    }
 
-   // (M.6) determine Hertz [seq 20140904°0651]
-   if ((ico.CmdsHash['hertz'] === undefined) || (ico.CmdsHash['hertz'] === null) || (ico.CmdsHash['hertz'] === ''))
-   {
-      ico.Hertz = 0.2;
-   }
-   else
-   {
-      ico.Hertz = ico.CmdsHash['hertz'];
-   }
+// 20190330°0315 shutdown in favour of func 20190330°0241 setlleAlgoProperties
+return;
 
-   // (M.7) determine ShiftX (pixel) [seq 20140904°0652]
-   if ((ico.CmdsHash['shiftx'] === undefined) || (ico.CmdsHash['shiftx'] === null) || (ico.CmdsHash['shiftx'] === ''))
-   {
-      ico.ShiftX = 0;
-   }
-   else
-   {
-      ico.ShiftX = ico.CmdsHash['shiftx'];
-   }
+   ////// (M.6) determine Hertz [seq 20140904°0651]
+   ////if ((ico.CmdsHash['hertz'] === undefined) || (ico.CmdsHash['hertz'] === null) || (ico.CmdsHash['hertz'] === ''))
+   ////{
+   ////   ico.Hertz = 0.2;
+   ////}
+   ////else
+   ////{
+   ////   ico.Hertz = ico.CmdsHash['hertz'];
+   ////}
 
-   // (M.8) determine ShiftY (pixel) [seq 20140904°0653]
-   if ((ico.CmdsHash['shifty'] === undefined) || (ico.CmdsHash['shifty'] === null) || (ico.CmdsHash['shifty'] === ''))
-   {
-      ico.ShiftY = 0;
-   }
-   else
-   {
-      ico.ShiftY = ico.CmdsHash['shifty'];
-   }
+   ////// (M.7) determine ShiftX (pixel) [seq 20140904°0652]
+   ////if ((ico.CmdsHash['shiftx'] === undefined) || (ico.CmdsHash['shiftx'] === null) || (ico.CmdsHash['shiftx'] === ''))
+   ////{
+   ////   ico.ShiftX = 0;
+   ////}
+   ////else
+   ////{
+   ////   ico.ShiftX = ico.CmdsHash['shiftx'];
+   ////}
 
-   // (M.9) determine Speed [seq 20140904°0654]
-   if ((ico.CmdsHash['speed'] === undefined) || (ico.CmdsHash['speed'] === null) || (ico.CmdsHash['speed'] === ''))
-   {
-      ico.Speed = 444;
-   }
-   else
-   {
-      ico.Speed = ico.CmdsHash['speed'];
-   }
+   ////// (M.8) determine ShiftY (pixel) [seq 20140904°0653]
+   ////if ((ico.CmdsHash['shifty'] === undefined) || (ico.CmdsHash['shifty'] === null) || (ico.CmdsHash['shifty'] === ''))
+   ////{
+   ////   ico.ShiftY = 0;
+   ////}
+   ////else
+   ////{
+   ////   ico.ShiftY = ico.CmdsHash['shifty'];
+   ////}
 
-   // (M.10) determine SizeFactor [seq 20190328°0833]
-   ico.SizeFactor = ('SizeFactor' in ico.CmdsHash)
-                   ? ico.CmdsHash['SizeFactor']
-                    : 1.0
-                     ;
+   ////// (M.9) determine Speed [seq 20140904°0654]
+   ////if ((ico.CmdsHash['speed'] === undefined) || (ico.CmdsHash['speed'] === null) || (ico.CmdsHash['speed'] === ''))
+   ////{
+   ////   ico.Speed = 444;
+   ////}
+   ////else
+   ////{
+   ////   ico.Speed = ico.CmdsHash['speed'];
+   ////}
+
+   ////// (M.10) determine SizeFactor [seq 20190328°0833]
+   ////ico.SizeFactor = ('SizeFactor' in ico.CmdsHash)
+   ////                ? ico.CmdsHash['SizeFactor']
+   ////                 : 1.0
+   ////                  ;
+
 };
+
+/**
+ * This array stores the AlgoName of the pulled-behind script
+ *
+ * Important: All three aPull* arrays have their indices in parallel
+ *
+ * id 20190330°0341
+ */
+Cvgr.Vars.aPullAlgos = [];
+
+/**
+ * This array stores an array of icons for piggybacking on the
+ *  pull-behind function of the first of their algo name.
+ *
+ * id 20190330°0342
+ */
+Cvgr.Vars.aPullPiggy = [];
+
+/**
+ * This array stores the timers to examine the non-immediate algorithms
+ *
+ * id 20190329°0431
+ */
+////Cvgr.Vars.timrs = [];
+Cvgr.Vars.aPullTimrs = [];
+
+/**
+ * This array stores success flags associated with the examination timers
+ *
+ * id 20190329°0433
+ */
+////Cvgr.Vars.timSuccess = [];
+Cvgr.Vars.aPullSuccess = [];
 
 // helper variables for browser independend angle calculation
 Cvgr.Vars.iMarkLastTwoSecond = 0;                      // [var 20140815°0932]
@@ -522,20 +520,6 @@ Cvgr.Vars.nTrueAngleTurns = 0;                         // [var 20140815°0936] w
 Cvgr.Vars.nIncTurnsPerFrame = 0;                       // [var 20140815°0937] increment turns per frame for 1 Hz
 
 /**
- * This array stores the timers to examine the non-immediate algorithms
- *
- * id 20190329°0431
- */
-Cvgr.Vars.timrs = [];
-
-/**
- * This array stores success flags associated with the examination timers
- *
- * id 20190329°0433
- */
-Cvgr.Vars.timSuccess = [];
-
-/**
  * This function is called when pulling-behind a non-immediate algorithm, it
  *  examines success, and in case of failure cares for a replacement algorithm.
  *
@@ -543,7 +527,6 @@ Cvgr.Vars.timSuccess = [];
  * @param {String} sAlgo —
  * @param {Integer} iMyNdx —
  */
-////Cvgr.Func.examineAlgo = function(iMyNdx, iIcoNdx)
 Cvgr.Func.examineAlgo = function(iMyNdx, iko)
 {
    // paranoia with IE9 [seq 20190330°0231]
@@ -554,18 +537,11 @@ Cvgr.Func.examineAlgo = function(iMyNdx, iko)
       return;
    }
 
-   // convenience get algo name [line 20190329°0453]
-   //  Here fires IE9 if AlgoName was not defined, see above seq 20190330°0231
-   ////var sAlgo = Cvgr.Vars.icos[iIcoNdx].AlgoName;
-   ////var sAlgo = iko.AlgoName;
-
-   // does the algo exist in the meanwhile? If not, set replacement algo [condi 20190329°0455]
-   ////if ( sAlgo in Cvgr.Algos ) {
+   // does the algo exist in the meanwhile? If not, set replacement algo [condi 20190329°0453]
    if ( iko.AlgoName in Cvgr.Algos ) {
-      Cvgr.Vars.timSuccess[iMyNdx] = true;
+      Cvgr.Vars.aPullSuccess[iMyNdx] = true;
    }
    else {
-      ////Cvgr.Vars.icos[iIcoNdx].AlgoName = 'pulse';
       iko.AlgoName = 'pulse';
    }
 };
@@ -576,16 +552,35 @@ Cvgr.Func.examineAlgo = function(iMyNdx, iko)
  * @id 20190329°0211
  * @callers Only • pullScriptBehind callback
  */
-Cvgr.Func.executeFramContinue = function(sAlgo, iNdx)
+//Cvgr.Func.executeFramContinue = function(iko)
+Cvgr.Func.executeFramContinue = function(iko)
 {
-Cvgr.Vars.bIsNotFirstFrame = true;
-   // the alog might be not yet ready [condi 20190329°0213]
+
+   // special IE paranoia [seq 20190330°0251]
+   //  How is it possible that iko.AlgoName does not exist? Who is the caller?
+   // note : Testing with "if (! 'AlgoName' in iko)" yields error in IE9..11
+   // I do not want this variable, just need something to access iko.AlgoName.
+   var sAlgoNam = '';
+   try {
+      sAlgoNam = iko.AlgoName;
+   }
+   catch(err) {
+      return;
+   }
+
+   // the algo might be not yet ready [condi 20190329°0213]
    // note : With the both requestAnimFrame plus pullScriptBehind
    //    intertweened, the exact callings may get a bit complicated.
-   if (sAlgo in Cvgr.Algos) {
+   if (sAlgoNam in Cvgr.Algos) {
       // finally do the wanted algo [line 20190329°0215]
-      Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos[iNdx]);
+      if ( ! Cvgr.Vars.bIsNotFirstFrame ) {
+         Cvgr.Func.settleAlgoProperties(iko);
+      }
+      Cvgr.Algos[iko.AlgoName].executeAlgorithm(iko);
    }
+
+   // [line 20190330°0145]
+   Cvgr.Vars.bIsNotFirstFrame = true;
 };
 
 /**
@@ -716,9 +711,8 @@ Cvgr.Func.executeFrame = function()
    // process each Ikon on the page [seq 20140815°1256]
    for (var iNdx = 0; iNdx < Cvgr.Vars.icos.length; iNdx++)
    {
-      // flag to skip icon
-      // prologue - draw this algorithm only once [seq 20140916°102204]
-      // todo : Implement here flag from commandline
+      // convenience [seq 20190330°0327]
+      var iko = Cvgr.Vars.icos[iNdx];
 
       // () debug output canvas status [line 20190329°0923]
       Cvgr.Func.executeFram_PrintInfo(iNdx);
@@ -726,35 +720,116 @@ Cvgr.Func.executeFrame = function()
       // () execute algorithm [seq 20140815°1257]
       //  Remember issue 20140828°0751 'Algo calling params quirk' — is it solved?
       // (.1) convenience
-      var sAlgo = Cvgr.Vars.icos[iNdx].AlgoName;
+      var sAlgo = iko.AlgoName;
 
       // (.2) [condition 20190329°0411]
-      // note : Oops, the condition got a tricky with the feature request
-      //  to use the external Template algo if available, otherwise use the
-      //  built-in one. So simple was it before : "if (sAlgo in Cvgr.Algos)"
+      // note : The condition got tricky with feature 20190330°0141 'external algo
+      //  overwrites built-in one'. Before, it was just : "if (sAlgo in Cvgr.Algos)"
       if ( ( (sAlgo in Cvgr.Algos) && (sAlgo !== 'Template') )
           || ( Cvgr.Vars.bIsNotFirstFrame && sAlgo === 'Template' )
            )
       {
          // (2.1) immediate call [seq 20190329°0413]
-         Cvgr.Algos[sAlgo].executeAlgorithm(Cvgr.Vars.icos[iNdx]);
+         if (! Cvgr.Vars.bIsNotFirstFrame) {
+            Cvgr.Func.settleAlgoProperties(iko);
+         }
+         Cvgr.Algos[sAlgo].executeAlgorithm(iko);
       }
       else
       {
+         /*
+         issue 20190330°0331 'pull-behind only only per algo'
+         matter : Do the pull-behind only once for one algo, even if that algo appears
+            multiple times on the page. Otherwise curious script abortion observed.
+         note : This was seen on page 20190324°0511 demo2.html
+         status : open
+         */
+
+         // was this algo already processed? [seq 20190330°0343]
+         var iNdxPiggy = Cvgr.Vars.aPullAlgos.indexOf(sAlgo);
+         if ( iNdxPiggy >= 0 ) {
+            Cvgr.Vars.aPullPiggy[iNdxPiggy].push(iko);
+            continue;
+         }
+
          // (2.2) load buddy module [seq 20190329°0415]
-         var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/treksvn/canvasgeardev/trunk/canvasgear/"
-         var sModNam = sPathAbs + 'canvasgear.' + sAlgo + '.js';
-         Cvgr.Vars.timSuccess.push(false);                             // pessimistic predetermination
-         ////Cvgr.Vars.timrs.push(setTimeout( Cvgr.Func.examineAlgo, 1357, (Cvgr.Vars.timrs.length - 1), iNdx ));
-         Cvgr.Vars.timrs.push(setTimeout( Cvgr.Func.examineAlgo, 1357, (Cvgr.Vars.timrs.length - 1), Cvgr.Vars.icos[iNdx] ));
-         Trekta.Utils.pullScriptBehind ( sModNam , function()
-                                        { Cvgr.Func.executeFramContinue( iNdx ); }
+         var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/canvasgear/"
+         var sModuleName = sPathAbs + 'canvasgear.' + sAlgo + '.js';
+
+         // create piggy array set [seq 20190330°0344]
+         //  Try solving issue 20190330°0331 'pull-behind only only per algo'
+         Cvgr.Vars.aPullAlgos.push(sAlgo);
+         var ar = [];
+         ar.push(iko);
+         Cvgr.Vars.aPullPiggy.push(ar);
+
+         Cvgr.Vars.aPullSuccess.push(false);  // pessimistic predetermination, indices parallel timer array
+         Cvgr.Vars.aPullTimrs.push ( setTimeout ( Cvgr.Func.examineAlgo
+                                    , 1357
+                                     , (Cvgr.Vars.aPullTimrs.length - 1), iko
+                                      ));
+         Trekta.Utils.pullScriptBehind ( sModuleName , function()
+                                        { Cvgr.Func.executeFramContinue( iko ); }
                                          );
       }
    }
 
    // setup for animation [line 20140815°1258]
    window.requestAnimFrame(Cvgr.Func.executeFrame);
+};
+
+/**
+ * This function sets the algorithm properties, reading first the built-in
+ *  default values, then overwriting them with the commandline values
+ *
+ * @id 20190330°0241
+ * @note ref 20140926°0352 'Stackoverflow : Check key in object'
+ * @note ref 20140926°0351 'Stacko : For-each on array'
+ * @note ref 20111031°1322 'Harms & Diaz : JavaScript object oriented ...'
+ * @callers Two places •• each before Cvgr.Algos[sAlgo].executeAlgorithm
+ * @param {Object} iko — The Ikon to be processed
+ */
+Cvgr.Func.settleAlgoProperties = function(iko)
+{
+   //return;
+
+   // // provide array with known keys [seq 20140926°0331]
+   // var keys = new Array ( 'algo', 'class', 'height', 'id', 'width', 'Algo'
+   //                         , 'Bgcolor', 'Color', 'Color2', 'Color3', 'Hertz'
+   //                          , 'Shiftx', 'Shifty', 'Speed'
+   //                           );
+
+   // tokens different from property names [seq 20190330°0313]
+   var oTokToProp = {
+      algo : 'AlgoName'
+      , height : 'Height'
+      , hertz : 'Hertz'
+      , width : 'Width'
+   }
+
+   // get any default properties [line 20190330°0243]
+   // About JavaScript syntax — Curiously, here it causes no error, if the
+   //  algorithm namespace has no defaultProperties defined, not even in IE9.
+   var oDefaults = Cvgr.Algos[iko.AlgoName].defaultProperties;
+
+   // apply default value to Ikon object [line 20190330°0245]
+   for (var sKey in oDefaults) {
+      iko[sKey] = oDefaults[sKey];
+   }
+
+   // overwrite with commandline values [seq 20190330°0247]
+   for ( var sKeySrc in iko.CmdsHash) {
+
+      // possibly translate
+      var sKeyTgt = sKeySrc;
+      if (sKeySrc in oTokToProp) {
+         sKeyTgt = oTokToProp[sKeySrc];
+      }
+
+      // write
+      iko[sKeyTgt] = iko.CmdsHash[sKeySrc];
+   }
+var xDbg = '';
 };
 
 /**
@@ -766,7 +841,6 @@ Cvgr.Func.executeFrame = function()
  */
 Cvgr.Func.setRadiobutton = function()
 {
-
    // toggle [seq 20140819°1753]
    var sMsg = '[Debug 20140926°1131]\n\nNow radio-button algo-mode = ';
    if (document.FormAlgoMode.AlgoMode[0].checked)
@@ -1343,8 +1417,7 @@ Cvgr.Algos.develop = {
    {
       'use strict'; // [line 20190329°0843`22]
 
-      // draw this algorithm only once [seq 20140916°1022`01]
-      // Remember issue ..
+      // draw this algorithm only once [seq 20140916°1022`01] remember issue ..
       if (iko.DrawOnlyOnce) {
          return;
       }
@@ -1360,13 +1433,14 @@ Cvgr.Algos.develop = {
 
       // preparatory calculations
       var lins = new Array();
-      var lin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, 'crimson');
-      var lin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, 'seagreen');
-      var lin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, 'royalblue');
+      var lin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, iko.Color); // 'Crimson');
+      var lin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, iko.Color2); // 'SeaGreen');
+      var lin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, iko.Color3); // 'RoyalBlue');
       lins.push(lin1);
       lins.push(lin2);
       lins.push(lin3);
 
+      // draw some lines?
       for (var i = 0; i < lins.length; i++)
       {
          iko.Context.beginPath();
@@ -1385,11 +1459,11 @@ Cvgr.Algos.develop = {
     * @id 20140901°0521
     */
    , defaultProperties : { // [Cvgr.Algos.develop.defaultProperties]
-      bgcolor : 'LightCyan'
-      , color1 : 'LightCoral' // 'Red'
-      , color2 : 'PaleGreen' // 'Green'
-      , color3 : 'LightBlue' // 'Blue'
-      , DrawOnlyOnce : true // it is static, not animated
+      BgColor : 'LightCyan'
+      , Color : 'LightCoral' // Red
+      , Color2 : 'PaleGreen' // Green
+      , Color3 : 'LightBlue' // Blue
+      //, DrawOnlyOnce : true // it is static, not animated
    }
 };
 //~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

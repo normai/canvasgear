@@ -1,4 +1,4 @@
-# CanvasGear v0.2.0.c <sup><sub><sub>20190330°1314</sub></sub></sup>
+# CanvasGear v0.2.0.d <sup><sub><sub>20190330°1314</sub></sub></sup>
 
 **Slogan** : Draw animated canvases by specifying parameters in a data attribute
 
@@ -34,6 +34,8 @@
 ```
 - Now the defined canvas should appear on the page
 - If you like experimenting, additionally copy [`canvasgear.Template.js`](./canvasgear.Template.js)
+
+**License** : GNU LGPL v3 or later [opensource.org/licenses/LGPL-3.0](https://opensource.org/licenses/LGPL-3.0)
 
 Have fun
 

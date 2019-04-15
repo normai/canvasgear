@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.0.c — 20190330°1314
+ * version : 0.2.0.d — 20190330°1314..
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -44,7 +44,7 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.0.c'
+    versionnumber : '0.2.0.d'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far

@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.0.d — 20190330°1314..
+ * version : 0.2.0.e — 20190331°0421
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -44,14 +44,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.0.d'
+    versionnumber : '0.2.0.e'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190330°1314'
+   , versiontimestamp : '20190331°0421'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -90,6 +90,13 @@ Cvgr.Vars =
     * @id 20180618°0642
     */
    bFlagTipTopTest : false
+
+   /**
+    * This flag is a humble helper
+    *
+    * @id 20190331°0331
+    */
+   , bTemplateSearchFinished : false
 
    /**
     * This number stores the CanvasGear start seconds
@@ -322,7 +329,7 @@ Cvgr.startCanvasGear = function()
       // () parse commandline [line 20140815°0946]
       ico.CmdsHash = Trekta.Util2.CmdlinParser.parse(ico.Command, true);
 
-      // retrieve AlgoName in advance [line 20190330°0221 (after seq 20140904°0646)]
+      // set AlgoName in advance [line 20190330°0221]
       ico.AlgoName = ( ( 'algo' in ico.CmdsHash ) && (ico.CmdsHash['algo'] !== '') )
                     ? ico.CmdsHash['algo']
                      : 'pulse'
@@ -340,25 +347,6 @@ Cvgr.startCanvasGear = function()
 };
 
 /**
- * Ths callback stockpile array is the brute force helper for
- *  solving issue 20190330°0355 'callback parameters useless'
- *
- * @note : Remember todo 20190330°0423 'catch callback stockpile array overflow'
- * @type {Array}
- */
-Cvgr.Vars.aCallbackStockpile = []; // [var 20190330°0415]
-Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 0 ); });
-Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 1 ); });
-Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 2 ); });
-Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 3 ); });
-Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 4 ); });
-Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 5 ); });
-Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 6 ); });
-Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 7 ); });
-Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 8 ); });
-Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 9 ); });
-
-/**
  * This array stores the AlgoName of the pulled-behind script
  *
  * Important: All three aPull* arrays have their indices in parallel
@@ -366,6 +354,88 @@ Cvgr.Vars.aCallbackStockpile.push(function() { Cvgr.Func.executeFramContinue( 9 
  * @id 20190330°0341
  */
 Cvgr.Vars.aPiggyAlgoNames = [];
+
+/**
+ * The callback stockpile array is the brute force helper for
+ *  solving issue 20190330°0355 'callback parameters useless'
+ *
+ * @id [var 20190330°0415]
+ * @note Remember todo 20190330°0423 'catch callback stockpile array overflow'
+ * @type {Array}
+ */
+Cvgr.Vars.aPiggyCallbacks = [];
+Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 0 ); } )
+                                 , ( function() { Cvgr.Func.pullbehind_onError( 0 ); } )
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 0 ); } )   // experimental for feature 20190331°0411 'riders also in subfolder'
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 0 ); } ) // experimental
+                                    ]);
+Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 1 ); } )
+                                 , ( function() { Cvgr.Func.pullbehind_onError( 1 ); } )
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 1 ); } ) 
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 1 ); } )
+                                    ]);
+Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 2 ); } )
+                                 , ( function() { Cvgr.Func.pullbehind_onError( 2 ); } )
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 2 ); } ) 
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 2 ); } )
+                                    ]);
+Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 3 ); } )
+                                 , ( function() { Cvgr.Func.pullbehind_onError( 3 ); } )
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 3 ); } ) 
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 3 ); } )
+                                    ]);
+Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 4 ); } )
+                                 , ( function() { Cvgr.Func.pullbehind_onError( 4 ); } )
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 4 ); } ) 
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 4 ); } )
+                                    ]);
+Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 5 ); } )
+                                 , ( function() { Cvgr.Func.pullbehind_onError( 5 ); } )
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 5 ); } ) 
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 5 ); } )
+                                    ]);
+Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 6 ); } )
+                                 , ( function() { Cvgr.Func.pullbehind_onError( 6 ); } )
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 6 ); } ) 
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 6 ); } )
+                                    ]);
+Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 7 ); } )
+                                 , ( function() { Cvgr.Func.pullbehind_onError( 7 ); } )
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 7 ); } ) 
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 7 ); } )
+                                    ]);
+Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 8 ); } )
+                                 , ( function() { Cvgr.Func.pullbehind_onError( 8 ); } )
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 8 ); } ) 
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 8 ); } )
+                                    ]);
+Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 9 ); } )
+                                 , ( function() { Cvgr.Func.pullbehind_onError( 9 ); } )
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 9 ); } ) 
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 9 ); } )
+                                    ]);
+
+/**
+ * This array stores error flags associated with the pullback attempts
+ *
+ * @id 20190331°0313
+ */
+Cvgr.Vars.aPiggyFlags4Avail = [];
+
+/**
+ * This array stores error flags associated with the pullback attempts
+ *
+ * @id 20190331°0311
+ */
+Cvgr.Vars.aPiggyFlags4OnError = [];
+
+/**
+ * This array stores success flags associated with the pullback attempts
+ *
+ * @id 20190329°0433
+ * @note Not yet used, isn't it?
+ */
+Cvgr.Vars.aPiggyFlags4OnLoad = [];
 
 /**
  * This array stores an array of icons for piggybacking on the
@@ -382,14 +452,6 @@ Cvgr.Vars.aPiggyIconArrays = [];
  */
 Cvgr.Vars.aPiggyTimers = [];
 
-/**
- * This array stores success flags associated with the examination timers
- *
- * @id 20190329°0433
- * @note Not yet used, isn't it?
- */
-Cvgr.Vars.aPiggySuccessFlags = [];
-
 // helper variables for browser independend angle calculation
 Cvgr.Vars.iFramesInLastTwoSeconds = 0;                 // [var 20140815°0934]
 Cvgr.Vars.iFramesPerTowSeconds = 0;                    // [var 20140815°0935]
@@ -404,6 +466,10 @@ Cvgr.Vars.sDebugPageHelper = ''; // [var 20190330°0411]
  * This function is called when pulling-behind a non-immediate algorithm, it
  *  examines success, and in case of failure cares for a replacement algorithm.
  *
+ * This is some late quality control, because I do not (yet) trust the
+ *  onload and onerror event handlers. All what is known and done here, should
+ *  already have been known and done in either onload or onerror event handler.
+ *
  * @id 20190329°0451
  * @todo 20190330°0441 : The two parameters iMyNdx and iko seem
  *     redundant, one of them should suffice. Does it`?
@@ -412,61 +478,28 @@ Cvgr.Vars.sDebugPageHelper = ''; // [var 20190330°0411]
  */
 Cvgr.Func.examineAlgo = function(iMyNdx, iko)
 {
-   // paranoia with IE9 [seq 20190330°0231]
-   //  How is this possible? It happens only with IE9, no more with IE10.
-   //  It happens if a canvas with unassigned AlgoName is on the page. Both
-   //  parameters are undefined then. Below line 20190329°0453 will fire.
-   if (typeof iMyNdx === 'undefined') {
-      return;
-   }
 
-   // does the algo exist in the meanwhile? If not, set replacement algo [condi 20190329°0453]
+   // is algorithm available now? [condi 20190329°0453]
+   var sAlgoNameOrg = iko.AlgoName;
    if ( iko.AlgoName in Cvgr.Algos ) {
-      Cvgr.Vars.aPiggySuccessFlags[iMyNdx] = true;
+      Cvgr.Vars.aPiggyFlags4Avail[iMyNdx] = true;
    }
    else {
-      iko.AlgoName = 'pulse';
-   }
-};
-
-/**
- * This function is called possibly only after wanted script is pulled-behind
- *
- * @id 20190329°0211
- * @callers Only • pullScriptBehind callback
- */
-Cvgr.Func.executeFramContinue = function(iNdxPiggy)
-{
-   // Remember issue 20190330°0355 'callback parameter useless'
-
-   // fulfill [seq 20190330°0345] issue 20190330°0331 'pull-behind only only per algo'
-   // Curiously, it works also without the further processing
-   //  here. Does it? Why? Is this processing here superfluous?
-   var sAlgoNam = Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy];
-   Cvgr.Vars.sDebugPageHelper += '<br /> — executeFramConti : piggy no ' + iNdxPiggy;
-
-   // [seq 20190330°0433]
-   var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
-   Cvgr.Vars.sDebugPageHelper += ', length ' + aIcos.length + ', algo "' + aIcos[0].AlgoName + '"';
-
-   // process all icons of this one algorithm [seq 20190330°0435]
-   for (var i = 0; i < aIcos.length; i++) {
-
-      // convenience [line 20190330°0437]
-      var iko = aIcos[i];
-      Cvgr.Vars.sDebugPageHelper += '<br /> — &nbsp; &nbsp; &nbsp; &nbsp; iko.Ide = ' + iko.Ide;
-
-      // the algo might be not yet ready [condi 20190329°0213]
-      // note : With the both requestAnimFrame plus pullScriptBehind
-      //    intertweened, the exact callings may get a bit complicated.
-      if (sAlgoNam in Cvgr.Algos) {
-         // finally do the wanted algo [line 20190329°0215]
-         if ( ! iko.bIsDefaultSettingDone ) {
-            Cvgr.Func.settleAlgoProperties(iko);
-         }
-         Cvgr.Algos[iko.AlgoName].executeAlgorithm(iko);
+      // rider not found [seq 20190331°0345]
+      // note : This is identical with seq 20190331°0343, it should be superfluous
+      var aIcos = Cvgr.Vars.aPiggyIconArrays[iMyNdx];
+      for (var i = 0; i < aIcos.length; i++) {
+         Cvgr.Vars.aPiggyIconArrays[iMyNdx][i].AlgoName = 'pulse';
       }
    }
+
+   // debug output
+   Cvgr.Vars.sDebugPageHelper += '<br /> — examineAlgo :' + ' piggy ' + iMyNdx + ' &nbsp;'
+                       + ' onLoad = ' + Cvgr.Vars.aPiggyFlags4OnLoad[iMyNdx] + ' &nbsp;'
+                        + ' onError = ' + Cvgr.Vars.aPiggyFlags4OnError[iMyNdx] + ' &nbsp;'
+                         + ' avail = ' + Cvgr.Vars.aPiggyFlags4Avail[iMyNdx] + ' &nbsp;'
+                          + ' algo = ' + sAlgoNameOrg + ' / ' + iko.AlgoName
+                           ;
 };
 
 /**
@@ -490,12 +523,14 @@ Cvgr.Func.executeFram_PrintInfoCanvas = function(iNdx)
       var sOut = '<small>Canvas Debug Info :';
 
       // print fixed value set [seq 20140815°1313]
-      sOut += "<br />iko.Angle = " + Cvgr.Vars.icos[iNdx].Angle.toFixed(9) + ' '
-            +  "<br />iko.Color = " + Cvgr.Vars.icos[iNdx].Color
-             + "<br />iko.Height = " + Cvgr.Vars.icos[iNdx].Height
-              + "<br />iko.Mode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip')
-               + "<br />iko.Width = " + Cvgr.Vars.icos[iNdx].Width
-                ;
+      sOut += "<br />iko.AlgoName = " + Cvgr.Vars.icos[iNdx].AlgoName + ' '
+            + "<br />frame no = " + Cvgr.Vars.iFrameNo + ' '
+            + "<br />iko.Angle = " + Cvgr.Vars.icos[iNdx].Angle.toFixed(9) + ' '
+             +  "<br />iko.Color = " + Cvgr.Vars.icos[iNdx].Color
+              + "<br />iko.Height = " + Cvgr.Vars.icos[iNdx].Height
+               + "<br />iko.Mode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip')
+                + "<br />iko.Width = " + Cvgr.Vars.icos[iNdx].Width
+                 ;
 
       // print commandline args [seq 20140815°1315]
       for ( var ki in Cvgr.Vars.icos[iNdx].CmdsHash )
@@ -525,7 +560,7 @@ Cvgr.Func.executeFram_PrintInfoPage = function ( iTimeCurr
    var elDbg = document.getElementById("Cvgr_DebugPageOutputArea");
    if (elDbg !== null)
    {
-      var s = "<b>CanvasGear Debug Info</b> :";
+      var s = "<b>CanvasGear Page Debug Info</b> :";
       s += " AlgoMode = " + (Cvgr.Vars.bFlagTipTopTest ? 'Top' : 'Tip') + "; ";
       s += " Frame number = " + Cvgr.Vars.iFrameNo + ";";
       s += "<br />Start time = " + Cvgr.Vars.iTimeStart + " = " + Cvgr.Vars.iTimeStart.valueOf() + ";";
@@ -612,14 +647,14 @@ Cvgr.Func.executeFrame = function()
       // (.1) convenience
       var sAlgo = iko.AlgoName;
 
-if (sAlgo === 'MyAlgo') {
-   var xDbg = '';
-}
+////if (sAlgo === 'Template') {
+////   var xDbg = '';
+////}
 
       // (.2) [condition 20190329°0411]
       // note : The condition got tricky with feature 20190330°0141 'external algo
       //  overwrites built-in one'. Before, it was just : "if (sAlgo in Cvgr.Algos)"
-      if ( ( (sAlgo in Cvgr.Algos) && (sAlgo !== 'Template') )
+      if ( ( (sAlgo in Cvgr.Algos) && ( (sAlgo !== 'Template') || Cvgr.Vars.bTemplateSearchFinished ) )
           || ( iko.bIsDefaultSettingDone )
            )
       {
@@ -643,39 +678,146 @@ if (sAlgo === 'MyAlgo') {
             // pull-behind requests are only done in the first round [condition 20190330°0431]
             if (Cvgr.Vars.iFrameNo < 2 ) {
                Cvgr.Vars.aPiggyIconArrays[iNdxPiggy].push(iko);
+ //Cvgr.Vars.aPiggyIconArrays[iNdxPiggy].push(iko);
             }
             continue;
          }
 
          // (2.2) load buddy module [seq 20190329°0415]
          var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/canvasgear/"
-         var sModuleName = sPathAbs + 'canvasgear.' + sAlgo + '.js';
+         var sModuleNameOne = sPathAbs + 'canvasgear.' + sAlgo + '.js';
+         var sModuleNameTwo = sPathAbs + 'riders/canvasgear.' + sAlgo + '.js';
          var iModuleIndex = Cvgr.Vars.aPiggyAlgoNames.length;
 
          // create piggy array set [seq 20190330°0344]
-         //  Try solving issue 20190330°0331 'pull-behind only only per algo'
+         //  Try solving issue 20190330°0331 'pull-behind only per algo'
          Cvgr.Vars.aPiggyAlgoNames.push(sAlgo);
          var ar = [];
          ar.push(iko);
          Cvgr.Vars.aPiggyIconArrays.push(ar);
 
-         Cvgr.Vars.aPiggySuccessFlags.push(false);  // pessimistic predetermination, indices parallel timer array
+         Cvgr.Vars.aPiggyFlags4Avail.push(false);
+         Cvgr.Vars.aPiggyFlags4OnError.push(false);
+         Cvgr.Vars.aPiggyFlags4OnLoad.push(false);
          Cvgr.Vars.aPiggyTimers.push ( setTimeout ( Cvgr.Func.examineAlgo
-                                      , 1357
-                                       , (Cvgr.Vars.aPiggyTimers.length - 1), iko
-                                        ));
+                                      , 1444                           // to be tuned
+                                       , Cvgr.Vars.aPiggyTimers.length // index into the piggy arrays
+                                        , Cvgr.Vars.icos[iNdx]         // why this?
+                                         ));
 
 
-         // remember brute force debug issue 20190330°0355 'callback parameter useless'
+         // output debug message [line 20190330°0416]
          Cvgr.Vars.sDebugPageHelper += '<br /> — pullScriptBehind ' + iModuleIndex + ' ' + sAlgo;
 
-         // heureka, with the hardcoded callback stockpile, it finally works as wanted [note 20190330°0417]
-         Trekta.Utils.pullScriptBehind ( sModuleName , Cvgr.Vars.aCallbackStockpile[iModuleIndex] );
+         // try loading the wanted script [line 20190330°0417]
+         // Heureka, with the hardcoded callback stockpile, the parameters work individually
+         // Remember brute force debug issue 20190330°0355 'callback parameter useless'
+         Trekta.Utils.pullScriptBehind ( sModuleNameOne
+                                        , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][0]
+                                         , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][1]
+                                          );
+if (true) {
+         // experiment [line 20190331°0413]
+         // Try introduce feature 20190331°0411 'riders also in subfolder'
+         // Crazy — It looks like this single line does the job. I cannot believe it yet.
+         Trekta.Utils.pullScriptBehind ( sModuleNameTwo
+                                        , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][3]
+                                         , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][4]
+                                          );
+}
+
       }
    }
 
    // setup for animation [line 20140815°1258]
    window.requestAnimFrame(Cvgr.Func.executeFrame);
+};
+
+/**
+ * This function is an event handler for the script onerror event.
+ *   It is possibly called after wanted script pulled-behind failed.
+ *
+ * @id 20190331°0251
+ * @note This code shall be pretty similar to func 20190329°0451 examineAlgo
+ * @todo Check — Having the error feedback now, might make function examineAlgo superfluous.
+ * @see ref 20190331°0238 'stackoverflow: tell if script faild to load'
+ * @callers Only • pullScriptBehind callback
+ */
+Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
+{
+
+   // main job [line 20190331°0253]
+   Cvgr.Vars.aPiggyFlags4OnError[iNdxPiggy] = true;
+
+   // [line 20190331°0333]
+   Cvgr.Vars.bTemplateSearchFinished = true;
+
+   // is algorithm available now? [condi 20190329°0453]
+   if ( Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] in Cvgr.Algos ) {
+      Cvgr.Vars.aPiggyFlags4Avail[iNdxPiggy] = true;
+   }
+   else {
+      // rider not found, switch to default algo [seq 20190331°0343] like 20190331°0345
+      var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
+      for (var i = 0; i < aIcos.length; i++) {
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].AlgoName = 'pulse';
+      }
+   }
+
+   // debug output [seq 20190331°0255]
+   Cvgr.Vars.sDebugPageHelper += '<br /> — pullbehind_onError :'
+                     + ' &nbsp; piggy ' + iNdxPiggy
+                      + ' &nbsp; "' + Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] + '"'
+                       + ' &nbsp; onload = ' + Cvgr.Vars.aPiggyFlags4OnLoad[iNdxPiggy]
+                        + ' &nbsp; onerror = ' + Cvgr.Vars.aPiggyFlags4OnError[iNdxPiggy]
+                          ;
+};
+
+/**
+ * This function is called only after wanted script was pulled-behind
+ *
+ * @id 20190329°0211
+ * @note Remember issue 20190330°0355 'callback parameter useless'
+ * @note Curiously, the program works pretty well also without this
+ *    function here. Does it really? Why? Is this function superfluous?
+ * @callers Only • pullScriptBehind callback
+ */
+Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
+{
+   // main job [line 20190331°0323]
+   Cvgr.Vars.aPiggyFlags4OnLoad[iNdxPiggy] = true;
+
+   // [line 20190331°0335]
+   Cvgr.Vars.bTemplateSearchFinished = true;
+
+   // fulfill [seq 20190330°0345] issue 20190330°0331 'pull-behind only per algo'
+   var sAlgoNam = Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy];
+   Cvgr.Vars.sDebugPageHelper += '<br /> — pullbehind_onLoad : piggy ' + iNdxPiggy;
+
+   // [seq 20190330°0433]
+   var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
+   Cvgr.Vars.sDebugPageHelper += ' &nbsp; algo "' + aIcos[0].AlgoName
+                               + '" &nbsp; count = ' + aIcos.length
+                                ;
+
+   // process all icons of this one algorithm [seq 20190330°0435]
+   for (var i = 0; i < aIcos.length; i++) {
+
+      // convenience [line 20190330°0437]
+      var iko = aIcos[i];
+      Cvgr.Vars.sDebugPageHelper += '<br /> — &nbsp; &nbsp; &nbsp; &nbsp; iko.Ide = ' + iko.Ide;
+
+      // the algo might be not yet ready [condi 20190329°0213]
+      // note : With the both requestAnimFrame plus pullScriptBehind
+      //    intertweened, the exact callings may get a bit complicated.
+      if (sAlgoNam in Cvgr.Algos) {
+         // finally do the wanted algo [line 20190329°0215]
+         if ( ! iko.bIsDefaultSettingDone ) {
+            Cvgr.Func.settleAlgoProperties(iko);
+         }
+         Cvgr.Algos[iko.AlgoName].executeAlgorithm(iko);
+      }
+   }
 };
 
 /**
@@ -704,7 +846,7 @@ Cvgr.Func.settleAlgoProperties = function(iko)
       , width : 'Width'
    };
 
-   // get any default properties [line 20190330°0243]
+   // get any default properties [line 20190330°0242]
    // About JavaScript syntax — Curiously, here it causes no error, if the
    //  algorithm namespace has no defaultProperties defined, not even in IE9.
    try { //  issue 20190330°0355 'callback parameter useless'
@@ -713,21 +855,27 @@ Cvgr.Func.settleAlgoProperties = function(iko)
       return;
    }
 
-   // apply default value to Ikon object [line 20190330°0245]
+   // apply default value to Ikon object [line 20190330°0243]
    for (var sKey in oDefaults) {
       iko[sKey] = oDefaults[sKey];
    }
 
-   // overwrite with commandline values [seq 20190330°0247]
+   // overwrite with commandline values [seq 20190330°0244]
    for ( var sKeySrc in iko.CmdsHash) {
 
-      // translate
+      // do not restore the algo name [seq 20190331°0321]
+      //  Any not-found algo might have switched it to default algo ('pulse')
+      if (sKeySrc === 'algo') {
+         continue;
+      }
+
+      // translate [seq 20190330°0245]
       var sKeyTgt = sKeySrc;
       if (sKeySrc in oTokToProp) {
          sKeyTgt = oTokToProp[sKeySrc];
       }
 
-      // write
+      // write [seq 20190330°0246]
       iko[sKeyTgt] = iko.CmdsHash[sKeySrc];
    }
 
@@ -2033,7 +2181,7 @@ Trekta.Util2.CmdlinParser = ( function()
 // summary : This area is shared via cutnpaste by those scripts:
 //            • dafutils.js • canvasgear.js • slidegear.js
 // id : area 20190106°0307
-// version : 20190329°0913
+// version : 20190331°0242 // 20190329°0913
 
 /**
  * This namespace shall be root namespace
@@ -2229,23 +2377,21 @@ Trekta.Utils = Trekta.Utils || {
     * This function loads the given script then calls the given function
     *
     * @id 20110821°0121
+    * @version 20190331°0241 added parameter for onError callback
     * @version 20181229°1941 now with parameter for onload callback function
     * @status works
     * @chain project 20181230°0211 http://www.trekta.biz/svn/demosjs/trunk/pullbehind
     * @note About how exactly to call function(s) in the loaded script, see
-    *     issue 20160503°0211 and seq 20160624°0411 'pull-behind fancytree'.
+    *    e.g. issue 20160503°0211 and seq 20160624°0411 'pull-behind fancytree'.
     * @note See howto 20181229°1943 'summary on pullbehind'
-    * @callers
-    *    • dafstart.js::callCanarySqueak()
-    *    • daftari.js seq 20160623°0251 'pull-behind slides'
-    *    • daftari.js seq 20160624°0411 'pull-behind fancytree'
-    * @param sScriptToLoad The path from page to script, e.g. "./../../daftari/js/daftaro/dafcanary.js", 'js/daftaro/dafcanary.js'
-    * @param callbackfunc The callback function for the script onload event
-    * @returns Success flag (so far just a dummy always true) e.g. function(){ DafCanary.squeak(); }
+    * @callers • dafstart.js::callCanarySqueak • daftari.js::pull-behind slides
+    *    • daftari.js::pull-behind fancytree • canvasgear.js::..
+    * @param {String} sScriptToLoad The path from page to script, e.g. "./../../daftari/js/daftaro/dafcanary.js", 'js/daftaro/dafcanary.js'
+    * @param {Function} callbackOnload The callback function for the script onload event
+    * @param {Function} callbackOnerror The callback function for the script onerror event
+    * @returns {Boolean}  Success flag (just a dummy always true)
     */
-   , pullScriptBehind : function ( sScriptToLoad
-                                  , callbackfunc
-                                   )
+   , pullScriptBehind : function ( sScriptToLoad, callbackOnload, callbackOnerror )
    {
       'use strict'; // [line 20190329°0847`17]
 
@@ -2254,7 +2400,7 @@ Trekta.Utils = Trekta.Utils || {
          if ( Trekta.Utils.bShow_Debug_Dialogs ) {
             alert ("[Debug]\n\nScript is already loaded:\n\n" + sScriptToLoad);
          }
-         callbackfunc();
+         callbackOnload();
          return;
       }
 
@@ -2270,7 +2416,7 @@ Trekta.Utils = Trekta.Utils || {
          }
       }
       else {
-         // call from CanvasGear [line 20190329°0152]
+         // call from • CanvasGear
          sScriptSource = sScriptToLoad;
       }
 
@@ -2284,7 +2430,12 @@ Trekta.Utils = Trekta.Utils || {
 
       // set the non-trivial but crucial property [line 20181229°1932]
       // note : Remember todo 20181229°1931 'make pullbehind state-of-the-art'
-      script.onload = callbackfunc;
+      script.onload = callbackOnload;
+
+      // [condition 20190331°0242]
+      if ((typeof callbackOnerror !== 'undefined') && (callbackOnerror !== null)) {
+         script.onerror = callbackOnerror;
+      }
 
       // ignit the pulling [seq 20110821°0125]
       head.appendChild(script);

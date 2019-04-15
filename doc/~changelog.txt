@@ -1,12 +1,13 @@
 
-   version
-   •
+
+   version Version 0.2.0.e — 20190331°0421
+   • Allow rider scripts in subfolder (feature 20190331°0411)
 ﻿
    version 20190330°1314 0.2.0.c
-   • External template algo overwrites internal
+   • External Template algorithm overwrites internal (feature 20190330°0141)
 
    release 0.1.9 — 20190330°0757
-   • Introduce algorithm-supplementing via buddy-script recognition
+   • Introduce supplementing new algorithm via rider script recognition (feature 20180619°0113)
 
    release CanvasGear v0.1.7 — 20190330°0711 (2019-Apr-11)
    • Read parameter from data-cvgr attribute

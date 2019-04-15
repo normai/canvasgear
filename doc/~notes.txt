@@ -3,6 +3,12 @@
    Room for any notes
    ******************
 
+   feature 20190331°0411 'riders also in subfolder'
+   matter : For the rider scripts, which are to be located parallel to
+      canvasgear.js, I want an alternative place, the subfolder 'riders'
+   status :
+   ܀
+
    feature 20190330°0141 'external algo overwrites built-in one'
    matter : The Template algo exists in two flavours, the built-in and the
       external one. If the both are present, means if file canvasgear.Template.js
@@ -12,7 +18,7 @@
    note : To make this work in general, we had to make the pull-behind test
       for each algo existing on the page. This can become pretty expensive.
       So best we suffice with this mechanism restriced to the Template algo.
-   status : Works for Template algo, but not others. Is not wanted in general.
+   status : Works for Template algo, but not others.
    ܀
 
    note 20190329°1043 'the icon properties so far'

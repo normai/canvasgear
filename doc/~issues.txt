@@ -35,7 +35,7 @@
    status : processing
    ܀
 
-   issue 20190330°0331 'pull-behind only only per algo'
+   issue 20190330°0331 'pull-behind only per algo'
    matter : Do the pull-behind only once for one algo, even if that algo appears
       multiple times on the page. Otherwise curious script abortion observed.
    note : This was seen on page 20190324°0511 demo2.html

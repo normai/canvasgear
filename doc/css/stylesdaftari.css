@@ -1,31 +1,23 @@
-﻿/*
- **************************************************************
- * file        : daftari/bin/styles.css
- * id          : 20140302°0611..
- * versions    : - (20140430°0721) merge back styles2.css
- *               - (20140302°0611) split off styles2.css
- *               - (20100822°1321) major changes
- *               - (20080710°2301) initial version
+﻿/**
+ * id          : 20140302°0611
+ * summary     : This is an extract from file 20080710°2301
+ *                http://downtown.trilo.de/svn/daftaridev/trunk/daftari/css/daftari.css
  * license     : MIT/X11 License
- * copyright   : Norbert C. Maier (http://www.trilo.de)
- * authors     :
- * status      : Applicable
+ * copyright   : Norbert C. Maier https://github.com/normai/canvasgear/
  * encoding : UTF-8-with-BOM
  * note : The following workarounds are applied:
  *    (1) 'text-align:center' in the body makes tables center work in IE This must be
- *        counteracted by 'text-align:left;' in p/li/.. tags then. (workaround 20090208°2301)
+ *        counteracted by 'text-align:left;' in p/li/.. tags then (workaround 20090208°2301)
  *    (2) Make tables centered in Firefox and Opera with 'margin-left:auto; margin-right:auto;'
  *        (workaround 20110323°2141)
- *    (3) IE doesn't understand max-width, so as a compromise we give it a width
+ *    (3) IE does not understand max-width, so as a compromise we give it a width
  *        The matter seems no really fixed, just mitigated. (workaround 20100822°1323)
- *    (4) workaround 20140128°1331 'monospace size'.
- *        Monospace fonts are sized too small in some browsers.
- *        See http://code.stephenmorley.org/html-and-css/fixing-browsers-broken-monospace-font-handling
- *        (ref 20140128°1332). The fix is to use 'font-family:monospace,monospace; font-size:1em;'
- * note : <!-- If doctype is missing, IE will not recognize the css hoover selector (20130725°1311). -->
- * todo : Check this with http://csslint.net (it has 118 warnings 20120929°1222)
+ *    (4) workaround 20140128°1331 'fix too small monospace size'.
+ *        See ref 20140128°1332 'Stephen Morley: Fixing monospace font'
+ *        The fix is to use 'font-family:monospace,monospace; font-size:1em;'
+ * note : <!-- If doctype is missing, IE will not recognize the css hoover selector [note 20130725°1311] -->
+ * todo : Check this with http://csslint.net (it has e.g. 118 warnings 20120929°1222)
  * note :
- **************************************************************
  */
 
 /* basic body (20080710°2311) */
@@ -38,11 +30,11 @@ body {
 /**
  * rule 20160617°0211 Default chapter pane
  * note : IE does not understand max-width, so as a compromise, apply
- *         the elements a width as well (after workaround 20100822°1323).
+ *    the elements a width as well (after workaround 20100822°1323).
  */
 div.ChapterFaceNormal { margin:0 auto; max-width:780px; width:84%;
-                         background-color:#fcfcfc; padding:0.3em 0.9em 0.3em 0.9em;
-                          margin-top:0.9em; margin-bottom:1.1em;
+                       background-color:#fcfcfc; padding:0.3em 0.9em 0.3em 0.9em;
+                        margin-top:0.9em; margin-bottom:1.1em;
                          }
 
 /*  (seq 20140302°0621 for workaround 20090208°2301) counteract 'text-align:center' for IE in body */
@@ -50,24 +42,17 @@ li { text-align:left; }                                                        /
 p { text-align:left; }                                                         /* (rule 20140302°0623) */
 td { text-align:left; }                                                        /* (rule 20140302°0624) */
 
-/* (seqence 20100826°2131) */
-ol             { text-indent:0.0em; text-align:left; }                         /* (rule 20100826°2131) */
-ul             { text-indent:0.0em; text-align:left; }                         /* (rule 20100826°2132) */
-li             { margin-top:0.4em; margin-bottom:0.4em; }                      /* (rule 20100826°2133) */
+/* (ruleset 20100826°2131) */
+ol { text-indent:0.0em; text-align:left; }                                     /* (rule 20100826°2131) */
+ul { text-indent:0.0em; text-align:left; }                                     /* (rule 20100826°2132) */
+li { margin-top:0.4em; margin-bottom:0.4em; }                                  /* (rule 20100826°2133) */
 
 /* (seq 20140302°0631 for workaround 20140128°1331 'monospace size' */
 pre { font-family:monospace,monospace; font-size:1.00em; text-align:left; padding:0.5em; } /* (rule 20090208°0511) */
 tt { font-family:monospace,monospace; font-size:1em; }                         /* (rule 20140131°0911) */
 
-p.topnavi1 { border-bottom:2px solid white; padding-bottom:0; margin-top:0%; margin-bottom:0%; border-top:transparent; } /* (rule 20080711°0531) */
-p.topnavi2 { border-bottom:2px solid white; padding-bottom:0; margin-top:0%; margin-bottom:0%; font-size:90%; } /* (rule 20080711°0532) */
-p.topnavi3 { border-bottom:2px solid white; padding-bottom:0; margin-top:0%; margin-bottom:0%; font-size:80%; } /* (rule 20080711°0533) */
-p.topnavi4 { border-bottom:2px solid white; padding-bottom:0; margin-top:0%; margin-bottom:0%; font-size:80%; } /* (rule 20080711°0534) */
-p.topnavi5 { border-bottom:2px solid white; padding-bottom:0; margin-top:0%; margin-bottom:0%; font-size:80%; } /* (rule 20080711°0535) */
-
-p.topTitleCrumbs { color:#0000f0; font-size:130%; margin-bottom:-0.7em; margin-top:0.2em; text-align:center; } /* (rule 20080711.0522) */
-/* h1.toptitle { margin-top:0.2em; } */ /* (rule 20080711°0521) */
-
+/* (rule 20080711.0522) */
+p.topTitleCrumbs { color:#0000f0; font-size:130%; margin-bottom:-0.7em; margin-top:0.2em; text-align:center; }
 
 /* header cascade */
 h1 { text-align:center; color:#0000f0; font-size:220%; }                       /* (rule 20080711°0511) */
@@ -75,22 +60,7 @@ h2 { text-align:center; color:#3000c0; font-size:180%; }                       /
 h3 { text-align:center; color:#600090; font-size:150%; }                       /* (rule 20080711°0513) */
 h4 { text-align:center; color:#900060; font-size:130%; }                       /* (rule 20080711°0514) */
 
-
-/* specific paragraphs */
-p.answer       { text-indent:1em; margin-top:0%; }                             /* (rule 20080711°0552) */
-p.question     { text-indent:1em; color:#00B000; margin-bottom:0%; }           /* (rule 20080711°0551) */
-
-p.attention    { font-family:monospace; font-weight:bold; color:darkred; font-size:127%; } /* (rule 20100826°2101) */
-p.typewrite    { font-family:monospace,monospace; font-size:1.00em; }          /* (rule 20100826°2102) ELIMINATE-THIS? */
-
-.timestamp     { color:Turquoise; font-size:55%; font-family:Comic Sans MS,Arial } /* (rule 20100826°2121) */
-.typewrite     { font-family:monospace; font-size:118%; }                      /* OBSOLET by workaround 20140128°1331 'Monospace size' */ /* Most browsers render <tt> pretty small, so add a little size (20120904°1621) todo : check exact browser particularities with <tt> */
-.todo          { color:red; font-size:0.77em; }                                /* (rule 20110924°1321) */
-
-p.phperror     { background-color:red; font-size:160%; font-weight:bold; padding:0.6em; } /* for php echo lines in Daftari debug mode (rule 20111002°1951) */
-
 p.imageCenter  { text-align:center; color:green; }                              /* (rule 20100826°2111) */
-
 
 /* footer paragraphs */
 p.goodbye      { font-family:Comic Sans MS,Arial; margin-bottom:1.5em; margin-top:1.5em; } /* (rule 20080710°2314) */
@@ -99,80 +69,25 @@ p.footer       { border-top:1px solid; color:#808080; font-size:0.77em; margin-b
 
 
 /* note : 'text-align:left' counteracts 'text-align:center' for IE in body (workaround 20090208°2301) */
-pre.codeNormal { font-family:monospace,monospace; font-size:1.00em; text-align:left; padding:0.5em; background:#fff0f0; } /* (rule 20090208°0512) - #ffe8ff; */
-pre.codeSmall  { font-family:monospace,monospace; font-size:0.85em; text-align:left; padding:0.5em; background:#fff0f0; } /* (rule 20090208°0513) - #ffe8ff; */
-/* pre.codeTiny   { font-family:monospace,monospace; font-size:0.70em; text-align:left; padding:0.5em; background:#fff0f0; } */ /* (rule 20090208°0514) - #ffe8ff; */
-/* pre.codemicro  { font-family:monospace,monospace; font-size:0.60em; text-align:left; padding:0.5em; background:#fff0f0; } */ /* (rule 20090208°0515) - #ffe8ff; */
+/* pre.codeNormal { font-family:monospace,monospace; font-size:1.00em; text-align:left; padding:0.5em; background:#fff0f0; } */ /* (rule 20090208°0512) - #ffe8ff; */
+/* pre.codeSmall  { font-family:monospace,monospace; font-size:0.85em; text-align:left; padding:0.5em; background:#fff0f0; } */ /* (rule 20090208°0513) - #ffe8ff; */
 
-
-/* note : Padding is not 0.1em but 0.9 em, otherwise e.g. an underline in the line above will be covered means invisible (20140209°0551) */
-.codeNormal { font-family:monospace,monospace; font-size:1.00em; padding:0.09em; background:#ffe8e8; } /* (rule 20140128°1331) (after http://code.stephenmorley.org/html-and-css/fixing-browsers-broken-monospace-font-handling 20140128°1332) */
-.codeSmall  { font-family:monospace,monospace; font-size:0.85em; padding:0.09em; background:#ffe8e8; } /* (rule 20140128°1332) */
-/* .codetiny   { font-family:monospace,monospace; font-size:0.70em; padding:0.09em; background:#ffe8e8; } */ /* (rule 20140128°1333) */
-/* .codemicro  { font-family:monospace,monospace; font-size:0.60em; padding:0.09em; background:#ffe8e8; } */ /* (rule 20140128°1334) */
-
-
-/* ********************************************************* */
-/* table appearances
-/* ********************************************************* */
-/* note : Make tables centered in Firefox and Opera with     */
-/*    "margin-left:auto; margin-right:auto;" (sequence 20110323°2141) */
-
-
-table.folien       { margin-left:auto; margin-right:auto; border:10px solid red; }     /* (rule 20110323°2151) */
-table.reposprofile { margin-left:1%; margin-right:auto; border-collapse:collapse; }    /* (rule 20110323°2152) */
-table.zenter       { margin-left:auto; margin-right:auto; border-collapse:collapse; }  /* (rule 20110323°2153) table for a block with links */
-table.zenter80p    { width:80%; margin-left:10%; margin-right:10%; border-collapse:collapse; border:0; } /* (rule 20110323°2154) two-column-table for a block with links, pretty similar to the chapters-table */
-
-
-table.summary { margin-left:1%; margin-right:auto; border-collapse:collapse; }    /* (rule 20140503°0351) e.g. /daftari/index.html */
-
-
-table.box      { border-collapse:collapse; width:80%; margin-bottom:0.6em; }            /* (rule 20100826°2141) */
-td.box         { border-width:1px; border-color:#a0a0a0; border-style:solid; }          /* (rule 20100826°2142) */
-caption.box    { border-width:1px; border-color:#a0a0a0; border-style:solid; }          /* (rule 20100826°2143) */
-
-
-tr { } /* text-align:left; */
-
+/* note : Padding is not 0.1em but 0.09em, otherwise e.g. an underline in the line above will be covered means invisible [note 20140209°0551] */
+.codeNormal { font-family:monospace,monospace; font-size:1.01em; padding:0.09em; background:MistyRose; } /* [rule 20140128°1331] */
+.codeSmall  { font-family:monospace,monospace; font-size:small; padding:0.09em; background:MistyRose; } /* [rule 20140128°1332] */
+.codeTiny  { font-family:monospace,monospace; font-size:x-small; padding:0.09em; background:MistyRose; }
 
 /*
- * For the Tigra Tree Menu, a class for 'td' seems not work. The table generator seems
- * not to transport any style. So just keep the plain td suitable for the Tigra Tree Menue!
+ * rule 20140217°0611
+ *  This replaces the obsolete 'tt' tag.
+ *  Remember workaround 20140128°1331 'Monospace size'
  */
-/* td             { text-align:left; vertical-align:top; border:1px solid lightgray; padding:0.2em; } */ /* (rule 20111227°0125) */
-td             { text-align:left; vertical-align:top; padding:0.2em; } /* (rule 20111227°0125) */
-td.treemenu    { text-align:left; vertical-align:top; border:0px; padding:0em; font-size:11px; font-family:Tahoma,Verdana; } /* counteract default borders (rule 20120826°1222) */
+.fontTypewrite {
+   font-family:monospace,monospace; font-size:1.1em; padding-left:0.3em; padding-right:0.3em;
+}
 
 
-/* becomes superfluous after we made the default td with a border (rule 20081109°2301) */
-td.normal      { vertical-align:top; border:1px solid gray; padding:0.4em; }
-
-
-td.folie       { text-align:center; border:0px; padding:0.4em; }                        /* (rule 20080711°0633) */
-td.linklogo    { padding:0.6em; vertical-align:top;            background:#e0ffff; border-bottom:-0.1em solid #fafafa; } /* (rule 20080711°0641) */
-td.linkurl     { padding:0.6em; vertical-align:top; width:40%; background:#e0ffff; border-bottom:0.4em solid #fafafa; } /* ELIMINATE THIS - have link tables only with three columns */ /* (rule 20080711°0642) */
-td.linkdescr   { padding:0.6em; vertical-align:top;            background:#e0ffff; border-bottom:-0.1em solid #fafafa; } /* (rule 20080711°0643) */
-td.linkstatus  { padding:0.6em; vertical-align:top;            background:#e0ffff; border-bottom:-0.1em solid #fafafa; } /* (rule 20080711°0644) */
-td.zenter      { text-align:center; vertical-align:top; border:1px solid gray; padding:0.4em; } /* (rule 20080711°0631) */
-td.zenternoborder { text-align:center; vertical-align:top; border:0px; padding:0.4em; padding-bottom:2em; } /* (rule 20080711°0632) */
-
-
-/*---------------------------------------------------------- */
-/* two or three columns table for listing subchapters, typically used at least on each frontpage */
-table.chapters { margin-left:5%; margin-right:5%; border:0;} /* (rule 20080711°0711) */
-td.chapter       { font-size:140%; font-weight:bold; text-align:right; width:40%; padding:0.7em; border:0; } /* (rule 20080711°0712) OBSOLET */
-td.chaptertitle { font-size:140%; font-weight:bold; text-align:right; width:40%; padding:0.7em; border:0; } /* (rule 20080711°0712) */
-td.chaptertext   { border:40px red; padding:0.7em; vertical-align:top; }                            /* (rule 20080711°0715) */
-td.chapterlogo   { border:40px transparent; text-align:center; vertical-align:top; padding-top:0.7em; }      /* (rule 20080711°0716) */
-/*---------------------------------------------------------- */
-
-
-
-/* ********************************************************* */
-/* Link appearances (part one)                               */
-/* ********************************************************* */
-
+/* ------------------- Link appearances -------------------- */
 
 /*  title : 'link-with-target-blank' (rule 20120725°1151)
  *  reference : http://www.peterkroener.de/links-mit-target_blank-gesondert-markieren (20120725°1141)
@@ -180,7 +95,7 @@ td.chapterlogo   { border:40px transparent; text-align:center; vertical-align:to
  */
 a[target^="_blank"] {
    padding-left:11px;
-   background-image:url(./img/20091221o152103.extern.png);
+   background-image:url(./../img/20091221o152103.extern.png);
    background-position:left center;
    background-repeat:no-repeat;
    color:darkviolet;                                           /* background-color:#ffffa0; */
@@ -190,219 +105,18 @@ a[target^="_blank"]:hover {                                    /* (rule 20120725
    background-color:yellow;                                    /* #ffd0a0 */
 }
 
-
-/* link with icon (rule 20100315°1943) */
+/* link with icon [rule 20100315°1943] */
 a.extern {
    padding-left:12px;
-   background-image:url(./img/20091221o152103.extern.png);
+   background-image:url(./../img/20091221o152103.extern.png);
    background-position:left center;
    background-repeat:no-repeat;
 }
 
-/* link without icon (rule 20100315°1944) */
+/* link without icon []rule 20100315°1944] */
 a.extern:hover {
    /* text-decoration:underline; */
    background-color:yellow; /* #ffd0d0; */
 }
 
-
-
-
-/* for 'a name' links to be shown on the right magin (rule 20140202°1553) */
-.pagemark {
-    /* background-color:green; */ /* debug */
-    border:0px;
-    float:right;
-    font-size:0.56em;
-    margin:0px;
-}
-
-
-/* for 'a name' links to be shown on the right magin (rule 20140202°1551) */
-/*
-p.pagemark {
-    border:0px;
-    float:right;
-    font-size:0.56em;
-    margin:0px;
-}
-*/
-
-/* purpose: For 'a name' links to be shown on e.g. inside a table cell (rule 20140202°1552) */
-/*
-a.pagemark2 {
-   border:0px;
-   color:gray;
-   float:right;
-   font-size:0.56em;
-   margin:0px;
-}
-*/
-
-
-
-/* ========================================================= */
-/* === Here split/merged two files (20140430°0721)     === */
-/* === Below less frequently used styles to be cleaned up === */
-/* ========================================================= */
-
-
-
-/* some predefined colors */
-body.apps              { background-color:#80ffb0; }                           /* (20111225°1531) */
-body.downtown          { background-color:#eaeaea; }                           /* (20111225°1532) */
-/* body.editpointstatic { background-color:#80ff80; } */ /* (shutdown 20140501°1051) */ /* todo : eliminate this (20120904°1021) */
-body.epslightsalmon    { background-color:#e8e8e8; }                           /* (20111225°1521) lightsalmon */
-body.epsinside         { background-color:#80ffb0; }                           /* (20111225°1522) */
-body.epsmediumpink     { background-color:#f8c8e8; }                           /* (20111225°1523) mediumpink */
-body.lightgreen        { background-color:#c0ffc0; }                           /* (20110424°0112) */
-body.lightergreen      { background-color:#d8ffd8; }                           /* (20120814°1551) DemoJS */
-/* body.turquoise      { background-color:#a4e4ec; } */ /* (shutdown 20140501°1052) */ /* (20111225°1524) */
-body.turkwoise         { background-color:#a4e4ec; }                           /* (20111225°1524) */
-body.wafaili           { background-color:#80ff80; }                           /* (20111225°1533) */
-body.daftarix          { background-color:turquoise; }  /* #40e0d0 */          /* (20140501°1051) */
-body.lavendero         { background-color:lavender; }                         /* (rule 20140502°1911) */
-
-/* --------------------------------------------- */
-
-
-p.onthispage   { text-align:center; color:#0000f0; border: solid lightgray 2px; } /* (rule 20100923°1101) */
-a.onthispage { color:blue; } /* (rule 20100923°1102) */
-
-
-/* alternative for normal h1 header lines (rule 20101104°1611) */
-p.headerbar { border-bottom:0px; border-top:0px; margin-top:0em; margin-bottom:0em; padding-top:.9em; padding-bottom:0.9em; background-color:#a4e4ec; text-align:center; font-size:180%; font-weight:bold; color:blue; }
-div.headerbar { border-bottom:0px; border-top:0px; margin-top:0em; margin-bottom:0em; padding-top:0.0em; padding-bottom:0.0em; background-color:#c4f8fc; text-align:center; } /* rule 20140712°2011 */
-
-
-/* some predefined panels */
-/* note : IE doesn't understand max-width, so as a compromise we give it a width (after workaround 20100822°1323) */
-div.chapter     { margin:0 auto; max-width:780px; width:80%; background-color:#f8f8f8; padding:0.9em; margin-top:0.9em; margin-bottom:1.1em; } /* (rule 20100822°1331) */
-div.chapterapps { margin:0 auto; max-width:780px; width:80%; background-color:#f8f8f8; padding:0.9em; margin-top:1em; margin-bottom:3em; } /* (rule 20100822°1332) */
-div.chapterlog  { margin:0 auto; max-width:780px; width:80%; padding:1em; margin-top:1em; border:1px solid; } /* (rule 20100822°1334) */
-div.chaptervv   { margin:0 auto; max-width:780px; width:80%; background-color:#f8f8f8; padding:0.9em; margin-top:1em; margin-bottom:3em; } /* (rule 20100822°1333) */
-
-
-/* ********************************************************* */
-/* flowtext paragraphs                                      */
-/* ********************************************************* */
-
-/* (shutdown 20140217o0621° */
-/* p.epslink      { text-align:right; margin-top:0.1em; margin-bottom:0.1em; } */
-
-p.pictureself  { text-align:center; text-indent:1em; color:darkgreen; margin-bottom:0%; } /* (rule 20080711°0541) */
-p.picturesub   { text-align:center; text-indent:1em; margin-top:0%; }                  /* (rule 20080711°0542) */
-
-
-p.typewrite-attention  { font-family:monospace; font-weight:bold; color:darkred }      /* ELIMINATE-THIS (rule 20080711°0611) */
-p.typewriteattention   { font-size:180%; text-align:center; font-family:monospace; font-weight:bold; color:darkred } /* ELIMINATE-THIS */
-p.ttyattention         { font-size:130%; font-family:monospace; font-weight:bold; color:crimson } /* (rule 20120810°1401) */
-p.typewrite-thin-black { font-family:monospace; }                                      /* (rule 20080711°0612) license, editors notes */
-p.typewrite-thin-gray  { font-family:monospace; font-style:italic; color:darkgrey }    /* (rule 20080711°0613) editors notes */
-p.typewrite-logentry   { color:gray ; font-size:80%; }                                 /* (rule 20080711°0614) behind bye, green like in the faq */
-p.typewrite-comment    { color:green ; font-size:84%; }                                /* (rule 20080711°0615) behind bye, green like in the faq */
-p.typewrite-comment-header { color:green ; font-size:84%; margin-top:3em;; border-top:1px none ;} /*(rule 20080711°0616)  behind bye, green like in the faq */
-p.typewrite-comment-body { color:green ; font-size:84%; }                              /* (rule 20080711°0617) same as comment */
-
-p.image        { text-align:center; color:blue; }                                      /* ELIMINATE in favour of 'imageCenter' (rule 20100826°211102) */
-p.session      { text-align:right; font-size:80%; font-style:italic;  color:#808080; } /* (rule 20100826°2112) */
-p.notez        { font-size:80%; color:darkgreen; }                                     /* (rule 20111228°1131) */
-
-p.textfileobject { background-color:#fefefe; margin-left:6%; margin-right:6%;  width:100%; }  /* (rule 20080711°0621) only for active-x textfile include */
-
-
-/* ********************************************************* */
-/* ubiquitous formats (spans and characters)
-/* ********************************************************* */
-
-/* spans inside paragraphs */
-.linksmaller   { font-size:85%; } /* in flowtext, long links are too long, make them more unobtrusive (rule 20110902°1841) */
-.qnaquestion   { color:#006000; margin-bottom:0%; font-weight:bold; }           /* (rule 20100826°2122) */
-.qnaanswer     { text-indent:1em; color:#004040; margin-top:0%; }               /* (rule 20100826°2123) */
-
-
-/* ********************************************************* */
-/* Character appearances in flowtext, to be used as span class */
-/* ********************************************************* */
-
-.inlaytimestamp { color:green ; font-size:75%; font-style:italic; }            /* ELIMIINATE (rule 20081026°0821) */
-.tt-attention   { font-family:monospace; font-weight:bold; color:darkred }     /* (rule 20081031°1801) */
-
-
-/* Span class for filenames. Used as replacement for plain '<tt>' which is complained obsolet */
-/* by tidy.exe. Has applied workaround 20140128°1331 'Monospace size' -- (rule 20140217°0611) */
-.filename {
-   font-family:monospace,monospace; font-size:1.0em; padding-left:0.3em; padding-right:0.3em;
-}
-
-
-/* ********************************************************* */
-/* Link appearances (part two)                               */
-/* ********************************************************* */
-
-a                                                              { /* (rule 20100315°1941) from 20091221°152102 */
-    /* color:black; */
-    /* background-color:transparent; */
-    /* text-decoration:none; */
-    /* font-weight:bold; */
- }
-
-a:hover {                                                      /* style general (rule 20100315°1942) */
-       /* text-decoration:underline; */
-       /* font-weight:bold; */
-       /* background-color:yellow; */
-       /* color:black; */
-}
-
-a.noborder img {                                               /* (rule 20111012°1221) in demos.html */
-    /* text-decoration:none; */
-    /* border:0px solid red; */
-    border:none;
-}
-
-
-a.extern2 {                                                    /* without icon (rule 20111011°1821) */
-}
-
-a.extern2:hover {
-   background-color:#ffd0d0;
-}
-
-
-a.intern {                                                     /* (rule 20100315°1945) */
-}
-
-a.intern:hover { /* (rule 20100325°1741) */
-   background-color:lightgreen;
-}
-
-
-a.crumbpassive { /* (rule 20100828°1422) */
-   color:#c8c8c8;
-}
-
-a.crumbuncle { /* (rule 20100828°1423) */
-   color:#c0c0c0;
-}
-
-
-/* ********************************************************* */
-/* Miscellaneous (e.g. horizontal row appearances)           */
-/* ********************************************************* */
-
-
-/* (rule 20121111°1911) for the Daftari Help Page */
-hr.fatturquoise {
-   color:#b0f8f0; border:0.2em solid; margin-top:0.7em; margin-bottom:0.9em;
-}
-
-
-/* sequence eliminated 20140503°0341 */
-/* the remainders from the 'chapters' table, not generic enough for stlyes.css (20140303°0611) */
-/* the chapter column width is not fixed but narrow to have room for additional columns, e.g. in index2.html */
-/* td.chapternarrow { font-size:140%; font-weight:bold; text-align:right; padding:0.7em; border:0; vertical-align:top; } */ /* (rule 20080711°0713) */
-/* td.chapterlevel1 { font-size:140%; font-weight:bold; text-align:right; width:40%; padding:0.7em; border:0; } */ /* ELIMINATE (20100910°010101) */
-/* td.chapterlevel2 { font-size:120%; font-weight:bold; text-align:right; width:40%; padding:0.7em; border:0; } */ /* ELIMINATE (20100910°010102) */
-/* td.chapterlevel3 { font-size:120%; font-weight:bold; text-align:right; width:40%; padding:0.7em; border:0;} */  /* ELIMINATE (20100910°010103) */
-/* td.chapterlevel4 { font-size:110%; font-weight:bold; text-align:right; width:40%; padding:0.7em; border:0;} */  /* ELIMINATE (20100910°010104) */
-/* td.chaptxt       { border:40px transparent; padding:0.7em;} */                                                  /* ELIMINATE (20100910°010105) */
+/* eof */

@@ -3,6 +3,16 @@
    Room for any notes
    ******************
 
+   howto 20190331°0541 'about linebreaks in canvas'
+   matter : The canvas method fillText does not support linebreaks.
+      You have to do it on your own. There exist several solutions.
+   see : ref 20190331°0547 'June Rockwell → .. line break in HTML5 Canvas'
+   see : ref 20190331°0545 'bramstein → typeset'
+   see : ref 20190331°0544 'Liza Shulyayeva → fillText line break limitation'
+   see : ref 20190331°0543 'html5canvastutorials → canvas-wrap-text-tutorial'
+   see : ref 20190331°0542 'stackoverflow → fillText won't do line breaks
+   ܀
+
    feature 20190331°0411 'riders also in subfolder'
    matter : For the rider scripts, which are to be located parallel to
       canvasgear.js, I want an alternative place, the subfolder 'riders'

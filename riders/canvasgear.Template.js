@@ -1,19 +1,17 @@
-﻿/*!
- * This script provides the CanvasGear Template algorithm [file 20190329°0611]
+﻿/*! - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * This script provides a CanvasGear algorithm [file 20190329°0611]
  *
- * version : 0.2.0.e — 20190331°0421
+ * version : 0.2.0.g — 20190331°0631
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */
-// encoding : UTF-8-with-BOM
 
-'use strict'; // [line 20190329°0844]
+'use strict'; // [line 20190329°0844`02]
 
- // Formal integration [seq 20190329°0621] (after 20180618°0622/20180619°0111)
-var Cvgr = Cvgr || {};
-Cvgr.Algos = Cvgr.Algos || {};
+// Formal integration into main script [seq 20190329°0621`02]
+var Cvgr = Cvgr || {}; // (after parent 20180618°0621)
+Cvgr.Algos = Cvgr.Algos || {}; // (after parent 20180619°0111)
 
-//------✂------------------------------------------------------
 /**
  * This namespace holds the Template algorithm, or any renamed one
  *
@@ -79,6 +77,17 @@ Cvgr.Algos.Template.executeAlgorithm = function(iko)
    iko.Context.lineWidth = 6;
    iko.Context.stroke();
 
+
+   // add text [seq 20190331°0531] (after parent 20190331°0521 'write text')
+   // See howto 20190331°0541 'about linebreaks in canvas'
+   var sText = "Template extern";
+   if (iko.CmdsHash['text']) {
+      sText = iko.CmdsHash['text'];                    // e.g. "Hello.."
+   }
+   iko.Context.fillStyle = 'MediumVioletRed'; // "#102030";
+   iko.Context.font = "0.9em Arial";                   // e.g. "20px Times Roman", "1.2em Arial"
+   iko.Context.fillText(sText, 3, 21);                // text, start pos x, start pos y
+
    // progress [seq 20190329°0447]
    //  Remember todo 20190329°0833 'centralize progression'
    iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
@@ -86,5 +95,5 @@ Cvgr.Algos.Template.executeAlgorithm = function(iko)
       iko.Angle = iko.Angle - Math.PI * 2;
    }
 };
-//------✂------------------------------------------------------
+﻿/* - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 /* eof */

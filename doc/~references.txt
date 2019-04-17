@@ -3,6 +3,67 @@
    References
    **********
 
+   ref 2019xxxx°xxxx ''
+   objtype : ref.
+   url :
+   title :
+   author :
+   releasedate :
+   usage :
+   chain :
+   ܀
+
+   ref 20190331°0547 'June Rockwell → .. line break in HTML5 Canvas'
+   objtype : ref.
+   url : http://junerockwell.com/end-of-line-or-line-break-in-html5-canvas/
+   title : End of line or line break in HTML5 Canvas?
+   author : June Rockwell
+   releasedate : 2015-Dec-9
+   usage : howto 20190331°0541 'about linebreaks in canvas'
+   chain :
+   ܀
+
+   ref 20190331°0545 'bramstein → typeset'
+   objtype : ref.
+   url : https://github.com/bramstein/typeset
+   title : bramstein → typeset
+   summary : TeX line breaking algorithm in JavaScript
+   author : Bram Stein
+   releasedate : 2017-Sep-7
+   usage : howto 20190331°0541 'about linebreaks in canvas'
+   chain :
+   ܀
+
+   ref 20190331°0544 'Liza Shulyayeva → fillText line break limitation'
+   objtype : ref.
+   url : http://liza.io/getting-around-the-html5-canvas-filltext-line-break-limitation/
+   title : Getting around the HTML5 canvas ctx.fillText line break limitation
+   author : Liza Shulyayeva
+   releasedate : <2012-Jul-27
+   usage : howto 20190331°0541 'about linebreaks in canvas'
+   chain :
+   ܀
+
+   ref 20190331°0543 'html5canvastutorials → canvas-wrap-text-tutorial'
+   objtype : ref.
+   url : https://www.html5canvastutorials.com/tutorials/html5-canvas-wrap-text-tutorial/
+   title : (Error Rendering Page)
+   author :
+   releasedate :
+   usage : howto 20190331°0541 'about linebreaks in canvas'
+   chain :
+   ܀
+
+   ref 20190331°0542 'stackoverflow → fillText won't do line breaks'
+   objtype : ref.thread
+   url : https://stackoverflow.com/questions/5026961/html5-canvas-ctx-filltext-wont-do-line-breaks/21574562
+   title : HTML5 canvas ctx.fillText won't do line breaks?
+   releasedate :
+   note : Different versions of the wrapText function
+   usage : howto 20190331°0541 'about linebreaks in canvas'
+   chain :
+   ܀
+
    ref 20190329°0542 'w3c: centering things'
    objtype : ref.article
    url : https://www.w3.org/Style/Examples/007/center.en.html

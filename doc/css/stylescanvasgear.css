@@ -1,14 +1,11 @@
-﻿/**
- * file : stylescanvasgear.css
- * id : 20140926°1141
- * summary : This file provides the styles wanted by CanvasGear programmatically.
+﻿/*!
+ * summary : This are the styles wanted by CanvasGear programmatically
  * license : MIT/X11 License
- * copyright : Norbert C. Maier (http://www.trilo.de)
- * authors :
+ * copyright : Norbert C. Maier https://github.com/normai/canvasgear/
+ * authors ;
+ * id : 20140926°1141
  * encoding : UTF-8-with-BOM
- * note :
  */
-
 
 /* rule 20180513°1631 (after 20140502°1911 BodyFaceLavender) */
 body.BodyFaceCanvasGear { background-color:Lavender; } /* #e6e6fa */
@@ -45,10 +42,12 @@ canvas { }
  */
 hr.horizon { clear:left; border-bottom:0.2em solid #e0e0e0; border-top:1.2em solid transparent; }
 
-
 /* rule 20140902°0411 (20121111°1911) */
 hr.fatlavender {
    border:0.2em solid Lavender; margin-top:2.2em; margin-bottom:0.9em;
 }
 
+/* ruleset 20190331°0511 */
+.CvgrCode { color: LightSlateGray; }
+.CvgrCode b { color: DarkRed; }
 /* eof */

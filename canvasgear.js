@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.0.e — 20190331°0421
+ * version : 0.2.0.g — 20190331°0631
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -20,14 +20,15 @@
 /**
  * This namespace constitutes the CanvasGear root namespace
  *
- * @id 20180618°0621
+ * See sequences 20190329°0621`
+ * @id 20180618°0621 (this is parent)
  */
 var Cvgr = {};
 
 /**
  * This namespace holds the individual and possibly external algorithm namespaces
  *
- * @id 20180619°0111`02
+ * @id 20180619°0111 (this is parent)
  */
 Cvgr.Algos = Cvgr.Algos || {};
 
@@ -44,14 +45,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.0.e'
+    versionnumber : '0.2.0.g'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190331°0421'
+   , versiontimestamp : '20190331°0631'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -170,7 +171,7 @@ Cvgr.Objs.Ikon = function()
    this.Ide = null;                                    // string - canvas ID, read from HTML [prop 20140926°0311]
    this.ShiftX = 0;                                    // int - horizontal offset (in pixel) [prop 20140916°0518]
    this.ShiftY = 0;                                    // int - vertical offset (in pixel) [prop 20140916°0522]
-   this.SizeFactor = null;                             // number - enlarge/reduce relative to automatic size [prop 20190328°0831]
+   this.SizeFactor = 1;                                // number - enlarge/reduce relative to automatic size [prop 20190328°0831]
    // this.Speed = null;                               // number - might complement Hertz [prop 20140916°0523]
 
    // constant properties, set from the canvas HTML attributes
@@ -186,8 +187,6 @@ Cvgr.Objs.Ikon = function()
    this.Context = null;                                // object - attached to canvas [prop 20140916°0533]
    this.DrawOnlyOnce = false;                          // object - flag [prop 20140916°1021]
    this.iDrawCount = 0;                                // integer how often the icon is drawn completely [prop 20140916°0534]
-
-   this.SizeFactor = 1;                                // [prop 20190330°0321]
 
    this.bIsDefaultSettingDone = false;                 // [prop 20190330°0353] important moment, now the icon is available
 };
@@ -374,11 +373,13 @@ Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 1 
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 1 ); } ) 
                                    , ( function() { Cvgr.Func.pullbehind_onError( 1 ); } )
                                     ]);
+
 Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 2 ); } )
                                  , ( function() { Cvgr.Func.pullbehind_onError( 2 ); } )
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 2 ); } ) 
                                    , ( function() { Cvgr.Func.pullbehind_onError( 2 ); } )
                                     ]);
+/*
 Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 3 ); } )
                                  , ( function() { Cvgr.Func.pullbehind_onError( 3 ); } )
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 3 ); } ) 
@@ -414,6 +415,7 @@ Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 9 
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 9 ); } ) 
                                    , ( function() { Cvgr.Func.pullbehind_onError( 9 ); } )
                                     ]);
+*/
 
 /**
  * This array stores error flags associated with the pullback attempts
@@ -490,6 +492,7 @@ Cvgr.Func.examineAlgo = function(iMyNdx, iko)
       var aIcos = Cvgr.Vars.aPiggyIconArrays[iMyNdx];
       for (var i = 0; i < aIcos.length; i++) {
          Cvgr.Vars.aPiggyIconArrays[iMyNdx][i].AlgoName = 'pulse';
+         Cvgr.Vars.aPiggyIconArrays[iMyNdx][i].CmdsHash['text'] = ('Rpx ' + i);
       }
    }
 
@@ -660,30 +663,51 @@ Cvgr.Func.executeFrame = function()
       {
 
          // (2.1) immediate call [seq 20190329°0413]
+         //
          if ( ! iko.bIsDefaultSettingDone ) {
+            // initialize icon
             Cvgr.Func.settleAlgoProperties(iko);
          }
          try {
+            // execute icon
             Cvgr.Algos[sAlgo].executeAlgorithm(iko);
          } catch(err) {
             // it is e.g. the non-existent 'Oha' algorithm, note yet
             //  exchanged to the default algo. Just skip this.
+            Cvgr.Vars.sDebugPageHelper += '<br />↯ executeAlgorithm failed:'
+                            + 'Ide = ' + iko.Ide + ' algo = ' + sAlgo
+                             + ' (should never happen'
+                              ;
          }
       }
       else
       {
-         // was this algo already processed? [seq 20190330°0343]
+         // the wanted algorithm is *not* present in canvasgear.js itself
+
+         // (2.2) try loading algo
+         // (2.2.1) was this algo already processed? [seq 20190330°0343]
          var iNdxPiggy = Cvgr.Vars.aPiggyAlgoNames.indexOf(sAlgo);
          if ( iNdxPiggy >= 0 ) {
             // pull-behind requests are only done in the first round [condition 20190330°0431]
             if (Cvgr.Vars.iFrameNo < 2 ) {
                Cvgr.Vars.aPiggyIconArrays[iNdxPiggy].push(iko);
- //Cvgr.Vars.aPiggyIconArrays[iNdxPiggy].push(iko);
             }
             continue;
          }
 
-         // (2.2) load buddy module [seq 20190329°0415]
+
+         // () paranoia — prefabricated callback on stock? [seq 20190331°0611]
+         if (Cvgr.Vars.aPiggyAlgoNames.length > (Cvgr.Vars.aPiggyCallbacks.length - 1)) {
+            // No more prefabricated callback, immediately assign substitution algorithm
+            Cvgr.Vars.sDebugPageHelper += '<br />*** Prefabricated callbacks finished : ' + Cvgr.Vars.aPiggyAlgoNames.length;
+
+            iko.AlgoName = 'pulse';
+            iko.CmdsHash['text'] = ('Substitute');
+            continue;
+         }
+
+
+         // (2.2.2) load buddy module [seq 20190329°0415]
          var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/canvasgear/"
          var sModuleNameOne = sPathAbs + 'canvasgear.' + sAlgo + '.js';
          var sModuleNameTwo = sPathAbs + 'riders/canvasgear.' + sAlgo + '.js';
@@ -716,18 +740,19 @@ Cvgr.Func.executeFrame = function()
                                         , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][0]
                                          , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][1]
                                           );
-if (true) {
-         // experiment [line 20190331°0413]
-         // Try introduce feature 20190331°0411 'riders also in subfolder'
-         // Crazy — It looks like this single line does the job. I cannot believe it yet.
-         Trekta.Utils.pullScriptBehind ( sModuleNameTwo
-                                        , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][3]
-                                         , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][4]
-                                          );
-}
 
-      }
-   }
+         if (true) {
+            // experiment [line 20190331°0413]
+            // Try introduce feature 20190331°0411 'riders also in subfolder'
+            // Crazy — It looks like this single line does the job. I cannot believe it yet.
+            Trekta.Utils.pullScriptBehind ( sModuleNameTwo
+                                           , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][3]
+                                            , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][4]
+                                             );
+         }
+
+      } // immediate-versus-load condition finished
+   } // icon processing finished
 
    // setup for animation [line 20140815°1258]
    window.requestAnimFrame(Cvgr.Func.executeFrame);
@@ -761,6 +786,7 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
       var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
       for (var i = 0; i < aIcos.length; i++) {
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].AlgoName = 'pulse';
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Rp ' + i);
       }
    }
 
@@ -843,24 +869,22 @@ Cvgr.Func.settleAlgoProperties = function(iko)
       , color3 : 'Color3'
       , height : 'Height'
       , hertz : 'Hertz'
+      , shiftx : 'ShiftX'
+      , shifty : 'ShiftY'
       , width : 'Width'
    };
 
-   // get any default properties [line 20190330°0242]
+   // get possible default properties [line 20190330°0242]
    // About JavaScript syntax — Curiously, here it causes no error, if the
    //  algorithm namespace has no defaultProperties defined, not even in IE9.
-   try { //  issue 20190330°0355 'callback parameter useless'
-      var oDefaults = Cvgr.Algos[iko.AlgoName].defaultProperties;
-   } catch (err) {
-      return;
-   }
+   var oDefaults = Cvgr.Algos[iko.AlgoName].defaultProperties;
 
-   // apply default value to Ikon object [line 20190330°0243]
+   // first apply default values to Ikon object [line 20190330°0243]
    for (var sKey in oDefaults) {
       iko[sKey] = oDefaults[sKey];
    }
 
-   // overwrite with commandline values [seq 20190330°0244]
+   // then overwrite with commandline values [seq 20190330°0244]
    for ( var sKeySrc in iko.CmdsHash) {
 
       // do not restore the algo name [seq 20190331°0321]
@@ -868,6 +892,10 @@ Cvgr.Func.settleAlgoProperties = function(iko)
       if (sKeySrc === 'algo') {
          continue;
       }
+
+      ///if (sKeySrc === 'shifty') {
+      ///   sKeySrc = 'shifty'; // debug
+      ///}
 
       // translate [seq 20190330°0245]
       var sKeyTgt = sKeySrc;
@@ -914,32 +942,19 @@ Cvgr.Func.setRadiobutton = function()
    return;
 };
 
-//======✂======================================================
-﻿/* !
+﻿/*! - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
  * This module provides algorithm 'Ballist'
  *
+ * id 20140916°0411 namespace
  * version : 0.x.x — 20190330°0757..
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
- */
-/**
- * @id 20140916°0411 namespace
- * @authors ncm
- * @encoding UTF-8-with-BOM
+ * authors : ncm
+ * encoding : UTF-8-with-BOM
  */
 
-/**
- * This namespace constitutes the CanvasGear namespace
- *
- * @id 20180618°0622
- */
+// Formal integration into main script [seq 20190329°0621`xx]
 var Cvgr = Cvgr || {};
-
-/**
- * This namespace holds algorithms
- *
- * @id 20180619°0111
- */
 Cvgr.Algos = Cvgr.Algos || {};
 
 /**
@@ -958,7 +973,7 @@ Cvgr.Algos.Ballist = {
     * @param sColorRing {}
     * @param sColorSpace {}
     */
-   Ring : function(sRingName, nRadiusAbs, sColorRing, sColorSpace ) {
+   Ring : function(sRingName, nRadiusAbs, sColorRing, sColorSpace ) { // Cvgr.Algos.Ring
 
       'use strict'; // [line 20190329°0843`12]
 
@@ -990,7 +1005,7 @@ Cvgr.Algos.Ballist = {
     * @id 20140916°0911
     * @param nRadius {} The target's radius in m, usually goes with lowest ring.
     */
-   , Target : function() {
+   , Target : function() { // Cvgr.Algos.Target
 
       'use strict'; // [line 20190329°0843`13]
 
@@ -1007,7 +1022,7 @@ Cvgr.Algos.Ballist = {
     * @param nRingval {}
     * @param nMinutes {}
     */
-   , Hit : function(nRingval, nMinutes) {
+   , Hit : function(nRingval, nMinutes) { // Cvgr.Algos.Hit
 
       'use strict'; // [line 20190329°0843`14]
 
@@ -1045,7 +1060,7 @@ Cvgr.Algos.Ballist = {
     * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
     */
-   , executeAlgorithm : function(iko)
+   , executeAlgorithm : function(iko) // Cvgr.Algos.executeAlgorithm
    {
       'use strict'; // [line 20190329°0843`15]
 
@@ -1061,10 +1076,6 @@ Cvgr.Algos.Ballist = {
 
       // preparatory calculations [line 20140916°0825]
       //var iSize = ((+iko.Width) + (+iko.Height)) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
-
-      // calculate angle
-      //var nCurrAngle = iko.Angle;
-      //nCurrAngle = Math.sin (iko.Angle) * (iSize - 4) / 2 + iSize / 2;
 
       // retrieve target [seq 20140916°0433]
       var tgt = Cvgr.Algos.Ballist.executeAlgo_getTarget();
@@ -1162,7 +1173,7 @@ Cvgr.Algos.Ballist = {
     * @callers Only • func 20140916°0421 executeAlgorithm
     * @param {object} iko ...
     */
-   , executeAlgo_drawDiagonal : function(iko)
+   , executeAlgo_drawDiagonal : function(iko) // Cvgr.Algos.executeAlgo_drawDiagonal
    {
       'use strict'; // [line 20190329°0843`16]
 
@@ -1215,8 +1226,9 @@ Cvgr.Algos.Ballist = {
       status : open
       */
 
-      // add ruler part two [seq 20140926°1216]
-      // note : Remember issue 20140926°1321 'IE8 fails with Context.fillText'
+      // add ruler part two [seq 20140926°1216 parent]
+      // note : Remember issue 20140926°1321 'IE8 fails with Context.fillText' finished
+      // Compare seq 20190331°0521 'write text'
       if (iko.CmdsHash['text']) {
          iko.Context.fillStyle = "#102030";
          iko.Context.font = "1.2em Arial";                     // e.g. "20px Times Roman", "1.2em Arial"
@@ -1231,9 +1243,8 @@ Cvgr.Algos.Ballist = {
     * @callers Only Cvgr.Algos.Ballist.executeAlgorithm
     * @param sSeries {} ..
     */
-   , executeAlgo_getSeries : function(sSeries)
+   , executeAlgo_getSeries : function(sSeries) // Cvgr.Algos.executeAlgo_getSeries
    {
-
       'use strict'; // [line 20190329°0843`17]
 
       var hits = new Array();
@@ -1287,7 +1298,7 @@ Cvgr.Algos.Ballist = {
     * @note The details are still be to adjusted.
     * @param sTargetName {string} ..
     */
-   , executeAlgo_getTarget : function(sTargetName)
+   , executeAlgo_getTarget : function(sTargetName) // Cvgr.Algos.executeAlgo_getTarget
    {
       'use strict'; // [line 20190329°0843`18]
 
@@ -1368,10 +1379,24 @@ Cvgr.Algos.Ballist = {
       return target;
    }
 };
-//======✂======================================================
+//- - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-//------✂------------------------------------------------------
+﻿/*! ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+ * This module provides the internal Template algorithm
+ *
+ * id : module 20190329°0611
+ * version : 0.x.x — 20190330°0757..
+ * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
+ * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
+ * authors : ncm
+ * encoding : UTF-8-with-BOM
+ */
+
+// Formal integration into main script [seq 20190329°0621`xx]
+var Cvgr = Cvgr || {};
+Cvgr.Algos = Cvgr.Algos || {};
+
 /**
  * This namespace holds the Template algorithm, or any renamed one
  *
@@ -1437,6 +1462,16 @@ Cvgr.Algos.Template.executeAlgorithm = function(iko)
    iko.Context.lineWidth = 6;
    iko.Context.stroke();
 
+   // add text [parent seq 20190331°0521 'write text']
+   // See howto 20190331°0541 'about linebreaks in canvas'
+   var sText = "Template intern";
+   if (iko.CmdsHash['text']) {
+      sText = iko.CmdsHash['text'];                    // e.g. "Hello.."
+   }
+   iko.Context.fillStyle = 'MediumVioletRed'; // "#102030";
+   iko.Context.font = "0.9em Arial";                   // e.g. "20px Times Roman", "1.2em Arial"
+   iko.Context.fillText(sText, 3, 21);
+
    // progress [seq 20190329°0447]
    //  Remember todo 20190329°0833 'centralize progression'
    iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
@@ -1444,14 +1479,28 @@ Cvgr.Algos.Template.executeAlgorithm = function(iko)
       iko.Angle = iko.Angle - Math.PI * 2;
    }
 };
-//------✂------------------------------------------------------
+// ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
 
 
-//~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*! ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+ * This module provides the develop algorithm
+ *
+ * id : module 20190329°0711
+ * version :
+ * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
+ * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
+ * authors : ncm
+ * encoding : UTF-8-with-BOM
+ */
+
+// Formal integration into main script [seq 20190329°0621`xx]
+var Cvgr = Cvgr || {};
+Cvgr.Algos = Cvgr.Algos || {};
+
 /**
  * This namespace holds the 'develop' algorithm
  *
- * @id 20190329°0711
+ * @id 20190329°0712
  */
 Cvgr.Algos.develop = {
 
@@ -1517,14 +1566,28 @@ Cvgr.Algos.develop = {
       //, DrawOnlyOnce : true // it is static, not animated
    }
 };
-//~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
 
-//++++++✂++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*! + + + ✂ + + + + + + + + + + + + + + + + + + + + + + + + + +
+ * This module provides the oblongrose algorithm
+ *
+ * id : module 20190329°0721
+ * version :
+ * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
+ * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
+ * authors : ncm
+ * encoding : UTF-8-with-BOM
+ */
+
+// Formal integration of cut-out into main script [seq 20190329°0621`xx]
+var Cvgr = Cvgr || {};
+Cvgr.Algos = Cvgr.Algos || {};
+
 /**
  * This namespace holds the 'oblongrose' algorithm
  *
- * @id 20190329°0711
+ * @id 20190329°0722
  */
 Cvgr.Algos.oblongrose = {
 
@@ -1568,7 +1631,7 @@ Cvgr.Algos.oblongrose = {
       }
    }
 };
-//++++++✂++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// + + + ✂ + + + + + + + + + + + + + + + + + + + + + + + + + +
 
 
 /**
@@ -1590,33 +1653,33 @@ Cvgr.Algos.pulse = {
     * @param {Array} icos — Array of icon objects, Cvgr.Vars.icos[iNdx] at the caller
     * @param {Integer} iNdx — The index into the array
     */
-   executeAlgorithm : function(iko)
+   executeAlgorithm : function(iko) // Cvgr.Algos.pulse.executeAlgorithm
    {
       'use strict'; // [line 20190329°0843`24]
+
+      // (.) calculate size [seq 20140829°0514]
+      var nRadiFull = (iko.Width + iko.Height) / 2;
+      nRadiFull = nRadiFull / 2;
+      nRadiFull = nRadiFull * iko.SizeFactor;
+
+      // (.) calculate position [seq 20140829°0516]
+      var nPosX = (iko.Width / 2) + parseInt(iko.ShiftX, 9);
+      var nPosY = (iko.Height / 2) + parseInt(iko.ShiftY, 9);
+
+      // (.) calculate current radius [seq 20140829°0515]
+      var nRadiCurr = 0;
+      nRadiCurr = nRadiFull * Math.abs(Math.cos(iko.Angle));
 
       // (.) prepare canvas [seq 20140829°0513]
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
       iko.Context.fillStyle = "#f0f0f0";
       iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
-      // (.) calculate size [seq 20140829°0514]
-      var iRadius = (iko.Width > iko.Height) ? iko.Width : iko.Height;
-      iRadius *= iko.SizeFactor; // [line 20190328°0835]
-      iRadius = iRadius / 2;
-
-      // (.) calculate current radius [seq 20140829°0515]
-      var radius = 0;
-      radius = iRadius * Math.abs(Math.cos(iko.Angle));
-
-      // (.) calculate position [seq 20140829°0516]
-      var iRadiX = iRadius + parseInt(iko.ShiftX, 10);
-      var iRadiY = iRadius + parseInt(iko.ShiftY, 10);
-
       // (.) draw [seq 20140829°0517]
-      iko.Context.beginPath();                            // circle
-      iko.Context.arc ( iRadiX                            // x coordinate, e.g. 90
-                       , iRadiY                           // y coordinate, e.g. 90
-                        , radius                          // radius, e.g. 90
+      iko.Context.beginPath();
+      iko.Context.arc ( nPosX                             // center point x
+                       , nPosY                            // center point y
+                        , nRadiCurr                       // radius
                          , 0                              // starting point angle in radians, starting east
                           , Math.PI * 2                   // endpoint angle in radians
                            , false                        // clockwise
@@ -1626,6 +1689,14 @@ Cvgr.Algos.pulse = {
       iko.Context.closePath();
       iko.Context.fillStyle = iko.Color;
       iko.Context.fill();
+
+      // possibly add text [seq 20190331°0551] (after parent 20190331°0521 'write text')
+      if ( iko.CmdsHash['text'] ) {
+         var sText = iko.CmdsHash['text'];
+         iko.Context.fillStyle = 'MediumVioletRed';
+         iko.Context.font = "0.9em Arial";                   // e.g. "20px Times Roman", "1.2em Arial"
+         iko.Context.fillText(sText, 3, 21);                // text, start pos x, start pos y
+      }
 
       // (.) seq 20140829°0519 'calculate progression'
       //  Note todo 20190329°0833 'centralize progression'
@@ -1653,7 +1724,7 @@ Cvgr.Algos.triangle = {
     * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param iNdx {Integer} The index into the icon objects array
     */
-   executeAlgorithm : function(iko)
+   executeAlgorithm : function(iko) // Cvgr.Algos.triangle.executeAlgorithm
    {
       'use strict'; // [line 20190329°0843`25]
 
@@ -1755,7 +1826,7 @@ Cvgr.Algos.triangulum = {
     * @param icos This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param iNdx The index into the icos array.
     */
-   executeAlgorithm : function(iko) /// function(icos, iNdx)
+   executeAlgorithm : function(iko) // Cvgr.Algos.triangulum.executeAlgorithm
    {
       'use strict'; // [line 20190329°0843`26]
 
@@ -1799,7 +1870,7 @@ Cvgr.Algos.triangulum = {
    }
 };
 
-//------✂------------------------------------------------------
+// - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 // id : block 20190329°0131
 // version : 20190329°0912 20190329°0141
 // summary : This block is to be shared by scripts via cutnpaste
@@ -2174,10 +2245,9 @@ Trekta.Util2.CmdlinParser = ( function()
       parse : parse
    };
 })();
-//------✂------------------------------------------------------
+// - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
-//~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 // summary : This area is shared via cutnpaste by those scripts:
 //            • dafutils.js • canvasgear.js • slidegear.js
 // id : area 20190106°0307
@@ -2743,7 +2813,7 @@ Trekta.Utils = Trekta.Utils || {
    , bShow_Debug_Dialogs : false // [Trekta.Utils.bShow_Debug_Dialogs]
 
 };
-//~~~~~~✂~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
 // start mechanism [line 20190316°0231]
 Trekta.Utils.windowOnloadDaisychain(Cvgr.startCanvasGear);

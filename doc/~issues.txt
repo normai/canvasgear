@@ -10,7 +10,7 @@
    do : Implement detecting and processing the possible over-use of this array.
         It suffices, if the affected icons just do not get their wanted external
         algo, but fall back to the default algoritm.
-   status : open
+   status : finished
    ܀
 
    issue 20190330°0355 'callback parameters useless'

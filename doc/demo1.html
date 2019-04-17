@@ -20,6 +20,10 @@
       td.DemoCell { border:0px dotted LightSlateGray; display:flex; align-items:center; }
       td.DemoCellCode { font-size:small; color:Silver; font-family: monospace; white-space: nowrap; }
       td.DemoCellCode b { color:DarkRed; font-weight:normal; } /* DarkSlateGray */
+
+      td.DemoCellCode2 { font-size:small; color:Silver; font-family: monospace; white-space: pre; border:0px dotted SlateGray; }
+      td.DemoCellCode2 b { color:DarkRed; font-weight:normal; } /* DarkSlateGray */
+
       canvas { padding:0 0.2em 0 0.2em; border:1px dotted LightSlateGray; }
    </style>
 </head>
@@ -86,19 +90,15 @@
   <tr id="i20190329o0532">
    <td id="i20190329o0534">
    </td>
-   <td class="DemoCellCode" id="i20190329o0535">
-             &lt;canvas <b>data-cvgr="algo=MyAlgo color=Crimson BgColor=LightCyan"</b> width="64" height="64" id="i20190330o0352"&gt;[Canvas]&lt;/canvas&gt;
-       <br />&lt;canvas <b>data-cvgr="algo=MyAlgo"</b> width="64" height="64" id="i20190330o0353"&gt;[Canvas]&lt;/canvas&gt;
-       <br />&lt;canvas <b>data-cvgr="algo=MyAlgo"</b> width="64" height="64" id="i20190330o0354"&gt;[Canvas]&lt;/canvas&gt;
-
- <!-- p class="Cvgr_CanvasAttachedInfoPara" id="i20190330o0352.info">
-               [CanvasGear debug info]
- </p -->
-
-       <br />&lt;canvas <b>data-cvgr=""</b> width="64" height="64" id="i20190330o0213"&gt;[Canvas]&lt;/canvas&gt;
-       <br />&lt;canvas <b>data-cvgr="algo=develop Color=Crimson Color2=SeaGreen Color3=RoyalBlue"</b> width="64" height="64" id="myCanvas22"&gt;[Canvas]&lt;/canvas&gt;
-       <br />&lt;canvas <b>data-cvgr="algo=Template shiftx=15 color=Orange bgcolor=LightCyan"</b> width="64" height="64" id="i20190329o0522"&gt;[Canvas]&lt;/canvas&gt;
-   </td>
+ <!-- pre class="codeTiny CvgrCode" id="i20190330o052x" -->
+   <td class="DemoCellCode2" id="i20190329o0535"
+> &lt;canvas <b>data-cvgr="algo=MyAlgo color=Crimson BgColor=LightCyan"</b> width="64" height="64" id="i20190330o0352"&gt;[Canvas]&lt;/canvas&gt;
+ &lt;canvas <b>data-cvgr="algo=MyAlgo"</b> width="64" height="64" id="i20190330o0353"&gt;[Canvas]&lt;/canvas&gt;
+ &lt;canvas <b>data-cvgr="algo=MyAlgo"</b> width="64" height="64" id="i20190330o0354"&gt;[Canvas]&lt;/canvas&gt;
+ &lt;canvas <b>data-cvgr=""</b> width="64" height="64" id="i20190330o0213"&gt;[Canvas]&lt;/canvas&gt;
+ &lt;canvas <b>data-cvgr="algo=develop Color=Crimson Color2=SeaGreen Color3=RoyalBlue"</b> width="64" height="64" id="myCanvas22"&gt;[Canvas]&lt;/canvas&gt;
+ &lt;canvas <b>data-cvgr="algo=Template shiftx=15 color=Orange bgcolor=LightCyan"</b> width="64" height="64" id="i20190329o0522"&gt;[Canvas]&lt;/canvas&gt;
+</td>
   </tr>
 
   <tr id="i20140901o0426">
@@ -206,10 +206,10 @@
         </p>
     </div>
                &nbsp;
-               <canvas data-cvgr="color=Turquoise shiftx=-61 shifty=-35" width="64" height="128" id="myCanvas29">[Canvas]</canvas>
-               <canvas data-cvgr="algo=Oha shiftx=-66" width="48" height="128" id="myCanvas30">[CANVAS]</canvas>
-               <canvas data-cvgr="shiftx=-21" width="32" height="128" id="myCanvas31">[Canvas]</canvas>
-               <canvas data-cvgr="color=Chocolate shiftx=-64" width="24" height="128" id="myCanvas32">[Canvas]</canvas>
+               <canvas data-cvgr="algo=Oha1 color=Turquoise shiftx=-33 shifty=-35" width="64" height="128" id="myCanvas29">[Canvas]</canvas>
+               <canvas data-cvgr="algo=Oha2 shifty=-33" width="48" height="128" id="myCanvas30">[CANVAS]</canvas>
+               <canvas data-cvgr="shiftx=20" width="32" height="128" id="myCanvas31">[Canvas]</canvas>
+               <canvas data-cvgr="color=Chocolate shiftx=-20" width="32" height="128" id="myCanvas32">[Canvas]</canvas>
    </td>
   </tr>
 
@@ -218,10 +218,10 @@
    </td>
    <td class="DemoCellCode" id="i20190329o0828">
                &lt;canvas <b>data-cvgr=""</b> width="128" height="128" style="float:left;" id="i20140828o0741"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="color=Turquoise shiftx=-61 shifty=-35"</b> width="64" height="128" id="myCanvas29"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=Oha shiftx=-66"</b> width="48" height="128" id="myCanvas30"&gt;[CANVAS]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="shiftx=-21"</b> width="32" height="128" id="myCanvas31"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="color=Chocolate shiftx=-64"</b> width="24" height="128" id="myCanvas32"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="color=Turquoise shiftx=-33 shifty=-35"</b> width="64" height="128" id="myCanvas29"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=Oha shifty=-33"</b> width="48" height="128" id="myCanvas30"&gt;[CANVAS]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="shiftx=20"</b> width="32" height="128" id="myCanvas31"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="color=Chocolate shiftx=-20"</b> width="32" height="128" id="myCanvas32"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 

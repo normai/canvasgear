@@ -1,19 +1,16 @@
-﻿/*!
- * This script provides the CanvasGear Template algorithm [file 20190329°0611]
+﻿/*! - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * This script supplements a CanvasGear algorithm [file 20190329°0611]
  *
- * version : 0.2.0.c — 20190330°1314
+ * version : 0.2.0.g — 20190331°0631
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */
-// encoding : UTF-8-with-BOM
 
-'use strict'; // [line 20190329°0844]
+// Formal integration into main script [seq 20190329°0621`03]
+'use strict';
+var Cvgr = Cvgr || {}; // (after parent 20180618°0621)
+Cvgr.Algos = Cvgr.Algos || {}; // (after parent 20180619°0111)
 
- // Formal integration [seq 20190329°0621] (after 20180618°0622/20180619°0111)
-var Cvgr = Cvgr || {};
-Cvgr.Algos = Cvgr.Algos || {};
-
-//------✂------------------------------------------------------
 /**
  * This namespace holds the Template algorithm, or any renamed one
  *
@@ -22,7 +19,7 @@ Cvgr.Algos = Cvgr.Algos || {};
  *  e.g. canvasgear.MyAlgo.js, then rename this namespace and
  *  it's members respectively, e.g. Cvgr.Algos.MyAlgo etc.
  *
- * @id 20190329°0623
+ * @id 20190329°0624 (after 20190329°0623)
  */
 Cvgr.Algos.MyAlgo = {};
 
@@ -86,5 +83,5 @@ Cvgr.Algos.MyAlgo.executeAlgorithm = function(iko)
       iko.Angle = iko.Angle - Math.PI * 2;
    }
 };
-//------✂------------------------------------------------------
+// - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 /* eof */

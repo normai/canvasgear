@@ -1,7 +1,7 @@
 ﻿/*! - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
  * This script provides a CanvasGear algorithm [file 20190329°0611]
  *
- * version : 0.2.0.g — 20190331°0631
+ * version : 0.2.0.h.. — 20190331°0631
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */
@@ -34,16 +34,6 @@ Cvgr.Algos.Template = {};
  */
 Cvgr.Algos.Template.executeAlgorithm = function(iko)
 {
-
-   // prologue — no-animation flag [seq 20190329°0427]
-   // todo : Make this flag an algo property and process it before here
-   if (iko.DrawOnlyOnce) { return; }
-
-   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   // Above were formal lines, below comes wanted fuctionality.
-   // Have fun experimenting with your modifications.
-   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
    // prepare canvas [seq 20190329°0441]
    iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
    iko.Context.fillStyle = iko.BgColor;
@@ -72,21 +62,19 @@ Cvgr.Algos.Template.executeAlgorithm = function(iko)
                          );
 
    // (.) finish [seq 20190329°0446]
-   //iko.Context.closePath();
    iko.Context.strokeStyle = iko.Color;
    iko.Context.lineWidth = 6;
    iko.Context.stroke();
-
 
    // add text [seq 20190331°0531] (after parent 20190331°0521 'write text')
    // See howto 20190331°0541 'about linebreaks in canvas'
    var sText = "Template extern";
    if (iko.CmdsHash['text']) {
-      sText = iko.CmdsHash['text'];                    // e.g. "Hello.."
+      sText = iko.CmdsHash['text'];
    }
-   iko.Context.fillStyle = 'MediumVioletRed'; // "#102030";
+   iko.Context.fillStyle = 'MediumVioletRed';
    iko.Context.font = "0.9em Arial";                   // e.g. "20px Times Roman", "1.2em Arial"
-   iko.Context.fillText(sText, 3, 21);                // text, start pos x, start pos y
+   iko.Context.fillText(sText, 3, 21);                 // text, start pos x, start pos y
 
    // progress [seq 20190329°0447]
    //  Remember todo 20190329°0833 'centralize progression'
@@ -94,6 +82,15 @@ Cvgr.Algos.Template.executeAlgorithm = function(iko)
    if (iko.Angle > Math.PI * 2) {
       iko.Angle = iko.Angle - Math.PI * 2;
    }
+};
+
+/**
+ * This object defines default properties for this algorithm.
+ *
+ * @id ~20190329°0617
+ */
+Cvgr.Algos.Template.defaultProperties = {
+      DrawNumberLimit : 0
 };
 ﻿/* - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 /* eof */

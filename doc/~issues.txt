@@ -3,6 +3,20 @@
    Issues and todos
    ****************
 
+   issue 20190401°0435 'hamster appears multiple times'
+   matter : The Hamster algo paints a series of smaller and smaller faces
+      with each frame. It shall draw one and the same face each frame.
+   note : The same happens with 'oblongrose' after I put the DrawOnlyOnce
+      procession into func 20140815°1221 executeFrame. This tells, it is
+      not a SVG problemm with Hamster, but one of the executeAlgorithm function.
+   location : Hamster.executeAlgorithm and oblongrose.executeAlgorithm
+   note : A key location is seq 20190401°0431 'process DrawOnlyOnce
+      flag', or the DrawNumberLimit counter flag respectively.
+   finding : The reason for the shifted repeatings is a translation on the
+      context which shall not be done if the drawing is multiple times.
+   status : open
+   ܀
+
    todo 20190330°0423 'catch callback stockpile array overflow'
    matter : The brute force solution of issue 20190330°0355 'callback parameters
       useless' involves a hardcoded array with callbacks. This will come short

@@ -13,6 +13,80 @@
    chain :
    ܀
 
+   ref 20190401°0133 'ProfessorCloud → SVG to HTML5 Canvas Converter' ✱
+   objtype : ref.service
+   url : http://www.professorcloud.com/svg-to-canvas/
+   title : SVG to HTML5 Canvas Converter
+   author :
+   releasedate :
+   chain : howto 20190401°0111 'draw svg on canvas'
+   tags : canvas, javascript, svg
+   ܀
+
+   ref 20190401°0132 'JsFiddle → Font converting SVG to Canvas'
+   objtype : ref.code
+   url : https://jsfiddle.net/ykx7kp8L/121/
+   title : Maintain Font converting SVG to Canvas
+   author :
+   releasedate :
+   chain : howto 20190401°0111 'draw svg on canvas'
+   tags : canvas, javascript, svg
+   ܀
+
+   ref 20190401°0131 'Stackoverflow → Draw SVG on canvas with font'
+   objtype : ref.thread
+   url : https://stackoverflow.com/questions/5495952/draw-svg-on-html5-canvas-with-support-for-font-element
+   title : Draw SVG on HTML5 Canvas with support for font element
+   author :
+   releasedate : 2011-Mar-31
+   chain : howto 20190401°0111 'draw svg on canvas'
+   tags : canvas, javascript, svg
+   ܀
+
+   ref 20190401°0123 'JsFiddle → Embed svg on canvas' ✱
+   objtype : ref.code
+   url : http://jsfiddle.net/020k543w/
+   title :
+   author :
+   releasedate :
+   chain : howto 20190401°0111 'draw svg on canvas'
+   tags : canvas, javascript, svg
+   ܀
+
+   ref 20190401°0122 'StackOverflow → Convert SVG to canvas'
+   objtype : ref.thread
+   url : https://stackoverflow.com/questions/2907537/is-there-a-way-to-convert-svg-files-to-html5s-canvas-compatible-commands
+   title : Is there a way to convert SVG files to HTML5's canvas compatible commands?
+   author :
+   releasedate : 2010-Mai-25
+   chain : howto 20190401°0111 'draw svg on canvas'
+   tags : canvas, javascript, svg
+   ܀
+
+   ref 20190401°0114 'Github → canvg (SVG parse and render on Canvas)'
+   objtype : ref.project
+   url : https://github.com/canvg/canvg
+   title : canvg → canvg
+   slogan : Javascript SVG parser and renderer on Canvas
+   author :
+   releasedate :
+   usage :
+   chain : 20190401°0116 canvg-2.0.0-beta.1.zip (5 205 586 bytes)
+   chain : 20190401°0115 https://github.com/canvg/canvg/releases
+   chain : howto 20190401°0111 'draw svg on canvas'
+   tags : canvas, javascript, svg
+   ܀
+
+   ref 20190401°0113 'Stackoverflow → Drawing SVG on canvas'
+   objtype : ref.thread
+   url : https://stackoverflow.com/questions/3768565/drawing-an-svg-file-on-a-html5-canvas
+   title : Drawing an SVG file on a HTML5 canvas
+   author :
+   releasedate : 2010-Sep-22
+   chain : howto 20190401°0111 'draw svg on canvas'
+   tags : canvas, javascript, svg
+   ܀
+
    ref 20190331°0547 'June Rockwell → .. line break in HTML5 Canvas'
    objtype : ref.
    url : http://junerockwell.com/end-of-line-or-line-break-in-html5-canvas/
@@ -20,7 +94,7 @@
    author : June Rockwell
    releasedate : 2015-Dec-9
    usage : howto 20190331°0541 'about linebreaks in canvas'
-   chain :
+   tags : canvas, javascript, linebreaks
    ܀
 
    ref 20190331°0545 'bramstein → typeset'
@@ -31,7 +105,7 @@
    author : Bram Stein
    releasedate : 2017-Sep-7
    usage : howto 20190331°0541 'about linebreaks in canvas'
-   chain :
+   tags : canvas, javascript, linebreaks
    ܀
 
    ref 20190331°0544 'Liza Shulyayeva → fillText line break limitation'
@@ -41,7 +115,7 @@
    author : Liza Shulyayeva
    releasedate : <2012-Jul-27
    usage : howto 20190331°0541 'about linebreaks in canvas'
-   chain :
+   tags : canvas, javascript, linebreaks
    ܀
 
    ref 20190331°0543 'html5canvastutorials → canvas-wrap-text-tutorial'
@@ -51,7 +125,7 @@
    author :
    releasedate :
    usage : howto 20190331°0541 'about linebreaks in canvas'
-   chain :
+   tags : canvas, javascript, linebreaks
    ܀
 
    ref 20190331°0542 'stackoverflow → fillText won't do line breaks'
@@ -61,7 +135,7 @@
    releasedate :
    note : Different versions of the wrapText function
    usage : howto 20190331°0541 'about linebreaks in canvas'
-   chain :
+   tags : canvas, javascript, linebreaks
    ܀
 
    ref 20190329°0542 'w3c: centering things'
@@ -72,6 +146,7 @@
    releasedate : 2001-May-5, updated 2018-Sep-26
    usage : page 20140828°0631 demo1.html
    chain : refs 20180620°1113 20190107°0435 20190329°0542 are the same
+   tags : center, css
    ܀
 
    ref 20190329°0513 'stackoverflow : convert float number to whole'
@@ -79,23 +154,24 @@
    url : https://stackoverflow.com/questions/596467/how-do-i-convert-a-float-number-to-a-whole-number-in-javascript
    title : How do I convert a float number to a whole number in JavaScript?
    releasedate : 2009-Feb-27
-   usage :
+   tags : javascript, syntax
    ܀
 
-   ref 20190324°0232 ''
+   ref 20190324°0232 'Simon Whitacker → GitHub Ribbon'
    url : https://simonwhitaker.github.io/github-fork-ribbon-css/﻿
    title : Fork me on GitHub – CSS ribbon
    chain : https://github.com/simonwhitaker/github-fork-ribbon-css [ref 20190324°0233]
    chain : https://raw.githubusercontent.com/simonwhitaker/github-fork-ribbon-css/gh-pages/gh-fork-ribbon.css [ref 20190324°0234]
-   author :
+   author : Simon Whitacker
+   tags : css, github
    ܀
 
-   ref 20140926°0621 'Krasimir: Simple command line parser in JS'
+   ref 20140926°0621 'Krasimir → Simple command line parser in JS'
    url : http://krasimirtsonev.com/blog/article/Simple-command-line-parser-in-JavaScript
    title : Simple command line parser in JavaScript
    author : Krasimir Tsonev
    releasedate : ~2014
-   usage :
+   tags : javascript, commandline, parsing
    ܀
 
    ref 20140901°0321 'William Malone: rotate canvas'
@@ -108,7 +184,6 @@
    about : Lookup 'official' canvas specifications at the WHATWG group on
    url : http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting.html
    tags : canvas
-   note :
    ܀
 
    ref 20140831°0622 'William Malone: Drawing library'

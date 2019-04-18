@@ -45,7 +45,7 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.0.g'
+    versionnumber : '0.2.0.h..'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
@@ -179,16 +179,16 @@ Cvgr.Objs.Ikon = function()
    this.Height = null;                                 // int - canvas height (in pixel) [prop 20140916°0524]
    this.Width = null;                                  // int - canvas width (in pixel) [prop 20140916°0525]
 
-   // private properties, set program internally
+   // runtime private properties, set program internally
    this.Angle = 0;                                     // private [prop 20140916°0527]
    this.Canvas = null;                                 // object - the canvas tag DOM element [prop 20140916°0528]
    this.CmdsHash = null;                               // object/array - the commandline as an associative array [var 20140926°0651]
    this.Command = ''; // null;                         // string - the commandline as read from the html comment [prop 20140916°0532]
    this.Context = null;                                // object - attached to canvas [prop 20140916°0533]
-   this.DrawOnlyOnce = false;                          // object - flag [prop 20140916°1021]
+   this.DrawNumberLimit = 1;                           // Draw frame one time, 0 means forever [prop 20190401°0433]
    this.iDrawCount = 0;                                // integer how often the icon is drawn completely [prop 20140916°0534]
-
    this.bIsDefaultSettingDone = false;                 // [prop 20190330°0353] important moment, now the icon is available
+   this.iFrameDelay = 0;                               // [prop 20190401°0453] See finding 20190401°0451 'frame delay with pulled-behind canvases'
 };
 
 /**
@@ -203,7 +203,7 @@ Cvgr.Objs.Ikon = function()
  * @param {number} iY2 — y position end
  * @param {string} sColor — The web color name (see func 20140831°0321 Webcolors)
  * @param {number} iWidth — Optional, width in pixel (ES6 default params do not
- *                work in IE, see issue 20190312°0251 'IE fails with default params')
+ *           work in IE, see issue 20190312°0251 'IE fails with default params')
  */
 Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iThick)
 {
@@ -245,8 +245,8 @@ Cvgr.Objs.Pojnt = function(nX, nY)
 };
 
 // Some 'static' variables for below function startCanvasGear()
-Cvgr.Vars.icos = new Array();
-Cvgr.Vars.iFrameNo = 0; // counter
+Cvgr.Vars.icos = new Array();                          // [var 20140815°1246]
+Cvgr.Vars.iFrameNo = 0;                                // [var 20140815°1247]
 
 /**
  * This function starts CanvasGear
@@ -365,8 +365,8 @@ Cvgr.Vars.aPiggyAlgoNames = [];
 Cvgr.Vars.aPiggyCallbacks = [];
 Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 0 ); } )
                                  , ( function() { Cvgr.Func.pullbehind_onError( 0 ); } )
-                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 0 ); } )   // experimental for feature 20190331°0411 'riders also in subfolder'
-                                   , ( function() { Cvgr.Func.pullbehind_onError( 0 ); } ) // experimental
+                                  , ( function() { Cvgr.Func.pullbehind_onLoad( 0 ); } )
+                                   , ( function() { Cvgr.Func.pullbehind_onError( 0 ); } )
                                     ]);
 Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 1 ); } )
                                  , ( function() { Cvgr.Func.pullbehind_onError( 1 ); } )
@@ -379,7 +379,6 @@ Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 2 
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 2 ); } ) 
                                    , ( function() { Cvgr.Func.pullbehind_onError( 2 ); } )
                                     ]);
-/*
 Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 3 ); } )
                                  , ( function() { Cvgr.Func.pullbehind_onError( 3 ); } )
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 3 ); } ) 
@@ -390,6 +389,7 @@ Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 4 
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 4 ); } ) 
                                    , ( function() { Cvgr.Func.pullbehind_onError( 4 ); } )
                                     ]);
+/* */
 Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 5 ); } )
                                  , ( function() { Cvgr.Func.pullbehind_onError( 5 ); } )
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 5 ); } ) 
@@ -415,7 +415,7 @@ Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 9 
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 9 ); } ) 
                                    , ( function() { Cvgr.Func.pullbehind_onError( 9 ); } )
                                     ]);
-*/
+/* */
 
 /**
  * This array stores error flags associated with the pullback attempts
@@ -473,34 +473,36 @@ Cvgr.Vars.sDebugPageHelper = ''; // [var 20190330°0411]
  *  already have been known and done in either onload or onerror event handler.
  *
  * @id 20190329°0451
- * @todo 20190330°0441 : The two parameters iMyNdx and iko seem
+ * @todo 20190330°0441 : The two parameters iNdxPiggy and iko seem
  *     redundant, one of them should suffice. Does it`?
- * @param {Integer} iMyNdx — The index into the piggy arrays
+ * @param {Integer} iNdxPiggy — The index into the piggy arrays
  * @param {object} iko — The specific Ikon which's algo shall be examined
  */
-Cvgr.Func.examineAlgo = function(iMyNdx, iko)
+Cvgr.Func.examineAlgo = function(iNdxPiggy, iko)
 {
 
    // is algorithm available now? [condi 20190329°0453]
    var sAlgoNameOrg = iko.AlgoName;
    if ( iko.AlgoName in Cvgr.Algos ) {
-      Cvgr.Vars.aPiggyFlags4Avail[iMyNdx] = true;
+      Cvgr.Vars.aPiggyFlags4Avail[iNdxPiggy] = true;
    }
    else {
       // rider not found [seq 20190331°0345]
       // note : This is identical with seq 20190331°0343, it should be superfluous
-      var aIcos = Cvgr.Vars.aPiggyIconArrays[iMyNdx];
+      var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
       for (var i = 0; i < aIcos.length; i++) {
-         Cvgr.Vars.aPiggyIconArrays[iMyNdx][i].AlgoName = 'pulse';
-         Cvgr.Vars.aPiggyIconArrays[iMyNdx][i].CmdsHash['text'] = ('Rpx ' + i);
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].AlgoName = 'pulse';
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Rpx ' + i);
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
+         Cvgr.Func.settleAlgoProperties(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
       }
    }
 
    // debug output
-   Cvgr.Vars.sDebugPageHelper += '<br /> — examineAlgo :' + ' piggy ' + iMyNdx + ' &nbsp;'
-                       + ' onLoad = ' + Cvgr.Vars.aPiggyFlags4OnLoad[iMyNdx] + ' &nbsp;'
-                        + ' onError = ' + Cvgr.Vars.aPiggyFlags4OnError[iMyNdx] + ' &nbsp;'
-                         + ' avail = ' + Cvgr.Vars.aPiggyFlags4Avail[iMyNdx] + ' &nbsp;'
+   Cvgr.Vars.sDebugPageHelper += '<br /> — examineAlgo :' + ' piggy ' + iNdxPiggy + ' &nbsp;'
+                       + ' onLoad = ' + Cvgr.Vars.aPiggyFlags4OnLoad[iNdxPiggy] + ' &nbsp;'
+                        + ' onError = ' + Cvgr.Vars.aPiggyFlags4OnError[iNdxPiggy] + ' &nbsp;'
+                         + ' avail = ' + Cvgr.Vars.aPiggyFlags4Avail[iNdxPiggy] + ' &nbsp;'
                           + ' algo = ' + sAlgoNameOrg + ' / ' + iko.AlgoName
                            ;
 };
@@ -514,7 +516,6 @@ Cvgr.Func.examineAlgo = function(iMyNdx, iko)
  */
 Cvgr.Func.executeFram_PrintInfoCanvas = function(iNdx)
 {
-
    // (x) output canvas status [seq 20140815°1251]
    // The ID of the output element has to be the ID of the canvas with added '.info'.
    // See ref 20190329°0513 'stackoverflow : convert float number to whole'
@@ -606,29 +607,23 @@ Cvgr.Func.executeFrame = function()
       Cvgr.Vars.iMarkLastTwoSecondFrame = Cvgr.Vars.iFrameNo;
    }
 
-   // (P.3) calculate true angle [seq 20140815°1254]
-   // (P.3.1) handle border situation
+   // (P.3) calculate true angle
+   // (P.3.1) handle border situation [seq 20140815°1254]
+   // On start no two-second measurement does exist, so use the first available
+   //  value. This is imprecise, sometime half, sometime double the final value.
    if (Cvgr.Vars.iFramesPerTowSeconds < 0.001)
    {
-      // The calculated speed is not available on start, there is not yet a
-      // two-second measurement, so use the first available value. But this
-      // is pretty imprecise, sometime half, sometime double the final value.
       Cvgr.Vars.iFramesPerTowSeconds = iFramesPerSecondTotal * 2;
    }
-   // (P.3.2) perform calculation [seq 20140815°1255]
+
+   // (P.3.2) calculate increment per frame [seq 20140815°1255]
+   // Remember note 20140916°1031 'known cornerstone values'
    Cvgr.Vars.nTrueAngleTurns = Cvgr.Vars.nTrueAngleTurns + (1 / Cvgr.Vars.iFramesPerTowSeconds);
    if (Cvgr.Vars.nTrueAngleTurns > 1)
    {
       Cvgr.Vars.nTrueAngleTurns = Cvgr.Vars.nTrueAngleTurns - 1;
    }
    Cvgr.Vars.nIncTurnsPerFrame = 1 / Cvgr.Vars.iFramesPerTowSeconds;
-
-   // note 20140916°1031 'known cornerstone values'
-   // At this runtime moment, the following cornerstone values are known:
-   //  • Cvgr.Vars.nTrueAngleTurns : This is a value cycling between 0 and 0.999
-   //      with one Hertz frequency independend of the browser.
-   //  • Cvgr.Vars.nIncTurnsPerFrame : This value depends on the browser, it wobbles
-   //      around e.g. 0.017 to 0.020 with Chrome, or 0.021 to 0.023 with IE8.
 
    // (P.4) debug output page status [line 20190329°0933] Cvgr_DebugPageOutputArea
    Cvgr.Func.executeFram_PrintInfoPage ( iTimeCurr
@@ -642,6 +637,30 @@ Cvgr.Func.executeFrame = function()
       // convenience [seq 20190330°0327]
       var iko = Cvgr.Vars.icos[iNdx];
 
+///if ( sAlgo === 'Oha1' ) {
+if ( iko.Ide === 'myCanvas29' ) {
+   var sAlgo = sAlgo;
+}
+
+      /*
+      finding 20190401°0451 'frame delay with pulled-behind canvases'
+      matter : Using Cvgr.Vars.iFrameNo with DrawNumberLimit has the following
+         shortcome. If the algo is loaded via pull-behind, then drawing starts
+         not immediately, but only after pullbehind_onLoad was called. At this
+         point, already severals frames might have been gone.
+      finding : The Hamster starts drawing with frame 2
+      status :
+      */
+
+      // process DrawNumberLimit flag [seq 20190401°0431]
+      // Remeber issue 20190401°0435 'hamster appears multiple times'
+      // Remember finding 20190401°0451 'frame delay with pulled-behind canvases'
+      if ( ( ! iko.DrawNumberLimit < 1 )
+          && ( ( Cvgr.Vars.iFrameNo - iko.iFrameDelay ) > iko.DrawNumberLimit )
+           ) {
+         continue;
+      }
+
       // () debug output canvas status [line 20190329°0923]
       Cvgr.Func.executeFram_PrintInfoCanvas(iNdx);
 
@@ -650,10 +669,6 @@ Cvgr.Func.executeFrame = function()
       // (.1) convenience
       var sAlgo = iko.AlgoName;
 
-////if (sAlgo === 'Template') {
-////   var xDbg = '';
-////}
-
       // (.2) [condition 20190329°0411]
       // note : The condition got tricky with feature 20190330°0141 'external algo
       //  overwrites built-in one'. Before, it was just : "if (sAlgo in Cvgr.Algos)"
@@ -661,12 +676,9 @@ Cvgr.Func.executeFrame = function()
           || ( iko.bIsDefaultSettingDone )
            )
       {
-
          // (2.1) immediate call [seq 20190329°0413]
-         //
          if ( ! iko.bIsDefaultSettingDone ) {
-            // initialize icon
-            Cvgr.Func.settleAlgoProperties(iko);
+            Cvgr.Func.settleAlgoProperties(iko); // initialize icon
          }
          try {
             // execute icon
@@ -695,7 +707,6 @@ Cvgr.Func.executeFrame = function()
             continue;
          }
 
-
          // () paranoia — prefabricated callback on stock? [seq 20190331°0611]
          if (Cvgr.Vars.aPiggyAlgoNames.length > (Cvgr.Vars.aPiggyCallbacks.length - 1)) {
             // No more prefabricated callback, immediately assign substitution algorithm
@@ -705,7 +716,6 @@ Cvgr.Func.executeFrame = function()
             iko.CmdsHash['text'] = ('Substitute');
             continue;
          }
-
 
          // (2.2.2) load buddy module [seq 20190329°0415]
          var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/canvasgear/"
@@ -736,7 +746,7 @@ Cvgr.Func.executeFrame = function()
          // try loading the wanted script [line 20190330°0417]
          // Heureka, with the hardcoded callback stockpile, the parameters work individually
          // Remember brute force debug issue 20190330°0355 'callback parameter useless'
-         Trekta.Utils.pullScriptBehind ( sModuleNameOne
+         Trekta.Utils.pullScriptBehind ( sModuleNameTwo
                                         , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][0]
                                          , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][1]
                                           );
@@ -745,7 +755,7 @@ Cvgr.Func.executeFrame = function()
             // experiment [line 20190331°0413]
             // Try introduce feature 20190331°0411 'riders also in subfolder'
             // Crazy — It looks like this single line does the job. I cannot believe it yet.
-            Trekta.Utils.pullScriptBehind ( sModuleNameTwo
+            Trekta.Utils.pullScriptBehind ( sModuleNameOne
                                            , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][3]
                                             , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][4]
                                              );
@@ -782,11 +792,15 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
       Cvgr.Vars.aPiggyFlags4Avail[iNdxPiggy] = true;
    }
    else {
-      // rider not found, switch to default algo [seq 20190331°0343] like 20190331°0345
+      // rider not found, switch to default algo [seq 20190331°0343 (like 20190331°0345)]
+      // loop over this canvases
       var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
       for (var i = 0; i < aIcos.length; i++) {
+         // switch this canvas to substitute algo
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].AlgoName = 'pulse';
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Rp ' + i);
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
+         Cvgr.Func.settleAlgoProperties(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
       }
    }
 
@@ -841,6 +855,7 @@ Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
          if ( ! iko.bIsDefaultSettingDone ) {
             Cvgr.Func.settleAlgoProperties(iko);
          }
+         iko.iFrameDelay = Cvgr.Vars.iFrameNo - 1;
          Cvgr.Algos[iko.AlgoName].executeAlgorithm(iko);
       }
    }
@@ -892,10 +907,6 @@ Cvgr.Func.settleAlgoProperties = function(iko)
       if (sKeySrc === 'algo') {
          continue;
       }
-
-      ///if (sKeySrc === 'shifty') {
-      ///   sKeySrc = 'shifty'; // debug
-      ///}
 
       // translate [seq 20190330°0245]
       var sKeyTgt = sKeySrc;
@@ -964,6 +975,39 @@ Cvgr.Algos = Cvgr.Algos || {};
  */
 Cvgr.Algos.Ballist = {
 
+   /*
+    * This function provides a hit object for the Ballist algorithm
+    *
+    * @id 20140916°0741
+    * @param nRingval {}
+    * @param nMinutes {}
+    */
+   Hit : function(nRingval, nMinutes) { // Cvgr.Algos.Ballist.Hit
+
+      'use strict'; // [line 20190329°0843`14]
+
+      // set source values
+      this.ringval = nRingval;                            // number - the ring value (assumed from 1.0 to 10.9)
+      this.minutes = nMinutes;                            // number - which minute on the clock
+
+      // calculate cartesian coordinates
+      var angle = this.minutes / 60 * Math.PI * 2;        // preliminary guess
+      angle = angle + Math.PI * 1.5;                      // shift the 0-Minute from east position to north position
+
+      // invert ring to radius
+      // note 20140917°0311 : The final coordinates can only be calculated
+      //    if the size of the target and the size of the canvas is known.
+      var nRadi = 10.9 - this.ringval;                    // invert ring value to a radius number
+      // //nRadi = nRadi * 0.2;                           // they calc from 1 to 10, we need from 1.1 to 10.9
+
+      var nEmpricHelper = 0.20;
+      var x = nRadi * Math.cos(angle) * nEmpricHelper;    // ELIMINATE empirical factor
+      var y = nRadi * Math.sin(angle) * nEmpricHelper;    // ELIMINATE empirical factor
+
+      this.X = x;                                         // number - calculated
+      this.Y = y;                                         // number - calculated
+   }
+
    /**
     * This class provides a ring object for the Ballist algorithm
     *
@@ -973,7 +1017,7 @@ Cvgr.Algos.Ballist = {
     * @param sColorRing {}
     * @param sColorSpace {}
     */
-   Ring : function(sRingName, nRadiusAbs, sColorRing, sColorSpace ) { // Cvgr.Algos.Ring
+   , Ring : function(sRingName, nRadiusAbs, sColorRing, sColorSpace ) { // Cvgr.Algos.Ballist.Ring
 
       'use strict'; // [line 20190329°0843`12]
 
@@ -1005,7 +1049,7 @@ Cvgr.Algos.Ballist = {
     * @id 20140916°0911
     * @param nRadius {} The target's radius in m, usually goes with lowest ring.
     */
-   , Target : function() { // Cvgr.Algos.Target
+   , Target : function() { // Cvgr.Algos.Ballist.Target
 
       'use strict'; // [line 20190329°0843`13]
 
@@ -1015,157 +1059,6 @@ Cvgr.Algos.Ballist = {
       this.rings = new Array();                           // array of rings, to be filled by somebody
    }
 
-   /*
-    * This function provides a hit object for the Ballist algorithm
-    *
-    * @id 20140916°0741
-    * @param nRingval {}
-    * @param nMinutes {}
-    */
-   , Hit : function(nRingval, nMinutes) { // Cvgr.Algos.Hit
-
-      'use strict'; // [line 20190329°0843`14]
-
-      // set source values
-      this.ringval = nRingval;                            // number - the ring value (assumed from 1.0 to 10.9)
-      this.minutes = nMinutes;                            // number - which minute on the clock
-
-      // calculate cartesian coordinates
-      var angle = this.minutes / 60 * Math.PI * 2;        // preliminary guess
-      angle = angle + Math.PI * 1.5;                      // shift the 0-Minute from east position to north position
-
-      // invert ring to radius
-      // note 20140917°0311 : The final coordinates can only be calculated
-      //    if the size of the target and the size of the canvas is known.
-      var nRadi = 10.9 - this.ringval;                    // invert ring value to a radius number
-      // //nRadi = nRadi * 0.2;                           // they calc from 1 to 10, we need from 1.1 to 10.9
-
-      var nEmpricHelper = 0.20;
-      var x = nRadi * Math.cos(angle) * nEmpricHelper;    // ELIMINATE empirical factor
-      var y = nRadi * Math.sin(angle) * nEmpricHelper;    // ELIMINATE empirical factor
-
-      this.X = x;                                         // number - calculated
-      this.Y = y;                                         // number - calculated
-   }
-
-   /**
-    * This function implements the drawing algorithm
-    *
-    * @id 20140916°0421
-    * @status under construction
-    * @note The statement 'fill() includes closePath()' is true only to some
-    *         degree, e.g. *not* for drawing the final line to origin.
-    * @note Compatibility: Seems not to work with IE8
-    * @callers • Cvgr.Func.executeFrame
-    * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
-    * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
-    */
-   , executeAlgorithm : function(iko) // Cvgr.Algos.executeAlgorithm
-   {
-      'use strict'; // [line 20190329°0843`15]
-
-      // prolog - draw this algorithm only once [seq 20140916°1022`03]
-      // note : This does not prevent Taskmanager to raise CPU usage
-      //    to nearly hundred percent. But without single-paint mode,
-      //    it raises towards full hundred percent perhaps.
-      // todo : Implement flag as commandline option and process very early.
-      if (iko.DrawOnlyOnce) {
-         return;
-      }
-      iko.DrawOnlyOnce = true;
-
-      // preparatory calculations [line 20140916°0825]
-      //var iSize = ((+iko.Width) + (+iko.Height)) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
-
-      // retrieve target [seq 20140916°0433]
-      var tgt = Cvgr.Algos.Ballist.executeAlgo_getTarget();
-
-      // retrieve series [seq 20140916°0434]
-      var hits = Cvgr.Algos.Ballist.executeAlgo_getSeries(iko.CmdsHash['series']);
-
-      // prepare canvas [seq 20140916°0435]
-      iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-      iko.Context.fillStyle = iko.BgColor;
-      iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
-
-      // (.) calculate center point from canvas length and height [seq 20140916°0436]
-      // note : The calculation is redundant to 'iSize'.
-      var iCenterPoint = (iko.Width + iko.Height) / 4; // this is half iSize
-
-      // (.) adjust center position from possible shift [seq 20140916°0437]
-      var iRadiX = iCenterPoint;
-      var iRadiY = iCenterPoint;
-      if (iko.ShiftX !== null) {
-         var iRadiX = iCenterPoint + parseInt(iko.ShiftX, 10);
-      }
-      if (iko.ShiftY !== null) {
-         var iRadiY = iCenterPoint + parseInt(iko.ShiftY, 10);
-      }
-
-      // (.) paint rings [seq 20140916°0442]
-      for (var iLoop = 0; iLoop < tgt.rings.length; iLoop++) {
-
-         // (.) calculate current radius [seq 20140916°0443]
-         // todo: Replace fixed factor by calculated factor
-         var radius = iCenterPoint * tgt.rings[iLoop].radiusAbs * 12;
-
-         // (.) draw [seq 20140916°0444]
-         iko.Context.beginPath();                         // circle
-         iko.Context.arc ( iRadiX                         // x coordinate, e.g. 90
-                          , iRadiY                        // y coordinate, e.g. 90
-                           , radius                       // radius, e.g. 90
-                            , 0                           // starting point angle in radians, starting east
-                             , Math.PI * 2                // endpoint angle in radians
-                              , false                     // clockwise
-                               );
-
-         // (.) finish [seq 20140916°0445]
-         iko.Context.closePath();
-         iko.Context.strokeStyle = Trekta.Util2.colorNameToHex(tgt.rings[iLoop].colorRing);
-         iko.Context.lineWidth = 1;
-         iko.Context.stroke();
-      }
-
-      // (.) paint hits [seq 20140916°0446]
-      for (var i = 0; i < hits.length; i++) {
-
-         // (.) calculate radius [seq 20140916°0447]
-         radius = 6;
-
-         // (.) [seq 20140916°0448]
-         var iRadiX = iCenterPoint + hits[i].X * 50 + parseInt(iko.ShiftX, 10);
-         var iRadiY = iCenterPoint + hits[i].Y * 50 + parseInt(iko.ShiftY, 10);
-
-         // (.) draw hit [seq 20140916°0452]
-         iko.Context.beginPath();                 // circle
-         iko.Context.arc ( iRadiX                 // x coordinate
-                          , iRadiY                // y coordinate
-                           , radius               // radius, e.g. 90
-                            , 0                   // starting point angle in radians, starting east
-                             , Math.PI * 2        // endpoint angle in radians
-                              , false             // clockwise
-                               );
-
-         // (.) finish [seq 20140916°0453]
-         iko.Context.closePath();
-
-         iko.Context.strokeStyle = '#4169e1'; // 'royalblue';
-         iko.Context.lineWidth = 1;
-         iko.Context.stroke();
-      }
-
-      // [seq 20140916°0454]
-      Cvgr.Algos.Ballist.executeAlgo_drawDiagonal(iko);
-
-      // progress [seq 20140916°0455]
-      // note : Ballist algo is static anyway, progression is useless.
-      //  Note todo 20190329°0833 'centralize progression'
-      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
-      if (iko.Angle > Math.PI * 4) {
-         iko.Angle = iko.Angle - Math.PI * 4;
-      }
-   }
-
    /**
     * This function .. is a test function
     *
@@ -1173,7 +1066,7 @@ Cvgr.Algos.Ballist = {
     * @callers Only • func 20140916°0421 executeAlgorithm
     * @param {object} iko ...
     */
-   , executeAlgo_drawDiagonal : function(iko) // Cvgr.Algos.executeAlgo_drawDiagonal
+   , executeAlgo_drawDiagonal : function(iko) // Cvgr.Algos.Ballist.executeAlgo_drawDiagonal
    {
       'use strict'; // [line 20190329°0843`16]
 
@@ -1243,7 +1136,7 @@ Cvgr.Algos.Ballist = {
     * @callers Only Cvgr.Algos.Ballist.executeAlgorithm
     * @param sSeries {} ..
     */
-   , executeAlgo_getSeries : function(sSeries) // Cvgr.Algos.executeAlgo_getSeries
+   , executeAlgo_getSeries : function(sSeries) // Cvgr.Algos.Ballist.executeAlgo_getSeries
    {
       'use strict'; // [line 20190329°0843`17]
 
@@ -1298,7 +1191,7 @@ Cvgr.Algos.Ballist = {
     * @note The details are still be to adjusted.
     * @param sTargetName {string} ..
     */
-   , executeAlgo_getTarget : function(sTargetName) // Cvgr.Algos.executeAlgo_getTarget
+   , executeAlgo_getTarget : function(sTargetName) // Cvgr.Algos.Ballist.executeAlgo_getTarget
    {
       'use strict'; // [line 20190329°0843`18]
 
@@ -1378,6 +1271,120 @@ Cvgr.Algos.Ballist = {
 
       return target;
    }
+
+   /**
+    * This function implements the drawing algorithm
+    *
+    * @id 20140916°0421
+    * @status under construction
+    * @note The statement 'fill() includes closePath()' is true only to some
+    *         degree, e.g. *not* for drawing the final line to origin.
+    * @note Compatibility: Seems not to work with IE8
+    * @callers • Cvgr.Func.executeFrame
+    * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
+    * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
+    */
+   , executeAlgorithm : function(iko) // Cvgr.Algos.Ballist.executeAlgorithm
+   {
+      'use strict'; // [line 20190329°0843`15]
+
+      // retrieve target [seq 20140916°0433]
+      var tgt = Cvgr.Algos.Ballist.executeAlgo_getTarget();
+
+      // retrieve series [seq 20140916°0434]
+      var hits = Cvgr.Algos.Ballist.executeAlgo_getSeries(iko.CmdsHash['series']);
+
+      // prepare canvas [seq 20140916°0435]
+      iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+      iko.Context.fillStyle = iko.BgColor;
+      iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
+
+      // (.) calculate center point from canvas length and height [seq 20140916°0436]
+      // note : The calculation is redundant to 'iSize'.
+      var iCenterPoint = (iko.Width + iko.Height) / 4; // this is half iSize
+
+      // (.) adjust center position from possible shift [seq 20140916°0437]
+      var iRadiX = iCenterPoint;
+      var iRadiY = iCenterPoint;
+      if (iko.ShiftX !== null) {
+         var iRadiX = iCenterPoint + parseInt(iko.ShiftX, 10);
+      }
+      if (iko.ShiftY !== null) {
+         var iRadiY = iCenterPoint + parseInt(iko.ShiftY, 10);
+      }
+
+      // (.) paint rings [seq 20140916°0442]
+      for (var iLoop = 0; iLoop < tgt.rings.length; iLoop++) {
+
+         // (.) calculate current radius [seq 20140916°0443]
+         // todo: Replace fixed factor by calculated factor
+         var radius = iCenterPoint * tgt.rings[iLoop].radiusAbs * 12;
+
+         // (.) draw [seq 20140916°0444]
+         iko.Context.beginPath();                         // circle
+         iko.Context.arc ( iRadiX                         // x coordinate, e.g. 90
+                          , iRadiY                        // y coordinate, e.g. 90
+                           , radius                       // radius, e.g. 90
+                            , 0                           // starting point angle in radians, starting east
+                             , Math.PI * 2                // endpoint angle in radians
+                              , false                     // clockwise
+                               );
+
+         // (.) finish [seq 20140916°0445]
+         iko.Context.closePath();
+         iko.Context.strokeStyle = Trekta.Util2.colorNameToHex(tgt.rings[iLoop].colorRing);
+         iko.Context.lineWidth = 1;
+         iko.Context.stroke();
+      }
+
+      // (.) paint hits [seq 20140916°0446]
+      for (var i = 0; i < hits.length; i++) {
+
+         // (.) calculate radius [seq 20140916°0447]
+         radius = 6;
+
+         // (.) [seq 20140916°0448]
+         var iRadiX = iCenterPoint + hits[i].X * 50 + parseInt(iko.ShiftX, 10);
+         var iRadiY = iCenterPoint + hits[i].Y * 50 + parseInt(iko.ShiftY, 10);
+
+         // (.) draw hit [seq 20140916°0452]
+         iko.Context.beginPath();                      // circle
+         iko.Context.arc ( iRadiX                      // x coordinate
+                          , iRadiY                     // y coordinate
+                           , radius                    // radius, e.g. 90
+                            , 0                        // starting point angle in radians, starting east
+                             , Math.PI * 2             // endpoint angle in radians
+                              , false                  // clockwise
+                               );
+
+         // (.) finish [seq 20140916°0453]
+         iko.Context.closePath();
+
+         iko.Context.strokeStyle = '#4169e1'; // 'royalblue';
+         iko.Context.lineWidth = 1;
+         iko.Context.stroke();
+      }
+
+      // [seq 20140916°0454]
+      Cvgr.Algos.Ballist.executeAlgo_drawDiagonal(iko);
+
+      // progress [seq 20140916°0455]
+      // note : Ballist algo is static anyway, progression is useless.
+      //  Note todo 20190329°0833 'centralize progression'
+      iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
+      if (iko.Angle > Math.PI * 4) {
+         iko.Angle = iko.Angle - Math.PI * 4;
+      }
+   }
+
+   /**
+    * This object can define default properties for this algorithm.
+    *  Use the same names as are used on the data-cvgr commandline.
+    *
+    * @id 20190401°0423
+    */
+   , defaultProperties : {                             // [Cvgr.Algos.Ballist.defaultProperties]
+   }
 };
 //- - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -1419,16 +1426,6 @@ Cvgr.Algos.Template = Cvgr.Algos.Template || {};
  */
 Cvgr.Algos.Template.executeAlgorithm = function(iko)
 {
-
-   // prologue — no-animation flag [seq 20190329°0427]
-   // todo : Make this flag an algo property and process it before here
-   if (iko.DrawOnlyOnce) { return; }
-
-   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   // Above were formal lines, below comes wanted fuctionality.
-   // Have fun experimenting with your modifications.
-   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
    // prepare canvas [seq 20190329°0441]
    iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
    iko.Context.fillStyle = iko.BgColor;
@@ -1517,14 +1514,9 @@ Cvgr.Algos.develop = {
    {
       'use strict'; // [line 20190329°0843`22]
 
-      // draw this algorithm only once [seq 20140916°1022`01] remember issue ..
-      if (iko.DrawOnlyOnce) {
-         return;
-      }
-      iko.DrawOnlyOnce = true;
-
       // preparatory calculations [seq 20140916°0821]
-      var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+      // Remember issue 20140901°0331 'IE8 demands extra plus sign'
+      var iSize = (iko.Width + iko.Height) / 2;
 
       // prepare canvas
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
@@ -1563,7 +1555,6 @@ Cvgr.Algos.develop = {
       , Color : 'LightCoral' // Red
       , Color2 : 'PaleGreen' // Green
       , Color3 : 'LightBlue' // Blue
-      //, DrawOnlyOnce : true // it is static, not animated
    }
 };
 // ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
@@ -1600,35 +1591,63 @@ Cvgr.Algos.oblongrose = {
     * @param {number} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param {number} iNdx — The index into the icos array.
     */
-   executeAlgorithm : function(iko)
+   executeAlgorithm : function(iko) // Cvgr.Algos.oblongrose.executeAlgorithm
    {
       'use strict'; // [line 20190329°0843`23]
 
-      // draw this algorithm only once [seq 20140916°1022`02]
-      if (iko.DrawOnlyOnce) {
-         return;
-      }
-      iko.DrawOnlyOnce = true;
-
       // preparatory calculations [seq 20140916°0822]
-      var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+      var iWhole = (iko.Width + iko.Height) / 2;
+      var iHalf = iWhole / 2; // helper var because mostly not whole is wanted but half
+      //var iTransX = 77.0; // substitute for line 20140828°1423
+      //var iTransY = 77.0;
 
-      // prepare canvas
+      // prepare canvas [line 20140828°1421]
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
-      // set colors
+      // set colors [seq 20140828°1422]
       iko.Context.strokeStyle = iko.Color;
-      iko.Context.fillStyle = '#ffff00';                                  // 'yellow' // not applied below
+      iko.Context.fillStyle = 'Yellow';                                // not applied below
 
-      // set registration point
-      iko.Context.translate(iSize / 2, iSize / 2);
+      // rotate wrapper open [line 20190401°0442]
+      // set registration point [line 20140828°1423]
+      // Remember note 20190401°0441 'about rotation center point'
+      // Remember issue 20190401°0435 'hamster appears multiple times'
+      iko.Context.translate(iHalf, iHalf);
 
+      // loop [seq 20140828°1424]
       var iNums = 16;
+      var nRotate = 0;
+      var nRotTotal = 0;
       for (var i = 0; i < iNums; i++)
       {
-         iko.Context.rotate(2 * Math.PI / iNums);
-         iko.Context.strokeRect(0, 0, iSize / 2, iSize / 6);
+         // rotate [line 20140828°1425]
+         nRotate = 1.7 * Math.PI / iNums;
+         iko.Context.rotate(nRotate);
+         nRotTotal += nRotate;
+
+         // draw [line 20140828°1426]
+         iko.Context.strokeRect ( iHalf * 0.1, iHalf * 0.1
+                                 , iHalf * 0.3 , iHalf * 0.7
+                                  );
       }
+
+      // rotate wrapper close [line 20190401°0443]
+      iko.Context.rotate(nRotTotal * -1);
+      iko.Context.translate(iHalf * -1, iHalf * -1);
+ 
+   }
+
+   /**
+    * This object defines default properties for this algorithm.
+    *
+    * @id 20190401°0421
+    */
+   , defaultProperties : { // [Cvgr.Algos.oblongrose.defaultProperties]
+      BgColor : 'LightCyan'
+      , Color : 'LightCoral' // Red
+      , Color2 : 'PaleGreen' // Green
+      , Color3 : 'LightBlue' // Blue
+      , DrawNumberLimit : 5
    }
 };
 // + + + ✂ + + + + + + + + + + + + + + + + + + + + + + + + + +
@@ -1705,6 +1724,17 @@ Cvgr.Algos.pulse = {
          iko.Angle = iko.Angle - Math.PI;
       }
    }
+
+   /**
+    * This object defines default properties for this algorithm.
+    *
+    * @id 20140829°0523
+    */
+   , defaultProperties : { // [Cvgr.Algos.pulse.defaultProperties]
+      BgColor : 'LightCyan'
+      , DrawNumberLimit : 0
+   }
+
 };
 
 /**
@@ -1729,7 +1759,8 @@ Cvgr.Algos.triangle = {
       'use strict'; // [line 20190329°0843`25]
 
       // preparatory calculations [seq 20140916°0823]
-      var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+      // Remember issue 20140901°0331 'IE8 demands extra plus sign'
+      var iSize = (iko.Width + iko.Height) / 2;
       var iPt1x = iSize * 0.5;
       var iPt1y = iSize * 0.01;
       var iPt2x = iSize * 0.8;
@@ -1796,10 +1827,10 @@ Cvgr.Algos.triangle = {
     */
    , defaultProperties : { // [Cvgr.Algos.develop.defaultProperties]
       BgColor : 'LightCyan'
-      , Color : 'LightCoral' // Red
-      , Color2 : 'PaleGreen' // Green
-      , Color3 : 'LightBlue' // Blue
-      //, DrawOnlyOnce : true // it is static, not animated
+      , Color : 'LightCoral'                           // Red
+      , Color2 : 'PaleGreen'                           // Green
+      , Color3 : 'LightBlue'                           // Blue
+      , DrawNumberLimit : 0                            // unlimited
    }
 };
 
@@ -1831,7 +1862,8 @@ Cvgr.Algos.triangulum = {
       'use strict'; // [line 20190329°0843`26]
 
       // preparatory calculations [seq 20140916°0824]
-      var iSize = (+iko.Width + +iko.Height) / 2; // see note 20140901°0331 'IE8 demands extra plus sign'
+      // Remember issue 20140901°0331 'IE8 demands extra plus sign'
+      var iSize = (iko.Width + iko.Height) / 2;
 
       var nCurrAngle = iko.Angle;
       nCurrAngle = Math.sin (iko.Angle) * (iSize - 4) / 2 + iSize / 2;

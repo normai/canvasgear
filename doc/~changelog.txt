@@ -1,5 +1,9 @@
 
 
+   • Introduce Hamster algo with SVG data
+   •
+
+
    version 0.2.0.g — 20190331°0631
    • Algorithm substitution seems to work safely (todo 20190330°0423 'catch callback stockpile array overflow')
 

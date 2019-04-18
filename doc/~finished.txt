@@ -3,6 +3,14 @@
    Finished issues and the like
    ****************************
 ﻿
+   note 20190401°0441 'about rotation center point'
+   text : The MDN documentation says: The rotation center point is always
+      the canvas origin. To change the center point, you will need to
+      move the canvas by using the translate() method.
+   bottomline: Looks like we need to wrap the rotate in two translate.
+   location : Algo 'oblongrose'
+   status : finished
+
    todo 20190329°1045 'commandline and default values'
    text : The commandline should be evaluated only after the algorithm is
       known, and the algo default properties are assigned. This makes a clear
@@ -45,8 +53,8 @@
    matter :  The plus sign before iko.Width and iko.Height is wanted for
        IE8, which will otherwise interpret that as string, and e.g.
        iSize will have the value 3232 if width=64 and height=64.
-   location : e.g. line 20140916°0821
-       "var iSize = (+iko.Width + +iko.Height) / 2;"
+   location : E.g. line 20140916°0821
+       • "var iSize = (+iko.Width + +iko.Height) / 2;"
    status : Finished (feature 20180619°0115 'discontinue IE8 support')
    ܀
 

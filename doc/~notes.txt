@@ -3,6 +3,22 @@
    Room for any notes
    ******************
 
+   howto 20190401°0111 'draw svg on canvas'
+   matter : Which possibilities exist for drawing SVG on the canvas element?
+   chain : 'ProfessorCloud → SVG to HTML5 Canvas Converter' ✱
+   chain : ref 20190401°0132 'JsFiddle → Font converting SVG to Canvas'
+   chain : ref 20190401°0131 'Stackoverflow → Draw SVG on canvas with font'
+   chain : ref 20190401°0123 'JsFiddle → Embed svg on canvas' ✱
+   chain : ref 20190401°0122 'StackOverflow → Convert SVG to canvas'
+   chain : ref 20190401°0114 'Github → canvg (SVG parse and render on Canvas)'
+   chain : ref 20190401°0113 'Stackoverflow → Drawing SVG on canvas'
+   chain : 
+   chain : 
+   chain : 
+   chain : 
+   chain : 
+   ܀
+
    howto 20190331°0541 'about linebreaks in canvas'
    matter : The canvas method fillText does not support linebreaks.
       You have to do it on your own. There exist several solutions.
@@ -44,7 +60,7 @@
       • Color3      : ""
       • Command     : "..."
       ⯈ Context     : CanvasRenderingContext2D { ... }
-      • DrawOnlyOnce : false
+      • DrawOnlyOnce : false                           // replaced by DrawNumberLimit
       • Height      : 98
       • Hertz       : null
       • Ide         : "myCanvas21"
@@ -59,6 +75,16 @@
    ref : Screenshot 20190329o1053.chrome--debug--ikon-props.png [ref 20190329°1053]
    note : Func 20190330°0111 startCanvasGr_evalCmdlin is replaced
            by function 20190330°0241 settleAlgoProperties
+   ܀
+
+   note 20140916°1031 'known cornerstone values'
+   text : At this runtime moment, the following cornerstone values are known:
+      • Cvgr.Vars.nTrueAngleTurns : This is a value cycling between 0 and 0.999
+         with one Hertz frequency independend of the browser.
+      • Cvgr.Vars.nIncTurnsPerFrame : This value depends on the browser, it wobbles
+         around e.g. 0.017 to 0.020 with Chrome, or 0.021 to 0.023 with IE8.
+   location : Func executeFrame behind seq 20140815°1255 'calculate increment per frame'
+   status : informal statement
    ܀
 
    feature 20180619°0115 'discontinue IE8 support'

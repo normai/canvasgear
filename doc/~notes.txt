@@ -3,6 +3,15 @@
    Room for any notes
    ******************
 
+   finding 20190401°0451 'frame delay with pulled-behind canvases'
+   matter : Using Cvgr.Vars.iFrameNo with DrawNumberLimit has the following
+      shortcome. If the algo is loaded via pull-behind, then drawing starts
+      not immediately, but only after pullbehind_onLoad was called. At this
+      point, already severals frames might have been gone.
+   finding : The Hamster starts drawing with frame 2
+   status :
+   ܀
+
    howto 20190401°0111 'draw svg on canvas'
    matter : Which possibilities exist for drawing SVG on the canvas element?
    chain : 'ProfessorCloud → SVG to HTML5 Canvas Converter' ✱
@@ -12,11 +21,6 @@
    chain : ref 20190401°0122 'StackOverflow → Convert SVG to canvas'
    chain : ref 20190401°0114 'Github → canvg (SVG parse and render on Canvas)'
    chain : ref 20190401°0113 'Stackoverflow → Drawing SVG on canvas'
-   chain : 
-   chain : 
-   chain : 
-   chain : 
-   chain : 
    ܀
 
    howto 20190331°0541 'about linebreaks in canvas'

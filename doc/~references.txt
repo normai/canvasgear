@@ -13,6 +13,22 @@
    chain :
    ܀
 
+   ref 20190401°0551 'Scott Schiller → Drum Machine Demo'
+   objtype : ref.code
+   url : https://github.com/scottschiller/SoundManager2/blob/master/demo/mpc/script/mpc.js
+   title : Drum Machine Demo
+   summary : Nice example for using keyboard and sound
+   chain : https://github.com/scottschiller/SoundManager2/blob/master/mpc/index.html
+   ܀
+
+   ref 20190401°0541 'Scott Schiller → A noisy page'
+   objtype : ref.code
+   url : https://github.com/scottschiller/SoundManager2/blob/master/demo/animation-2b/script/animation.js
+   title : A noisy page
+   summary : Nice example for using cursor movement and sound
+   chain : https://github.com/scottschiller/SoundManager2/blob/master/demo/animation-2b/index.html
+   ܀
+
    ref 20190401°0133 'ProfessorCloud → SVG to HTML5 Canvas Converter' ✱
    objtype : ref.service
    url : http://www.professorcloud.com/svg-to-canvas/

@@ -1,22 +1,14 @@
 
-
+   release v0.2.1 — 20190401°0551 (2019-Apr-19)
+   • Search pull-behind scripts in 'rider' subfolder, then in root folder
+   • Algorithm substitution, fallback for not-found algorithms
+   • External Template algorithm overwrites internal
    • Introduce Hamster algo with SVG data
-   •
-
-
-   version 0.2.0.g — 20190331°0631
-   • Algorithm substitution seems to work safely (todo 20190330°0423 'catch callback stockpile array overflow')
-
-   version 0.2.0.e — 20190331°0421
-   • Allow rider scripts in subfolder (feature 20190331°0411 'rider scripts in two folders')
 ﻿
-   version 20190330°1314 0.2.0.c
-   • External Template algorithm overwrites internal (feature 20190330°0141 'external algo overwrites built-in one')
-
-   release 0.1.9 — 20190330°0757
+   release v0.1.9 — 20190330°0757
    • Introduce supplementing new algorithm via rider script recognition (feature 20180619°0113)
 
-   release CanvasGear v0.1.7 — 20190330°0711 (2019-Apr-11)
+   release v0.1.7 — 20190330°0711 (2019-Apr-11)
    • Read parameter from data-cvgr attribute
    • Discontinue IE8 support, remove excanvas.js
 ﻿   • Convert files to UTF-8

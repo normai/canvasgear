@@ -1,7 +1,7 @@
 ﻿/*! - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
  * This script supplements a CanvasGear algorithm [file 20190329°1111]
  *
- * version : 0.2.0.h.. — 20190331°0631
+ * version : 0.2.1 — 20190401°0551
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */

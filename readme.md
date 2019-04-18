@@ -1,4 +1,4 @@
-# CanvasGear v0.2.0.h.. <sup><sub><sub>20190331°0631</sub></sub></sup>
+# CanvasGear v0.2.1 <sup><sub><sub>20190401°0551</sub></sub></sup>
 
 **Slogan** : Draw animated canvases by specifying parameters in a data attribute
 
@@ -39,6 +39,6 @@
 
 Have fun
 
-2019-April-14
+2019-April-19
 
 <sup><sub>(file 20140815°0121) (project 20140815°0111)</sub></sup>

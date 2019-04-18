@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.0.g — 20190331°0631
+ * version : 0.2.1 — 20190401°0551
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -45,14 +45,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.0.h..'
+    versionnumber : '0.2.1'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190331°0631'
+   , versiontimestamp : '20190401°0551'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -661,20 +661,9 @@ Cvgr.Func.executeFrame = function()
       // convenience [seq 20190330°0327]
       var iko = Cvgr.Vars.icos[iNdx];
 
-///if ( sAlgo === 'Oha1' ) {
-if ( iko.Ide === 'myCanvas29' ) {
-   var sAlgo = sAlgo;
-}
-
-      /*
-      finding 20190401°0451 'frame delay with pulled-behind canvases'
-      matter : Using Cvgr.Vars.iFrameNo with DrawNumberLimit has the following
-         shortcome. If the algo is loaded via pull-behind, then drawing starts
-         not immediately, but only after pullbehind_onLoad was called. At this
-         point, already severals frames might have been gone.
-      finding : The Hamster starts drawing with frame 2
-      status :
-      */
+      if ( iko.AlgoName === 'Template' ) {
+         var sAlgo = sAlgo;
+      }
 
       // process DrawNumberLimit flag [seq 20190401°0431]
       // Remeber issue 20190401°0435 'hamster appears multiple times'
@@ -695,7 +684,7 @@ if ( iko.Ide === 'myCanvas29' ) {
 
       // (.2) [condition 20190329°0411]
       // note : The condition got tricky with feature 20190330°0141 'external algo
-      //  overwrites built-in one'. Before, it was just : "if (sAlgo in Cvgr.Algos)"
+      //  overwrites built-in one'. Before, it was plain "if (sAlgo in Cvgr.Algos)".
       if ( ( (sAlgo in Cvgr.Algos) && ( (sAlgo !== 'Template') || Cvgr.Vars.bTemplateSearchFinished ) )
           || ( iko.bIsDefaultSettingDone )
            )
@@ -775,7 +764,6 @@ if ( iko.Ide === 'myCanvas29' ) {
                                         , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][0]
                                          , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][1]
                                           );
-
       } // immediate-versus-load condition finished
    } // single canvas processing finished
 
@@ -795,9 +783,9 @@ if ( iko.Ide === 'myCanvas29' ) {
  */
 Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
 {
-   ///if ( Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] === 'MyAlgo' ) {
-   ///   var xDbg = xDbg;
-   ///}
+   if ( Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] === 'Template' ) {
+      var xDbg = xDbg;
+   }
 
    // was the second attempt already done? [condition 20190329°0434]
    if ( Cvgr.Vars.aPiggyFlags4OnError1[iNdxPiggy] === false ) {
@@ -822,12 +810,22 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
    // main job [line 20190331°0253]
    Cvgr.Vars.aPiggyFlags4OnError2[iNdxPiggy] = true;
 
-   // [line 20190331°0333]
-   Cvgr.Vars.bTemplateSearchFinished = true;
-
    // is algorithm available now? [condi 20190329°0453]
    if ( Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] in Cvgr.Algos ) {
+
+      // [seq 20190331°0333]
+      Cvgr.Vars.bTemplateSearchFinished = true;
       Cvgr.Vars.aPiggyFlags4Avail[iNdxPiggy] = true;
+
+      // this should be the run only by 'Template', does it? [seq 20190401°0531]
+      // So far, only Template is searched external, although it were available internal.
+      // todo : Sequence is redundant with just below. Somehow merge the two.
+      var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
+      for (var i = 0; i < aIcos.length; i++) {
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Template intern ' + i);
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
+         Cvgr.Func.settleAlgoProperties(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
+      }
    }
    else {
       // rider not found, switch to default algo [seq 20190331°0343 (like 20190331°0345)]
@@ -865,9 +863,6 @@ Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
 {
    // main job [line 20190331°0323]
    Cvgr.Vars.aPiggyFlags4OnLoad1[iNdxPiggy] = true;
-
-   // [line 20190331°0335]
-   Cvgr.Vars.bTemplateSearchFinished = true;
 
    // fulfill [seq 20190330°0345] issue 20190330°0331 'pull-behind only per algo'
    var sAlgoNam = Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy];
@@ -1458,7 +1453,7 @@ Cvgr.Algos.Template = Cvgr.Algos.Template || {};
 /**
  * This function implements the drawing algorithm
  *
- * @id 20190329°0631
+ * @id 201910329°0631
  * @callers Only • Cvgr.Func.executeFrame
  * @note See issue 20190329°0421 'impossible index', is it solved?
  * @param {Object} iko — The Icon object to paint
@@ -1514,6 +1509,15 @@ Cvgr.Algos.Template.executeAlgorithm = function(iko)
    if (iko.Angle > Math.PI * 2) {
       iko.Angle = iko.Angle - Math.PI * 2;
    }
+};
+
+ /**
+ * This object defines default properties for this algorithm.
+ *
+ * @id 201910329°0641
+ */
+Cvgr.Algos.Template.defaultProperties = {
+   DrawNumberLimit : 0
 };
 // ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
 

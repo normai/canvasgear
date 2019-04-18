@@ -3,6 +3,14 @@
    Issues and todos
    ****************
 
+   todo 20190401°0523 'combine piggy variables'
+   do : Somehow combine all piggy variables to one single object.
+   note : If that were done, then in seq 20190330°0344 'create piggy
+      array set', one single push() should suffice, instead of ~eight.
+   proposal: Use an array of objects.
+   status : open
+   ܀
+
    issue 20190401°0435 'hamster appears multiple times'
    matter : The Hamster algo paints a series of smaller and smaller faces
       with each frame. It shall draw one and the same face each frame.

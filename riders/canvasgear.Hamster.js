@@ -966,7 +966,7 @@ Cvgr.Algos.Hamster.executeAlgorithm = function(iko)
    // shift into visibility [seq 20190401°0413]
    // Remember issue 20190401°0435 'hamster appears multiple times'
    if (true) {
-      iko.Context.translate(121, 166);
+      iko.Context.translate(111, 144);
       iko.Context.scale(0.77, 0.77);
    }
 
@@ -976,25 +976,25 @@ Cvgr.Algos.Hamster.executeAlgorithm = function(iko)
       sText = (Cvgr.Vars.iFrameNo - iko.iFrameDelay) + ' ' + sText; // debug repetition pattern [line 20190401°0436]
       iko.Context.fillStyle = 'Teal';
       iko.Context.font = "1.9em Arial";
-      ///iko.Context.fillText(sText, 3, 21);
-      ///iko.Context.fillText(sText, 3, ( 0 + iko.Height * 0.01));
-      iko.Context.fillText(sText, iko.Height * 0.4, ( iko.Height * -0.27 )); // how exactly calculate the upper left corner?
+
+      // How can the upper left corner be calculated exactly? [issue 20190401°0513]
+      var nLeft = 0;
+      var nTop = 0;
+      if (true) {
+         nLeft = iko.Height * 0.4;
+         nTop = ( iko.Height * -0.27 );
+      }
+      iko.Context.fillText(sText, nLeft, nTop);
    }
 };
 
 /**
- * This object can define default properties for this algorithm.
- *  Use the same names as are used on the data-cvgr commandline.
+ * This object defines the default properties for this algorithm
  *
  * @id 20190401°0423
  */
 Cvgr.Algos.Hamster.defaultProperties = {
-   ///DrawNumberLimit : 1      // produces one hamster
-   ///DrawNumberLimit : 2      // produces one hamster
-   ///DrawNumberLimit : 3      // produces two hamsters
-   ///DrawNumberLimit : 4      // produces tree hamsters
-   DrawNumberLimit : 5      // produces four hamsters
-   ///DrawNumberLimit : 6         // produces five hamsters
+   DrawNumberLimit : 5
 };
 
 ﻿/* - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -29,9 +29,10 @@
    see : ref 20190331°0542 'stackoverflow → fillText won't do line breaks
    ܀
 
-   feature 20190331°0411 'riders also in subfolder'
-   matter : For the rider scripts, which are to be located parallel to
-      canvasgear.js, I want an alternative place, the subfolder 'riders'
+   feature 20190331°0411 'rider scripts in two folders'
+   matter : Any not-built-in algoritm is searched in subfolder 'riders'.
+      If it is not found there, make a second search in the folder where
+      canvasgear.js resides.
    status :
    ܀
 

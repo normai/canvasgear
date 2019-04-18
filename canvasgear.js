@@ -351,8 +351,17 @@ Cvgr.startCanvasGear = function()
  * Important: All three aPull* arrays have their indices in parallel
  *
  * @id 20190330°0341
+ * @see todo 20190401°0523 'combine piggy variables'
  */
 Cvgr.Vars.aPiggyAlgoNames = [];
+
+/**
+ * This array stores the module names for the second pullbehind attempt
+ *
+ * @id 20190331°0315
+ * @see todo 20190401°0523 'combine piggy variables'
+ */
+Cvgr.Vars.aPiggyModuleNamesTwo = [];
 
 /**
  * The callback stockpile array is the brute force helper for
@@ -360,6 +369,7 @@ Cvgr.Vars.aPiggyAlgoNames = [];
  *
  * @id [var 20190330°0415]
  * @note Remember todo 20190330°0423 'catch callback stockpile array overflow'
+ * @see todo 20190401°0523 'combine piggy variables'
  * @type {Array}
  */
 Cvgr.Vars.aPiggyCallbacks = [];
@@ -421,6 +431,7 @@ Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 9 
  * This array stores error flags associated with the pullback attempts
  *
  * @id 20190331°0313
+ * @see todo 20190401°0523 'combine piggy variables'
  */
 Cvgr.Vars.aPiggyFlags4Avail = [];
 
@@ -428,29 +439,41 @@ Cvgr.Vars.aPiggyFlags4Avail = [];
  * This array stores error flags associated with the pullback attempts
  *
  * @id 20190331°0311
+ * @see todo 20190401°0523 'combine piggy variables'
  */
-Cvgr.Vars.aPiggyFlags4OnError = [];
+Cvgr.Vars.aPiggyFlags4OnError2 = [];
 
 /**
  * This array stores success flags associated with the pullback attempts
  *
- * @id 20190329°0433
+ * @id 20190329°0431
+ * @see todo 20190401°0523 'combine piggy variables'
  * @note Not yet used, isn't it?
  */
-Cvgr.Vars.aPiggyFlags4OnLoad = [];
+Cvgr.Vars.aPiggyFlags4OnLoad1 = [];
 
 /**
- * This array stores an array of icons for piggybacking on the
- *  pull-behind function of the first of their algo name.
+ * This array stores success flags associated with the pullback attempts
  *
- * @id 20190330°0342
+ * @id 20190329°0432
+ * @see todo 20190401°0523 'combine piggy variables'
+ * @note Not yet used, isn't it?
+ */
+Cvgr.Vars.aPiggyFlags4OnError1 = [];
+
+/**
+ * This are the flags for the second pull-behind attempt
+ *
+ * @id 
+ * @see todo 20190401°0523 'combine piggy variables'
  */
 Cvgr.Vars.aPiggyIconArrays = [];
 
 /**
  * This array stores the timers to examine the non-immediate algorithms
  *
- * @id 20190329°0431
+ * @id 20190329°0433
+ * @see todo 20190401°0523 'combine piggy variables'
  */
 Cvgr.Vars.aPiggyTimers = [];
 
@@ -500,11 +523,12 @@ Cvgr.Func.examineAlgo = function(iNdxPiggy, iko)
 
    // debug output
    Cvgr.Vars.sDebugPageHelper += '<br /> — examineAlgo :' + ' piggy ' + iNdxPiggy + ' &nbsp;'
-                       + ' onLoad = ' + Cvgr.Vars.aPiggyFlags4OnLoad[iNdxPiggy] + ' &nbsp;'
-                        + ' onError = ' + Cvgr.Vars.aPiggyFlags4OnError[iNdxPiggy] + ' &nbsp;'
-                         + ' avail = ' + Cvgr.Vars.aPiggyFlags4Avail[iNdxPiggy] + ' &nbsp;'
-                          + ' algo = ' + sAlgoNameOrg + ' / ' + iko.AlgoName
-                           ;
+                       + ' onLoad = ' + Cvgr.Vars.aPiggyFlags4OnLoad1[iNdxPiggy] + ' &nbsp;'
+                        + ' onError1 = ' + Cvgr.Vars.aPiggyFlags4OnError1[iNdxPiggy] + ' &nbsp;'
+                         + ' onError2 = ' + Cvgr.Vars.aPiggyFlags4OnError2[iNdxPiggy] + ' &nbsp;'
+                          + ' avail = ' + Cvgr.Vars.aPiggyFlags4Avail[iNdxPiggy] + ' &nbsp;'
+                           + ' algo = ' + sAlgoNameOrg + ' / ' + iko.AlgoName
+                            ;
 };
 
 /**
@@ -719,26 +743,27 @@ if ( iko.Ide === 'myCanvas29' ) {
 
          // (2.2.2) load buddy module [seq 20190329°0415]
          var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/canvasgear/"
-         var sModuleNameOne = sPathAbs + 'canvasgear.' + sAlgo + '.js';
-         var sModuleNameTwo = sPathAbs + 'riders/canvasgear.' + sAlgo + '.js';
+         var sModuleNameOne = sPathAbs + 'riders/canvasgear.' + sAlgo + '.js';
+         var sModuleNameTwo = sPathAbs + 'canvasgear.' + sAlgo + '.js';
          var iModuleIndex = Cvgr.Vars.aPiggyAlgoNames.length;
 
          // create piggy array set [seq 20190330°0344]
-         //  Try solving issue 20190330°0331 'pull-behind only per algo'
+         // This helps to solve issue 20190330°0331 'pull-behind only per algo'
+         // See todo 20190401°0523 'combine piggy variables'
          Cvgr.Vars.aPiggyAlgoNames.push(sAlgo);
          var ar = [];
          ar.push(iko);
          Cvgr.Vars.aPiggyIconArrays.push(ar);
-
          Cvgr.Vars.aPiggyFlags4Avail.push(false);
-         Cvgr.Vars.aPiggyFlags4OnError.push(false);
-         Cvgr.Vars.aPiggyFlags4OnLoad.push(false);
+         Cvgr.Vars.aPiggyFlags4OnError2.push(false);
+         Cvgr.Vars.aPiggyFlags4OnLoad1.push(false);
+         Cvgr.Vars.aPiggyFlags4OnError1.push(false);
          Cvgr.Vars.aPiggyTimers.push ( setTimeout ( Cvgr.Func.examineAlgo
                                       , 1444                           // to be tuned
                                        , Cvgr.Vars.aPiggyTimers.length // index into the piggy arrays
                                         , Cvgr.Vars.icos[iNdx]         // why this?
                                          ));
-
+         Cvgr.Vars.aPiggyModuleNamesTwo.push(sModuleNameTwo);
 
          // output debug message [line 20190330°0416]
          Cvgr.Vars.sDebugPageHelper += '<br /> — pullScriptBehind ' + iModuleIndex + ' ' + sAlgo;
@@ -746,23 +771,13 @@ if ( iko.Ide === 'myCanvas29' ) {
          // try loading the wanted script [line 20190330°0417]
          // Heureka, with the hardcoded callback stockpile, the parameters work individually
          // Remember brute force debug issue 20190330°0355 'callback parameter useless'
-         Trekta.Utils.pullScriptBehind ( sModuleNameTwo
+         Trekta.Utils.pullScriptBehind ( sModuleNameOne
                                         , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][0]
                                          , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][1]
                                           );
 
-         if (true) {
-            // experiment [line 20190331°0413]
-            // Try introduce feature 20190331°0411 'riders also in subfolder'
-            // Crazy — It looks like this single line does the job. I cannot believe it yet.
-            Trekta.Utils.pullScriptBehind ( sModuleNameOne
-                                           , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][3]
-                                            , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][4]
-                                             );
-         }
-
       } // immediate-versus-load condition finished
-   } // icon processing finished
+   } // single canvas processing finished
 
    // setup for animation [line 20140815°1258]
    window.requestAnimFrame(Cvgr.Func.executeFrame);
@@ -780,9 +795,32 @@ if ( iko.Ide === 'myCanvas29' ) {
  */
 Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
 {
+   ///if ( Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] === 'MyAlgo' ) {
+   ///   var xDbg = xDbg;
+   ///}
+
+   // was the second attempt already done? [condition 20190329°0434]
+   if ( Cvgr.Vars.aPiggyFlags4OnError1[iNdxPiggy] === false ) {
+
+      // pullbehind second attempt [line 20190331°0413]
+      // See feature 20190331°0411 'rider scripts in two folders'
+      Cvgr.Vars.aPiggyFlags4OnError1[iNdxPiggy] = true;
+      Trekta.Utils.pullScriptBehind ( Cvgr.Vars.aPiggyModuleNamesTwo[iNdxPiggy]
+                                     , Cvgr.Vars.aPiggyCallbacks[iNdxPiggy][0] // [2]
+                                      , Cvgr.Vars.aPiggyCallbacks[iNdxPiggy][1] // [3]
+                                       );
+      Cvgr.Vars.sDebugPageHelper += '<br /> — pullScript_Second :'
+                     + ' &nbsp; piggy ' + iNdxPiggy
+                      + ' &nbsp; "' + Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] + '"'
+                       + ' &nbsp; onload = ' + Cvgr.Vars.aPiggyFlags4OnLoad1[iNdxPiggy]
+                        + ' &nbsp; onerror1 = ' + Cvgr.Vars.aPiggyFlags4OnError1[iNdxPiggy]
+                         + ' &nbsp; onerror2 = ' + Cvgr.Vars.aPiggyFlags4OnError2[iNdxPiggy]
+                          ;
+      return;
+   }
 
    // main job [line 20190331°0253]
-   Cvgr.Vars.aPiggyFlags4OnError[iNdxPiggy] = true;
+   Cvgr.Vars.aPiggyFlags4OnError2[iNdxPiggy] = true;
 
    // [line 20190331°0333]
    Cvgr.Vars.bTemplateSearchFinished = true;
@@ -808,8 +846,9 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
    Cvgr.Vars.sDebugPageHelper += '<br /> — pullbehind_onError :'
                      + ' &nbsp; piggy ' + iNdxPiggy
                       + ' &nbsp; "' + Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] + '"'
-                       + ' &nbsp; onload = ' + Cvgr.Vars.aPiggyFlags4OnLoad[iNdxPiggy]
-                        + ' &nbsp; onerror = ' + Cvgr.Vars.aPiggyFlags4OnError[iNdxPiggy]
+                       + ' &nbsp; onload = ' + Cvgr.Vars.aPiggyFlags4OnLoad1[iNdxPiggy]
+                        + ' &nbsp; onerror1 = ' + Cvgr.Vars.aPiggyFlags4OnError1[iNdxPiggy]
+                         + ' &nbsp; onerror2 = ' + Cvgr.Vars.aPiggyFlags4OnError2[iNdxPiggy]
                           ;
 };
 
@@ -825,7 +864,7 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
 Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
 {
    // main job [line 20190331°0323]
-   Cvgr.Vars.aPiggyFlags4OnLoad[iNdxPiggy] = true;
+   Cvgr.Vars.aPiggyFlags4OnLoad1[iNdxPiggy] = true;
 
    // [line 20190331°0335]
    Cvgr.Vars.bTemplateSearchFinished = true;

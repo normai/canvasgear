@@ -8,7 +8,7 @@
    • Algorithm substitution seems to work safely (todo 20190330°0423 'catch callback stockpile array overflow')
 
    version 0.2.0.e — 20190331°0421
-   • Allow rider scripts in subfolder (feature 20190331°0411 'riders also in subfolder')
+   • Allow rider scripts in subfolder (feature 20190331°0411 'rider scripts in two folders')
 ﻿
    version 20190330°1314 0.2.0.c
    • External Template algorithm overwrites internal (feature 20190330°0141 'external algo overwrites built-in one')

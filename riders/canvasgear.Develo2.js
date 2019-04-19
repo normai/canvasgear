@@ -1,8 +1,10 @@
 /*! ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
  * This section holds the Develo2 algorithm
  *
- * id : section 20190401°0711 (after 20140901°0511)
+ * id : file 20190401°0711 (after 20140901°0511)
  */
+
+'use strict';
 
 // Formal integration [seq 20190329°0621`xx]
 var Cvgr = Cvgr || {};
@@ -61,54 +63,111 @@ Cvgr.Algos.Develo2 = {
       }
 
       // draw each round [seq 20190401°1013]
-      if (iCursoPosX !== null) {
+      if ( Cvgr.Algos.Develo2.iCursorPosX !== null ) {
+
+
+         // calculate fix [seq 20190401°1033]
+         // Compare seq 20190324°0831 'fix the height calculation' in file 20190324°0757
+         //    http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursorTrekta.js
+         var nScrollAmountX = document.documentElement.scrollLeft || document.body.scrollLeft;
+         var nScrollAmountY = document.documentElement.scrollTop || document.body.scrollTop;
+
+         // convenience [seq 20190401°1031]
+         var nCurPosX = Cvgr.Algos.Develo2.iCursorPosX - iko.Canvas.offsetLeft + nScrollAmountX;
+         var nCurPosY = Cvgr.Algos.Develo2.iCursorPosY - iko.Canvas.offsetTop + nScrollAmountY;
 
          // (.) draw [seq 20190401°1015]
          iko.Context.beginPath();
-         iko.Context.arc ( iCursoPosX                        // center point x
-                          , iCursoPosX                       // center point y
-                           , 16 // nRadiCurr                 // radius
-                            , 0                              // starting point angle in radians, starting east
-                             , Math.PI * 2                   // endpoint angle in radians
-                              , false                        // clockwise
+         iko.Context.arc ( nCurPosX                                    // center point x
+                          , nCurPosY                                   // center point y
+                           , 16 // nRadiCurr                           // radius
+                            , 0                                        // starting point angle in radians, starting east
+                             , Math.PI * 2                             // endpoint angle in radians
+                              , false                                  // clockwise
                                );
 
          // (.) finish [seq 20140829°0518]
          iko.Context.closePath();
-         iko.Context.fillStyle = iko.Color;
+         iko.Context.fillStyle = 'DeepPink';                           // o.Color;
          iko.Context.fill();
+
+         // debug [seq 20190401°1033]
+         iko.Context.fillStyle = 'Teal';
+         iko.Context.font = "1.1em monospace";                         // Arial monospace
+         iko.Context.fillText('nScrollAmountY  = ' + nScrollAmountY, 11, 44);
+         iko.Context.fillText('nCurPosY        = ' + nCurPosY, 11, 66);
 
       }
 
    }
 
    /**
-    * This optional function shall pick up a cursor position
+    * This optional function shall pick up the key-down event
     *
-    * @id 20190401°0741
+    * @id 20190401°1101
     * @status Under construction
     * @callers Only •
     */
-   , pickupCursor : function(evt) // [Cvgr.Algos.Develo2.pickupCursor]
+   , pickupOnKeyDown : function() // [Cvgr.Algos.Develo2.pickupOnKeyDown]
    {
-      // [seq 20190401°1025]
-      iCursoPosX = 123;
-      iCursoPosy = 123;
    }
 
    /**
-    * This optional function shall pick up a keystroke
+    * This optional function shall pick up the mouse-down event
     *
-    * @id 20190401°0751
-    * @status Under construction
+    * @id 20190401°1111
     * @callers Only •
     */
-   , pickupKeystroke : function() // [Cvgr.Algos.Develo2.pickupKeystroke]
+   , pickupOnMouseDown : function() // [Cvgr.Algos.Develo2.pickupOnKeyDown]
    {
    }
 
-   , iCursoPosX : null // [prop 20190401°1021]
-   , iCursoPosy : null // null // [prop 20190401°1023]
+   /**
+    * This optional function shall pick up the mouse-move event
+    *
+    * @id 20190401°1121 [[20190401°0741]]
+    * @callers Only •
+    */
+   , pickupOnMouseMove : function(evt) // [Cvgr.Algos.Develo2.pickupOnMouseMove]
+   {
+      // [seq 20190401°1025]
+      Cvgr.Algos.Develo2.iCursorPosX = evt.clientX;
+      Cvgr.Algos.Develo2.iCursorPosY = evt.clientY;
+   }
+
+   /**
+    * This optional function shall pick the mouse-up event
+    *
+    * @id 20190401°1131
+    * @callers Only •
+    */
+   , pickupOnMouseUp : function() // [Cvgr.Algos.Develo2.pickupOnKeyDown]
+   {
+   }
+
+   /**
+    * This optional function shall pick up the touch-move event
+    *
+    * @id 20190401°1141
+    * @callers Only •
+    */
+   , pickupOnTouchMove : function() // [Cvgr.Algos.Develo2.pickupOnTouchMove]
+   {
+   }
+
+   /**
+    * This optional function shall pick up the touch-move event
+    *
+    * @id 20190401°1151
+    * @callers Only •
+    */
+   , pickupOnTouchStart : function() // [Cvgr.Algos.Develo2.pickupOnTouchStart]
+   {
+   }
+
+   , iCursorPosX : null // [prop 20190401°1021]
+
+   , iCursorPosY : null // null // [prop 20190401°1023]
 
    /**
     * This object defines default properties for this algorithm

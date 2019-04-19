@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.2.a — 20190401°0551..
+ * version : 0.2.2.a.. — 20190401°0551..
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -830,31 +830,24 @@ Cvgr.Func.initializeCanvas = function(iko)
 
    // (B) process events [seq 20190401°0911]
    var sAlgo = iko.AlgoName;
-   var bProcessCursor = false;
-   var bProcessKeyboard = false;
-   if ( 'pickupCursor' in Cvgr.Algos[sAlgo]) {
-      bProcessCursor = true;
+   if ( 'pickupOnKeyDown' in Cvgr.Algos[sAlgo]) {
+      iko.Canvas.onkeydown = Cvgr.Algos[sAlgo].pickupOnKeyDown;
    }
-   if ( 'pickupKeyboard' in Cvgr.Algos[sAlgo]) {
-      bProcessKeyboard = true;
+   if ( 'pickupOnMouseMove' in Cvgr.Algos[sAlgo]) {
+      iko.Canvas.onmousemove = Cvgr.Algos[sAlgo].pickupOnMouseMove;
    }
-
-   // (B.1) cursor [seq 20190401°0921]
-   if ( bProcessCursor ) {
-
-      //alert ("processing cursor");
-
-      ////document.onmousemove = doPaint;
-      ////document.onmouseup = stopPaint;
-      iko.Canvas.onmousemove = Cvgr.Algos[sAlgo].pickupCursor;
-      //document.onmouseup = stopPaint;
+   if ( 'pickupOnMouseDown' in Cvgr.Algos[sAlgo]) {
+      iko.Canvas.onmousedown = Cvgr.Algos[sAlgo].pickupOnMouseDown;
    }
-
-   // (B.2) keyboard [seq 20190401°0931]
-   if (bProcessKeyboard) {
-      //
+   if ( 'pickupOnMouseUp' in Cvgr.Algos[sAlgo]) {
+      iko.Canvas.onmouseup = Cvgr.Algos[sAlgo].pickupOnMouseUp;
    }
-
+   if ( 'pickupOnTouchMove' in Cvgr.Algos[sAlgo]) {
+      iko.Canvas.ontouchmove = Cvgr.Algos[sAlgo].pickupOnTouchMove;
+   }
+   if ( 'pickupOnTouchStart' in Cvgr.Algos[sAlgo]) {
+      iko.Canvas.ontouchstart = Cvgr.Algos[sAlgo].pickupOnTouchStart;
+   }
 
    // (C) set signal [line 20190330°0344]
    iko.bIsDefaultSettingDone = true;

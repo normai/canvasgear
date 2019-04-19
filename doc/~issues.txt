@@ -69,7 +69,7 @@
    matter : The properties are precessed humble one by one.
    do : Process properties in lump-sum treatment
    chain : todo 20190329°1045 'commandline and default values'
-   status : under construction (see func 20190330°0241 settleAlgoProperties)
+   status : under construction (see func 20190330°0241 initializeCanvas)
    ܀
 
    todo 20190330°0121 'register test buttons cleanup'

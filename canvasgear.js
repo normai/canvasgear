@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.1 — 20190401°0551
+ * version : 0.2.2.a — 20190401°0551..
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -45,14 +45,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.1'
+    versionnumber : '0.2.2.a'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190401°0551'
+   , versiontimestamp : '20190401°0551..'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -192,18 +192,17 @@ Cvgr.Objs.Ikon = function()
 };
 
 /**
- * This class represents one line to be drawn
+ * This class represents one straight line
  *
  * @id 20140901°0511
- * @usage In function algoLines() ...
- * @status Embryonic ... experimental
+ * @callers • function algoLines()
+ * @status experimental, embryonic
  * @param {number} iX1 — x position start
  * @param {number} iY1 — y position start
  * @param {number} iX2 — x position end
  * @param {number} iY2 — y position end
  * @param {string} sColor — The web color name (see func 20140831°0321 Webcolors)
- * @param {number} iWidth — Optional, width in pixel (ES6 default params do not
- *           work in IE, see issue 20190312°0251 'IE fails with default params')
+ * @param {number} iWidth — Optional, width in pixel
  */
 Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iThick)
 {
@@ -691,7 +690,7 @@ Cvgr.Func.executeFrame = function()
       {
          // (2.1) immediate call [seq 20190329°0413]
          if ( ! iko.bIsDefaultSettingDone ) {
-            Cvgr.Func.settleAlgoProperties(iko); // initialize icon
+            Cvgr.Func.initializeCanvas(iko); // initialize icon
          }
          try {
             // execute icon
@@ -772,6 +771,96 @@ Cvgr.Func.executeFrame = function()
 };
 
 /**
+ * This function sets the algorithm properties, reading first the built-in
+ *  default values, then overwriting them with the commandline values
+ *
+ * @id 20190330°0241
+ * @note ref 20140926°0352 'Stackoverflow : Check key in object'
+ * @note ref 20140926°0351 'Stacko : For-each on array'
+ * @note ref 20111031°1322 'Harms & Diaz : JavaScript object oriented ...'
+ * @see note 20190329°1043 'the icon properties so far'
+ * @callers Two places •• each before Cvgr.Algos[sAlgo].executeAlgorithm
+ * @param {Object} iko — The Ikon to be processed
+ */
+Cvgr.Func.initializeCanvas = function(iko)
+{
+   // (A) process properties [seq 20190330°0311]
+   // (A.) translate tokens to property names [seq 20190330°0313]
+   var oTokToProp = {
+      algo : 'AlgoName'
+      , bgcolor : 'BgColor'
+      , color : 'Color'
+      , color2 : 'Color2'
+      , color3 : 'Color3'
+      , height : 'Height'
+      , hertz : 'Hertz'
+      , shiftx : 'ShiftX'
+      , shifty : 'ShiftY'
+      , width : 'Width'
+   };
+
+   // (A.) get possible default properties [line 20190330°0242]
+   // About JavaScript syntax — Curiously, here it causes no error, if the
+   //  algorithm namespace has no defaultProperties defined, not even in IE9.
+   var oDefaults = Cvgr.Algos[iko.AlgoName].defaultProperties;
+
+   // (A.) first apply default values to Ikon object [line 20190330°0243]
+   for (var sKey in oDefaults) {
+      iko[sKey] = oDefaults[sKey];
+   }
+
+   // (A.) then overwrite with commandline values [seq 20190330°0244]
+   for ( var sKeySrc in iko.CmdsHash) {
+
+      // (A.) do not restore the algo name [seq 20190331°0321]
+      //  Any not-found algo might have switched it to default algo ('pulse')
+      if (sKeySrc === 'algo') {
+         continue;
+      }
+
+      // (A.) translate [seq 20190330°0245]
+      var sKeyTgt = sKeySrc;
+      if (sKeySrc in oTokToProp) {
+         sKeyTgt = oTokToProp[sKeySrc];
+      }
+
+      // (A.) write [seq 20190330°0246]
+      iko[sKeyTgt] = iko.CmdsHash[sKeySrc];
+   }
+
+   // (B) process events [seq 20190401°0911]
+   var sAlgo = iko.AlgoName;
+   var bProcessCursor = false;
+   var bProcessKeyboard = false;
+   if ( 'pickupCursor' in Cvgr.Algos[sAlgo]) {
+      bProcessCursor = true;
+   }
+   if ( 'pickupKeyboard' in Cvgr.Algos[sAlgo]) {
+      bProcessKeyboard = true;
+   }
+
+   // (B.1) cursor [seq 20190401°0921]
+   if ( bProcessCursor ) {
+
+      //alert ("processing cursor");
+
+      ////document.onmousemove = doPaint;
+      ////document.onmouseup = stopPaint;
+      iko.Canvas.onmousemove = Cvgr.Algos[sAlgo].pickupCursor;
+      //document.onmouseup = stopPaint;
+   }
+
+   // (B.2) keyboard [seq 20190401°0931]
+   if (bProcessKeyboard) {
+      //
+   }
+
+
+   // (C) set signal [line 20190330°0344]
+   iko.bIsDefaultSettingDone = true;
+};
+
+/**
  * This function is an event handler for the script onerror event.
  *   It is possibly called after wanted script pulled-behind failed.
  *
@@ -824,7 +913,7 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
       for (var i = 0; i < aIcos.length; i++) {
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Template intern ' + i);
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
-         Cvgr.Func.settleAlgoProperties(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
+         Cvgr.Func.initializeCanvas(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
       }
    }
    else {
@@ -836,7 +925,7 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].AlgoName = 'pulse';
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Rp ' + i);
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
-         Cvgr.Func.settleAlgoProperties(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
+         Cvgr.Func.initializeCanvas(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
       }
    }
 
@@ -887,73 +976,12 @@ Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
       if (sAlgoNam in Cvgr.Algos) {
          // finally do the wanted algo [line 20190329°0215]
          if ( ! iko.bIsDefaultSettingDone ) {
-            Cvgr.Func.settleAlgoProperties(iko);
+            Cvgr.Func.initializeCanvas(iko);
          }
          iko.iFrameDelay = Cvgr.Vars.iFrameNo - 1;
          Cvgr.Algos[iko.AlgoName].executeAlgorithm(iko);
       }
    }
-};
-
-/**
- * This function sets the algorithm properties, reading first the built-in
- *  default values, then overwriting them with the commandline values
- *
- * @id 20190330°0241
- * @note ref 20140926°0352 'Stackoverflow : Check key in object'
- * @note ref 20140926°0351 'Stacko : For-each on array'
- * @note ref 20111031°1322 'Harms & Diaz : JavaScript object oriented ...'
- * @see note 20190329°1043 'the icon properties so far'
- * @callers Two places •• each before Cvgr.Algos[sAlgo].executeAlgorithm
- * @param {Object} iko — The Ikon to be processed
- */
-Cvgr.Func.settleAlgoProperties = function(iko)
-{
-   // translate tokens to property names [seq 20190330°0313]
-   var oTokToProp = {
-      algo : 'AlgoName'
-      , bgcolor : 'BgColor'
-      , color : 'Color'
-      , color2 : 'Color2'
-      , color3 : 'Color3'
-      , height : 'Height'
-      , hertz : 'Hertz'
-      , shiftx : 'ShiftX'
-      , shifty : 'ShiftY'
-      , width : 'Width'
-   };
-
-   // get possible default properties [line 20190330°0242]
-   // About JavaScript syntax — Curiously, here it causes no error, if the
-   //  algorithm namespace has no defaultProperties defined, not even in IE9.
-   var oDefaults = Cvgr.Algos[iko.AlgoName].defaultProperties;
-
-   // first apply default values to Ikon object [line 20190330°0243]
-   for (var sKey in oDefaults) {
-      iko[sKey] = oDefaults[sKey];
-   }
-
-   // then overwrite with commandline values [seq 20190330°0244]
-   for ( var sKeySrc in iko.CmdsHash) {
-
-      // do not restore the algo name [seq 20190331°0321]
-      //  Any not-found algo might have switched it to default algo ('pulse')
-      if (sKeySrc === 'algo') {
-         continue;
-      }
-
-      // translate [seq 20190330°0245]
-      var sKeyTgt = sKeySrc;
-      if (sKeySrc in oTokToProp) {
-         sKeyTgt = oTokToProp[sKeySrc];
-      }
-
-      // write [seq 20190330°0246]
-      iko[sKeyTgt] = iko.CmdsHash[sKeySrc];
-   }
-
-   // set signal [line 20190330°0344]
-   iko.bIsDefaultSettingDone = true;
 };
 
 /**
@@ -1557,22 +1585,22 @@ Cvgr.Algos.develop = {
       iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
       // build some lines [seq 20140901°0535]
-      var lins = new Array();
-      var lin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, iko.Color);
-      var lin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, iko.Color2);
-      var lin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, iko.Color3);
-      lins.push(lin1);
-      lins.push(lin2);
-      lins.push(lin3);
+      var aLins = new Array();
+      var oLin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, iko.Color);
+      var oLin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, iko.Color2);
+      var oLin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, iko.Color3);
+      aLins.push(oLin1);
+      aLins.push(oLin2);
+      aLins.push(oLin3);
 
       // draw the built lines [seq 20140901°0537]
-      for (var i = 0; i < lins.length; i++)
+      for (var i = 0; i < aLins.length; i++)
       {
          iko.Context.beginPath();
-         iko.Context.moveTo(lins[i].X1, lins[i].Y1);
-         iko.Context.lineTo(lins[i].X2, lins[i].Y2);
+         iko.Context.moveTo(aLins[i].X1, aLins[i].Y1);
+         iko.Context.lineTo(aLins[i].X2, aLins[i].Y2);
          iko.Context.lineWidth = 3;
-         iko.Context.strokeStyle = lins[i].Colo;
+         iko.Context.strokeStyle = aLins[i].Colo;
          iko.Context.stroke();
       }
    }

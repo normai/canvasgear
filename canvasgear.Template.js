@@ -2,7 +2,7 @@
  * This script serves as template to spawn CanvasGear algorithms
  *
  * id : file 20190329°0611
- * version : 0.2.1 — 20190401°0551
+ * version : 0.2.2.a — 20190401°0551..
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */

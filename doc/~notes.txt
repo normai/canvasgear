@@ -79,7 +79,7 @@
       • this        : undefined
    ref : Screenshot 20190329o1053.chrome--debug--ikon-props.png [ref 20190329°1053]
    note : Func 20190330°0111 startCanvasGr_evalCmdlin is replaced
-           by function 20190330°0241 settleAlgoProperties
+           by function 20190330°0241 initializeCanvas [[settleAlgoProperties]]
    ܀
 
    note 20140916°1031 'known cornerstone values'

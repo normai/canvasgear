@@ -37,7 +37,7 @@
       Or outsource above sequence to dedicated helper function. Or use
       a loop over all object properties instead individual properties.
    location : canvasgear/canvasgear.js
-   status : finished (func 20190330°0111 replaced by 20190330°0241 settleAlgoProperties)
+   status : finished (func 20190330°0111 replaced by 20190330°0241 initializeCanvas)
    ܀
 
    issue 20140901°0933 'Opera 10 peculiar about capitals'

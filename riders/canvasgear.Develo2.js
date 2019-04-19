@@ -95,15 +95,6 @@ Cvgr.Algos.Develo2 = {
          iko.Context.fillStyle = 'DeepPink';                           // o.Color;
          iko.Context.fill();
 
-         // (C.5) debug [seq 20190401°1035]
-         iko.Context.fillStyle = 'Teal';
-         iko.Context.font = "1.1em monospace";                         // Arial monospace
-         iko.Context.fillText('nScrollAmountY  = ' + nScrollAmountY, 11, 44);
-         iko.Context.fillText('nCurPosY        = ' + nCurPosY, 11, 60);
-         iko.Context.fillText('iPtsNdx         = ' + Cvgr.Algos.Develo2.iPtsNdx, 11, 76);
-         iko.Context.fillText('sKeyboard       = ' + Cvgr.Algos.Develo2.sKeyboard, 11, 92);
-
-
          // (D) draw ring buffer [seq 20190401°1051]
          for (var iNdx = 0; iNdx < Cvgr.Algos.Develo2.aPoints.length; iNdx ++) {
 
@@ -122,6 +113,17 @@ Cvgr.Algos.Develo2 = {
             iko.Context.fill();
          }
       }
+
+      // (E) debug [seq 20190401°1035]
+      iko.Context.fillStyle = 'Teal';
+      iko.Context.font = "1.1em monospace";                         // Arial monospace
+      iko.Context.fillText('nScrollAmountY   = ' + nScrollAmountY, 11, 44);
+      iko.Context.fillText('nCurPosY         = ' + nCurPosY, 11, 60);
+      iko.Context.fillText('iPtsNdx          = ' + Cvgr.Algos.Develo2.iPtsNdx, 11, 76);
+      iko.Context.fillText('sKeyboard        = ' + Cvgr.Algos.Develo2.sKeyboard, 11, 92);
+      iko.Context.fillText('SoundMan2 loaded = ' + Cvgr.Vars.bSoundManagerLoaded, 11, 108);
+      iko.Context.fillText('SoundMan2 ready  = ' + Cvgr.Vars.bSoundManagerReady, 11, 124);
+
    }
 
    /**
@@ -165,6 +167,27 @@ Cvgr.Algos.Develo2 = {
     */
    , pickupOnMouseMove : function(evt) // [Cvgr.Algos.Develo2.pickupOnMouseMove]
    {
+
+      // [line 20190401°1423]
+      // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
+      ////if ( typeof soundManager !== 'undefined' ) {
+      if ( Cvgr.Vars.bSoundManagerReady ) {
+
+         //alert('noise is defined');
+         /*
+         Cvgr.Vars.fNoise.play ( {
+            ///volume : parseInt ( Math.min ( 1 , scale / 3 ) * 100 )
+            ///, pan : ( x < screenX2 ? (screenX2 - x) / screenX2*-100 : (x - screenX2) / screenX2 * 100 )
+            volume : 99
+            , pan : 99
+         });
+         */
+
+         ////soundManager.play('noise');
+         var sSound = 'aSound'; // 'noise';
+         soundManager.play(sSound);
+      }
+
       // [seq 20190401°1025] can be superfluous in favour of the ringbuffer
       Cvgr.Algos.Develo2.iCursorPosX = evt.clientX;
       Cvgr.Algos.Develo2.iCursorPosY = evt.clientY;
@@ -260,8 +283,9 @@ Cvgr.Algos.Develo2 = {
       , Color : 'LightCoral'
       , Color2 : 'PaleGreen'
       , Color3 : 'LightBlue'
-      , TailLength : 32 // property dedicated for this algorithm [prop 20190401°1227]
       , DrawNumberLimit : 0
+      , PlaySound : 'yes'
+      , TailLength : 32 // property dedicated for this algorithm [prop 20190401°1227]
    }
 };
 // ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~

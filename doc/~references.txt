@@ -22,7 +22,7 @@
    chain : https://github.com/scottschiller/SoundManager2/blob/master/mpc/index.html
    ܀
 
-   ref 20190401°0541 'Scott Schiller → A noisy page'
+   ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
    objtype : ref.code
    url : https://github.com/scottschiller/SoundManager2/blob/master/demo/animation-2b/script/animation.js
    title : A noisy page
@@ -172,6 +172,18 @@
    title : How do I convert a float number to a whole number in JavaScript?
    releasedate : 2009-Feb-27
    tags : javascript, syntax
+   ܀
+
+   ref 20190328°0127 'SoundManager2 demo : A Noisy Page'
+   url : http://www.schillmania.com/projects/soundmanager2/demo/animation-2b/
+   title : SoundManager2 demo : A Noisy Page
+   note : no webshot
+   ܀
+
+   ref 20190327°0816 'Scott Schiller : SoundManager 2 Template Example'
+   url : http://www.schillmania.com/projects/soundmanager2/demo/template/
+   title : SoundManager 2 Template Example
+   author : 
    ܀
 
    ref 20190324°0232 'Simon Whitacker → GitHub Ribbon'

@@ -1,13 +1,16 @@
-# CanvasGear v0.2.2.a <sup><sub><sub>20190401°0551..</sub></sub></sup>
+# CanvasGear v0.2.2.b <sup><sub><sub>20190401°1437</sub></sub></sup>
 
 **Slogan** : Draw animated canvases by specifying parameters in a data attribute
 
 **Features** :
 - Paints canvases after parameters in a data attribute
-- Acts as framework for writing graphic algorithms
+- Provides a framework for writing canvas graphics
 - Provides mechanism for cyclically animated canvases
-- Has no dependencies
+- Interactivity is possible (reads mouse and keyboard)
+- Sound is possible (e.g. play MP3 files)
 - Browser compatibility from IE 9 up
+- Small footprint
+- No dependencies
 
 **Status** : Works, but has only few boring algorithms on board
 
@@ -39,6 +42,6 @@
 
 Have fun
 
-2019-April-19
+2019-April-20
 
-<sup><sub>(file 20140815°0121) (project 20140815°0111)</sub></sup>
+<sup><sub>[file 20140815°0121, project 20140815°0111]</sub></sup>

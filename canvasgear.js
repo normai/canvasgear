@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.2.a.. — 20190401°0551..
+ * version : 0.2.2.b — 20190401°1437
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -45,14 +45,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.2.a'
+    versionnumber : '0.2.2.b'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190401°0551..'
+   , versiontimestamp : '20190401°1437'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -93,11 +93,46 @@ Cvgr.Vars =
    bFlagTipTopTest : false
 
    /**
+    * This flag tells whether SoundManager2 has failed loading
+    *
+    * @id 20190401°1315
+    */
+   , bSoundManagerFailed : false
+
+   /**
+    * This flag tells whether SoundManager2 is loaded
+    *
+    * @id 20190401°1316
+    */
+   , bSoundManagerLoaded : false
+
+   /**
+    * This flag tells whether SoundManager2 is wanted to load
+    *
+    * @id 20190401°1317
+    */
+   , bSoundManagerLoading : false
+
+   /**
+    * This flag tells whether SoundManager2 is wanted to load
+    *
+    * @id 20190401°1318
+    */
+   , bSoundManagerReady : false
+
+   /**
     * This flag is a humble helper
     *
     * @id 20190331°0331
     */
    , bTemplateSearchFinished : false
+
+   /**
+    * This function is prepared for SoundManager2
+    *
+    * @id 20190401°1425
+    */
+   , fNoise : null
 
    /**
     * This number stores the CanvasGear start seconds
@@ -406,7 +441,6 @@ Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 4 
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 4 ); } ) 
                                    , ( function() { Cvgr.Func.pullbehind_onError( 4 ); } )
                                     ]);
-/* */
 Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 5 ); } )
                                  , ( function() { Cvgr.Func.pullbehind_onError( 5 ); } )
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 5 ); } ) 
@@ -432,7 +466,6 @@ Cvgr.Vars.aPiggyCallbacks.push( [ ( function() { Cvgr.Func.pullbehind_onLoad( 9 
                                   , ( function() { Cvgr.Func.pullbehind_onLoad( 9 ); } ) 
                                    , ( function() { Cvgr.Func.pullbehind_onError( 9 ); } )
                                     ]);
-/* */
 
 /**
  * This array stores error flags associated with the pullback attempts
@@ -494,6 +527,8 @@ Cvgr.Vars.nTrueAngleTurns = 0;                         // [var 20140815°0936] w
 
 Cvgr.Vars.sDebugPageHelper = ''; // [var 20190330°0411]
 
+Cvgr.Vars.tHelper = null; // [var 20190401°1413]
+
 /**
  * This function is called when pulling-behind a non-immediate algorithm, it
  *  examines success, and in case of failure cares for a replacement algorithm.
@@ -524,7 +559,8 @@ Cvgr.Func.examineAlgo = function(iNdxPiggy, iko)
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].AlgoName = 'pulse';
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Rpx ' + i);
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
-         Cvgr.Func.settleAlgoProperties(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
+         /////Cvgr.Func.settleAlgoProperties(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
+         Cvgr.Func.initializeCanvas(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
       }
    }
 
@@ -859,7 +895,25 @@ Cvgr.Func.initializeCanvas = function(iko)
       iko.Canvas.ontouchstart = Cvgr.Algos[sAlgo].pickupOnTouchStart;
    }
 
-   // (C) set signal [line 20190330°0344]
+   // (C) process sound [seq 20190401°1323]
+   if (iko.PlaySound === 'yes') {
+
+      // load [seq 20190401°1325]
+      Cvgr.Vars.bSoundManagerLoading = true;
+      var sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js');
+      var bFlag_UseSmFullCommented = false;
+      if (bFlag_UseSmFullCommented) {
+         sScript += 'libs/sm2/soundmanager2.js';
+      } else {
+         sScript += 'libs/sm2/soundmanager2-nodebug-jsmin.js';
+      }
+      Trekta.Utils.pullScriptBehind ( sScript
+                                     , Cvgr.Func.pullbehind_soundOnLoad('soundman2')
+                                      , Cvgr.Func.pullbehind_soundOnError('soundman2')
+                                       );
+   }
+
+   // (D) set signal [line 20190330°0344]
    iko.bIsDefaultSettingDone = true;
 };
 
@@ -985,6 +1039,163 @@ Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
          Cvgr.Algos[iko.AlgoName].executeAlgorithm(iko);
       }
    }
+};
+
+/**
+ * This function is an event handler for the script onerror event
+ *
+ * @id 20190401°1333
+ * @note The SoundManager2 pullbehind does not use the events for the
+ *    algorithm pullbehinds because here we hopefully stay much simpler.
+ *    It will be interesting, if we possible want load even more scripts,
+ *    whether it is easy to share this callback with multiple of them.
+ * @callers Only • pullScriptBehind callback
+ * @param {String} sScript The name of the script to load. This is, what
+ *    will be interesting, whether it will be easy to share this callback
+ *    between multiple scripts.
+ */
+Cvgr.Func.pullbehind_soundOnError = function(sScript)
+{
+   // [seq 20190401°1334]
+   if (sScript !== 'soundman2') {
+      alert('Theoretically not possible:\n\nPullbehind onError different from SoundManager2');
+      return;
+   }
+
+   // [line 20190401°1335]
+   Cvgr.Vars.bSoundManagerFailed = true;
+
+};
+
+/**
+ * This function is an event handler for the script onload event
+ *
+ * @id 20190401°1343
+ * @callers Only • pullScriptBehind callback
+ */
+Cvgr.Func.pullbehind_soundOnLoad = function(sScript)
+{
+   // [seq 20190401°1344]
+   if (sScript !== 'soundman2') {
+      alert('Theoretically not possible:\n\nPullbehind onLoad different from SoundManager2');
+      return;
+   }
+
+   // [line 20190401°1345]
+   Cvgr.Vars.bSoundManagerLoaded = true;
+
+   // [seq 20190401°1346]
+   // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
+   // See issue 20190401°1347 'SM2 not available in script onLoad callback'
+   // //soundManager.setup ( {
+   // //   preferFlash: true,
+   // //   flashVersion: 9,
+   // //   url: '../../swf/',
+   // //   useHighPerformance: true,
+   // //   wmode: 'transparent',
+   // //   debugMode: false
+   // //});
+
+   // workaround [seq 20190401°1348]
+   Cvgr.Vars.tHelper = setTimeout(Cvgr.Func.pullbehind_soundWorkaround, 1456);
+};
+
+/**
+ * This function is a workaround for issue 20190401°1347 'SM2 not available ..'
+ *
+ * @id 20190401°1353
+ * @see issue 20190401°1347 'SM2 not available in script onLoad callback'
+ * @see finding 20190401°1433 'summary on SoundManager2 so far'
+ * @callers Only • pullScriptBehind callback
+ */
+Cvgr.Func.pullbehind_soundWorkaround = function()
+{
+   ///alert('pullbehind_soundWorkaround executing ..');
+   ///Cvgr.Vars.sDebugPageHelper += '<br /> • pullbehind_soundWorkaround ..';
+
+   // [seq 20190401°1355]
+   // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
+   // See ref 20190327°0816 'Scott Schiller : SoundManager 2 Template Example'
+   soundManager.setup ( {
+      preferFlash : true                                               // ?
+      , flashVersion : 9                                               // ?
+      , url : './../libs/sm2/'                                         // '../../swf/'
+      , useHighPerformance : true
+      , wmode : 'transparent'
+      , debugMode : false
+
+      , onready : function() {
+         var mySound = soundManager.createSound ( {
+            id : 'aSound'
+            , url : './../libs/sm2/fingerplop.mp3' // curiously, './sm2/fingerplop.mp3' does not work
+         });
+         ////alert('SoundManager2 onReady event fired ..'); // this fires
+         ////Cvgr.Vars.sDebugPageHelper += '<br /> • SoundManager2 onReady event fired —';
+         var bFlag_PlayImmediate = false;
+         if (bFlag_PlayImmediate) {
+            mySound.play();
+         }
+      }
+
+      , ontimeout : function() {
+         // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
+         alert('SM2 failed to start.');
+      }
+
+      , onload : function() { console.log('SoundManager2 is loaded ..', this); }
+      ////, onload : function() { alert('SoundManager2 is loaded!', this); }
+
+   });
+
+   // [seq 20190401°1357]
+   // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
+   /*
+   soundManager.onready ( function() {
+      noise = soundManager.createSound({
+         id : 'noise',
+         url : './../libs/sm2/fingerplop.mp3',                         // '../animation/audio/fingerplop.mp3'
+         multiShot : true,
+         autoLoad : true
+      });
+      soundManager.createSound({
+         id : 'down',
+         url : './../libs/sm2/click-low.mp3',                          // '../_mp3/click-low.mp3'
+         multiShot : true,
+         autoLoad : true
+      });
+      soundManager.createSound({
+         id : 'up',
+         url : './../libs/sm2/click-high.mp3',                         // '../_mp3/click-high.mp3'
+         multiShot : true,
+         autoLoad : true
+      });
+   });
+   */
+/*
+      ////noise = soundManager.createSound ( {
+      Cvgr.Vars.fNoise = soundManager.createSound ( {
+         id : 'noise',
+         url : './../libs/sm2/fingerplop.mp3',                         // '../animation/audio/fingerplop.mp3'
+         multiShot : true,
+         autoLoad : true
+      });
+*/
+/*
+      soundManager.createSound({
+         id : 'down',
+         url : './../libs/sm2/click-low.mp3',                          // '../_mp3/click-low.mp3'
+         multiShot : true,
+         autoLoad : true
+      });
+      soundManager.createSound({
+         id : 'up',
+         url : './../libs/sm2/click-high.mp3',                         // '../_mp3/click-high.mp3'
+         multiShot : true,
+         autoLoad : true
+      });
+*/
+
+   Cvgr.Vars.bSoundManagerReady = true;
 };
 
 /**

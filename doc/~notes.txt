@@ -3,6 +3,23 @@
    Room for any notes
    ******************
 
+   finding 20190401°1433 'summary on SoundManager2 so far'
+   text : Finally I got SM2 run. To judge the result, I compare it
+      with ref 20190328°0127 'SoundManager2 demo : A Noisy Page'
+      ⁞ Browser      CanvasGear               NoisyPage
+      ⁞ -----------  ----------------------   ------------------------
+      ⁞ Chrom 64     fine                     fine
+      ⁞ Edge 42      delayed-fragments-only   delayed-fragments-only
+      ⁞ FF 66        yes-with-delay           yes-with-delay
+      ⁞ IE 9         fragments-only           fragments-only
+      ⁞ IE 11        fragments-only           fragments-only
+      ⁞ Opera 58     loudest                  yes
+      ⁞ -----------  ----------------------   ------------------------
+   note : The NoisyPage mostly sounds more smoothly, because it has the
+      volume tuning by cursor speed, which CanvasGear is still missing.
+   status :
+   ܀
+
    finding 20190401°0451 'frame delay with pulled-behind canvases'
    matter : Using Cvgr.Vars.iFrameNo with DrawNumberLimit has the following
       shortcome. If the algo is loaded via pull-behind, then drawing starts

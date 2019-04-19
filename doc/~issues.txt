@@ -3,6 +3,14 @@
    Issues and todos
    ****************
 
+   issue 20190401°1347 'SM2 not available in script onLoad callback'
+   matter : Function soundManager.setup is not available in the script onLoad
+      callback. It looks like it is only available after the callback has
+      finished. Should it not already be available in the callback itself?
+   workaround : See func 20190401°1353 pullbehind_soundWorkaround
+   location : canvasgear.js func 20190401°1343 pullbehind_soundOnLoad
+   status : Workaround. Not clear what exactly is going on.
+
    todo 20190401°0523 'combine piggy variables'
    do : Somehow combine all piggy variables to one single object.
    note : If that were done, then in seq 20190330°0344 'create piggy

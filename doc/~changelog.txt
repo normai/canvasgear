@@ -1,5 +1,7 @@
 
-   release v0.2.1 — 20190401°0551 (2019-Apr-19)
+   •
+
+   release v0.2.1 — 20190401°0551 'Framework seems to run smooth'
    • Search pull-behind scripts in 'rider' subfolder, then in root folder
    • Algorithm substitution, fallback for not-found algorithms
    • External Template algorithm overwrites internal

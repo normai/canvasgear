@@ -7,6 +7,7 @@
    objtype : ref.
    url :
    title :
+   summary :
    author :
    releasedate :
    usage :
@@ -191,18 +192,50 @@
    ܀
 
    ref 20140901°0321 'William Malone: rotate canvas'
+   objtype : ref.tutorial
    title : Article 'Hwo do you rotate an HTML5 canvas around it's center'
    url : http://www.williammalone.com/briefs/how-to-rotate-html5-canvas-around-center
    tags : canvas canvas.rotate
    ܀
 
+   ref 20140831°0743 'mysamplecode.com → canvas draw → width and color'
+   objtype : ref.tutorial
+   url : http://www.mysamplecode.com/2012/04/html5-canvas-draw-line-tutorial.html
+   title : HTML5 canvas draw line tutorial → Change width and color
+   summary : Here I found the first example for multi colored lines
+   copyright : © 2011-2019 mysamplecode.com
+   releasedate : ?
+   note :
+   ܀
+
+   ref 20140831°0742 'Alex Gheorghiu → Advanced context path painting' ✱
+   objtype : ref.tutorial
+   url : http://html5tutorial.com/advanced-path-painting/
+   title : HTML5 Tutorial → Advanced context path painting
+   summary :
+   author : Alex Gheorghiu
+   releasedate : ?
+   note :
+   ܀
+
+   ref 20140831°0741 'stackoverflow → Canvas drawing multicolored lines'
+   objtype : ref.thread
+   url : http://stackoverflow.com/questions/3594653/html5-canvas-drawing-multicolored-lines
+   title : HTML5 Canvas drawing multicolored lines
+   summary :
+   releasedate : 2010-Aug-29
+   note :
+   ܀
+
    ref ~20140831°0623 'whatwg group : canvas specifications'
+   objtype : ref.specs
    about : Lookup 'official' canvas specifications at the WHATWG group on
    url : http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting.html
    tags : canvas
    ܀
 
    ref 20140831°0622 'William Malone: Drawing library'
+   objtype : ref.tutorial
    about : Canvas drawing library
    url : http://blocksjs.com/
    author : William Mallone.
@@ -210,6 +243,7 @@
    ܀
 
    ref 20140831°0611 'William Malone : Canvas tutorials'
+   objtype : ref.tutorial
    about : Very good canvas tutorials are found on William Malones site
    url : http://www.williammalone.com"
    note : As well he maintains several canvas projects on github.
@@ -217,6 +251,7 @@
    ܀
 
    ref 20140830°1222 'eric meyer: colorblender'
+   objtype : ref.tutorial
    url :  http://meyerweb.com/eric/tools/color-blend/
    title : Colorblender
    author : Eric Meyer
@@ -227,9 +262,40 @@
    ܀
 
    ref 20140829°0351 'stackoverflow : changing the color of a hr element' at
+   objtype : ref.thread
    url : http://stackoverflow.com/questions/6382023/changing-the-color-of-a-hr-element
    title : Changing the color of an hr element
    note : display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0;
+   ܀
+
+   ref 20140828°1422 'MDN → Stile und Farben verwenden'
+   objtype : ref.manual
+   url : https://developer.mozilla.org/de/docs/Web/Guide/HTML/Canvas_tutorial/Applying_styles_and_colors
+   title : MDN → Stile und Farben verwenden
+   summary :
+   author :
+   releasedate :
+   note : With nice example for gradient
+   ܀
+
+   ref 20140828°1421 'Quaese → Pfad-Schnittstelle stroke'
+   objtype : ref.
+   url : http://canvas.quaese.de/index.php?doc_id=36&nav=6,47
+   title : Pfad-Schnittstelle - stroke()
+   summary :
+   author : Markus Höllein (Quaese)
+   releasedate : 2008-Feb-5
+   note :
+   ܀
+
+   ref 20140828°1221 'Peter Kröner → Eine kleine Canvas-Einführung'
+   objtype : ref.tutorial
+   url : http://www.peterkroener.de/eine-kleine-canvas-einfuehrung
+   title : Eine kleine Canvas-Einführung
+   summary :
+   author : Peter Kröner
+   releasedate : 2009-Mar-16
+   note :
    ܀
 
    ref 20140828°0911 'MDN : Drawing shapes with canvas'

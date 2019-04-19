@@ -988,7 +988,7 @@ Cvgr.Func.setRadiobutton = function()
 };
 
 ﻿/*! - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
- * This module provides algorithm 'Ballist'
+ * This section provides algorithm 'Ballist'
  *
  * id 20140916°0411 namespace
  * version : 0.x.x — 20190330°0757..
@@ -1412,8 +1412,7 @@ Cvgr.Algos.Ballist = {
    }
 
    /**
-    * This object can define default properties for this algorithm.
-    *  Use the same names as are used on the data-cvgr commandline.
+    * This object defines default properties for this algorithm
     *
     * @id 20190401°0423
     */
@@ -1422,9 +1421,8 @@ Cvgr.Algos.Ballist = {
 };
 //- - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
 ﻿/*! ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
- * This module provides the internal Template algorithm
+ * This section provides the internal Template algorithm
  *
  * id : module 20190329°0611
  * version : 0.x.x — 20190330°0757..
@@ -1521,61 +1519,53 @@ Cvgr.Algos.Template.defaultProperties = {
 };
 // ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
 
-
 /*! ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
- * This module provides the develop algorithm
+ * This section holds the develop algorithm
  *
- * id : module 20190329°0711
- * version :
- * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
- * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
- * authors : ncm
- * encoding : UTF-8-with-BOM
+ * id : section 20140901°0511
  */
 
-// Formal integration into main script [seq 20190329°0621`xx]
+// Formal integration [seq 20190329°0621`xx]
 var Cvgr = Cvgr || {};
 Cvgr.Algos = Cvgr.Algos || {};
 
 /**
- * This namespace holds the 'develop' algorithm
+ * This namespace represents the 'develop' algorithm
  *
- * @id 20190329°0712
+ * @id 20140901°0513
  */
 Cvgr.Algos.develop = {
 
    /**
-    * This function serves developing an algorithm
+    * This function executes the drawing
     *
-    * @id 20140901°0521
+    * @id 20140901°0521 ✱
     * @status Under construction
-    * @callers • Cvgr.Func.executeFrame
-    * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
-    * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
+    * @callers Only • Cvgr.Func.executeFrame
+    * @param {Object} iko — This is Cvgr.Vars.icos[iNdx] from the caller
     */
    executeAlgorithm : function(iko) // [Cvgr.Algos.develop.executeAlgorithm]
    {
-      'use strict'; // [line 20190329°0843`22]
+      'use strict';
 
-      // preparatory calculations [seq 20140916°0821]
-      // Remember issue 20140901°0331 'IE8 demands extra plus sign'
+      // preparation [seq 20140901°0531]
       var iSize = (iko.Width + iko.Height) / 2;
 
-      // prepare canvas
+      // prepare canvas [seq 20140901°0533]
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
       iko.Context.fillStyle = iko.BgColor;
       iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
-      // preparatory calculations
+      // build some lines [seq 20140901°0535]
       var lins = new Array();
-      var lin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, iko.Color); // 'Crimson');
-      var lin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, iko.Color2); // 'SeaGreen');
-      var lin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, iko.Color3); // 'RoyalBlue');
+      var lin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, iko.Color);
+      var lin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, iko.Color2);
+      var lin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, iko.Color3);
       lins.push(lin1);
       lins.push(lin2);
       lins.push(lin3);
 
-      // draw some lines?
+      // draw the built lines [seq 20140901°0537]
       for (var i = 0; i < lins.length; i++)
       {
          iko.Context.beginPath();
@@ -1588,10 +1578,9 @@ Cvgr.Algos.develop = {
    }
 
    /**
-    * This object can define default properties for this algorithm.
-    *  Use the same names as are used on the data-cvgr commandline.
+    * This object defines default properties for this algorithm
     *
-    * @id 20140901°0521
+    * @id 20140901°0541
     */
    , defaultProperties : { // [Cvgr.Algos.develop.defaultProperties]
       BgColor : 'LightCyan'
@@ -1602,9 +1591,8 @@ Cvgr.Algos.develop = {
 };
 // ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
-
 /*! + + + ✂ + + + + + + + + + + + + + + + + + + + + + + + + + +
- * This module provides the oblongrose algorithm
+ * This section provides the oblongrose algorithm
  *
  * id : module 20190329°0721
  * version :
@@ -1636,39 +1624,37 @@ Cvgr.Algos.oblongrose = {
     */
    executeAlgorithm : function(iko) // Cvgr.Algos.oblongrose.executeAlgorithm
    {
-      'use strict'; // [line 20190329°0843`23]
+      'use strict';
 
       // preparatory calculations [seq 20140916°0822]
       var iWhole = (iko.Width + iko.Height) / 2;
-      var iHalf = iWhole / 2; // helper var because mostly not whole is wanted but half
-      //var iTransX = 77.0; // substitute for line 20140828°1423
-      //var iTransY = 77.0;
+      var iHalf = iWhole / 2; // mostly not the whole is wanted but the half
 
-      // prepare canvas [line 20140828°1421]
+      // prepare canvas [line 20140828°1423]
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
-      // set colors [seq 20140828°1422]
+      // set colors [seq 20140828°1424]
       iko.Context.strokeStyle = iko.Color;
       iko.Context.fillStyle = 'Yellow';                                // not applied below
 
       // rotate wrapper open [line 20190401°0442]
-      // set registration point [line 20140828°1423]
+      // set registration point [line 20140828°1425]
       // Remember note 20190401°0441 'about rotation center point'
       // Remember issue 20190401°0435 'hamster appears multiple times'
       iko.Context.translate(iHalf, iHalf);
 
-      // loop [seq 20140828°1424]
+      // loop [seq 20140828°1426]
       var iNums = 16;
       var nRotate = 0;
       var nRotTotal = 0;
       for (var i = 0; i < iNums; i++)
       {
-         // rotate [line 20140828°1425]
+         // rotate [line 20140828°1427]
          nRotate = 1.7 * Math.PI / iNums;
          iko.Context.rotate(nRotate);
          nRotTotal += nRotate;
 
-         // draw [line 20140828°1426]
+         // draw [line 20140828°1428]
          iko.Context.strokeRect ( iHalf * 0.1, iHalf * 0.1
                                  , iHalf * 0.3 , iHalf * 0.7
                                   );
@@ -1695,7 +1681,7 @@ Cvgr.Algos.oblongrose = {
 };
 // + + + ✂ + + + + + + + + + + + + + + + + + + + + + + + + + +
 
-
+// -- -- ✂ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 /**
  * This namespace holds the 'pulse' algorithm
  *
@@ -1777,9 +1763,10 @@ Cvgr.Algos.pulse = {
       BgColor : 'LightCyan'
       , DrawNumberLimit : 0
    }
-
 };
+// -- -- ✂ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
+// ~~ ~~ ✂ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~
 /**
  * This namespace holds the 'triangle' algorithm
  *
@@ -1863,8 +1850,7 @@ Cvgr.Algos.triangle = {
    }
 
    /**
-    * This object can define default properties for this algorithm.
-    *  Use the same names as are used on the data-cvgr commandline.
+    * This object defines default properties for this algorithm
     *
     * @id 20190330°0451
     */
@@ -1876,7 +1862,9 @@ Cvgr.Algos.triangle = {
       , DrawNumberLimit : 0                            // unlimited
    }
 };
+// ~~ ~~ ✂ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~
 
+// ' ' ' ✂ ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' '
 /**
  * This namespace holds the 'triangulum' algorithm
  *
@@ -1889,12 +1877,12 @@ Cvgr.Algos.triangulum = {
     *
     * @id 20140828°1431
     * @status under construction
-    * @ref http://stackoverflow.com/questions/3594653/html5-canvas-drawing-multicolored-lines [20140831o0741]
-    * @ref http://html5tutorial.com/advanced-path-painting/ [20140831o0742]
-    * @ref http://www.mysamplecode.com/2012/04/html5-canvas-draw-line-tutorial.html [20140831o0743] here I found the first example for multi colored lines
-    * @ref http://www.peterkroener.de/eine-kleine-canvas-einfuehrung [20140828o1221]
-    * @ref http://canvas.quaese.de/index.php?doc_id=36&nav=6,47 [20140828o1421]
-    * @ref https://developer.mozilla.org/de/docs/Web/Guide/HTML/Canvas_tutorial/Applying_styles_and_colors [20140828o1422]
+    * @see ref 20140831°0743 'mysamplecode.com → canvas draw → width and color'
+    * @see ref 20140831°0742 'Alex Gheorghiu → Advanced context path painting' ✱
+    * @see ref 20140831°0741 'stackoverflow → Canvas drawing multicolored lines'
+    * @see ref 20140828°1422 'MDN → Stile und Farben verwenden'
+    * @see ref 20140828°1421 'Quaese → Pfad-Schnittstelle stroke'
+    * @see ref 20140828°1221 'Peter Kröner → Eine kleine Canvas-Einführung'
     * @note The statement 'fill() includes closePath()' is true only to some degree,
     *         e.g. *not* for drawing the final line to origin.
     * @param icos This is Cvgr.Vars.icos[iNdx] at the caller.
@@ -1944,6 +1932,7 @@ Cvgr.Algos.triangulum = {
       }
    }
 };
+// ' ' ' ✂ ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' '
 
 // - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 // id : block 20190329°0131

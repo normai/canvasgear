@@ -111,6 +111,12 @@
    status : open (and possibly will never be closed)
    ܀
 
+   todo 20140926°1341 'provide writeText method'
+   do : Outsource below sequence to a dedicated algorithm e.g. 'writetext'
+   location : Many drawing functions
+   status : open
+   ܀
+
    issue 20140815°0641 'browser is missing requestAnimationFrame'
    matter : Method requestAnimationFrame does not exist in IE8
    location : canvasgear.js seq 20140815°0651 'workaround for missing requestAnimFrame'

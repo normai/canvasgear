@@ -153,7 +153,7 @@ Cvgr.Objs.Algo = function()
 /**
  * This class represents an icon object
  *
- * @id 20140815°1221
+ * @id 20140815°1321 [[20140815°1221]]
  * @note Line 'this.Algo = Cvgr.Func.algoPulse;' is bad, it makes
  *        the script disappear [note 20140828°0722]
  * @callers Only • func 20140815°1241 startCanvasGear
@@ -161,7 +161,7 @@ Cvgr.Objs.Algo = function()
 Cvgr.Objs.Ikon = function()
 {
 
-   // public properties, to be set by user via HTML comment
+   // public properties, to be set by user via HTML comment [seq 20140815°1322]
    this.AlgoName = ''; // 'pulse'                      // string - algorithm (workaround for Algo) [prop 20140916°0512]
    this.BgColor = 'Transparent';                       // string - background color as RGB or webcolor [prop 20140916°0513]
    this.Color = 'Silver';                              // [prop 20140916°0514] string - RGB or webcolor
@@ -174,12 +174,12 @@ Cvgr.Objs.Ikon = function()
    this.SizeFactor = 1;                                // number - enlarge/reduce relative to automatic size [prop 20190328°0831]
    // this.Speed = null;                               // number - might complement Hertz [prop 20140916°0523]
 
-   // constant properties, set from the canvas HTML attributes
+   // constant properties, set from the canvas HTML attributes [seq 20140815°1323]
    // // this.Diameter;                                // number - canvas size (in meter) [var 20140926°1331]
    this.Height = null;                                 // int - canvas height (in pixel) [prop 20140916°0524]
    this.Width = null;                                  // int - canvas width (in pixel) [prop 20140916°0525]
 
-   // runtime private properties, set program internally
+   // runtime private properties, set program internally [seq 20140815°1324]
    this.Angle = 0;                                     // private [prop 20140916°0527]
    this.Canvas = null;                                 // object - the canvas tag DOM element [prop 20140916°0528]
    this.CmdsHash = null;                               // object/array - the commandline as an associative array [var 20140926°0651]
@@ -223,24 +223,32 @@ Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iThick)
 /**
  * This class represents a two-dimensional point object
  *
- * @id 20140815°1221
+ * @id 20140815°1331 [[20140815°1221]]
  * @see ref 20140926°1231 'tutorial : write class in js'
  * @see ref 20140926°1413 'stoyan : define javascript class'
  * @see Book ref 20111031°1322 'Harms & Diaz : JavaScript object orientation ..'
- * @note This function is named similar instead exactly 'Point', just to text-search it more distinctively.
+ * @note This function is named with a typo to allow a more distinctive text-search.
  * @callers • None yet
  * @param {number} nX — The x positon of the point
  * @param {number} nY — The y positon of the point
  */
 Cvgr.Objs.Pojnt = function(nX, nY)
 {
-    this.X = nX;
-    this.Y = nY;
-    this.Colhor = "red";
-    this.getIt = function()
-    {
-        return this.Colhor + ' ' + this.x + '/' + this.Y + ' apple';
-    };
+   // [seq 20140815°1332]
+   this.ptX = nX;
+   this.ptY = nY;
+   this.Colhor = "Red";
+
+   /*
+    * Function just for fun
+    *
+    * @id 20140815°1333
+    * @return {String}
+    */
+   this.getIt = function()
+   {
+      return ( 'Pojnt ' + ' ' + this.x + '/' + this.Y + this.Colhor + ' apple' );
+   };
 };
 
 // Some 'static' variables for below function startCanvasGear()
@@ -829,9 +837,11 @@ Cvgr.Func.initializeCanvas = function(iko)
    }
 
    // (B) process events [seq 20190401°0911]
+   // todo 20190401°1233 : Alternatively use addEventListener like
+   //   "document.addEventListener('mousemove', onMouseMove);"
    var sAlgo = iko.AlgoName;
    if ( 'pickupOnKeyDown' in Cvgr.Algos[sAlgo]) {
-      iko.Canvas.onkeydown = Cvgr.Algos[sAlgo].pickupOnKeyDown;
+      document.onkeydown = Cvgr.Algos[sAlgo].pickupOnKeyDown;
    }
    if ( 'pickupOnMouseMove' in Cvgr.Algos[sAlgo]) {
       iko.Canvas.onmousemove = Cvgr.Algos[sAlgo].pickupOnMouseMove;
@@ -1066,7 +1076,7 @@ Cvgr.Algos.Ballist = {
    /**
     * This class provides a ring object for the Ballist algorithm
     *
-    * @id 20140815°1221
+    * @id 20140815°1341 [[20140815°1221]]
     * @param sRingName {}
     * @param nRadiusAbs {}
     * @param sColorRing {}
@@ -1074,9 +1084,9 @@ Cvgr.Algos.Ballist = {
     */
    , Ring : function(sRingName, nRadiusAbs, sColorRing, sColorSpace ) { // Cvgr.Algos.Ballist.Ring
 
-      'use strict'; // [line 20190329°0843`12]
+      'use strict';
 
-      // guarantee default values
+      // guarantee default values [seq 20140815°1343]
       // note : not sure this sequence yet works properly
       if (sRingName === null) {
          sRingName ='?';
@@ -1091,11 +1101,11 @@ Cvgr.Algos.Ballist = {
          sColorSpace = 'white';
       }
 
-      // set public properties
-      this.ringname = sRingName;                          // string e.g. '1', '2', ..
-      this.radiusAbs = nRadiusAbs;                        // number - radius absolute in meter
-      this.colorRing = sColorRing;                        // string - color of the ring, RGB or webcolor
-      this.colorSpace = sColorSpace;                      // string - color of the space for the ring RGB or webcolor
+      // set public properties [seq 20140815°1345]
+      this.ringname = sRingName;                                       // string e.g. '1', '2', ..
+      this.radiusAbs = nRadiusAbs;                                     // number - radius absolute in meter
+      this.colorRing = sColorRing;                                     // string - color of the ring, RGB or webcolor
+      this.colorSpace = sColorSpace;                                   // string - color of the space for the ring RGB or webcolor
    }
 
    /*
@@ -1106,12 +1116,13 @@ Cvgr.Algos.Ballist = {
     */
    , Target : function() { // Cvgr.Algos.Ballist.Target
 
-      'use strict'; // [line 20190329°0843`13]
+      'use strict';
 
-      this.Diameter = 0.1;                                // diameter in meter [var 20140926°1151] the canvas scale shall be based on this
-      this.Naame = '<n/a>';                               // the discipline name
-      this.Shortnam = '<n/a>';                            //
-      this.rings = new Array();                           // array of rings, to be filled by somebody
+      // [seq 20140916°0913]
+      this.Diameter = 0.1;                                             // diameter in meter [var 20140926°1151] the canvas scale shall be based on this
+      this.Naame = '<n/a>';                                            // the discipline name
+      this.Shortnam = '<n/a>';                                         //
+      this.rings = new Array();                                        // array of rings, to be filled by somebody
    }
 
    /**
@@ -1168,14 +1179,9 @@ Cvgr.Algos.Ballist = {
       iko.Context.fillStyle = "turquoise";                             // "aquamarine" // "#ff0000"
       iko.Context.fillText(s, nX1 + nDistTwo, nY1 - nDistTwo);         // IE8 Error 'Object doesn't support this property or method' (see issue 20160416°1321)
 
-      /*
-      todo 20140926°1341
-      do : Outsource below sequence to a dedicated algorithm e.g. 'writetext'
-      status : open
-      */
-
       // add ruler part two [seq 20140926°1216 parent]
       // note : Remember issue 20140926°1321 'IE8 fails with Context.fillText' finished
+      // do : todo 20140926°1341 'provide writeText method'
       // Compare seq 20190331°0521 'write text'
       if (iko.CmdsHash['text']) {
          iko.Context.fillStyle = "#102030";

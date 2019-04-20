@@ -1,8 +1,9 @@
 /*! ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
- * This section holds the Develo2 algorithm
+ * This section holds the Noisy1 figure
  *
  * id : file 20190401°0711 (after 20140901°0511)
  */
+// note : Algorithm gesture paragon figure pattern
 
 'use strict';
 
@@ -11,11 +12,11 @@ var Cvgr = Cvgr || {};
 Cvgr.Algos = Cvgr.Algos || {};
 
 /**
- * This namespace represents the 'Develo2' algorithm
+ * This namespace represents the Noisy1 algorithm
  *
  * @id 20190401°0713
  */
-Cvgr.Algos.Develo2 = {
+Cvgr.Algos.Noisy1 = {
 
    /**
     * This function executes the drawing
@@ -25,7 +26,7 @@ Cvgr.Algos.Develo2 = {
     * @callers Only • Cvgr.Func.executeFrame
     * @param {Object} iko — This is Cvgr.Vars.icos[iNdx] from the caller
     */
-   executeAlgorithm : function(iko) // [Cvgr.Algos.Develo2.executeAlgorithm]
+   executeAlgorithm : function(iko) // [Cvgr.Algos.Noisy1.executeAlgorithm]
    {
       'use strict';
 
@@ -38,7 +39,7 @@ Cvgr.Algos.Develo2 = {
       if (true) {
          
          // (A.1) provide canvas for event handlers [line 20190401°1217]
-         Cvgr.Algos.Develo2.oIko = iko;
+         Cvgr.Algos.Noisy1.oIko = iko;
 
          // (A.2) prepare canvas [seq 20190401°0723]
          iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
@@ -67,12 +68,12 @@ Cvgr.Algos.Develo2 = {
       }
 
       // (B) draw each round [seq 20190401°1013]
-      if ( Cvgr.Algos.Develo2.iCursorPosX !== null ) {
+      if ( Cvgr.Algos.Noisy1.iCursorPosX !== null ) {
 
          // (C.1) draw [seq 20190401°1015]
          iko.Context.beginPath();
-         iko.Context.arc ( Cvgr.Algos.Develo2.iCursorPosX // nCurPosX  // center point x
-                          , Cvgr.Algos.Develo2.iCursorPosY // nCurPosY // center point y
+         iko.Context.arc ( Cvgr.Algos.Noisy1.iCursorPosX // nCurPosX  // center point x
+                          , Cvgr.Algos.Noisy1.iCursorPosY // nCurPosY // center point y
                            , 16 // nRadiCurr                           // radius
                             , 0                                        // starting point angle in radians, starting east
                              , Math.PI * 2                             // endpoint angle in radians
@@ -85,10 +86,10 @@ Cvgr.Algos.Develo2 = {
          iko.Context.fill();
 
          // (D) draw ring buffer [seq 20190401°1051]
-         for (var iNdx = 0; iNdx < Cvgr.Algos.Develo2.aPoints.length; iNdx ++) {
+         for (var iNdx = 0; iNdx < Cvgr.Algos.Noisy1.aPoints.length; iNdx ++) {
 
             // (D.1) draw [seq 20190401°1053]
-            var pt = Cvgr.Algos.Develo2.aPoints[iNdx];
+            var pt = Cvgr.Algos.Noisy1.aPoints[iNdx];
             iko.Context.beginPath();
             iko.Context.arc ( pt.ptX                                   // center point x
                              , pt.ptY                                  // center point y
@@ -108,10 +109,10 @@ Cvgr.Algos.Develo2 = {
       iko.Context.font = "0.9em monospace";                         // Arial monospace
       iko.Context.fillText('scrollX   = ' + (document.documentElement.scrollLeft || document.body.scrollLeft), 11, 28);
       iko.Context.fillText('scrollY   = ' + (document.documentElement.scrollTop || document.body.scrollTop), 11, 44);
-      iko.Context.fillText('curX      = ' + Cvgr.Algos.Develo2.iCursorPosX, 11, 60);
-      iko.Context.fillText('curY      = ' + Cvgr.Algos.Develo2.iCursorPosY, 11, 76);
-      iko.Context.fillText('ptsNdx    = ' + Cvgr.Algos.Develo2.iPtsNdx, 11, 92);
-      iko.Context.fillText('keyboard  = ' + Cvgr.Algos.Develo2.sKeyboard, 11, 108);
+      iko.Context.fillText('curX      = ' + Cvgr.Algos.Noisy1.iCursorPosX, 11, 60);
+      iko.Context.fillText('curY      = ' + Cvgr.Algos.Noisy1.iCursorPosY, 11, 76);
+      iko.Context.fillText('ptsNdx    = ' + Cvgr.Algos.Noisy1.iPtsNdx, 11, 92);
+      iko.Context.fillText('keyboard  = ' + Cvgr.Algos.Noisy1.sKeyboard, 11, 108);
       iko.Context.fillText('sm2loaded = ' + Cvgr.Vars.bSoundManagerLoaded, 11, 124);
       iko.Context.fillText('sm2ready  = ' + Cvgr.Vars.bSoundManagerReady, 11, 140);
       iko.Context.fillText('canvasX   = ' + iko.Canvas.offsetLeft, 11, 156); // seems relative to parent element, not page
@@ -126,7 +127,7 @@ Cvgr.Algos.Develo2 = {
     * @note Code after ref 20190401°1532 'PlainJs → Get position relative to document'
     * @callers •
     */
-   , getElementPositionOnPage : function(el) // [Cvgr.Algos.Develo2.getElementPositionOnPage]
+   , getElementPositionOnPage : function(el) // [Cvgr.Algos.Noisy1.getElementPositionOnPage]
    {
       var rect = el.getBoundingClientRect()
                 , scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
@@ -142,7 +143,7 @@ Cvgr.Algos.Develo2 = {
     * @status Under construction
     * @callers Only •
     */
-   , pickupOnKeyDown : function(evt) // [Cvgr.Algos.Develo2.pickupOnKeyDown]
+   , pickupOnKeyDown : function(evt) // [Cvgr.Algos.Noisy1.pickupOnKeyDown]
    {
       // catch char [seq 20190401°1103]
       ///var oEvt = e || window.event;
@@ -152,10 +153,10 @@ Cvgr.Algos.Develo2 = {
       var sChar = String.fromCharCode(oEvt.keyCode);
 
        // process char [seq 20190401°1105]
-      if ( Cvgr.Algos.Develo2.sKeyboard.length > 11 ) {
-         Cvgr.Algos.Develo2.sKeyboard = Cvgr.Algos.Develo2.sKeyboard.slice(1);
+      if ( Cvgr.Algos.Noisy1.sKeyboard.length > 11 ) {
+         Cvgr.Algos.Noisy1.sKeyboard = Cvgr.Algos.Noisy1.sKeyboard.slice(1);
       }
-      Cvgr.Algos.Develo2.sKeyboard += sChar;
+      Cvgr.Algos.Noisy1.sKeyboard += sChar;
    }
 
    /**
@@ -164,7 +165,7 @@ Cvgr.Algos.Develo2 = {
     * @id 20190401°1111
     * @callers Only •
     */
-   , pickupOnMouseDown : function() // [Cvgr.Algos.Develo2.pickupOnKeyDown]
+   , pickupOnMouseDown : function() // [Cvgr.Algos.Noisy1.pickupOnKeyDown]
    {
    }
 
@@ -174,11 +175,11 @@ Cvgr.Algos.Develo2 = {
     * @id 20190401°1121
     * @callers Only •
     */
-   , pickupOnMouseMove : function(evt) // [Cvgr.Algos.Develo2.pickupOnMouseMove]
+   , pickupOnMouseMove : function(evt) // [Cvgr.Algos.Noisy1.pickupOnMouseMove]
    {
 
       // [line 20190401°1423]
-      // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
+      // See ref 20190401°0541 'Scott Schiller → A Noisy1 page (animation.js)'
       if ( Cvgr.Vars.bSoundManagerReady ) {
 
          // //alert('noise is defined');
@@ -197,10 +198,10 @@ Cvgr.Algos.Develo2 = {
       }
 
       // fix cursor pos [line 20190401°1515]
-      Cvgr.Algos.Develo2.settle_cursorPos(evt.clientX, evt.clientY);
+      Cvgr.Algos.Noisy1.settle_cursorPos(evt.clientX, evt.clientY);
 
       // maintain ringbuffer [line 20190401°1525]
-      Cvgr.Algos.Develo2.settle_ringbuffer();
+      Cvgr.Algos.Noisy1.settle_ringbuffer();
    }
 
    /**
@@ -209,7 +210,7 @@ Cvgr.Algos.Develo2 = {
     * @id 20190401°1131
     * @callers Only •
     */
-   , pickupOnMouseUp : function() // [Cvgr.Algos.Develo2.pickupOnKeyDown]
+   , pickupOnMouseUp : function() // [Cvgr.Algos.Noisy1.pickupOnKeyDown]
    {
    }
 
@@ -219,13 +220,13 @@ Cvgr.Algos.Develo2 = {
     * @id 20190401°1141
     * @callers Only •
     */
-   , pickupOnTouchMove : function(evt) // [Cvgr.Algos.Develo2.pickupOnTouchMove]
+   , pickupOnTouchMove : function(evt) // [Cvgr.Algos.Noisy1.pickupOnTouchMove]
    {
       // [seq 20190401°1027]
       // finding : On a iPhone, this paints a dot where the screen
       //   is touched, but it does not follow a swipe
-      Cvgr.Algos.Develo2.iCursorPosX = evt.clientX;
-      Cvgr.Algos.Develo2.iCursorPosY = evt.clientY;
+      Cvgr.Algos.Noisy1.iCursorPosX = evt.clientX;
+      Cvgr.Algos.Noisy1.iCursorPosY = evt.clientY;
    }
 
    /**
@@ -234,7 +235,7 @@ Cvgr.Algos.Develo2 = {
     * @id 20190401°1151
     * @callers Only •
     */
-   , pickupOnTouchStart : function() // [Cvgr.Algos.Develo2.pickupOnTouchStart]
+   , pickupOnTouchStart : function() // [Cvgr.Algos.Noisy1.pickupOnTouchStart]
    {
    }
 
@@ -244,25 +245,25 @@ Cvgr.Algos.Develo2 = {
     * @id 20190401°1523
     * @callers •
     */
-   , settle_ringbuffer : function() // [Cvgr.Algos.Develo2.settle_ringbuffer]
+   , settle_ringbuffer : function() // [Cvgr.Algos.Noisy1.settle_ringbuffer]
    {
       // rotate ringbuffer index [seq 20190401°1026]
-      if ( Cvgr.Algos.Develo2.iPtsNdx === null ) {
-         Cvgr.Algos.Develo2.iPtsNdx = 0;
+      if ( Cvgr.Algos.Noisy1.iPtsNdx === null ) {
+         Cvgr.Algos.Noisy1.iPtsNdx = 0;
       }
-      Cvgr.Algos.Develo2.iPtsNdx += 1;
-      if ( Cvgr.Algos.Develo2.iPtsNdx > ( Cvgr.Algos.Develo2.defaultProperties.TailLength - 1 )) {
-         Cvgr.Algos.Develo2.iPtsNdx = 0;
+      Cvgr.Algos.Noisy1.iPtsNdx += 1;
+      if ( Cvgr.Algos.Noisy1.iPtsNdx > ( Cvgr.Algos.Noisy1.defaultProperties.TailLength - 1 )) {
+         Cvgr.Algos.Noisy1.iPtsNdx = 0;
       }
 
       // write ringbuffer [seq 20190401°1043]
-      var p = new Cvgr.Objs.Pojnt(Cvgr.Algos.Develo2.iCursorPosX, Cvgr.Algos.Develo2.iCursorPosY);
+      var p = new Cvgr.Objs.Pojnt(Cvgr.Algos.Noisy1.iCursorPosX, Cvgr.Algos.Noisy1.iCursorPosY);
       var p = new Cvgr.Objs.Pojnt(1, 1);
-      if ( Cvgr.Algos.Develo2.aPoints.length < ( Cvgr.Algos.Develo2.iPtsNdx + 1 )) {
-         Cvgr.Algos.Develo2.aPoints.push(p);
+      if ( Cvgr.Algos.Noisy1.aPoints.length < ( Cvgr.Algos.Noisy1.iPtsNdx + 1 )) {
+         Cvgr.Algos.Noisy1.aPoints.push(p);
       }
       else {
-         Cvgr.Algos.Develo2.aPoints[Cvgr.Algos.Develo2.iPtsNdx] = p;
+         Cvgr.Algos.Noisy1.aPoints[Cvgr.Algos.Noisy1.iPtsNdx] = p;
       }
 
       return;
@@ -277,19 +278,19 @@ Cvgr.Algos.Develo2 = {
     * @note : Remember todo 20190401°1223 'outsource lines'
     * @callers •
     */
-   , settle_cursorPos : function(nClientX, nClientY) // [Cvgr.Algos.Develo2.settle_cursorPos]
+   , settle_cursorPos : function(nClientX, nClientY) // [Cvgr.Algos.Noisy1.settle_cursorPos]
    {
 
       // calculation [seq 20190401°1541]
       var nScrollAmountX = document.documentElement.scrollLeft || document.body.scrollLeft;
       var nScrollAmountY = document.documentElement.scrollTop || document.body.scrollTop;
-      var divOffset = Cvgr.Algos.Develo2.getElementPositionOnPage(Cvgr.Algos.Develo2.oIko.Canvas);
+      var divOffset = Cvgr.Algos.Noisy1.getElementPositionOnPage(Cvgr.Algos.Noisy1.oIko.Canvas);
       var nCurPosX = nClientX - divOffset.left + nScrollAmountX;
       var nCurPosY = nClientY - divOffset.top + nScrollAmountY;
 
       // [seq 20190401°1025] may be superfluous in favour of the ringbuffer
-      Cvgr.Algos.Develo2.iCursorPosX = nCurPosX; // evt.clientX;
-      Cvgr.Algos.Develo2.iCursorPosY = nCurPosY; // evt.clientY;
+      Cvgr.Algos.Noisy1.iCursorPosX = nCurPosX; // evt.clientX;
+      Cvgr.Algos.Noisy1.iCursorPosY = nCurPosY; // evt.clientY;
    }
 
    , aPoints : [] // [prop 20190401°1211] ring buffer for point objects
@@ -309,7 +310,7 @@ Cvgr.Algos.Develo2 = {
     *
     * @id 20190401°0731
     */
-   , defaultProperties : { // [Cvgr.Algos.Develo2.defaultProperties]
+   , defaultProperties : { // [Cvgr.Algos.Noisy1.defaultProperties]
       BgColor : 'AntiqueWhite'
       , Color : 'LightCoral'
       , Color2 : 'PaleGreen'

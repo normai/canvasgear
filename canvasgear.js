@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.2.b — 20190401°1437
+ * version : 0.2.2.c — 20190401°1437..
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -45,14 +45,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.2.b'
+    versionnumber : '0.2.2.c'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190401°1437'
+   , versiontimestamp : '20190401°1437..'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -130,7 +130,7 @@ Cvgr.Vars =
    /**
     * This function is prepared for SoundManager2
     *
-    * @id 20190401°1425
+    * @id 20190401°1421
     */
    , fNoise : null
 
@@ -559,7 +559,6 @@ Cvgr.Func.examineAlgo = function(iNdxPiggy, iko)
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].AlgoName = 'pulse';
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Rpx ' + i);
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
-         /////Cvgr.Func.settleAlgoProperties(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
          Cvgr.Func.initializeCanvas(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
       }
    }
@@ -1110,8 +1109,30 @@ Cvgr.Func.pullbehind_soundOnLoad = function(sScript)
  */
 Cvgr.Func.pullbehind_soundWorkaround = function()
 {
-   ///alert('pullbehind_soundWorkaround executing ..');
-   ///Cvgr.Vars.sDebugPageHelper += '<br /> • pullbehind_soundWorkaround ..';
+
+   // [seq 20190401°1357]
+   // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
+   // See todo 20190401°1553 'finetune sound installation'
+   // //soundManager.onready ( function() {
+   // //   noise = soundManager.createSound({
+   // //      id : 'noise',
+   // //      url : './../libs/sm2/fingerplop.mp3',                    // '../animation/audio/fingerplop.mp3'
+   // //      multiShot : true,
+   // //      autoLoad : true
+   // //   });
+   // //   soundManager.createSound({
+   // //      id : 'down',
+   // //      url : './../libs/sm2/click-low.mp3',                     // '../_mp3/click-low.mp3'
+   // //      multiShot : true,
+   // //      autoLoad : true
+   // //   });
+   // //   soundManager.createSound({
+   // //      id : 'up',
+   // //      url : './../libs/sm2/click-high.mp3',                    // '../_mp3/click-high.mp3'
+   // //      multiShot : true,
+   // //      autoLoad : true
+   // //   });
+   // //});
 
    // [seq 20190401°1355]
    // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
@@ -1129,8 +1150,6 @@ Cvgr.Func.pullbehind_soundWorkaround = function()
             id : 'aSound'
             , url : './../libs/sm2/fingerplop.mp3' // curiously, './sm2/fingerplop.mp3' does not work
          });
-         ////alert('SoundManager2 onReady event fired ..'); // this fires
-         ////Cvgr.Vars.sDebugPageHelper += '<br /> • SoundManager2 onReady event fired —';
          var bFlag_PlayImmediate = false;
          if (bFlag_PlayImmediate) {
             mySound.play();
@@ -1143,58 +1162,10 @@ Cvgr.Func.pullbehind_soundWorkaround = function()
       }
 
       , onload : function() { console.log('SoundManager2 is loaded ..', this); }
-      ////, onload : function() { alert('SoundManager2 is loaded!', this); }
 
    });
 
-   // [seq 20190401°1357]
-   // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
-   /*
-   soundManager.onready ( function() {
-      noise = soundManager.createSound({
-         id : 'noise',
-         url : './../libs/sm2/fingerplop.mp3',                         // '../animation/audio/fingerplop.mp3'
-         multiShot : true,
-         autoLoad : true
-      });
-      soundManager.createSound({
-         id : 'down',
-         url : './../libs/sm2/click-low.mp3',                          // '../_mp3/click-low.mp3'
-         multiShot : true,
-         autoLoad : true
-      });
-      soundManager.createSound({
-         id : 'up',
-         url : './../libs/sm2/click-high.mp3',                         // '../_mp3/click-high.mp3'
-         multiShot : true,
-         autoLoad : true
-      });
-   });
-   */
-/*
-      ////noise = soundManager.createSound ( {
-      Cvgr.Vars.fNoise = soundManager.createSound ( {
-         id : 'noise',
-         url : './../libs/sm2/fingerplop.mp3',                         // '../animation/audio/fingerplop.mp3'
-         multiShot : true,
-         autoLoad : true
-      });
-*/
-/*
-      soundManager.createSound({
-         id : 'down',
-         url : './../libs/sm2/click-low.mp3',                          // '../_mp3/click-low.mp3'
-         multiShot : true,
-         autoLoad : true
-      });
-      soundManager.createSound({
-         id : 'up',
-         url : './../libs/sm2/click-high.mp3',                         // '../_mp3/click-high.mp3'
-         multiShot : true,
-         autoLoad : true
-      });
-*/
-
+   // set flag [line 20190401°1359]
    Cvgr.Vars.bSoundManagerReady = true;
 };
 

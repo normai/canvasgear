@@ -14,6 +14,46 @@
    chain :
    ܀
 
+   ref 20190401°1535 'Quirksmode → Using assignment instead equality'
+   objtype : ref.article
+   url : https://www.quirksmode.org/blog/archives/2008/01/using_the_assig.html
+   title : Using the assignment operator instead of the equality operator
+   summary :
+   author : Peter-Paul Koch
+   releasedate : 2008-Jan-14
+   chain : howto 20190401°1531 'find cursorpos relative to page'
+   ܀
+
+   ref 20190401°1534 'Quirksmode → Find position'
+   objtype : ref.tutorial
+   url : https://www.quirksmode.org/js/findpos.html
+   title : Find position
+   summary :
+   author : Peter-Paul Koch
+   releasedate : ?
+   chain : howto 20190401°1531 'find cursorpos relative to page'
+   ܀
+
+   ref 20190401°1533 'stackoverflow → Finding position relative to document'
+   objtype : ref.thread
+   url : https://stackoverflow.com/questions/5598743/finding-elements-position-relative-to-the-document
+   title : Finding element's position relative to the document
+   summary :
+   releasedate : 2011-Apr-8
+   chain : howto 20190401°1531 'find cursorpos relative to page'
+   ܀
+
+   ref 20190401°1532 'PlainJs → Get position relative to document' ✱
+   objtype : ref.tutorial
+   url : https://plainjs.com/javascript/styles/get-the-position-of-an-element-relative-to-the-document-24/
+   title : Get the position of an element relative to the document
+   summary :
+   author : Braxmeier & Steinberger GbR
+   releasedate : ?
+   chain : howto 20190401°1531 'find cursorpos relative to page'
+   chain : Function 20190401°1543 getElementPositionOnPage
+   ܀
+
    ref 20190401°0551 'Scott Schiller → Drum Machine Demo'
    objtype : ref.code
    url : https://github.com/scottschiller/SoundManager2/blob/master/demo/mpc/script/mpc.js

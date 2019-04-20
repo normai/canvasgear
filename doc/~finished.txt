@@ -3,6 +3,12 @@
    Finished issues and the like
    ****************************
 ﻿
+   todo 20190401°1223 'outsource lines'
+   do : Outsource lines, they are identically wanted from pickupOnTouchMove
+   location : Func 20190401°1121 pickupOnMouseMove
+   status : done
+   ܀
+
    note 20190401°0441 'about rotation center point'
    text : The MDN documentation says: The rotation center point is always
       the canvas origin. To change the center point, you will need to

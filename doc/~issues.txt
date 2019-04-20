@@ -3,6 +3,17 @@
    Issues and todos
    ****************
 
+   todo 20190401°1553 'finetune sound installation'
+   matter : In reference script 'A Noisy Page', the sound installation
+      allows controling the volume, but is a bit tricky. It did not work
+      for us on the first attempt. Thus we retreted to the bare bone
+      instructions from SoundManager2, which are obviously simpler.
+   do : Try abain to implement the sound solution as done in 'A Noisy Page'.
+   see : ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
+   location : seq 20190401°1425 'initialize sound'
+   status : open
+   ܀
+
    issue 20190401°1347 'SM2 not available in script onLoad callback'
    matter : Function soundManager.setup is not available in the script onLoad
       callback. It looks like it is only available after the callback has
@@ -10,6 +21,7 @@
    workaround : See func 20190401°1353 pullbehind_soundWorkaround
    location : canvasgear.js func 20190401°1343 pullbehind_soundOnLoad
    status : Workaround. Not clear what exactly is going on.
+   ܀
 
    todo 20190401°0523 'combine piggy variables'
    do : Somehow combine all piggy variables to one single object.

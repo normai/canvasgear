@@ -34,6 +34,7 @@ Cvgr.Algos.Develo2 = {
       var iDist = 2;
 
       // (A) draw only in first round [condition 20190401°1011]
+      ///if ( (Cvgr.Vars.iFrameNo - iko.iFrameDelay) < 2 ) {
       if (true) {
          
          // (A.1) provide canvas for event handlers [line 20190401°1217]
@@ -68,29 +69,17 @@ Cvgr.Algos.Develo2 = {
       // (B) draw each round [seq 20190401°1013]
       if ( Cvgr.Algos.Develo2.iCursorPosX !== null ) {
 
-         // (C) first experiment
-
-         // (C.1) calculate fix [seq 20190401°1031]
-         // Compare seq 20190324°0831 'fix the height calculation' in file 20190324°0757
-         //    http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursorTrekta.js
-         var nScrollAmountX = document.documentElement.scrollLeft || document.body.scrollLeft;
-         var nScrollAmountY = document.documentElement.scrollTop || document.body.scrollTop;
-
-         // (C.2) convenience [seq 20190401°1033]
-         var nCurPosX = Cvgr.Algos.Develo2.iCursorPosX - iko.Canvas.offsetLeft + nScrollAmountX;
-         var nCurPosY = Cvgr.Algos.Develo2.iCursorPosY - iko.Canvas.offsetTop + nScrollAmountY;
-
-         // (C.3) draw [seq 20190401°1015]
+         // (C.1) draw [seq 20190401°1015]
          iko.Context.beginPath();
-         iko.Context.arc ( nCurPosX                                    // center point x
-                          , nCurPosY                                   // center point y
+         iko.Context.arc ( Cvgr.Algos.Develo2.iCursorPosX // nCurPosX  // center point x
+                          , Cvgr.Algos.Develo2.iCursorPosY // nCurPosY // center point y
                            , 16 // nRadiCurr                           // radius
                             , 0                                        // starting point angle in radians, starting east
                              , Math.PI * 2                             // endpoint angle in radians
                               , false                                  // clockwise
                                );
 
-         // (C.4) finish [seq 20140829°0518]
+         // (C.2) finish [seq 20140829°0518]
          iko.Context.closePath();
          iko.Context.fillStyle = 'DeepPink';                           // o.Color;
          iko.Context.fill();
@@ -116,14 +105,34 @@ Cvgr.Algos.Develo2 = {
 
       // (E) debug [seq 20190401°1035]
       iko.Context.fillStyle = 'Teal';
-      iko.Context.font = "1.1em monospace";                         // Arial monospace
-      iko.Context.fillText('nScrollAmountY   = ' + nScrollAmountY, 11, 44);
-      iko.Context.fillText('nCurPosY         = ' + nCurPosY, 11, 60);
-      iko.Context.fillText('iPtsNdx          = ' + Cvgr.Algos.Develo2.iPtsNdx, 11, 76);
-      iko.Context.fillText('sKeyboard        = ' + Cvgr.Algos.Develo2.sKeyboard, 11, 92);
-      iko.Context.fillText('SoundMan2 loaded = ' + Cvgr.Vars.bSoundManagerLoaded, 11, 108);
-      iko.Context.fillText('SoundMan2 ready  = ' + Cvgr.Vars.bSoundManagerReady, 11, 124);
+      iko.Context.font = "0.9em monospace";                         // Arial monospace
+      iko.Context.fillText('scrollX   = ' + (document.documentElement.scrollLeft || document.body.scrollLeft), 11, 28);
+      iko.Context.fillText('scrollY   = ' + (document.documentElement.scrollTop || document.body.scrollTop), 11, 44);
+      iko.Context.fillText('curX      = ' + Cvgr.Algos.Develo2.iCursorPosX, 11, 60);
+      iko.Context.fillText('curY      = ' + Cvgr.Algos.Develo2.iCursorPosY, 11, 76);
+      iko.Context.fillText('ptsNdx    = ' + Cvgr.Algos.Develo2.iPtsNdx, 11, 92);
+      iko.Context.fillText('keyboard  = ' + Cvgr.Algos.Develo2.sKeyboard, 11, 108);
+      iko.Context.fillText('sm2loaded = ' + Cvgr.Vars.bSoundManagerLoaded, 11, 124);
+      iko.Context.fillText('sm2ready  = ' + Cvgr.Vars.bSoundManagerReady, 11, 140);
+      iko.Context.fillText('canvasX   = ' + iko.Canvas.offsetLeft, 11, 156); // seems relative to parent element, not page
+      iko.Context.fillText('canvasY   = ' + iko.Canvas.offsetTop, 11, 172);
 
+   }
+
+   /**
+    * This function retrieves element position relative to the page
+    *
+    * @id 20190401°1543
+    * @note Code after ref 20190401°1532 'PlainJs → Get position relative to document'
+    * @callers •
+    */
+   , getElementPositionOnPage : function(el) // [Cvgr.Algos.Develo2.getElementPositionOnPage]
+   {
+      var rect = el.getBoundingClientRect()
+                , scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+                 , scrollTop = window.pageYOffset || document.documentElement.scrollTop
+                  ;
+      return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
    }
 
    /**
@@ -170,60 +179,28 @@ Cvgr.Algos.Develo2 = {
 
       // [line 20190401°1423]
       // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
-      ////if ( typeof soundManager !== 'undefined' ) {
       if ( Cvgr.Vars.bSoundManagerReady ) {
 
-         //alert('noise is defined');
-         /*
-         Cvgr.Vars.fNoise.play ( {
-            ///volume : parseInt ( Math.min ( 1 , scale / 3 ) * 100 )
-            ///, pan : ( x < screenX2 ? (screenX2 - x) / screenX2*-100 : (x - screenX2) / screenX2 * 100 )
-            volume : 99
-            , pan : 99
-         });
-         */
+         // //alert('noise is defined');
+         // //Cvgr.Vars.fNoise.play ( {
+         // //   ///volume : parseInt ( Math.min ( 1 , scale / 3 ) * 100 )
+         // //   ///, pan : ( x < screenX2 ? (screenX2 - x) / screenX2*-100 : (x - screenX2) / screenX2 * 100 )
+         // //   volume : 99
+         // //   , pan : 99
+         // //});
+         // //soundManager.play('noise');
 
-         ////soundManager.play('noise');
+         // initialize sound [seq 20190401°1425]
+         // See todo 20190401°1553 'finetune sound installation'
          var sSound = 'aSound'; // 'noise';
-         soundManager.play(sSound);
+         soundManager.play(sSound); // after bare bone instructions
       }
 
-      // [seq 20190401°1025] can be superfluous in favour of the ringbuffer
-      Cvgr.Algos.Develo2.iCursorPosX = evt.clientX;
-      Cvgr.Algos.Develo2.iCursorPosY = evt.clientY;
+      // fix cursor pos [line 20190401°1515]
+      Cvgr.Algos.Develo2.settle_cursorPos(evt.clientX, evt.clientY);
 
-      /*
-      todo 20190401°1223 'outsource lines'
-      do : Outsource below lines, they are identically wanted from pickupOnTouchMove
-      location : Func 20190401°1121 pickupOnMouseMove
-      status : open
-      */
-
-      // rotate index [seq 20190401°1026]
-      if ( Cvgr.Algos.Develo2.iPtsNdx === null ) {
-         Cvgr.Algos.Develo2.iPtsNdx = 0;
-      }
-      Cvgr.Algos.Develo2.iPtsNdx += 1;
-      if ( Cvgr.Algos.Develo2.iPtsNdx > ( Cvgr.Algos.Develo2.defaultProperties.TailLength - 1 )) {
-         Cvgr.Algos.Develo2.iPtsNdx = 0;
-      }
-
-      // calculate cursor fix [seq 20190401°1041]
-      // Compare seq 20190324°0831 'fix the height calculation' in file 20190324°0757
-      //    http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursorTrekta.js
-      var nScrollAmountX = document.documentElement.scrollLeft || document.body.scrollLeft;
-      var nScrollAmountY = document.documentElement.scrollTop || document.body.scrollTop;
-      var nCurPosX = evt.clientX - Cvgr.Algos.Develo2.oIko.Canvas.offsetLeft + nScrollAmountX;
-      var nCurPosY = evt.clientY - Cvgr.Algos.Develo2.oIko.Canvas.offsetTop + nScrollAmountY;
-
-      // maintain ringbuffer [seq 20190401°1043]
-      var p = new Cvgr.Objs.Pojnt(nCurPosX, nCurPosY);
-      if ( Cvgr.Algos.Develo2.aPoints.length < ( Cvgr.Algos.Develo2.iPtsNdx + 1 )) {
-         Cvgr.Algos.Develo2.aPoints.push(p);
-      }
-      else {
-         Cvgr.Algos.Develo2.aPoints[Cvgr.Algos.Develo2.iPtsNdx] = p;
-      }
+      // maintain ringbuffer [line 20190401°1525]
+      Cvgr.Algos.Develo2.settle_ringbuffer();
    }
 
    /**
@@ -259,6 +236,60 @@ Cvgr.Algos.Develo2 = {
     */
    , pickupOnTouchStart : function() // [Cvgr.Algos.Develo2.pickupOnTouchStart]
    {
+   }
+
+   /**
+    * This function maintains the cursor positions ringbuffer
+    *
+    * @id 20190401°1523
+    * @callers •
+    */
+   , settle_ringbuffer : function() // [Cvgr.Algos.Develo2.settle_ringbuffer]
+   {
+      // rotate ringbuffer index [seq 20190401°1026]
+      if ( Cvgr.Algos.Develo2.iPtsNdx === null ) {
+         Cvgr.Algos.Develo2.iPtsNdx = 0;
+      }
+      Cvgr.Algos.Develo2.iPtsNdx += 1;
+      if ( Cvgr.Algos.Develo2.iPtsNdx > ( Cvgr.Algos.Develo2.defaultProperties.TailLength - 1 )) {
+         Cvgr.Algos.Develo2.iPtsNdx = 0;
+      }
+
+      // write ringbuffer [seq 20190401°1043]
+      var p = new Cvgr.Objs.Pojnt(Cvgr.Algos.Develo2.iCursorPosX, Cvgr.Algos.Develo2.iCursorPosY);
+      var p = new Cvgr.Objs.Pojnt(1, 1);
+      if ( Cvgr.Algos.Develo2.aPoints.length < ( Cvgr.Algos.Develo2.iPtsNdx + 1 )) {
+         Cvgr.Algos.Develo2.aPoints.push(p);
+      }
+      else {
+         Cvgr.Algos.Develo2.aPoints[Cvgr.Algos.Develo2.iPtsNdx] = p;
+      }
+
+      return;
+   }
+
+   /**
+    * This function translates page cursor position to canvas cursor position
+    *
+    * @id 20190401°1513
+    * @note Compare seq 20190324°0831 'fix the height calculation' in file 20190324°0757
+    *     http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursorTrekta.js
+    * @note : Remember todo 20190401°1223 'outsource lines'
+    * @callers •
+    */
+   , settle_cursorPos : function(nClientX, nClientY) // [Cvgr.Algos.Develo2.settle_cursorPos]
+   {
+
+      // calculation [seq 20190401°1541]
+      var nScrollAmountX = document.documentElement.scrollLeft || document.body.scrollLeft;
+      var nScrollAmountY = document.documentElement.scrollTop || document.body.scrollTop;
+      var divOffset = Cvgr.Algos.Develo2.getElementPositionOnPage(Cvgr.Algos.Develo2.oIko.Canvas);
+      var nCurPosX = nClientX - divOffset.left + nScrollAmountX;
+      var nCurPosY = nClientY - divOffset.top + nScrollAmountY;
+
+      // [seq 20190401°1025] may be superfluous in favour of the ringbuffer
+      Cvgr.Algos.Develo2.iCursorPosX = nCurPosX; // evt.clientX;
+      Cvgr.Algos.Develo2.iCursorPosY = nCurPosY; // evt.clientY;
    }
 
    , aPoints : [] // [prop 20190401°1211] ring buffer for point objects

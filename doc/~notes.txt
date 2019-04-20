@@ -3,6 +3,18 @@
    Room for any notes
    ******************
 
+   howto 20190401°1531 'find cursorpos relative to page'
+   matter : The cursor positon inside e.g. a canvas sometimes works,
+      sometimes not. What is the general solution?
+   chain : ref 20190401°1535 'Quirksmode → Using assignment instead equality'
+   chain : ref 20190401°1534 'Quirksmode → Find position'
+   chain : ref 20190401°1533 'stackoverflow → Finding position relative to document'
+   chain : ref 20190401°1532 'PlainJs → Get position relative to document' ✱
+   chain : Function 20190401°1543 getElementPositionOnPage
+   chain : Script file 20190324°0757 http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursorTrekta.js
+   ܀
+
+
    finding 20190401°1433 'summary on SoundManager2 so far'
    text : Finally I got SM2 run. To judge the result, I compare it
       with ref 20190328°0127 'SoundManager2 demo : A Noisy Page'

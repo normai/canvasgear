@@ -93,32 +93,39 @@ Cvgr.Vars =
    bFlagTipTopTest : false
 
    /**
+    * This flag tells which of the two sound libraries to use
+    *
+    * @id 20190402°0511
+    */
+   , bSoundLibIsSoundManTwo : false
+
+   /**
     * This flag tells whether SoundManager2 has failed loading
     *
     * @id 20190401°1315
     */
-   , bSoundManagerFailed : false
+   , bSoundLibraryFailed : false
 
    /**
     * This flag tells whether SoundManager2 is loaded
     *
     * @id 20190401°1316
     */
-   , bSoundManagerLoaded : false
+   , bSoundLibraryLoaded : false
 
    /**
     * This flag tells whether SoundManager2 is wanted to load
     *
     * @id 20190401°1317
     */
-   , bSoundManagerLoading : false
+   , bSoundLibraryLoading : false
 
    /**
     * This flag tells whether SoundManager2 is wanted to load
     *
     * @id 20190401°1318
     */
-   , bSoundManagerReady : false
+   , bSoundLibraryReady : false
 
    /**
     * This flag is a humble helper
@@ -773,12 +780,9 @@ Cvgr.Func.executeFrame = function()
          }
 
          // (2.2.2) load buddy module [seq 20190329°0415]
-         var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.min.js'); // e.g. "http://localhost/canvasgear/"
+         var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.combined.js'); // e.g. "http://localhost/canvasgear/"
          if (sPathAbs === '') { // supplement 20190402°0451
-            sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgearcombined.js');
-            if (sPathAbs === '') { // supplement 20190402°0451
-               sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js');
-            }
+            sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js');
          }
          var sModuleNameOne = sPathAbs + 'riders/canvasgear.' + sAlgo + '.js';
          var sModuleNameTwo = sPathAbs + 'canvasgear.' + sAlgo + '.js';
@@ -904,18 +908,31 @@ Cvgr.Func.initializeCanvas = function(iko)
    if (iko.PlaySound === 'yes') {
 
       // load [seq 20190401°1325]
-      Cvgr.Vars.bSoundManagerLoading = true;
-      var sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js');
-      var bFlag_UseSmFullCommented = false;
-      if (bFlag_UseSmFullCommented) {
-         sScript += 'libs/sm2/soundmanager2.js';
-      } else {
-         sScript += 'libs/sm2/soundmanager2-nodebug-jsmin.js';
+      Cvgr.Vars.bSoundLibraryLoading = true;
+      if ( Cvgr.Vars.bSoundLibIsSoundManTwo ) {
+         var sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js');
+         var bFlag_UseSmFullCommented = false;
+         if (bFlag_UseSmFullCommented) {
+            sScript += 'libs/sm2/soundmanager2.js';
+         } else {
+            sScript += 'libs/sm2/soundmanager2-nodebug-jsmin.js';
+         }
+         Trekta.Utils.pullScriptBehind ( sScript
+                                        , Cvgr.Func.pullbehind_soundOnLoad('soundman2')
+                                         , Cvgr.Func.pullbehind_soundOnError('soundman2')
+                                          );
       }
-      Trekta.Utils.pullScriptBehind ( sScript
-                                     , Cvgr.Func.pullbehind_soundOnLoad('soundman2')
-                                      , Cvgr.Func.pullbehind_soundOnError('soundman2')
-                                       );
+      else {
+
+         // seq 20190402°0521
+         var sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.combined.js');
+         if (sScript === '') { sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); }
+         sScript += 'libs/howler/howler.min.js';
+         Trekta.Utils.pullScriptBehind ( sScript
+                                        , Cvgr.Func.pullbehind_soundOnLoad('howler')
+                                         , Cvgr.Func.pullbehind_soundOnError('howler')
+                                          );
+      }
    }
 
    // (D) set signal [line 20190330°0344]
@@ -1062,13 +1079,13 @@ Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
 Cvgr.Func.pullbehind_soundOnError = function(sScript)
 {
    // [seq 20190401°1334]
-   if (sScript !== 'soundman2') {
-      alert('Theoretically not possible:\n\nPullbehind onError different from SoundManager2');
+   if ( (sScript !== 'soundman2') && (sScript !== 'howler') ) {
+      alert('Theoretically not possible:\n\nPullbehind onError wanted = "' + sScript + '"');
       return;
    }
 
    // [line 20190401°1335]
-   Cvgr.Vars.bSoundManagerFailed = true;
+   Cvgr.Vars.bSoundLibraryFailed = true;
 
 };
 
@@ -1081,13 +1098,13 @@ Cvgr.Func.pullbehind_soundOnError = function(sScript)
 Cvgr.Func.pullbehind_soundOnLoad = function(sScript)
 {
    // [seq 20190401°1344]
-   if (sScript !== 'soundman2') {
-      alert('Theoretically not possible:\n\nPullbehind onLoad different from SoundManager2');
+   if ( (sScript !== 'soundman2') && (sScript !== 'howler') ) {
+      alert('Theoretically not possible:\n\nPullbehind onLoad wanted = "' + sScript + '"');
       return;
    }
 
    // [line 20190401°1345]
-   Cvgr.Vars.bSoundManagerLoaded = true;
+   Cvgr.Vars.bSoundLibraryLoaded = true;
 
    // [seq 20190401°1346]
    // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
@@ -1115,6 +1132,9 @@ Cvgr.Func.pullbehind_soundOnLoad = function(sScript)
  */
 Cvgr.Func.pullbehind_soundWorkaround = function()
 {
+
+// condition 20190402°0515
+if ( Cvgr.Vars.bSoundLibIsSoundManTwo ) {
 
    // [seq 20190401°1357]
    // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
@@ -1171,8 +1191,32 @@ Cvgr.Func.pullbehind_soundWorkaround = function()
 
    });
 
+}
+else { // Howler
+
+   /**
+    * This immediately executed function creates a sound object
+    *
+    * id 20190402°0541 (after 20190402°0221)
+    * note : After ref 20190401°1616 https://github.com/goldfire/howler.js/
+    * note : The files from examples
+    *         • './p7/howler.js-2.1.2/examples/player/audio/80s_vibe.mp3'
+    *         • './p7/howler.js-2.1.2/examples/player/audio/rave_digger.mp3'
+    *         • './p7/howler.js-2.1.2/examples/player/audio/running_out.mp3'
+    */
+   ////Midiprobe.sound = new Howl({
+   Cvgr.Vars.sound = new Howl (
+               ////{ src: [ './p7/howler.js-2.1.2/examples/player/audio/80s_vibe.webm'
+               //// , './p7/howler.js-2.1.2/examples/player/audio/rave_digger.mp3'
+               ////  ] }
+ ////          { src: [ './libs/sm2/fingerplop.mp3' ] }
+               { src: [ 'http://localhost/treksvn/canvasgeardev/trunk/canvasgear/libs/sm2/fingerplop.mp3' ] }
+   );
+
+}
+
    // set flag [line 20190401°1359]
-   Cvgr.Vars.bSoundManagerReady = true;
+   Cvgr.Vars.bSoundLibraryReady = true;
 };
 
 /**

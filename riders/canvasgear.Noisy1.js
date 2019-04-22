@@ -116,8 +116,8 @@ Cvgr.Algos.Noisy1 = {
       iko.Context.fillText('curY      = ' + Cvgr.Algos.Noisy1.iCursorPosY, 11, 76);
       iko.Context.fillText('ptsNdx    = ' + Cvgr.Algos.Noisy1.iPtsNdx, 11, 92);
       iko.Context.fillText('keyboard  = ' + Cvgr.Algos.Noisy1.sKeyboard, 11, 108);
-      iko.Context.fillText('sm2loaded = ' + Cvgr.Vars.bSoundManagerLoaded, 11, 124);
-      iko.Context.fillText('sm2ready  = ' + Cvgr.Vars.bSoundManagerReady, 11, 140);
+      iko.Context.fillText('sm2loaded = ' + Cvgr.Vars.bSoundLibraryLoaded, 11, 124);
+      iko.Context.fillText('sm2ready  = ' + Cvgr.Vars.bSoundLibraryReady, 11, 140);
       iko.Context.fillText('canvasX   = ' + iko.Canvas.offsetLeft, 11, 156); // seems relative to parent element, not page
       iko.Context.fillText('canvasY   = ' + iko.Canvas.offsetTop, 11, 172);
 
@@ -179,9 +179,13 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnMouseMove : function(evt) // [Cvgr.Algos.Noisy1.pickupOnMouseMove]
    {
+
+// condition 20190402°0513
+if ( Cvgr.Vars.bSoundLibIsSoundManTwo ) {
+
       // [line 20190401°1423]
       // See ref 20190401°0541 'Scott Schiller → A Noisy1 page (animation.js)'
-      if ( Cvgr.Vars.bSoundManagerReady ) {
+      if ( Cvgr.Vars.bSoundLibraryReady ) {
 
          // //alert('noise is defined');
          // //Cvgr.Vars.fNoise.play ( {
@@ -197,6 +201,18 @@ Cvgr.Algos.Noisy1 = {
          var sSound = 'aSound'; // 'noise';
          soundManager.play(sSound); // after bare bone instructions
       }
+
+}
+else { // Howler
+
+      // [seq 20190402°0531]
+      if ( Cvgr.Vars.bSoundLibraryReady ) {
+
+         ////var nSoundId = Midiprobe.sound.play();
+         Cvgr.Vars.sound.play();
+
+      }
+}
 
       // fix cursor pos [line 20190401°1515]
       Cvgr.Algos.Noisy1.settle_cursorPos(evt.clientX, evt.clientY);

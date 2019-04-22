@@ -4,8 +4,8 @@
    <meta charset="UTF-8" /><!-- UTF-8-with-BOM -->
    <title>CanvasGear → Demo1</title>
 
-   <!-- script src="./../canvasgear.js"></script -->
-   <script src="./../canvasgear.combined.js"></script>
+   <script src="./../canvasgear.js"></script>
+   <!-- script src="./../canvasgear.combined.js"></script -->
 
    <link rel="stylesheet" type="text/css" href="./css/gh-fork-ribbon.css"/>
    <link rel="stylesheet" type="text/css" href="./css/stylescanvasgear.css"/>
@@ -18,8 +18,10 @@
 
       /* ruleset 20190329°0551 */ /* for flex see ref 20190329°0543 'w3c: centering things' */
       td.DemoCell { border:0px dotted LightSlateGray; display:flex; align-items:center; }
-      td.DemoCellCode { font-size:x-small; color:Silver; font-family: monospace; white-space: nowrap; background-color:MistyRose; }
-      td.DemoCellCode b { color:DarkRed; font-weight:normal; } /* DarkSlateGray */
+      /* td.DemoCellCode { font-size:x-small; color:Silver; font-family: monospace; white-space: nowrap; background-color:MistyRose; } */
+      /* td.DemoCellCode b { color:DarkRed; font-weight:normal; } */ /* DarkSlateGray */
+      .DemoCellCode { font-size:x-small; color:Silver; font-family: monospace; white-space: nowrap; background-color:MistyRose; }
+      .DemoCellCode b { color:DarkRed; font-weight:normal; } /* DarkSlateGray */
 
       td.DemoCellCode2 { font-size:x-small; color:Silver; font-family: monospace; white-space: pre; border:0px dotted SlateGray; background-color:MistyRose; }
       td.DemoCellCode2 b { color:DarkRed; font-weight:normal; } /* DarkSlateGray */
@@ -72,6 +74,15 @@
  <h1 id="i20140815o1231">
                Demo One
  </h1>
+
+ <p style="font-size:small; padding-left:7.1em;" id="i20190402°0551">
+               Note: For developing, the combined script is not useful. For developing, switch to the plain script :
+               <br /><span class="DemoCellCode"> <!-- style="font-family:monospace;" -->
+               &lt; script src="./../<b>canvasgear.combined.js</b>"&gt;&lt;/script &gt;
+   <br />      &lt;!--script src="./../<b>canvasgear.js</b>"&gt;&lt;/script--&gt;
+
+               </span>
+ </p>
 
  <table id="i20140901o0413">
 

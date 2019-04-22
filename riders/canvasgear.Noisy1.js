@@ -3,7 +3,7 @@
  *
  * id : file 20190401°0711 (after 20140901°0511)
  */
-// note : Algorithm gesture paragon figure pattern
+// note : Words — Algorithm figure gesture paragon pattern
 
 'use strict';
 
@@ -30,16 +30,19 @@ Cvgr.Algos.Noisy1 = {
    {
       'use strict';
 
-      // preparation [seq 20190401°0722]
+      // () preparation [seq 20190401°0722]
       var iSize = (iko.Width + iko.Height) / 2;
       var iDist = 2;
 
+      // () pass canvas to the event handlers [line 20190401°1217]
+      Cvgr.Algos.Noisy1.oIko = iko;
+
       // (A) draw only in first round [condition 20190401°1011]
-      ///if ( (Cvgr.Vars.iFrameNo - iko.iFrameDelay) < 2 ) {
-      if (true) {
-         
-         // (A.1) provide canvas for event handlers [line 20190401°1217]
-         Cvgr.Algos.Noisy1.oIko = iko;
+      // No, it needs be drawn each round, because if iko.Context.clearRect()
+      //  is missing, then all drawings below will accumulate over one another.
+      var b_DrawThis = ( (Cvgr.Vars.iFrameNo - iko.iFrameDelay) < 2 );
+      b_DrawThis = true;
+      if ( b_DrawThis ) {
 
          // (A.2) prepare canvas [seq 20190401°0723]
          iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
@@ -67,7 +70,7 @@ Cvgr.Algos.Noisy1 = {
          }
       }
 
-      // (B) draw each round [seq 20190401°1013]
+      // (B) draw with each round [seq 20190401°1013]
       if ( Cvgr.Algos.Noisy1.iCursorPosX !== null ) {
 
          // (C.1) draw [seq 20190401°1015]
@@ -140,23 +143,22 @@ Cvgr.Algos.Noisy1 = {
     * This optional function shall pick up the key-down event
     *
     * @id 20190401°1101
-    * @status Under construction
     * @callers Only •
     */
    , pickupOnKeyDown : function(evt) // [Cvgr.Algos.Noisy1.pickupOnKeyDown]
    {
       // catch char [seq 20190401°1103]
-      ///var oEvt = e || window.event;
-      ///var sChar = String.fromCharCode(oEvt.keyCode).toLowerCase();
-      ///if (typeof self.keys[sChar] !== 'undefined') soundManager.play('s' + self.keys[sChar]);
       var oEvt = evt || window.event;
-      var sChar = String.fromCharCode(oEvt.keyCode);
+      ///if (typeof self.keys[sChar] !== 'undefined') soundManager.play('s' + self.keys[sChar]);
+      ///var sChar = String.fromCharCode(oEvt.keyCode);
+      ///var sChar = String.fromCharCode(oEvt.which);
+      var sChar = oEvt.key;
 
-       // process char [seq 20190401°1105]
-      if ( Cvgr.Algos.Noisy1.sKeyboard.length > 11 ) {
-         Cvgr.Algos.Noisy1.sKeyboard = Cvgr.Algos.Noisy1.sKeyboard.slice(1);
+      // process char [seq 20190401°1105]
+      Cvgr.Algos.Noisy1.sKeyboard += ' ' + sChar;
+      if ( Cvgr.Algos.Noisy1.sKeyboard.length > 17 ) {
+         Cvgr.Algos.Noisy1.sKeyboard = Cvgr.Algos.Noisy1.sKeyboard.slice(Cvgr.Algos.Noisy1.sKeyboard.length - 17);
       }
-      Cvgr.Algos.Noisy1.sKeyboard += sChar;
    }
 
    /**
@@ -177,7 +179,6 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnMouseMove : function(evt) // [Cvgr.Algos.Noisy1.pickupOnMouseMove]
    {
-
       // [line 20190401°1423]
       // See ref 20190401°0541 'Scott Schiller → A Noisy1 page (animation.js)'
       if ( Cvgr.Vars.bSoundManagerReady ) {
@@ -258,7 +259,6 @@ Cvgr.Algos.Noisy1 = {
 
       // write ringbuffer [seq 20190401°1043]
       var p = new Cvgr.Objs.Pojnt(Cvgr.Algos.Noisy1.iCursorPosX, Cvgr.Algos.Noisy1.iCursorPosY);
-      var p = new Cvgr.Objs.Pojnt(1, 1);
       if ( Cvgr.Algos.Noisy1.aPoints.length < ( Cvgr.Algos.Noisy1.iPtsNdx + 1 )) {
          Cvgr.Algos.Noisy1.aPoints.push(p);
       }
@@ -274,7 +274,7 @@ Cvgr.Algos.Noisy1 = {
     *
     * @id 20190401°1513
     * @note Compare seq 20190324°0831 'fix the height calculation' in file 20190324°0757
-    *     http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursorTrekta.js
+    *     http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursor2Trekta.js
     * @note : Remember todo 20190401°1223 'outsource lines'
     * @callers •
     */

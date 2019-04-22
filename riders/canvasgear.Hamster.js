@@ -44,11 +44,6 @@ Cvgr.Algos.Hamster = {};
  */
 Cvgr.Algos.Hamster.draw = function(ctx)
 {
-
- if (false) // [line 20190401°0411] successively find bad line
- {
- }
-
    ctx.save();
    ctx.translate(0,0);
    ctx.translate(0,0);

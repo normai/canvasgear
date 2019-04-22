@@ -773,7 +773,13 @@ Cvgr.Func.executeFrame = function()
          }
 
          // (2.2.2) load buddy module [seq 20190329°0415]
-         var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); // e.g. "http://localhost/canvasgear/"
+         var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.min.js'); // e.g. "http://localhost/canvasgear/"
+         if (sPathAbs === '') { // supplement 20190402°0451
+            sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgearcombined.js');
+            if (sPathAbs === '') { // supplement 20190402°0451
+               sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js');
+            }
+         }
          var sModuleNameOne = sPathAbs + 'riders/canvasgear.' + sAlgo + '.js';
          var sModuleNameTwo = sPathAbs + 'canvasgear.' + sAlgo + '.js';
          var iModuleIndex = Cvgr.Vars.aPiggyAlgoNames.length;
@@ -2915,7 +2921,7 @@ Trekta.Utils = Trekta.Utils || {
             //    • FF etc : scripts[i].src = 'http://localhost/manual/daftari/daftari.js'
             //    • IE     : scripts[i].src = '../daftari/daftari.js'
             if (scripts[i].src) {
-               if (scripts[i].src.match(regexMatch)) {                    // e.g. /dafstart\.js$/
+               if ( scripts[i].src.match(regexMatch) ) {                  // e.g. /dafstart\.js$/
                   path = scripts[i].src.replace(regexReplace, '$1');      // e.g. /(.*)dafstart.js$/
                }
             }

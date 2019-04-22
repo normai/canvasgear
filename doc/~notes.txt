@@ -3,6 +3,22 @@
    Room for any notes
    ******************
 
+   note 20190401°1557 'about using soundmanager'
+   Some things about SoundManager2
+   • About lazy loading, what we do here, see soundmanager2.js line 6210
+       ⁞ if (window.SM2_DEFER === _undefined || !SM2_DEFER) {
+       ⁞    soundManager = new SoundManager();
+       ⁞ }
+   • Example code about lazy loading is on
+      http://www.schillmania.com/projects/soundmanager2/doc/getstarted/#lazy-loading
+   • See http://www.trekta.biz/svn/midiprobedev/trunk/midiprobe/p5sm/sm297a/demo/index.js
+       ⁞ soundManager.createSound({
+       ⁞    id: 'success',
+       ⁞    url: 'demo/_mp3/mouseover.mp3'
+       ⁞ }).play();
+   chain :
+   ܀
+
    howto 20190401°1531 'find cursorpos relative to page'
    matter : The cursor positon inside e.g. a canvas sometimes works,
       sometimes not. What is the general solution?
@@ -11,9 +27,8 @@
    chain : ref 20190401°1533 'stackoverflow → Finding position relative to document'
    chain : ref 20190401°1532 'PlainJs → Get position relative to document' ✱
    chain : Function 20190401°1543 getElementPositionOnPage
-   chain : Script file 20190324°0757 http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursorTrekta.js
+   chain : Script file 20190324°0757 http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursor2Trekta.js
    ܀
-
 
    finding 20190401°1433 'summary on SoundManager2 so far'
    text : Finally I got SM2 run. To judge the result, I compare it

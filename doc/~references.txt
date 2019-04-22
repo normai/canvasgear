@@ -14,6 +14,15 @@
    chain :
    ܀
 
+   ref 20190402°0437 'stackoverflow → python concatenate text files'
+   objtype : ref.thread
+   url : https://stackoverflow.com/questions/13613336/python-concatenate-text-files
+   title : Python concatenate text files
+   releasedate : 2012-Nov-28
+   usage : file 20190402°0411 release.py
+   tag : filehandling python
+   ܀
+
    ref 20190401°1535 'Quirksmode → Using assignment instead equality'
    objtype : ref.article
    url : https://www.quirksmode.org/blog/archives/2008/01/using_the_assig.html

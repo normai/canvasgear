@@ -3,6 +3,15 @@
    Issues and todos
    ****************
 
+   issue 20190402°0611 'audio data source does not work'
+   matter : Audio data source does not work with Howler.
+   see : ref 20190402°0614 'stackoverflow → base64 wav file with howler'
+   see : ref 20190402°0613 'stackoverflow → data uris in video and audio tags'
+   location : canvasgear.js func 20190401°1353 pullbehind_soundWorkaround
+   workaound : none
+   status : open
+   ܀
+
    todo 20190401°1553 'finetune sound installation'
    matter : In reference script 'A Noisy Page', the sound installation
       allows controling the volume, but is a bit tricky. It did not work

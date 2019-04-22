@@ -14,6 +14,24 @@
    chain :
    ܀
 
+   ref 20190402°0614 'stackoverflow → base64 wav file with howler'
+   objtype : ref.thread
+   url : https://stackoverflow.com/questions/46623006/why-does-encoding-wav-file-to-base64-with-python-and-online-webapp-give-differen
+   title : Why does encoding wav file to base64 with python and online webapp give different results?
+   summary :
+   releasedate : 2017-Okt-7
+   usage : issue 20190402°0611 'audio data source does not work'
+   ܀
+
+   ref 20190402°0613 'stackoverflow → data uris in video and audio tags'
+   objtype : ref.thread
+   url : https://stackoverflow.com/questions/2270151/is-it-possible-to-use-data-uris-in-video-and-audio-tags
+   title : Is it possible to use data URIs in video and audio tags?
+   summary :
+   releasedate : 2010-Feb-16
+   usage : issue 20190402°0611 'audio data source does not work'
+   ܀
+
    ref 20190402°0437 'stackoverflow → python concatenate text files'
    objtype : ref.thread
    url : https://stackoverflow.com/questions/13613336/python-concatenate-text-files

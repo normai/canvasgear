@@ -17,7 +17,7 @@
 **Demos** : [http://www.trekta.biz/../canvasgear/doc/index.html](http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/index.html).
 
 **Installation** :
-- Copy [`canvasgear.min.js`](./canvasgear.min.js) to your web folder
+- Copy [`canvasgear.combined.js`](./canvasgear.combined.js) to your web folder
 - Equip your HTML file like follows :
 ```
       <head>

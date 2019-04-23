@@ -1,7 +1,8 @@
 ﻿/*! - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
- * This script provides a CanvasGear algorithm [file 20190401°0311]
+ * This script provides a CanvasGear algorithm
  *
- * version : 0.2.3 — 20190402°0641
+ * file : 20190401°0311
+ * version : 0.2.3.b — 20190402°0641..
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */
@@ -950,7 +951,7 @@ Cvgr.Algos.Hamster.draw = function(ctx)
  *
  * @id 20190401°0331 (after parent 20190329°0631)
  * @callers Only • Cvgr.Func.executeFrame
- * @note See issue 20190329°0421 'impossible index', is it solved?
+ * @note Remember issue 20190329°0421 'impossible index'
  * @param {Object} iko — The Icon object to paint
  */
 Cvgr.Algos.Hamster.executeAlgorithm = function(iko)

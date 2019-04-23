@@ -4,15 +4,15 @@
 # encoding : UTF-8-with-BOM
 # interpeter : Python 3.6
 # issues/todos :
-#  • The drive letter changing is done quick-n-dirty
-#  • After changing CWD, it were nice to restore it afterwards.
-#  • Local Closure Compiler path is hardcoded
-#  • If no local executable, provide fallback to online API
-#  • Did run under Windows so far, is not tested for others,
-#     e.g. exchange backslashes by slashes
-# note : For implementing call to online Google Closure Compiler API see
-#  • https://developers.google.com/closure/compiler/docs/gettingstarted_api
-#  • https://developers.google.com/closure/compiler/docs/api-tutorial1
+#    • Call online Closure Compiler online API (instead local executable)
+#    • Local Closure Compiler path is hardcoded
+#    • The drive letter changing is done quick-n-dirty
+#    • After changing CWD, it were nice to restore it afterwards.
+#    • Did run under Windows so far, is not tested for others,
+#       e.g. exchange backslashes by slashes
+# note : For implementing planned call to online Google Closure Compiler API see
+#    • https://developers.google.com/closure/compiler/docs/gettingstarted_api
+#    • https://developers.google.com/closure/compiler/docs/api-tutorial1
 # todo : create files list programmatically from all riders\*.js files
 
 """
@@ -23,6 +23,7 @@
 
 import os, sys
 
+#  A d j u s t   t h i s !
 sLocalCompiler = '..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
 
 # seq 20190402°0441

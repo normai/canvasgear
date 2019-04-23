@@ -1,4 +1,4 @@
-# CanvasGear v0.2.3 <sup><sub><sub>20190402°0641</sub></sub></sup>
+# CanvasGear v0.2.3.b <sup><sub><sub>— 20190402°0641..</sub></sub></sup>
 
 **Slogan** : Draw animated canvases by specifying parameters in a data attribute
 
@@ -43,7 +43,7 @@
    or any other rider file to one with your new algorithm name,
    e.g. `canvasgear.MyAlgo2.js`
    and edit this. It will be recognized automatically.
-- To debug or edit CanvasGear itself, just use the plain `canvasgear.js` with with
+- To debug or edit CanvasGear itself, just use the plain `canvasgear.js` with
    the libs and riders folders behind, instead the standalone script `canvasgear.combined.js`
 
 **License** : GNU LGPL v3 or later [opensource.org/licenses/LGPL-3.0](https://opensource.org/licenses/LGPL-3.0)

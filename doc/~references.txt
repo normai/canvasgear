@@ -14,14 +14,13 @@
    chain :
    ܀
 
-   ref 20190402°0623 'Dopiaza → data: URI Generator'
+   ref 20190402°0623 'Dopiaza → data: URI Generator' ✱
    objtype : ref.service
    url : https://dopiaza.org/tools/datauri/index.php
    title : Dopiaza → data: URI Generator
    summary :
    author : David Wilkinson
-   releasedate :
-   usage : issue 20190402°0611 'audio data source does not work'
+   note : This solved issue 20190402°0611 'audio data source does not work'
    ܀
 
    ref 20190402°0617 'Fiddle data:audio/mpeg vs. data:audio/mp3'
@@ -132,6 +131,8 @@
    title : A noisy page
    summary : Nice example for using cursor movement and sound
    chain : https://github.com/scottschiller/SoundManager2/blob/master/demo/animation-2b/index.html
+   note : SoundManager2 itself is no more used with CanvasGear. Nevertheless it
+      provides great examples, which are usefull also with other sound libraries.
    ܀
 
    ref 20190401°0133 'ProfessorCloud → SVG to HTML5 Canvas Converter' ✱

@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.3 — 20190402°0641
+ * version : 0.2.3.b — 20190402°0641..
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -45,14 +45,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.3'
+    versionnumber : '0.2.3.b'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190402°0641'
+   , versiontimestamp : '20190402°0641..'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -2060,7 +2060,7 @@ Cvgr.Algos.Template = Cvgr.Algos.Template || {};
  *
  * @id 201910329°0631
  * @callers Only • Cvgr.Func.executeFrame
- * @note See issue 20190329°0421 'impossible index', is it solved?
+ * @note Remember issue 20190329°0421 'impossible index'
  * @param {Object} iko — The Icon object to paint
  */
 Cvgr.Algos.Template.executeAlgorithm = function(iko)

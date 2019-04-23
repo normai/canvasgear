@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.2.c — 20190401°1437..
+ * version : 0.2.3 — 20190402°0641
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -45,14 +45,14 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.2.c'
+    versionnumber : '0.2.3'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190401°1437..'
+   , versiontimestamp : '20190402°0641'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -62,203 +62,447 @@ Cvgr.Const =
     */
    , bShow_Debug_Dialogs : false
 
-   /**
-    * This ~constant holds file fingerplop2.mp3 as base64
-    *
-    * @id  20190402°0551
-    * @note Converted by https://www.base64encode.org/ [ref 20190315°0313]
-    * @type String
-    */
-   , sB64_Fingerplop2Mp3 : 'w7/Du8KQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAAIKABA'
-                     + 'QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEDCgMKAwoDCgMKAwoDCgMKAwoDCgMKAwoDCgMKAwoDCgMKA'
-                     + 'woDCgMKAwoDCgMKAwoDCgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DD'
-                     + 'gMOAw4DDgMOAw7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/'
-                     + 'w78AAAA5TEFNRTMuOTcgAcKqAAAAACwXAAAUwoAkBcONTgAAwoAAAAgoV8O6VsKoAAAAAAAAAAAA'
-                     + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-                     + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-                     + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-                     + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw7/Du8KQbAAAA00Q'
-                     + 'w44NYcOgAC3DgRnCosKkwowAEXFZwo3CuWowGRcawq93KMKiAgBSw7wKM0rDjSNcQMKEHMKsdFLC'
-                     + 'kTEgFMKHVWHDmDwUwpfCicKBEQUgKgcDwoLCnMK3wpPCssOmdcKoFcKKw4fCkSkRwoPDoMO4Pg/C'
-                     + 'ggDCgCBQEwfDgcO3w4EAQBA4JAQgw7g+w6B8HygJwoPDp8Oww4LDj8O8wrggc8KUBAEHawfDn8Og'
-                     + 'woTCuD9/wpfDigIfUcOCwoDCh8OUwqgGw4nDpMKAUMKBAQAgAMOAGBsNwpPDqsKIDkHDsHw/w6XD'
-                     + 'n8Oyw6HDtH1+J8KoH3/Dv8O5w7/CiB3Dv8KDw6fDv8KCFCwGAwHCgMOUYDAUCQMBAAYTA8KYABnC'
-                     + 'rRgcA8KIw6B8V0PDjHA0LsOPAMOPw7BnKsOwPxvDgMOlYcOwKMK4IA4BQH8LQBwCNBkqwr8Gw4cF'
-                     + 'RDbDgAQiBkwXw74nEMOHBBofwqgiHgjChMO/w7jDmgQiw4HCqELCmGJCDMKfw7/DpMKAasOCwphc'
-                     + 'w6DDsE3CicOQR8KEw47CtsO/w7xQAyhLFgdJWMOVOVDDh8O/w7/DswQZw4vChcOEw5luwrPDqMOV'
-                     + 'woDDoHAwHA4HA8KBwoDCoEAAAQEBw4/DsEAgDMKIKsOwNRcBZsKNaMO0RMO4KhXDi35OPiotf8Kp'
-                     + 'ISEpw7/DucOjUSJOPMO/w7PCiAhJwo9Gw7/DvsOqe8KhcsO/w7A/YknCkCI2w4ttwrLDq3bClcOb'
-                     + 'LcK3VsOqw6hNGS/Dk8O/w7vCkmwKAAPDpmFcw64lYARAwopawqrDhcKIAA5xWT5dwpHCgAjDlsKD'
-                     + 'w6lrwpIgAMOFQsOmwp3CosKsWMORJsKkezjDgcO1NVFRw5sTaTTDhMOWwp1dVcOdwrzDqcOEwqTD'
-                     + 'pMONdsO3w7DDuy91w67DvcKvwq/Dv8KLbcO9XX/DvHbDqcKGwp/Cs8KTSW9haCMbw7bDj8OdGcK7'
-                     + 'wqLCqsKfM8OJwrHDusKJwovDuUZhwrtrf3ctN8K3wrbCusKPw7zDgAcgwoAmUMOxw5jDvl/Dt04/'
-                     + 'CcKgAAAADCAcBgVjAVjDomXDmmIzw4gKYBPCuA0fDSfDk8O/bMOfw6/Cn8O/wphBFcK/w7/CtS/D'
-                     + 'v8O6wpbChy7DusOzwrE/w69yTMOrf8O/w7/DrEdwRGlXMcKhwqrDgCRoBMO4wqkbZsOywrkswqXC'
-                     + 'vMKcR3MIdF40woU8GR4BYV5aQhZCwqDChMKMwpvCnBUKC8KnPMKYcsKWAjUEDcO0w4QRwqXChsKO'
-                     + 'w7YxBWc8MjJlLXPDmsOTacKCw6LDs8Kew4BLZ3/DjsKUw43Dn1pUwojDiMOsw6FCU0vCsTV1w48U'
-                     + 'FCHDtMOTDChTGG09w7ctekHDvBpTwocdw752TsKgNABEwoVpwqdrL2rCtkrDjMOhwrFAwpTClcOM'
-                     + 'w5nDr1PDv8OIHxE4w4rDlcOUU8O1w71EwoHCryQZw7/DvG/Cr8O2D2gkTH7Dt8KpwoTClgLCscOV'
-                     + 'M8KUey3CncKvTT4wwrpHwq3ClSHDiFXDhcKiQRLCtzoSwptED0YWfsKsw6LCkCJhwoHDuMKOHsKM'
-                     + 'woRrwpnDhMO/w7vCkmwVwoADw4pBTcKFYQACTsOMWjzCpAgBDw1BOTk2woABLcKaw6vCtwTCgAJ0'
-                     + 'Hi4jwo4YLEsQw44cwprCtMOkGjMaS8OKw6vCmsKdwrQiwrV9acO2w57Cq8OMwroOWDDDqBnDml00'
-                     + 'LcKlwqDDssOHVTbDgz7Dh8OiKjLDmjgJwqYewozDnwDDtV3Djmx7wqXDt33CvkAuN8KtwrrCrEzD'
-                     + 'tUElAMKbwqByDcKxdVxrJsKHIsOBClxCLMOJM8Kpw4jCr8O/w7/Dvh0Xw4kyWMOlw4jDt1JkJnbD'
-                     + 'vsK0w7fCusORHsOIwojDncOtZ8OtecO6USZOw5koe2dLwr7CqXXCm1bCshLCiX7CjsKWwpnCri3D'
-                     + 'ngrDrRYAADBDw4AgQUgAAMOREBYvY1RzBsKodFgdwpLDgMOcQn7DgcK0PUkiwpZ0woJcRWXDnsOl'
-                     + 'wofDhylAwpE8bcOmwqgUTcKHwqJJLsKPw4oIEsOnw4omRxFjKl/Col9Iw4XDjMKKw5NJKsObw7zC'
-                     + 'pMK0wovDpsKHwo1Nw4rDlsKkwpbCj1fDvMKUJEnCpigaw4ooJsK9fsK0f8O+dcOEQEZEZRt6w47C'
-                     + 'qMKTP8OLAk3ChsKBQ2EgwrhaLRbCi0XCgAAxw4pcEMKKYmZ8G8KKwoAwW8OSaXXDvsOJwpQwVQXC'
-                     + 'v8OGKcKFwpENw6vDv8K9KXfDgsO/w7/DuMOfwonCnmPDtsK/w7/Dh8KpFMOwKnjDgMOodCQlw7TC'
-                     + 'gy4YPMKOVQAzw6gBQsKpMMKmw5QwEMKjCgImAWVLw5xjw6lRSSwIwoNEw4nCisO/w7vCkmwOwo/D'
-                     + 'sxEwI8K3DSACL8KjRHHDoMKIAEAAAcKkAAAAIAAANMKAAAAEUW/Dv8O5SMKwJBpsKgjCksKkFhTC'
-                     + 'ksKhw4XCkTTCqSzDhSLCmCzCicKrVRImwrVUMcKkWSl4w4Y+wqLCrHJIworCg3/Dv8OCGgpIJcOf'
-                     + 'w7rCimhRw4DDg3puWR0Vw5TCisOhw5jCkAYQw4QhTEIUIUQmw79SwpZjGUpvw67CgcKMw6UBLCBX'
-                     + 'QmzDkF4Nw6hRw4DCrB3Dv8O/FMOQwqfCi8O/w7/DiMOowq7CpUxBTUUzLjk3VVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVU='
+   // discarded in favour of var 20190402°0633
+   // // /**
+   // // /**
+   // //  * This ~constant holds file fingerplop2.mp3 as base64
+   // //  *
+   // //  * @id  20190402°0551
+   // //  * @note Converted by https://www.base64encode.org/ [ref 20190315°0313]
+   // //  * @type String
+   // //  */
+   // // , sB64_Fingerplop2Mp3 : 'w7/Du8KQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAAIKABA'
+   // //                   + 'QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEDCgMKAwoDCgMKAwoDCgMKAwoDCgMKAwoDCgMKAwoDCgMKA'
+   // //                   + 'woDCgMKAwoDCgMKAwoDCgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DD'
+   // //                   + 'gMOAw4DDgMOAw7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/'
+   // //                   + 'w78AAAA5TEFNRTMuOTcgAcKqAAAAACwXAAAUwoAkBcONTgAAwoAAAAgoV8O6VsKoAAAAAAAAAAAA'
+   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw7/Du8KQbAAAA00Q'
+   // //                   + 'w44NYcOgAC3DgRnCosKkwowAEXFZwo3CuWowGRcawq93KMKiAgBSw7wKM0rDjSNcQMKEHMKsdFLC'
+   // //                   + 'kTEgFMKHVWHDmDwUwpfCicKBEQUgKgcDwoLCnMK3wpPCssOmdcKoFcKKw4fCkSkRwoPDoMO4Pg/C'
+   // //                   + 'ggDCgCBQEwfDgcO3w4EAQBA4JAQgw7g+w6B8HygJwoPDp8Oww4LDj8O8wrggc8KUBAEHawfDn8Og'
+   // //                   + 'woTCuD9/wpfDigIfUcOCwoDCh8OUwqgGw4nDpMKAUMKBAQAgAMOAGBsNwpPDqsKIDkHDsHw/w6XD'
+   // //                   + 'n8Oyw6HDtH1+J8KoH3/Dv8O5w7/CiB3Dv8KDw6fDv8KCFCwGAwHCgMOUYDAUCQMBAAYTA8KYABnC'
+   // //                   + 'rRgcA8KIw6B8V0PDjHA0LsOPAMOPw7BnKsOwPxvDgMOlYcOwKMK4IA4BQH8LQBwCNBkqwr8Gw4cF'
+   // //                   + 'RDbDgAQiBkwXw74nEMOHBBofwqgiHgjChMO/w7jDmgQiw4HCqELCmGJCDMKfw7/DpMKAasOCwphc'
+   // //                   + 'w6DDsE3CicOQR8KEw47CtsO/w7xQAyhLFgdJWMOVOVDDh8O/w7/DswQZw4vChcOEw5luwrPDqMOV'
+   // //                   + 'woDDoHAwHA4HA8KBwoDCoEAAAQEBw4/DsEAgDMKIKsOwNRcBZsKNaMO0RMO4KhXDi35OPiotf8Kp'
+   // //                   + 'ISEpw7/DucOjUSJOPMO/w7PCiAhJwo9Gw7/DvsOqe8KhcsO/w7A/YknCkCI2w4ttwrLDq3bClcOb'
+   // //                   + 'LcK3VsOqw6hNGS/Dk8O/w7vCkmwKAAPDpmFcw64lYARAwopawqrDhcKIAA5xWT5dwpHCgAjDlsKD'
+   // //                   + 'w6lrwpIgAMOFQsOmwp3CosKsWMORJsKkezjDgcO1NVFRw5sTaTTDhMOWwp1dVcOdwrzDqcOEwqTD'
+   // //                   + 'pMONdsO3w7DDuy91w67DvcKvwq/Dv8KLbcO9XX/DvHbDqcKGwp/Cs8KTSW9haCMbw7bDj8OdGcK7'
+   // //                   + 'wqLCqsKfM8OJwrHDusKJwovDuUZhwrtrf3ctN8K3wrbCusKPw7zDgAcgwoAmUMOxw5jDvl/Dt04/'
+   // //                   + 'CcKgAAAADCAcBgVjAVjDomXDmmIzw4gKYBPCuA0fDSfDk8O/bMOfw6/Cn8O/wphBFcK/w7/CtS/D'
+   // //                   + 'v8O6wpbChy7DusOzwrE/w69yTMOrf8O/w7/DrEdwRGlXMcKhwqrDgCRoBMO4wqkbZsOywrkswqXC'
+   // //                   + 'vMKcR3MIdF40woU8GR4BYV5aQhZCwqDChMKMwpvCnBUKC8KnPMKYcsKWAjUEDcO0w4QRwqXChsKO'
+   // //                   + 'w7YxBWc8MjJlLXPDmsOTacKCw6LDs8Kew4BLZ3/DjsKUw43Dn1pUwojDiMOsw6FCU0vCsTV1w48U'
+   // //                   + 'FCHDtMOTDChTGG09w7ctekHDvBpTwocdw752TsKgNABEwoVpwqdrL2rCtkrDjMOhwrFAwpTClcOM'
+   // //                   + 'w5nDr1PDv8OIHxE4w4rDlcOUU8O1w71EwoHCryQZw7/DvG/Cr8O2D2gkTH7Dt8KpwoTClgLCscOV'
+   // //                   + 'M8KUey3CncKvTT4wwrpHwq3ClSHDiFXDhcKiQRLCtzoSwptED0YWfsKsw6LCkCJhwoHDuMKOHsKM'
+   // //                   + 'woRrwpnDhMO/w7vCkmwVwoADw4pBTcKFYQACTsOMWjzCpAgBDw1BOTk2woABLcKaw6vCtwTCgAJ0'
+   // //                   + 'Hi4jwo4YLEsQw44cwprCtMOkGjMaS8OKw6vCmsKdwrQiwrV9acO2w57Cq8OMwroOWDDDqBnDml00'
+   // //                   + 'LcKlwqDDssOHVTbDgz7Dh8OiKjLDmjgJwqYewozDnwDDtV3Djmx7wqXDt33CvkAuN8KtwrrCrEzD'
+   // //                   + 'tUElAMKbwqByDcKxdVxrJsKHIsOBClxCLMOJM8Kpw4jCr8O/w7/Dvh0Xw4kyWMOlw4jDt1JkJnbD'
+   // //                   + 'vsK0w7fCusORHsOIwojDncOtZ8OtecO6USZOw5koe2dLwr7CqXXCm1bCshLCiX7CjsKWwpnCri3D'
+   // //                   + 'ngrDrRYAADBDw4AgQUgAAMOREBYvY1RzBsKodFgdwpLDgMOcQn7DgcK0PUkiwpZ0woJcRWXDnsOl'
+   // //                   + 'wofDhylAwpE8bcOmwqgUTcKHwqJJLsKPw4oIEsOnw4omRxFjKl/Col9Iw4XDjMKKw5NJKsObw7zC'
+   // //                   + 'pMK0wovDpsKHwo1Nw4rDlsKkwpbCj1fDvMKUJEnCpigaw4ooJsK9fsK0f8O+dcOEQEZEZRt6w47C'
+   // //                   + 'qMKTP8OLAk3ChsKBQ2EgwrhaLRbCi0XCgAAxw4pcEMKKYmZ8G8KKwoAwW8OSaXXDvsOJwpQwVQXC'
+   // //                   + 'v8OGKcKFwpENw6vDv8K9KXfDgsO/w7/DuMOfwonCnmPDtsK/w7/Dh8KpFMOwKnjDgMOodCQlw7TC'
+   // //                   + 'gy4YPMKOVQAzw6gBQsKpMMKmw5QwEMKjCgImAWVLw5xjw6lRSSwIwoNEw4nCisO/w7vCkmwOwo/D'
+   // //                   + 'sxEwI8K3DSACL8KjRHHDoMKIAEAAAcKkAAAAIAAANMKAAAAEUW/Dv8O5SMKwJBpsKgjCksKkFhTC'
+   // //                   + 'ksKhw4XCkTTCqSzDhSLCmCzCicKrVRImwrVUMcKkWSl4w4Y+wqLCrHJIworCg3/Dv8OCGgpIJcOf'
+   // //                   + 'w7rCimhRw4DDg3puWR0Vw5TCisOhw5jCkAYQw4QhTEIUIUQmw79SwpZjGUpvw67CgcKMw6UBLCBX'
+   // //                   + 'QmzDkF4Nw6hRw4DCrB3Dv8O/FMOQwqfCi8O/w7/DiMOowq7CpUxBTUUzLjk3VVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVU='
+
+   // discarded in favour of var 20190402°0635
+   // // /**
+   // //  * This ~constant holds file fingerplop.mp3 as base64
+   // //  *
+   // //  * @id 20190402°0553
+   // //  * @type String
+   // //  */
+   // // , sB64_FingerplopMp3 : 'w7/Du8KQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAIAAAOwrAA'
+   // //                   + 'ICAgICAgICAgICAgQEBAQEBAQEBAQEBAYGBgYGBgYGBgYGBgYMKAwoDCgMKAwoDCgMKAwoDCgMKA'
+   // //                   + 'woDCgMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw6DD'
+   // //                   + 'oMOgw6DDoMOgw6DDoMOgw6DDoMOgw6DDv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w78AAAA5TEFNRTMu'
+   // //                   + 'OTcgAcKqAAAAAC4XAAAUwoAkBWVOAADCgAAADsKwBDDCmF8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADDv8O7wpBsAAADMhrDjQ1pw6AALUFJwqrC'
+   // //                   + 'pMKIARHDgQd/wrnDusKwGR3CkMOywrc3KMKCAMKMOHMODRHDgsOCwo0DY8KRUMOtVDgFDGtzw7HD'
+   // //                   + 'uMO6WjbDgwVHwpnDlCZ8wqg4wpvCpMKKwoARwoBGAnjCmcKZc8KwHMKGwoDDtcKTwrUcJMOiGMKG'
+   // //                   + 'MkNDEMOFAsKxw6PDiMKZfsKGKBXCkTV3w7HDg8OfB8OBw7PDojPDpQ5/EAIQQcOTw79/LwQOQxLD'
+   // //                   + 'v8KXB8OAAAIlaFIDw5zDp8OUQMOkYMKAYcKLRsKNHMOoOMKzw6UlJMO6wo5KO8OxAAw/w4EPw7zC'
+   // //                   + 'oGHDlcKfw4TDp8O/w7rDgcO8woYDAcKAw4BwOxbCiAMBAAAwPwIlMVjDicOEw5/Dv8KYwpgGIsKc'
+   // //                   + 'w5jDhgdKw54Yw4teMMK0AMKoMMKUQVLDr8O3w4DDkmzCoDRYw6vDgMO5bcOQMcK7wpgNAh7DvA0Q'
+   // //                   + 'w7UDAgZAw4dAIDPDocOHw7wOOhADw6M4woDDhgDDgBYIwoYhwqLDn8OCw4gAw4DCgMOQGBPCgQAQ'
+   // //                   + 'NAoII8Ofw7zCpk8IAEAEJjo1f8O/KMKQw7HClCZIw4QIw6Mzw7/Dv8O5FinCrMOGEwHCjAYDwoHC'
+   // //                   + 'gMOgYDAUCADDoAAAFRAywoHCv8O/w7PDocK9NRo7wrfDv8OABAYiLcO/w74Dw6A2w78Twqhfw5AI'
+   // //                   + 'b8OGXE7Dg8OswrvDviXCpMOxwrlww4PDv3RPwp1Ew7/DqBrCoD/Dv1zCjE4RFsKBMcOMd29Tw4Ue'
+   // //                   + 'wrTDpkUwwqDDo8KJPMOrOcO/w7vCkmwKCBN3TsOTH2jDgAIqQMOqLMOsCAEQPTU0w43CsQvDiMKx'
+   // //                   + 'wpFodCwIZTFAw4tCwp0xSMK0wrdlwqMtw5tWwonDlcKiQlrCtcOpfmczO1dKwrzDo0zCtW81AlLD'
+   // //                   + 'm8K+ccKZw701bMOMw7nDhiVzOcOmWsK5wqjCscK4S2ZzwrTDusKnwprDn1vDplrCtMOdNw7CrzLD'
+   // //                   + 'k8KVw7tsw4/CnMO1wrMtMsOEwpLCqQfDv8O9Kw3CihhpAAAAFAA6exLDuBrDjEoGYEpeFcKRwqUp'
+   // //                   + 'wqs7w4DCoCtPwrMtwpFUSsOvw7/Dv8O/w7/Dv8O/w7/DmsKlCXpHwoDDiWREw6l8w7vCqMKZwoIE'
+   // //                   + 'EsKCFcKBwokqwprDmnHDscKAI8OwNQ7CjkHDtMOVwoLCq8OePcO4bMOiw4suw6MYXMKGwqvDu8Kz'
+   // //                   + 'w6B5w6jDuUISc2zCjsKLKGjCucKoXMKmw4Mhwp7DoVnDucK+ecKbTcKSbQvCm8Omw6nDvMKLSnTC'
+   // //                   + 'l8O1RXrCp0tHZBchXcOaYsKDwrFgUCUPBcOgw5PDkGvCoMKwwog1RsOoSxA8K8KCIcOowr3DjGXD'
+   // //                   + 'lsO/fsKdw7sAACQRMcKdJhd0FMKuw6xUZEsyXyHCt2BYA8O6RXvCpUvDv8OUw4FQKQUowqPCqzdb'
+   // //                   + 'w54nCsOLwpvCojXCjcKyworCqMKLFsKkw6k6bwLCmQFGDgzDrADDnmTDq8OmNAbDgcKgGXsFwoIi'
+   // //                   + 'w6/DqmEgScOLwpRaPcKqSiVwwrnDgsOhwrTDhMKbw4zCuSNIa8KuTsOewot0UsOGw5/Dn8OXSMKN'
+   // //                   + 'bMO9w6zDsnXCjF7Dv8O7wpJsJQwDwq1PThs6MiAvYUnDig8DJRDCvRMmTcOww4jCiQHChGh0F8KI'
+   // //                   + 'w4TDjsOnw63DvUlwwpnCrV8pwq5KwrROLjNVU8Kbwp3CrntswrJYdsKzwrXDjDN5w4zCnsKOw6TC'
+   // //                   + 'ssOnwoTCgsOjRzvDv3AABgoAAAAJEsKMDcKiw6nDrMKmQFfCl8OBw5fCg8KJwr0LRGpKw6XCgWBo'
+   // //                   + 'Hg7CnA8dw7/Dv8O/w7/Dv8O/w5otwr3CosKyKFFKQ8KrHTIQwoFgBBouE8OoGCBnYyZlGGoQwqd6'
+   // //                   + 'NcKTEgPChMONwqvDnsO6SDjDpHLCjwkgAjU8JCUCwpDCl2LCkUzCgm7DtsKkEznCqSbDjyxhw7Q2'
+   // //                   + 'dcO2EzYXw6MLwos0wqzDpcOvw4RxwoHCp1vDvW/CuDdNwoHDuSLDoMKrwqZzN8Orw4/DoMKOwppZ'
+   // //                   + 'wo8XTmQYWm9BR8OADiwGwrbDhsOKwqrCucKDw4w+BcK7w6s5w67DvsOlwrtZw47DvsKwGQANwobC'
+   // //                   + 'ulkjYcOIIUYUwpjCssKHJwAGDQPCr8OWCTw2Az0oGkPDuMKqEgtFAFcpwofCjkokecKTIsKNEgTD'
+   // //                   + 'oQTDkixscSTDtMOUbcK2w7xOw4fCnMO6VSzCjEbDmMOCwoNawpDDsMKqwovCmGA4JBTCqCg6wpAX'
+   // //                   + 'RjVCwpFgVlDDqk4ARMKNIBzCtsKNBCjDtcKUfQ8swo7DhCfDkcKvwpVaCQXCmMOtSjjCpU/CizbC'
+   // //                   + 'm351w7zCjUXCs8K5UcKNQlYWMmYhMMKzw4YxYsKXWDJmbMOpIsKeSXfDv8O7wpJsLgwEGGZIwotm'
+   // //                   + 'G3JBQcO5w4wsI2UPUcKRIC4YbQlIwpbDp8K0IwwtMMOuEMOLKcOWw5rCkMKlYMKRYRvCnUJ1PcKN'
+   // //                   + 'w4rCm8KDQT/ClcOuw7MpOzV6wp1Of8Onwo4hwqXCgsKaAAAUTsOZSsOBOcKxE8K8RybCgsKAw5or'
+   // //                   + 'eMOQNwt1QsKAwo8sworChMOmwpHDtw/DnzzChcK8w6xmw53Cj8KKFHHCl8KLwoYaw6LDtVbCksKl'
+   // //                   + 'LlFWwqVBwrAsIsK1BcKXIQdEA8KPCkPCg8OJwqLDixLCpcO7AAJMDggGwo7DhcKNw6FgKHBYwrvC'
+   // //                   + 'scO5w5RBwpLCjU0zblgedsOwwo82JgUowrzCmibCiChLIRYrN8KawpjCtsOLw65CVMKQZcOLCXkb'
+   // //                   + 'NhBAwpoKFEcrQjYyw4VCLMOtwrHDpzM9w6k3woLDsmBSQ3h5asKlwrnCn0/DoWPDtcOhw4Myw5Yc'
+   // //                   + 'w4/CnMOywp/CnWcLcMOhVhPDqWZkOMKAw7rDrTXDksK2w4DCmcOTwrDDsAQCR8OFwovDmirCmkVj'
+   // //                   + 'MMOmwrJlwpbDrHDDkHTDtSxZRSZ8EcKHEcK/CUl8w5NDw6xQczBMw44bHwLChcOow5nDicKLw4h9'
+   // //                   + 'wqtkZ0N+woJcH1fDk8O/w63DiUN7VsKeMU/CrADCgcKBw7nDgEhAVBnDpsOsw5fCmMKKcgEMNjc4'
+   // //                   + 'wpxqw616exEhw7osw51wYFoOw4AwUcKpwrALGsKZwrrCh8KIw6Fjw7LCkVUkwp5tw6bDtGpCQg7D'
+   // //                   + 'i1TCjMKvfxBJwpnCncKFZ8KbLlHDv8O7wpJsJMKIA8KZSEjCq1kYUkTDoQnDnQTDghdMw4lLKywM'
+   // //                   + 'w5XDgMO9FWZ0JgzDiMKOwpDCk2V0w53DscK6TMKIw7bDh8KrWMKYW8OHQsK9L8K4wpzDj8OfRMKf'
+   // //                   + 'JEDDnHrCh8K7f8ORw7Nvwo7Dt8KsMVJTAxhjRxzCtjTCkMKzw5psacKgQ8KrwoBVwozCt8K2w7vC'
+   // //                   + 'l8O+F8ObdsKBMzHDnMKXYCjDs0cOWiDDoiPClsOTG8KMw73Du8KswrbCnsODwqM3wqfDsz/Dvzcb'
+   // //                   + 'w5/DsMK9P8Ocw57Cu8OuwrfDr8K8KSfDmSASMWDDhsOhw4kNHsKmB0F8IsKxwovDv8K6w5zCtVvC'
+   // //                   + 'tjPDllvDj8Kfw5/DvFASG8KlCkXCnhzDtyJFdjTCrsO+THHCj8Kfw6RTw6cic8KvEMK3KMOvwovD'
+   // //                   + 'mileS8OYfUXCjWs2WUjCucO5DsK8w5FQJMKQw6I9KyMIwrbDucKGwo1mTcKNCDpnFsK4w6vDv8O7'
+   // //                   + 'QiADZXI6w6IIHcOLPi4SAMOPJkFMwqjDksOcwozCpmQtTsOeEFd7PMKIwojDoR/CsxzDr8K2w7le'
+   // //                   + 'GRxKT8OEwqDCgMKlw5bDoDjCqkjDncOJw5o6w6/Dv8Oqw6zCusKaAAbDmMK6wqUDwqQHwrTDhsOV'
+   // //                   + 'wrAVTERKFsO4HMKHTDrCh8KrFcOFw4rDhH/DpsOnEx/CqEVmwoPCk8OJwpU9wrrDhyvCq8KhH3vC'
+   // //                   + 'lBQEMhsUAsKSUcKlPH4GWsODAwfChcKQRlHDjMOARAHCogMFwp7DiRHCoDAyDMKpeUzDo8K7dMKO'
+   // //                   + 'w5LCm0TDh2zDv8KlQS59w5TCg8OidnHDv8O7wpJsNMKAAsOXKcOKw4oPGEBDw6DCujwIIxPDihR7'
+   // //                   + 'McKmPGZIw77Ch8Kpw7QAwow/A8KDw4Qtw4BMTkhjwqhjG2sKwprCt8O7w6pXwo3DvcO4w4nDl8OD'
+   // //                   + 'aBbDgMOpby/DmsK3TcK/GsOibMO7wr56HcOvOsKRw50SwrfCu8O/dBwHCAQAccK2w5TCjcK2woAR'
+   // //                   + 'NULClz/DqMO5FE3Ct8KCEDHCkcOrwpIbbQp7wp88woo8wpXCoFpOw6RYacKGCQAow6jClcKPw7xu'
+   // //                   + 'w63CoCbDgcOuwr/DnWdtXMOBwromwqZQfsOcCMKLw7hUw6rCvsOMw5Ffb3fCuWrCrcKDIkjDhMKz'
+   // //                   + 'aSRtIgzDksKGw7vDjcOdHcKZwrLCgyLCj07DvH3CoHnDvMKlByZYw61Twqh4bD56w7TClRR6w5LD'
+   // //                   + 'u8O9wrdzw5rDrS9WBHfDq8OxwofCrsKlw63Dv8Kfw7/Dv8O/w7wRDghrbDtkwqYqfA3ClRbCpsKL'
+   // //                   + 'IMKHwoJIwpHCmyfDuVEUEcKSw79JHMKMw6duaGl0QcKGNDLCnMOvwq3DiSEvSsOPwofDsMK/wrTD'
+   // //                   + 'j8KkX8Olw6vDncK5GsKxIsKbOMOgwqrClHEMwo3CslfDtcO/w4TCusO5w70OwrvDj1PDgsOuw70a'
+   // //                   + 'w6fCt8Kqw6tjwoI/UMKEw5FbwrbCtsOZI8KMbMKqwq7ChcKCw5zDqHnClcOMw6xqw7VTSMKGYsOG'
+   // //                   + 'FcKKw5nDkBxcwrLCpMOPI3wDwoTDmcKRwqQiKcOIw6hJHMKrKhhxAMK9cMOpZRvCijDCoGhBSDZ6'
+   // //                   + 'w4ohw7zDvcKLQMKCwoHCmULDsi1Cw5XDpcOGw44lIBcMwpkLwqnDv8O7wpJsXAACw7JCSQsPGFJH'
+   // //                   + 'aHnDvRQjw4kLw4RLJMOHwrDDgEkoDsOmdBEZLcOSw7PCpcKOw5LDu8KPVG5KV07Cmn8mw5ohwqLD'
+   // //                   + 'scOHwpTDqmjCrkQKEhJwSsOfw7VMVcKHBMKdf8KodirClcKXwqDDkcKew6BZcjfDrzxbw5zDmcK2'
+   // //                   + 'aiTDhUUlwovDt8Onw5rCrMK/w73Ds3/DrC3DmsKXHWgmw5wUXWvCihJAwq9pw4xKw7HChyfCvcKM'
+   // //                   + 'wpLCuVEGwqtDHMOrw4PCnybCvsO9w4fDuQnDgcO5dG94TCxpw6LDisK1wrBgWCrDi8KLwqbDpz/C'
+   // //                   + 'j8OLwo/DvysswpxYw6hcfllxwq/DvxViwrvDqcK9wpYGwokyw5XDgsKfacKuVHbDhMK6VSnCkkrD'
+   // //                   + 'pBIgCDDCkWHCgsKNMTRJCS0EwqXCrUTCjS0FwqJzw4JGwpcXwpUxwrMsw7HCs07Dn2XClcKfw5Ud'
+   // //                   + 'wpzCqMKOVFvClMOJb8KiOzrCo8KxwpFuw5/Dv8O6f2fDtkVnKcKCwqkcwqjCrMOlW8KyLcO9wp/C'
+   // //                   + 'p8O0VU/DqsKKR2MUMCHDjgApwonCqsKdwrZdwp82WcObw7sMwplkcmvCmUhqw5UHAQwIOg4kGRUk'
+   // //                   + 'w73CoCFjQVJGwpnDv8O/w7/CoAopTEFNRTMuOTdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVw7/Du8KSbHQP'
+   // //                   + 'w7MzaEDCgwYTci3Cg8K4MRgDcgAAAcKkAAAAIAAANMKAAAAEVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVQ=='
+
+   // discarded in favour of var 20190402°0631
+   // // /**
+   // //  * This ~constant holds file mouseover.mp3 as base64
+   // //  *
+   // //  * @id 20190402°0555
+   // //  * @type String
+   // //  */
+   // // , sB64_MouseOver : 'w7/Du1BkAAAAXADDocO1AAAIAAANIMKgAAERfcKnRBh6AAAAADTCgwAAAA4AAA8AAAAALn/DocKB'
+   // //                   + 'GB94AwjCvg9AF8OJwqHDjsOxwpYhwqPCm8O4w4rCkMOhw44VwrfDuQ0cw5FawpDDoXN/w6LCtiHC'
+   // //                   + 'osOlEMKow6UKw5vDv8OELDHCosKBD8KEY8KDw6IMwo3Dv8O4wq7ChkULQQ/DmC4YG0gHAwMUNAbC'
+   // //                   + 'gsO/WsK/w6XCkDB9w4DDkjkDAlgMwpjCgGzDsMK0woYBDMKyOsKFBDrCgMOSWC3CosOfwpDDkDcy'
+   // //                   + 'w4kfw7FzEMORwpkgwqUiBE8swrpqwqNkw5bCj8O/w7/Dv8OqacOUwqZKB3d4wpnCh3/CtsOWCcK2'
+   // //                   + 'woZGRmQRJsKYEE1Lw7/Du2BkCgjDs8KtRFDDvwbCgAIAAA0gw6AAAQltFynCoMKPwrdAAAA0woAA'
+   // //                   + 'AARSw5TCt3Z2dnQWwrUtXcOZwp3CqlrClsKlLsOOw47DjsOoLUtSw5VnZ2dBNBTCtS1LdndnZMOQ'
+   // //                   + 'WsKWwrUtw5nDmcOZBMOQTUtSw5JJHcOZaC1qEMKELnQOw5NgAkwjw6cxNibCr8O9QMOCw5VQMsKq'
+   // //                   + 'wq/DulnDvcKmwppGKsKqOmjCqsOqwqrCt8OVUALDkcO/w7YIw7/Dv8O/wq/Cn8O4ZcOyw4jDsMOv'
+   // //                   + 'w7zDiMO9ZcKpw4MuwoLCl8OBw73Ck8OyO8ObLMO/w7/Du8OZLmTDiy3Cn8O/wrrClcO1RsOqJXnC'
+   // //                   + 'gwDCscOLK8OBwpPDgCDCkC7CrA1+G8KUU8Ohw7LDgsOCwq7CucK/w5fCkQAAABfCgcO8wqwhw7/D'
+   // //                   + 'v8O9w7zDl8O/w6R4LcKyai3Cvg/DvsKtw7rDu8K5acO/wqfDlcOrw5vDv8O4S8OiwpImw6zCg2DC'
+   // //                   + 'gBwwIwrDky1GHTDDv8O7IGQaDMOyL0XDisOoIsO2wrgAAA0gAAABCFkXKmDCi8OcwqAAADTCgAAA'
+   // //                   + 'BMOFBlMBQBQswroqMQceKS/Dv8O+w5/Dkj/DusOAF8O/w7/DtcOzX8Ovw6Z0w4nDrBMNYMOBw6vD'
+   // //                   + 'qjLDvW1Nw5E/w7XDusOkw6/Dv8O8wqdfwqbCusKmIsKgCBQBw7BIXxjCmjXDocKCWDsYAADCqks3'
+   // //                   + 'OMK7w6Uiwp3Dv8O/w7zCnQAAABNvw7/DiCfDv8O/w7tAZATCiMOyXkZKaCLDryAAAA0gAAABCW0b'
+   // //                   + 'K8KgwovCnMKAAAA0woAAAATDv8O9w77Cl0/ClsKMwpcswq/DjsKGwqXDmUlXUcK0wqIzOsOQw7rD'
+   // //                   + 'kMKNw7/CnsKEZTvDvcOnw5wiEVnDtmDCv1LCjBATwpvCixvCmVAHwokEcAzDszvCk8O8wqLDgMKe'
+   // //                   + 'w4E5w7DDh8O/w7XCuAF3w7/DukFfw7/Dv8OWWcOrwpPDuUdGL1IoU2TDvMOFZylQw4M3R8KVwqZ/'
+   // //                   + 'Qyl/w7nCjSlmesOjw7XCqcKrw4ZcwpvCqyQwCllzwrkQTGoXDAQiMyrChiHDqMOVwrpbOMKUwrHD'
+   // //                   + 'oMOXw7/DtCoAAADDv8O7QGQBwojDsm5Gw4poIcOkw7AAAA0gAAABCMKxFSnCoQfCnkAAADTCgAAA'
+   // //                   + 'BMK3b8O+woQXw7/Dv8OLwr56eMOjw7HDgcKMwrTCn2jDmUwaw5rCgjkswp7Dij/CnAh/w7nCsBjD'
+   // //                   + 'iQ8+w5TCqy/CiE7CtcK2wpLCv8OWwoHCgsKDwocxwq8ow4A4JsKCR8O1w4TCiMOAw7HCjG3CkMKE'
+   // //                   + 'QMKAwrkGf8O+QAt/w7/DvMODwp/Dv8O+w7t+NX8vwr7Cm8KjwqZ/R0TCrcOVE8KoISV+Ry7ClsKi'
+   // //                   + 'w7/Ds8KRwoXDkz/Dl27DnMKpwrgJwpTDgEIQKcKRwqDCoMOgSsOiajEow4RqwoTCsVx4QF3Cn8O/'
+   // //                   + 'wqnDu2oAw7/Du0BkAMKAAsOeR8OKbQLCoAgAAA0gwqAAAQY1LzPDuAnCgAAAADTCgwAAAAAAFG/D'
+   // //                   + 'vcKAAcO0wr/DkMOpK2pILcK6SsK6w6jCqQTDkW1XScORw5Jew4cRw7dewpV/UktHw77CpGk6LMKn'
+   // //                   + 'w5TCksOIwqlwc8KHwqDDvUZIPcKQFAzCgcKARkBhFsOwGWQYAcKgQTnChcKxJ8KFakITRWMTVTzD'
+   // //                   + 'qHQ0RT/Dv8KkAAAAABgBw4AgH8Oxw6/DgAAAwqAKw77Cg37CpsO9f0vDn8O7el9fw5nCv8O/w7/D'
+   // //                   + 'v8O/w7/CoA3CjcKVP8OWHMODf8OxwqwCwqYgFQAABwPDv8O/w7sQZALCj8OwwrxDw5IfAEAIAAAN'
+   // //                   + 'IMOgAAEAAAHDvgAAACAAADTCgAAABMO/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8OywoUBAQESVUxB'
+   // //                   + 'TUUzLjk4VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVXDv8O7EGQYwo/D'
+   // //                   + 'sAAAaQAAAAgAAA0gAAABAAABwqQAAAAgAAA0woAAAARVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQ=='
 
    /**
-    * This ~constant holds file fingerplop.mp3 as base64
+    * This ~constant holds file bonk.mp3 as data uri
     *
-    * @id 20190402°0553
+    * @note : File https://github.com/scottschiller/SoundManager2/tree/master/demo/animation-2b/audio/bonk.mp3
+    * @note : Data generated by ref 20190402°0623 'Dopiaza → data: URI Generator'
+    * @id 20190402°0637
     * @type String
     */
-   , sB64_FingerplopMp3 : 'w7/Du8KQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAIAAAOwrAA'
-                     + 'ICAgICAgICAgICAgQEBAQEBAQEBAQEBAYGBgYGBgYGBgYGBgYMKAwoDCgMKAwoDCgMKAwoDCgMKA'
-                     + 'woDCgMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw6DD'
-                     + 'oMOgw6DDoMOgw6DDoMOgw6DDoMOgw6DDv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w78AAAA5TEFNRTMu'
-                     + 'OTcgAcKqAAAAAC4XAAAUwoAkBWVOAADCgAAADsKwBDDCmF8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-                     + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-                     + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-                     + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-                     + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADDv8O7wpBsAAADMhrDjQ1pw6AALUFJwqrC'
-                     + 'pMKIARHDgQd/wrnDusKwGR3CkMOywrc3KMKCAMKMOHMODRHDgsOCwo0DY8KRUMOtVDgFDGtzw7HD'
-                     + 'uMO6WjbDgwVHwpnDlCZ8wqg4wpvCpMKKwoARwoBGAnjCmcKZc8KwHMKGwoDDtcKTwrUcJMOiGMKG'
-                     + 'MkNDEMOFAsKxw6PDiMKZfsKGKBXCkTV3w7HDg8OfB8OBw7PDojPDpQ5/EAIQQcOTw79/LwQOQxLD'
-                     + 'v8KXB8OAAAIlaFIDw5zDp8OUQMOkYMKAYcKLRsKNHMOoOMKzw6UlJMO6wo5KO8OxAAw/w4EPw7zC'
-                     + 'oGHDlcKfw4TDp8O/w7rDgcO8woYDAcKAw4BwOxbCiAMBAAAwPwIlMVjDicOEw5/Dv8KYwpgGIsKc'
-                     + 'w5jDhgdKw54Yw4teMMK0AMKoMMKUQVLDr8O3w4DDkmzCoDRYw6vDgMO5bcOQMcK7wpgNAh7DvA0Q'
-                     + 'w7UDAgZAw4dAIDPDocOHw7wOOhADw6M4woDDhgDDgBYIwoYhwqLDn8OCw4gAw4DCgMOQGBPCgQAQ'
-                     + 'NAoII8Ofw7zCpk8IAEAEJjo1f8O/KMKQw7HClCZIw4QIw6Mzw7/Dv8O5FinCrMOGEwHCjAYDwoHC'
-                     + 'gMOgYDAUCADDoAAAFRAywoHCv8O/w7PDocK9NRo7wrfDv8OABAYiLcO/w74Dw6A2w78Twqhfw5AI'
-                     + 'b8OGXE7Dg8OswrvDviXCpMOxwrlww4PDv3RPwp1Ew7/DqBrCoD/Dv1zCjE4RFsKBMcOMd29Tw4Ue'
-                     + 'wrTDpkUwwqDDo8KJPMOrOcO/w7vCkmwKCBN3TsOTH2jDgAIqQMOqLMOsCAEQPTU0w43CsQvDiMKx'
-                     + 'wpFodCwIZTFAw4tCwp0xSMK0wrdlwqMtw5tWwonDlcKiQlrCtcOpfmczO1dKwrzDo0zCtW81AlLD'
-                     + 'm8K+ccKZw701bMOMw7nDhiVzOcOmWsK5wqjCscK4S2ZzwrTDusKnwprDn1vDplrCtMOdNw7CrzLD'
-                     + 'k8KVw7tsw4/CnMO1wrMtMsOEwpLCqQfDv8O9Kw3CihhpAAAAFAA6exLDuBrDjEoGYEpeFcKRwqUp'
-                     + 'wqs7w4DCoCtPwrMtwpFUSsOvw7/Dv8O/w7/Dv8O/w7/DmsKlCXpHwoDDiWREw6l8w7vCqMKZwoIE'
-                     + 'EsKCFcKBwokqwprDmnHDscKAI8OwNQ7CjkHDtMOVwoLCq8OePcO4bMOiw4suw6MYXMKGwqvDu8Kz'
-                     + 'w6B5w6jDuUISc2zCjsKLKGjCucKoXMKmw4Mhwp7DoVnDucK+ecKbTcKSbQvCm8Omw6nDvMKLSnTC'
-                     + 'l8O1RXrCp0tHZBchXcOaYsKDwrFgUCUPBcOgw5PDkGvCoMKwwog1RsOoSxA8K8KCIcOowr3DjGXD'
-                     + 'lsO/fsKdw7sAACQRMcKdJhd0FMKuw6xUZEsyXyHCt2BYA8O6RXvCpUvDv8OUw4FQKQUowqPCqzdb'
-                     + 'w54nCsOLwpvCojXCjcKyworCqMKLFsKkw6k6bwLCmQFGDgzDrADDnmTDq8OmNAbDgcKgGXsFwoIi'
-                     + 'w6/DqmEgScOLwpRaPcKqSiVwwrnDgsOhwrTDhMKbw4zCuSNIa8KuTsOewot0UsOGw5/Dn8OXSMKN'
-                     + 'bMO9w6zDsnXCjF7Dv8O7wpJsJQwDwq1PThs6MiAvYUnDig8DJRDCvRMmTcOww4jCiQHChGh0F8KI'
-                     + 'w4TDjsOnw63DvUlwwpnCrV8pwq5KwrROLjNVU8Kbwp3CrntswrJYdsKzwrXDjDN5w4zCnsKOw6TC'
-                     + 'ssOnwoTCgsOjRzvDv3AABgoAAAAJEsKMDcKiw6nDrMKmQFfCl8OBw5fCg8KJwr0LRGpKw6XCgWBo'
-                     + 'Hg7CnA8dw7/Dv8O/w7/Dv8O/w5otwr3CosKyKFFKQ8KrHTIQwoFgBBouE8OoGCBnYyZlGGoQwqd6'
-                     + 'NcKTEgPChMONwqvDnsO6SDjDpHLCjwkgAjU8JCUCwpDCl2LCkUzCgm7DtsKkEznCqSbDjyxhw7Q2'
-                     + 'dcO2EzYXw6MLwos0wqzDpcOvw4RxwoHCp1vDvW/CuDdNwoHDuSLDoMKrwqZzN8Orw4/DoMKOwppZ'
-                     + 'wo8XTmQYWm9BR8OADiwGwrbDhsOKwqrCucKDw4w+BcK7w6s5w67DvsOlwrtZw47DvsKwGQANwobC'
-                     + 'ulkjYcOIIUYUwpjCssKHJwAGDQPCr8OWCTw2Az0oGkPDuMKqEgtFAFcpwofCjkokecKTIsKNEgTD'
-                     + 'oQTDkixscSTDtMOUbcK2w7xOw4fCnMO6VSzCjEbDmMOCwoNawpDDsMKqwovCmGA4JBTCqCg6wpAX'
-                     + 'RjVCwpFgVlDDqk4ARMKNIBzCtsKNBCjDtcKUfQ8swo7DhCfDkcKvwpVaCQXCmMOtSjjCpU/CizbC'
-                     + 'm351w7zCjUXCs8K5UcKNQlYWMmYhMMKzw4YxYsKXWDJmbMOpIsKeSXfDv8O7wpJsLgwEGGZIwotm'
-                     + 'G3JBQcO5w4wsI2UPUcKRIC4YbQlIwpbDp8K0IwwtMMOuEMOLKcOWw5rCkMKlYMKRYRvCnUJ1PcKN'
-                     + 'w4rCm8KDQT/ClcOuw7MpOzV6wp1Of8Onwo4hwqXCgsKaAAAUTsOZSsOBOcKxE8K8RybCgsKAw5or'
-                     + 'eMOQNwt1QsKAwo8sworChMOmwpHDtw/DnzzChcK8w6xmw53Cj8KKFHHCl8KLwoYaw6LDtVbCksKl'
-                     + 'LlFWwqVBwrAsIsK1BcKXIQdEA8KPCkPCg8OJwqLDixLCpcO7AAJMDggGwo7DhcKNw6FgKHBYwrvC'
-                     + 'scO5w5RBwpLCjU0zblgedsOwwo82JgUowrzCmibCiChLIRYrN8KawpjCtsOLw65CVMKQZcOLCXkb'
-                     + 'NhBAwpoKFEcrQjYyw4VCLMOtwrHDpzM9w6k3woLDsmBSQ3h5asKlwrnCn0/DoWPDtcOhw4Myw5Yc'
-                     + 'w4/CnMOywp/CnWcLcMOhVhPDqWZkOMKAw7rDrTXDksK2w4DCmcOTwrDDsAQCR8OFwovDmirCmkVj'
-                     + 'MMOmwrJlwpbDrHDDkHTDtSxZRSZ8EcKHEcK/CUl8w5NDw6xQczBMw44bHwLChcOow5nDicKLw4h9'
-                     + 'wqtkZ0N+woJcH1fDk8O/w63DiUN7VsKeMU/CrADCgcKBw7nDgEhAVBnDpsOsw5fCmMKKcgEMNjc4'
-                     + 'wpxqw616exEhw7osw51wYFoOw4AwUcKpwrALGsKZwrrCh8KIw6Fjw7LCkVUkwp5tw6bDtGpCQg7D'
-                     + 'i1TCjMKvfxBJwpnCncKFZ8KbLlHDv8O7wpJsJMKIA8KZSEjCq1kYUkTDoQnDnQTDghdMw4lLKywM'
-                     + 'w5XDgMO9FWZ0JgzDiMKOwpDCk2V0w53DscK6TMKIw7bDh8KrWMKYW8OHQsK9L8K4wpzDj8OfRMKf'
-                     + 'JEDDnHrCh8K7f8ORw7Nvwo7Dt8KsMVJTAxhjRxzCtjTCkMKzw5psacKgQ8KrwoBVwozCt8K2w7vC'
-                     + 'l8O+F8ObdsKBMzHDnMKXYCjDs0cOWiDDoiPClsOTG8KMw73Du8KswrbCnsODwqM3wqfDsz/Dvzcb'
-                     + 'w5/DsMK9P8Ocw57Cu8OuwrfDr8K8KSfDmSASMWDDhsOhw4kNHsKmB0F8IsKxwovDv8K6w5zCtVvC'
-                     + 'tjPDllvDj8Kfw5/DvFASG8KlCkXCnhzDtyJFdjTCrsO+THHCj8Kfw6RTw6cic8KvEMK3KMOvwovD'
-                     + 'mileS8OYfUXCjWs2WUjCucO5DsK8w5FQJMKQw6I9KyMIwrbDucKGwo1mTcKNCDpnFsK4w6vDv8O7'
-                     + 'QiADZXI6w6IIHcOLPi4SAMOPJkFMwqjDksOcwozCpmQtTsOeEFd7PMKIwojDoR/CsxzDr8K2w7le'
-                     + 'GRxKT8OEwqDCgMKlw5bDoDjCqkjDncOJw5o6w6/Dv8Oqw6zCusKaAAbDmMK6wqUDwqQHwrTDhsOV'
-                     + 'wrAVTERKFsO4HMKHTDrCh8KrFcOFw4rDhH/DpsOnEx/CqEVmwoPCk8OJwpU9wrrDhyvCq8KhH3vC'
-                     + 'lBQEMhsUAsKSUcKlPH4GWsODAwfChcKQRlHDjMOARAHCogMFwp7DiRHCoDAyDMKpeUzDo8K7dMKO'
-                     + 'w5LCm0TDh2zDv8KlQS59w5TCg8OidnHDv8O7wpJsNMKAAsOXKcOKw4oPGEBDw6DCujwIIxPDihR7'
-                     + 'McKmPGZIw77Ch8Kpw7QAwow/A8KDw4Qtw4BMTkhjwqhjG2sKwprCt8O7w6pXwo3DvcO4w4nDl8OD'
-                     + 'aBbDgMOpby/DmsK3TcK/GsOibMO7wr56HcOvOsKRw50SwrfCu8O/dBwHCAQAccK2w5TCjcK2woAR'
-                     + 'NULClz/DqMO5FE3Ct8KCEDHCkcOrwpIbbQp7wp88woo8wpXCoFpOw6RYacKGCQAow6jClcKPw7xu'
-                     + 'w63CoCbDgcOuwr/DnWdtXMOBwromwqZQfsOcCMKLw7hUw6rCvsOMw5Ffb3fCuWrCrcKDIkjDhMKz'
-                     + 'aSRtIgzDksKGw7vDjcOdHcKZwrLCgyLCj07DvH3CoHnDvMKlByZYw61Twqh4bD56w7TClRR6w5LD'
-                     + 'u8O9wrdzw5rDrS9WBHfDq8OxwofCrsKlw63Dv8Kfw7/Dv8O/w7wRDghrbDtkwqYqfA3ClRbCpsKL'
-                     + 'IMKHwoJIwpHCmyfDuVEUEcKSw79JHMKMw6duaGl0QcKGNDLCnMOvwq3DiSEvSsOPwofDsMK/wrTD'
-                     + 'j8KkX8Olw6vDncK5GsKxIsKbOMOgwqrClHEMwo3CslfDtcO/w4TCusO5w70OwrvDj1PDgsOuw70a'
-                     + 'w6fCt8Kqw6tjwoI/UMKEw5FbwrbCtsOZI8KMbMKqwq7ChcKCw5zDqHnClcOMw6xqw7VTSMKGYsOG'
-                     + 'FcKKw5nDkBxcwrLCpMOPI3wDwoTDmcKRwqQiKcOIw6hJHMKrKhhxAMK9cMOpZRvCijDCoGhBSDZ6'
-                     + 'w4ohw7zDvcKLQMKCwoHCmULDsi1Cw5XDpcOGw44lIBcMwpkLwqnDv8O7wpJsXAACw7JCSQsPGFJH'
-                     + 'aHnDvRQjw4kLw4RLJMOHwrDDgEkoDsOmdBEZLcOSw7PCpcKOw5LDu8KPVG5KV07Cmn8mw5ohwqLD'
-                     + 'scOHwpTDqmjCrkQKEhJwSsOfw7VMVcKHBMKdf8KodirClcKXwqDDkcKew6BZcjfDrzxbw5zDmcK2'
-                     + 'aiTDhUUlwovDt8Onw5rCrMK/w73Ds3/DrC3DmsKXHWgmw5wUXWvCihJAwq9pw4xKw7HChyfCvcKM'
-                     + 'wpLCuVEGwqtDHMOrw4PCnybCvsO9w4fDuQnDgcO5dG94TCxpw6LDisK1wrBgWCrDi8KLwqbDpz/C'
-                     + 'j8OLwo/DvysswpxYw6hcfllxwq/DvxViwrvDqcK9wpYGwokyw5XDgsKfacKuVHbDhMK6VSnCkkrD'
-                     + 'pBIgCDDCkWHCgsKNMTRJCS0EwqXCrUTCjS0FwqJzw4JGwpcXwpUxwrMsw7HCs07Dn2XClcKfw5Ud'
-                     + 'wpzCqMKOVFvClMOJb8KiOzrCo8KxwpFuw5/Dv8O6f2fDtkVnKcKCwqkcwqjCrMOlW8KyLcO9wp/C'
-                     + 'p8O0VU/DqsKKR2MUMCHDjgApwonCqsKdwrZdwp82WcObw7sMwplkcmvCmUhqw5UHAQwIOg4kGRUk'
-                     + 'w73CoCFjQVJGwpnDv8O/w7/CoAopTEFNRTMuOTdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVw7/Du8KSbHQP'
-                     + 'w7MzaEDCgwYTci3Cg8K4MRgDcgAAAcKkAAAAIAAANMKAAAAEVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVQ=='
+   , sB64Dopiaza_Bonk_Mp3 : 'data:audio/mp3;base64,'
+               + '/+OAxAAAAAAAAAAAAEluZm8AAAAPAAAABwAADQ4AJCQkJCQkJCQkJCQkJCRJSUlJSUlJSUlJ'
+               + 'SUlJSW1tbW1tbW1tbW1tbW1tkpKSkpKSkpKSkpKSkpKStra2tra2tra2tra2trbb29vb29vb2'
+               + '9vb29vb2///////////////////AAAAWkxBTUUzLjkyIAHDAAAAAAAAAAACQCQF2SEAAAAAAA'
+               + '0OXWa08wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/+OAxABa1IIMF5uwACCDBAGAB/8'
+               + '6aEEGTrP/hZNdJTyqr/pn4OCRDARfjtIEHqAZfjEAZzj+AZkhOeMiITA2IE0A1rkeA6cdIA9G'
+               + 'McA66Ro+MmOYSZqT4G0RQAGcoYgGMcNoGAQPQGJ4KH4wyIEXNjUiYGUkgoGMMRYGEkBIGFkLY'
+               + 'GG8P4GGMDv8tmpPn0J4DEOL0DGmI8AYFQGEkHIGDUHIGDEBYGD4F3/NicKiaCSJfLYGBoAQr4'
+               + 'GFIIgGDoGwGCYAgGCsC4WhAFAQAw7hT//PE+ZmREB5IkLgGAO8ghUAwXgbAaAuUwMAIHQMFYD'
+               + 'wMQAngMUwZgIAJAx5CmAwpAQFrAwcAs//6d97vTdngYJAPAFAkAGAeK2DlAGABluASAMDAaAs'
+               + 'L3gYBwBgYAwDgNAHDU///////AwBgDDfxkBjxS4aoGQWIIF0nxWgYoFgJoAwBABwFBBQMiCAH'
+               + '//4GAUAIGAMA4DQBwAgDhc2MmBgWAgDY6AcA9UJAILy11W1dqwrXViy2OQCw1TFUqEku6WxLa'
+               + 'ggJZ4skWaLxKbQemiY/+OCxCha9IJFQ9jwABJw+YDYFRgagfGCiDUYQ4UhhvilGSSRkauQAZg'
+               + 'uA5mCgBuYC4DRgKgBBcBJxU5SzpgBADmAMAWYBQC5gFgGGAaAUYBIAxgDgBGAGAAWaQeV070d'
+               + 'gBymHLDLDKmVMoEw1xZajTDtnsNKVBQAEwCgITBSAeMBcAgFABJFLucp3ozGYzLYzGcq0qpYz'
+               + 'GYy5L+w67LszVqmv3dVYzLY1Gniac/0PRp/mlJiNeh6TyyNRqNQ1GYZf2GX9jLOXVgatTQ0/0'
+               + 'PQWYEALbAkTlAVSs5a6zl/Xdh2My6mtayzq1aXKmlVymtU2WPa0n3n+tZY1X2TgjVNTU1al3j'
+               + '+5mUfg0WUQn9ZWvyxu473zH/5r/5jzHX/zHDn719rLLn3bO+5VuxaGm/ZbLbUqtU1rLP48+l/'
+               + 'Hm5bD1NTUtLZpsfwxxuZU2SPPcqaaQAhh+FryH0uXjKpcoDewl+bSaWw/SLjbQLj8agKecVQY'
+               + 'FATAIARMA0CgwBgSzAVCgMFAdkxD47Tt0DxMGgRAwHwVTAtAHBwVhgyiBBgOSTMH//jgsRRWg'
+               + 'yCFULXtuQ5FkPVXXrENw3ZinyWZDgGE5YWqR/J+P0gNEVBZdGEjl1wlmZgAkb+ljIIyOMR2td'
+               + 'f7s3Fbzds47dprvwFI701C0yHDlMW5VhyelLWaO8MgTbROzjZc4MF3gn26qtiU/vstkOdu+6b'
+               + 'R0TXks1pmVLtAosYDlE1+mY4CbaNMqlEbpb2oKk8kty2tauSKXyZusW+ih2GakYp2DVpRlRUU'
+               + 'nmnjVAX3jVmJ87EpXEdSBuqVOMVFA1JhGCC4zBkqv3MotL5fRw1HpdnGpJD8odr56cgJyb0jm'
+               + '3ihiHJuIu9KqODsvkUzhS1uSqWx0EAa/YQ/N+jcF8ZqGIgoEJBNBSV5hbC9sZqDr8MqW/L6sV'
+               + 'l2MM2pIYKQJncuwwqmR50hLvF3Zl0dUbAs7ViSSi7QSKIS6Hc9Z27ECMHRnIgBDAGAaMAkFEw'
+               + 'JwFzEzJPMjjX89/l5TFqBeMCUC0wEQATAoA6MEcGZLtXk5SdWTA29vrU1POVTvBQwfEZbbtQ9'
+               + 'KZRD4oA2JAExp9XBhyXxJK8wCALmttYq1rcamv/44LEfVscgggNWvAAViw7L6zk9Vh+eytw9K'
+               + 'mttugmdZokWo5RJ9Yu1LMGBV5fOP9uEEwAMlpIJbWahqdmqlWgn6Wwy59WI3ZbHZA4bymB6BI'
+               + 'DAFm5xtUiw1q/GXrsw5uVPLDVSnhFR+FtwKuxe0odCHpdTY3aTeFXka5L9KrAYBKV0UruS7KR'
+               + '3rlM6Rf7O8IgAXsQVijiSx5VrLCt86jEXVWbYclwoBj7IlH2ssGpJG6NiIPhGnLaWuZe7uxJ/'
+               + 'YTMu03Z2WbQA3GSqbLqaS4sOupDcvf2rF4csW3Rrqyr2lcMUuT1ONYu3KGWwqgqOjCIy+2FuU'
+               + 'hYAeBcoRTVBCSCRkof4QBfxYWZQMRCQAd1kQCzHgTXLwA6pYCCAFTAtBRMD8A8wOAcTBoAvMF'
+               + 'UQ6GoZRCMKEQcwQJFzHkCyMMINwwiBNTHuK1MwwuswSAgVbn3Y0wIwvARi7Jg+AoAIDkwFwCz'
+               + 'CwDVMKwEcwNAbzCAB1MDADCD4KhrN4jAwAOAoD5gNgDoCTAnAZDAMzA6BpMFYCcwBQVjAmA/M'
+               + 'BIAQwMQUIat/+OCxKV/zGIABZrwAMBRK/NGBWBKQgDquMCEBtC9SwwGQATAMAVEIERgWgPBcA'
+               + 'wwIwKgwCswCwJq1/H8pmqVAAAUATDQIAGFgCAAAIYBAACxTASAEMCUBQqgRmAiBIPARGAYBWY'
+               + 'AYBRYALMBgB198JmryrV5vY8ABPGAMAAvFWNPARgImBAAOhPLVs3MAMAMwCAFwwCEEAHmAsAm'
+               + 'CAADACAXAQEIhAUAgAqNhgFgJNdxrZbmq3a1butJ1v0YBIA8aZIgPTQXQ+4QAAtRUiDiXKNgN'
+               + 'AIAwCyRxgBgCISwSAUBgEiAAkEgCK/AAB6gSMoCAFZj3HHUzVwmavKtXn+zR/ggAxmKQb8l91'
+               + 'L0w3HTDLfoL0KAeLqELfTsYKAABU4AsACBgBUdAYAGmaFwBkEq+ACAFOoZJ9JpFtmHoCkNkdc'
+               + 'a2W61btat3Wu739XH6qokhHEYI6j8M4aRRKZP2lS1p8UxbTope7WqTEFNRTMuOTKqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqv/jgsQ6AAADSAHAA'
+               + 'ACqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpMQU1FMy45Mqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr/44LE/wAAA0gAAAAAqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqTEFNRTMuOTKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
+               + 'qqqq'
 
    /**
-    * This ~constant holds file mouseover.mp3 as base64
+    * This ~constant holds file fingerplop2.mp3 as data uri
     *
-    * @id 20190402°0555
+    * @note : File https://github.com/scottschiller/SoundManager2/tree/master/demo/animation-2b/audio/fingerplop2.mp3
+    * @note : Data generated by ref 20190402°0623 'Dopiaza → data: URI Generator'
+    * @id 20190402°0633
     * @type String
     */
-   , sB64_MouseOver : 'w7/Du1BkAAAAXADDocO1AAAIAAANIMKgAAERfcKnRBh6AAAAADTCgwAAAA4AAA8AAAAALn/DocKB'
-                     + 'GB94AwjCvg9AF8OJwqHDjsOxwpYhwqPCm8O4w4rCkMOhw44VwrfDuQ0cw5FawpDDoXN/w6LCtiHC'
-                     + 'osOlEMKow6UKw5vDv8OELDHCosKBD8KEY8KDw6IMwo3Dv8O4wq7ChkULQQ/DmC4YG0gHAwMUNAbC'
-                     + 'gsO/WsK/w6XCkDB9w4DDkjkDAlgMwpjCgGzDsMK0woYBDMKyOsKFBDrCgMOSWC3CosOfwpDDkDcy'
-                     + 'w4kfw7FzEMORwpkgwqUiBE8swrpqwqNkw5bCj8O/w7/Dv8OqacOUwqZKB3d4wpnCh3/CtsOWCcK2'
-                     + 'woZGRmQRJsKYEE1Lw7/Du2BkCgjDs8KtRFDDvwbCgAIAAA0gw6AAAQltFynCoMKPwrdAAAA0woAA'
-                     + 'AARSw5TCt3Z2dnQWwrUtXcOZwp3CqlrClsKlLsOOw47DjsOoLUtSw5VnZ2dBNBTCtS1LdndnZMOQ'
-                     + 'WsKWwrUtw5nDmcOZBMOQTUtSw5JJHcOZaC1qEMKELnQOw5NgAkwjw6cxNibCr8O9QMOCw5VQMsKq'
-                     + 'wq/DulnDvcKmwppGKsKqOmjCqsOqwqrCt8OVUALDkcO/w7YIw7/Dv8O/wq/Cn8O4ZcOyw4jDsMOv'
-                     + 'w7zDiMO9ZcKpw4MuwoLCl8OBw73Ck8OyO8ObLMO/w7/Du8OZLmTDiy3Cn8O/wrrClcO1RsOqJXnC'
-                     + 'gwDCscOLK8OBwpPDgCDCkC7CrA1+G8KUU8Ohw7LDgsOCwq7CucK/w5fCkQAAABfCgcO8wqwhw7/D'
-                     + 'v8O9w7zDl8O/w6R4LcKyai3Cvg/DvsKtw7rDu8K5acO/wqfDlcOrw5vDv8O4S8OiwpImw6zCg2DC'
-                     + 'gBwwIwrDky1GHTDDv8O7IGQaDMOyL0XDisOoIsO2wrgAAA0gAAABCFkXKmDCi8OcwqAAADTCgAAA'
-                     + 'BMOFBlMBQBQswroqMQceKS/Dv8O+w5/Dkj/DusOAF8O/w7/DtcOzX8Ovw6Z0w4nDrBMNYMOBw6vD'
-                     + 'qjLDvW1Nw5E/w7XDusOkw6/Dv8O8wqdfwqbCusKmIsKgCBQBw7BIXxjCmjXDocKCWDsYAADCqks3'
-                     + 'OMK7w6Uiwp3Dv8O/w7zCnQAAABNvw7/DiCfDv8O/w7tAZATCiMOyXkZKaCLDryAAAA0gAAABCW0b'
-                     + 'K8KgwovCnMKAAAA0woAAAATDv8O9w77Cl0/ClsKMwpcswq/DjsKGwqXDmUlXUcK0wqIzOsOQw7rD'
-                     + 'kMKNw7/CnsKEZTvDvcOnw5wiEVnDtmDCv1LCjBATwpvCixvCmVAHwokEcAzDszvCk8O8wqLDgMKe'
-                     + 'w4E5w7DDh8O/w7XCuAF3w7/DukFfw7/Dv8OWWcOrwpPDuUdGL1IoU2TDvMOFZylQw4M3R8KVwqZ/'
-                     + 'Qyl/w7nCjSlmesOjw7XCqcKrw4ZcwpvCqyQwCllzwrkQTGoXDAQiMyrChiHDqMOVwrpbOMKUwrHD'
-                     + 'oMOXw7/DtCoAAADDv8O7QGQBwojDsm5Gw4poIcOkw7AAAA0gAAABCMKxFSnCoQfCnkAAADTCgAAA'
-                     + 'BMK3b8O+woQXw7/Dv8OLwr56eMOjw7HDgcKMwrTCn2jDmUwaw5rCgjkswp7Dij/CnAh/w7nCsBjD'
-                     + 'iQ8+w5TCqy/CiE7CtcK2wpLCv8OWwoHCgsKDwocxwq8ow4A4JsKCR8O1w4TCiMOAw7HCjG3CkMKE'
-                     + 'QMKAwrkGf8O+QAt/w7/DvMODwp/Dv8O+w7t+NX8vwr7Cm8KjwqZ/R0TCrcOVE8KoISV+Ry7ClsKi'
-                     + 'w7/Ds8KRwoXDkz/Dl27DnMKpwrgJwpTDgEIQKcKRwqDCoMOgSsOiajEow4RqwoTCsVx4QF3Cn8O/'
-                     + 'wqnDu2oAw7/Du0BkAMKAAsOeR8OKbQLCoAgAAA0gwqAAAQY1LzPDuAnCgAAAADTCgwAAAAAAFG/D'
-                     + 'vcKAAcO0wr/DkMOpK2pILcK6SsK6w6jCqQTDkW1XScORw5Jew4cRw7dewpV/UktHw77CpGk6LMKn'
-                     + 'w5TCksOIwqlwc8KHwqDDvUZIPcKQFAzCgcKARkBhFsOwGWQYAcKgQTnChcKxJ8KFakITRWMTVTzD'
-                     + 'qHQ0RT/Dv8KkAAAAABgBw4AgH8Oxw6/DgAAAwqAKw77Cg37CpsO9f0vDn8O7el9fw5nCv8O/w7/D'
-                     + 'v8O/w7/CoA3CjcKVP8OWHMODf8OxwqwCwqYgFQAABwPDv8O/w7sQZALCj8OwwrxDw5IfAEAIAAAN'
-                     + 'IMOgAAEAAAHDvgAAACAAADTCgAAABMO/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8OywoUBAQESVUxB'
-                     + 'TUUzLjk4VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVXDv8O7EGQYwo/D'
-                     + 'sAAAaQAAAAgAAA0gAAABAAABwqQAAAAgAAA0woAAAARVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-                     + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQ=='
+   , sB64Dopiaza_Fingerplop2_Mp3 : 'data:audio/mp3;base64,'
+               + '//uQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAAIKABA'
+               + 'QEBAQEBAQEBAQEBAQEBAQEBAQEBAQECAgICAgICAgICAgICAgICAgICAgICAgICAwMDAwMDA'
+               + 'wMDAwMDAwMDAwMDAwMDAwMDAwP////////////////////////////////8AAAA5TEFNRTMuO'
+               + 'TcgAaoAAAAALBcAABSAJAXNTgAAgAAACChX+laoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//uQbAAAA00Qzg1h4AAtwRmipI'
+               + 'wAEXFZjblqMBkXGq93KKICAFL8CjNKzSNcQIQcrHRSkTEgFIdVYdg8FJeJgREFICoHA4Kct5O'
+               + 'y5nWoFYrHkSkRg+D4Pg+CAIAgUBMHwffBAEAQOCQEIPg+4HwfKAmD5/DCz/y4IHOUBAEHawff'
+               + '4IS4P3+XygIfUcKAh9SoBsnkgFCBAQAgAMAYGw2T6ogOQfB8P+Xf8uH0fX4nqB9///n/iB3/g'
+               + '+f/ghQsBgMBgNRgMBQJAwEABhMDmAAZrRgcA4jgfFdDzHA0Ls8Az/BnKvA/G8DlYfAouCAOAU'
+               + 'B/C0AcAjQZKr8GxwVENsAEIgZMF/4nEMcEGh+oIh4IhP/42gQiwahCmGJCDJ//5IBqwphc4PB'
+               + 'NidBHhM62//xQAyhLFgdJWNU5UMf///MEGcuFxNlus+jVgOBwMBwOBwOBgKBAAAEBAc/wQCAM'
+               + 'iCrwNRcBZo1o9ET4KhXLfk4+Ki1/qSEhKf/541EiTjz/84gISY9G//7qe6Fy//A/YkmQIjbLb'
+               + 'bLrdpXbLbdW6uhNGS/T//uSbAoAA+ZhXO4lYARAilqqxYgADnFZPl2RgAjWg+lrkiAAxULmna'
+               + 'KsWNEmpHs4wfU1UVHbE2k0xNadXVXdvOnEpOTNdvfw+y917v2vr/+Lbf1df/x26Yafs5NJb2F'
+               + 'oIxv2z90Zu6KqnzPJsfqJi/lGYbtrf3ctN7e2uo/8wAcggCZQ8dj+X/dOPwmgAAAADCAcBgVj'
+               + 'AVjiZdpiM8gKYBO4DR8NJ9P/bN/vn/+YQRW//7Uv//qWhy7687E/73JM63///+xHcERpVzGhq'
+               + 'sAkaAT4qRtm8rkspbycR3MIdF40hTwZHgFhXlpCFkKghIybnBUKC6c8mHKWAjUEDfTEEaWGjv'
+               + 'YxBWc8MjJlLXPa02mC4vOewEtnf86Uzd9aVIjI7OFCU0uxNXXPFBQh9NMMKFMYbT33LXpB/Bp'
+               + 'Thx3+dk6gNABEhWmnay9qtkrM4bFAlJXM2e9T/8gfETjK1dRT9f1Ega8kGf/8b6/2D2gkTH73'
+               + 'qYSWArHVM5R7LZ2vTT4wuketlSHIVcWiQRK3OhKbRA9GFn6s4pAiYYH4jh6MhGuZxP/7kmwVg'
+               + 'APKQU2FYQACTsxaPKQIAQ8NQTk5NoABLZrrtwSAAnQeLiOOGCxLEM4cmrTkGjMaS8rrmp20Ir'
+               + 'V9afbeq8y6Dlgw6BnaXTQtpaDyx1U2wz7H4ioy2jgJph6M3wD1Xc5se6X3fb5ALjetuqxM9UE'
+               + 'lAJugcg2xdVxrJociwQpcQizJM6nIr////h0XyTJY5cj3UmQmdv6097rRHsiI3e1n7Xn6USZO'
+               + '2Sh7Z0u+qXWbVrISiX6OlpmuLd4K7RYAADBDwCBBSAAA0RAWL2NUcwaodFgdksDcQn7BtD1JI'
+               + 'pZ0glxFZd7lh8cpQJE8beaoFE2Hokkuj8oIEufKJkcRYypfol9IxcyK00kq2/yktIvmh41Nyt'
+               + 'aklo9X/JQkSaYoGsooJr1+tH/+dcRARkRlG3rOqJM/ywJNhoFDYSC4Wi0Wi0WAADHKXBCKYmZ'
+               + '8G4qAMFvSaXX+yZQwVQW/ximFkQ3r/70pd8L///jfiZ5j9r//x6kU8Cp4wOh0JCX0gy4YPI5V'
+               + 'ADPoAUKpMKbUMBCjCgImAWVL3GPpUUksCINEyYr/+5JsDo/zETAjtw0gAi+jRHHgiABAAAGkA'
+               + 'AAAIAAANIAAAARRb//5SLAkGmwqCJKkFhSSocWRNKksxSKYLImrVRImtVQxpFkpeMY+oqxySI'
+               + 'qDf//CGgpIJd/6imhRwMN6blkdFdSK4diQBhDEIUxCFCFEJv9SlmMZSm/ugYzlASwgV0Js0F4'
+               + 'N6FHArB3//xTQp4v//8jorqVMQU1FMy45N1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVV'
+
+   /**
+    * This ~constant holds file fingerplop.mp3 as data uri
+    *
+    * @note : File https://github.com/scottschiller/SoundManager2/tree/master/demo/animation-2b/audio/fingerplop.mp3
+    * @note : Data generated by ref 20190402°0623 'Dopiaza → data: URI Generator'
+    * @id 20190402°0635
+    * @type String
+    */
+   , sB64Dopiaza_Fingerplop_Mp3 : 'data:audio/mp3;base64,'
+               + '//uQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAIAAAOsAAg'
+               + 'ICAgICAgICAgICBAQEBAQEBAQEBAQEBgYGBgYGBgYGBgYGBggICAgICAgICAgICAoKCgoKCg'
+               + 'oKCgoKCgoMDAwMDAwMDAwMDAwODg4ODg4ODg4ODg4OD///////////////8AAAA5TEFNRTMuO'
+               + 'TcgAaoAAAAALhcAABSAJAVlTgAAgAAADrAEMJhfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+               + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//uQbAAAAzIazQ1p4AAtQUmqpI'
+               + 'gBEcEHf7n6sBkdkPK3NyiCAIw4cw4NEcLCjQNjkVDtVDgFDGtz8fj6WjbDBUeZ1CZ8qDibpIq'
+               + 'AEYBGAniZmXOwHIaA9ZO1HCTiGIYyQ0MQxQKx48iZfoYoFZE1d/HD3wfB8+Iz5Q5/EAIQQdP/'
+               + 'fy8EDkMS/5cHwAACJWhSA9zn1EDkYIBhi0aNHOg4s+UlJPqOSjvxAAw/wQ/8oGHVn8Tn//rB/'
+               + 'IYDAYDAcDsWiAMBAAAwPwIlMVjJxN//mJgGIpzYxgdK3hjLXjC0AKgwlEFS7/fA0mygNFjrwP'
+               + 'lt0DG7mA0CHvwNEPUDAgZAx0AgM+HH/A46EAPjOIDGAMAWCIYhot/CyADAgNAYE4EAEDQKCCP'
+               + 'f/KZPCABABCY6NX//KJDxlCZIxAjjM///+RYprMYTAYwGA4GA4GAwFAgA4AAAFRAygb//8+G9'
+               + 'NRo7t//ABAYiLf/+A+A2/xOoX9AIb8ZcTsPsu/4lpPG5cMP/dE+dRP/oGqA//1yMThEWgTHMd'
+               + '29TxR605kUwoOOJPOs5//uSbAoIE3dO0x9owAIqQOos7AgBED01NM2xC8ixkWh0LAhlMUDLQp'
+               + '0xSLS3ZaMt21aJ1aJCWrXpfmczO1dKvONMtW81AlLbvnGZ/TVszPnGJXM55lq5qLG4S2ZztPq'
+               + 'nmt9b5lq03TcOrzLTlftsz5z1sy0yxJKpB//9Kw2KGGkAAAAUADp7EvgazEoGYEpeFZGlKas7'
+               + 'wKArT7MtkVRK7//////////apQl6R4DJZETpfPuomYIEEoIVgYkqmtpx8YAj8DUOjkH01YKr3'
+               + 'j34bOLLLuMYXIar+7Pgeej5QhJzbI6LKGi5qFymwyGe4Vn5vnmbTZJtC5vm6fyLSnSX9UV6p0'
+               + 'tHZBchXdpig7FgUCUPBeDT0GugsIg1RuhLEDwrgiHovcxl1v9+nfsAACQRMZ0mF3QUruxUZEs'
+               + 'yXyG3YFgD+kV7pUv/1MFQKQUoo6s3W94nCsubojWNsoqoixak6TpvApkBRg4M7ADeZOvmNAbB'
+               + 'oBl7BYIi7+phIEnLlFo9qkolcLnC4bTEm8y5I0hrrk7ei3RSxt/f10iNbP3s8nWMXv/7kmwlD'
+               + 'AOtT04bOjIgL2FJyg8DJRC9EyZN8MiJAYRodBeIxM7n7f1JcJmtXymuSrROLjNVU5udrntssl'
+               + 'h2s7XMM3nMno7ksueEguNHO/9wAAYKAAAACRKMDaLp7KZAV5fB14OJvQtEakrlgWBoHg6cDx3'
+               + '////////aLb2isihRSkOrHTIQgWAEGi4T6BggZ2MmZRhqEKd6NZMSA4TNq976SDjkco8JIAI1'
+               + 'PCQlApCXYpFMgm72pBM5qSbPLGH0NnX2EzYX4wuLNKzl78Rxgadb/W+4N02B+SLgq6ZzN+vP4'
+               + 'I6aWY8XTmQYWm9BR8AOLAa2xsqquYPMPgW76znu/uW7Wc7+sBkADYa6WSNhyCFGFJiyhycABg'
+               + '0Dr9YJPDYDPSgaQ/iqEgtFAFcph45KJHmTIo0SBOEE0ixscST01G22/E7HnPpVLIxG2MKDWpD'
+               + 'wqouYYDgkFKgoOpAXRjVCkWBWUOpOAESNIBy2jQQo9ZR9DyyOxCfRr5VaCQWY7Uo4pU+LNpt+'
+               + 'dfyNRbO5UY1CVhYyZiEws8YxYpdYMmZs6SKeSXf/+5JsLgwEGGZIi2YbckFB+cwsI2UPUZEgL'
+               + 'hhtCUiW57QjDC0w7hDLKdbakKVgkWEbnUJ1PY3Km4NBP5Xu8yk7NXqdTn/njiGlgpoAABRO2U'
+               + 'rBObETvEcmgoDaK3jQNwt1QoCPLIqE5pH3D988hbzsZt2PihRxl4uGGuL1VpKlLlFWpUGwLCK'
+               + '1BZchB0QDjwpDg8miyxKl+wACTA4IBo7FjeFgKHBYu7H51EGSjU0zblgedvCPNiYFKLyaJogo'
+               + 'SyEWKzeamLbL7kJUkGXLCXkbNhBAmgoURytCNjLFQiztseczPek3gvJgUkN4eWqluZ9P4WP14'
+               + 'cMy1hzPnPKfnWcLcOFWE+lmZDiA+u010rbAmdOw8AQCR8WL2iqaRWMw5rJlluxw0HT1LFlFJn'
+               + 'wRhxG/CUl800PsUHMwTM4bHwKF6NnJi8h9q2RnQ36CXB9X0//tyUN7Vp4xT6wAgYH5wEhAVBn'
+               + 'm7NeYinIBDDY3OJxq7Xp7ESH6LN1wYFoOwDBRqbALGpm6h4jhY/KRVSSebeb0akJCDstUjK9/'
+               + 'EEmZnYVnmy5R//uSbCSIA5lISKtZGFJE4QndBMIXTMlLKywM1cD9FWZ0JgzIjpCTZXTd8bpMi'
+               + 'PbHq1iYW8dCvS+4nM/fRJ8kQNx6h7t/0fNvjvesMVJTAxhjRxy2NJCz2mxpoEOrgFWMt7b7l/'
+               + '4X23aBMzHcl2Ao80cOWiDiI5bTG4z9+6y2nsOjN6fzP/83G9/wvT/c3rvut++8KSfZIBIxYMb'
+               + 'hyQ0epgdBfCKxi/+63LVbtjPWW8+f3/xQEhulCkWeHPciRXY0rv5McY+f5FPnInOvELco74va'
+               + 'KV5L2H1FjWs2WUi5+Q680VAkkOI9KyMItvmGjWZNjQg6Zxa46//7QiADZXI64ggdyz4uEgDPJ'
+               + 'kFMqNLcjKZkLU7eEFd7PIiI4R+zHO+2+V4ZHEpPxKCApdbgOKpI3cnaOu//6uy6mgAG2LqlA6'
+               + 'QHtMbVsBVMREoW+ByHTDqHqxXFysR/5ucTH6hFZoOTyZU9uscrq6Efe5QUBDIbFAKSUaU8fgZ'
+               + 'awwMHhZBGUczARAGiAwWeyRGgMDIMqXlM47t0jtKbRMds/6VBLn3Ug+J2cf/7kmw0gALXKcrK'
+               + 'DxhAQ+C6PAgjE8oUezGmPGZI/oep9ACMPwODxC3ATE5IY6hjG2sKmrf76leN/fjJ18NoFsDpb'
+               + 'y/at02/GuJs+756He86kd0St7v/dBwHCAQAcbbUjbaAETVClz/o+RRNt4IQMZHrkhttCnufPI'
+               + 'o8laBaTuRYaYYJACjolY/8bu2gJsHuv91nbVzBuiamUH7cCIv4VOq+zNFfb3e5aq2DIkjEs2k'
+               + 'kbSIM0ob7zd0dmbKDIo9O/H2gefylByZY7VOoeGw+evSVFHrS+/23c9rtL1YEd+vxh66l7f+f'
+               + '/////BEOCGtsO2SmKnwNlRamiyCHgkiRmyf5URQRkv9JHIznbmhpdEGGNDKc763JIS9Kz4fwv'
+               + '7TPpF/l6925GrEimzjgqpRxDI2yV/X/xLr5/Q67z1PC7v0a57eq62OCP1CE0Vu2ttkjjGyqro'
+               + 'WC3Oh5lczsavVTSIZixhWK2dAcXLKkzyN8A4TZkaQiKcjoSRyrKhhxAL1w6WUbijCgaEFINnr'
+               + 'KIfz9i0CCgZlC8i1C1eXGziUgFwyZC6n/+5JsXAAC8kJJCw8YUkdoef0UI8kLxEskx7DASSgO'
+               + '5nQRGS3S86WO0vuPVG5KV06afybaIaLxx5TqaK5EChIScErf9UxVhwSdf6h2KpWXoNGe4FlyN'
+               + '+88W9zZtmokxUUli/fn2qy//fN/7C3alx1oJtwUXWuKEkCvacxK8YcnvYySuVEGq0Mc68OfJr'
+               + '79x/kJwfl0b3hMLGniyrWwYFgqy4um5z+Py4//KyycWOhcfllxr/8VYrvpvZYGiTLVwp9prlR'
+               + '2xLpVKZJK5BIgCDCRYYKNMTRJCS0Epa1EjS0FonPCRpcXlTGzLPGzTt9llZ/VHZyojlRblMlv'
+               + 'ojs6o7GRbt//+n9n9kVnKYKpHKis5VuyLf2fp/RVT+qKR2MUMCHOACmJqp22XZ82Wdv7DJlkc'
+               + 'muZSGrVBwEMCDoOJBkVJP2gIWNBUkaZ////oAopTEFNRTMuOTdVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVV//uSbHQP8zNoQIMGE3Itg7gxGANyAAABpAAAACAAADSAAAAEVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQ=='
+
+   /**
+    * This ~constant holds file mouseover.mp3 as base64, generated
+    *  from ref 20190402°0623 'Dopiaza → data: URI Generator'
+    *
+    * @id 20190402°0631
+    * @note : File https://github.com/scottschiller/SoundManager2/tree/master/demo/_mp3/mouseover.mp3
+    * @note : Data generated by ref 20190402°0623 'Dopiaza → data: URI Generator'
+    * @note : Remember issue 20190402°0611 'audio data source does not work'
+    * @note : It works with mime-type mp3 and mpeg, but not with mpeg3
+    * @note : Tested with browsers Chrome 64, Edge 42, FF 66, IE 9, Opera 58, Vivaldi 2.4
+    * @type String
+    */
+   , sB64Dopiaza_MouseOverMp3 : 'data:audio/mp3;base64,'
+               + '//tQZAAAAFwA4fUAAAgAAA0goAABEX2nRBh6AAAAADSDAAAADgAADwAAAAAuf+GBGB94Awi+'
+               + 'D0AXyaHO8ZYho5v4ypDhzhW3+Q0c0VqQ4XN/4rYhouUQqOUK2//ELDGigQ+EY4PiDI3/+K6G'
+               + 'RQtBD9guGBtIBwMDFDQGgv9av+WQMH3A0jkDAlgMmIBs8LSGAQyyOoUEOoDSWC2i35DQNzLJ'
+               + 'H/FzENGZIKUiBE8sumqjZNaP////6mnUpkoHd3iZh3+21gm2hkZGZBEmmBBNS//7YGQKCPOt'
+               + 'RFD/BoACAAANIOAAAQltFymgj7dAAAA0gAAABFLUt3Z2dnQWtS1d2Z2qWpalLs7OzugtS1LV'
+               + 'Z2dnQTQUtS1LdndnZNBalrUt2dnZBNBNS1LSSR3ZaC1qEIQudA7TYAJMI+cxNiav/UDC1VAy'
+               + 'qq/6Wf2mmkYqqjpoquqqt9VQAtH/9gj///+vn/hl8sjw7/zI/WWpwy6Cl8H9k/I72yz///vZ'
+               + 'LmTLLZ//upX1RuoleYMAscsrwZPAIJAurA1+G5RT4fLCwq65v9eRAAAAF4H8rCH///381//k'
+               + 'eC2yai2+D/6t+vu5af+n1evb//hL4pIm7INggBwwIwrTLUYdMP/7IGQaDPIvRcroIva4AAAN'
+               + 'IAAAAQhZFypgi9ygAAA0gAAABMUGUwFAFCy6KjEHHikv//7f0j/6wBf///XzX+/mdMnsEw1g'
+               + 'wevqMv1tTdE/9frk7//8p1+muqYioAgUAfBIXxiaNeGCWDsYAACqSzc4u+Uinf///J0AAAAT'
+               + 'b//IJ///+0BkBIjyXkZKaCLvIAAADSAAAAEJbRsroIucgAAANIAAAAT//f6XT5aMlyyvzoal'
+               + '2UlXUbSiMzrQ+tCN/56EZTv959wiEVn2YL9SjBATm4sbmVAHiQRwDPM7k/yiwJ7BOfDH//W4'
+               + 'AXf/+kFf///WWeuT+UdGL1IoU2T8xWcpUMM3R5Wmf0Mpf/mNKWZ64/Wpq8Zcm6skMApZc7kQ'
+               + 'TGoXDAQiMyqGIejVuls4lLHg1//0KgAAAP/7QGQBiPJuRspoIeTwAAANIAAAAQixFSmhB55A'
+               + 'AAA0gAAABLdv/oQX///Lvnp44/HBjLSfaNlMGtqCOSyeyj+cCH/5sBjJDz7Uqy+ITrW2kr/W'
+               + 'gYKDhzGvKMA4JoJH9cSIwPGMbZCEQIC5Bn/+QAt///zDn//++341fy++m6Omf0dErdUTqCEl'
+               + 'fkculqL/85GF0z/XbtypuAmUwEIQKZGgoOBK4moxKMRqhLFceEBdn/+p+2oA//tAZACAAt5H'
+               + 'ym0CoAgAAA0goAABBjUvM/gJgAAAADSDAAAAAAAUb/2AAfS/0Okrakgtukq66KkE0W1XSdHS'
+               + 'XscR916Vf1JLR/6kaTosp9SSyKlwc4eg/UZIPZAUDIGARkBhFvAZZBgBoEE5hbEnhWpCE0Vj'
+               + 'E1U86HQ0RT//pAAAAAAYAcAgH/HvwAAAoAr+g36m/X9L3/t6X1/Zv///////oA2NlT/WHMN/'
+               + '8awCpiAVAAAHA///+xBkAo/wvEPSHwBACAAADSDgAAEAAAH+AAAAIAAANIAAAAT/////////'
+               + '///////yhQEBARJVTEFNRTMuOThVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVf/7EGQYj/AAAGkAAAAIAAANIAAAAQAAAaQAAAAgAAA0gAAABFVVVVVVVVVVVVVV'
+               + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
+               + 'VVVV'
 };
 
 /**
@@ -288,13 +532,6 @@ Cvgr.Vars =
     * @id 20180618°0642
     */
    bFlagTipTopTest : false
-
-   /**
-    * This flag tells which of the two sound libraries to use
-    *
-    * @id 20190402°0511
-    */
-   , bSoundLibIsSoundManTwo : false
 
    /**
     * This flag tells whether SoundManager2 has failed loading
@@ -1106,30 +1343,15 @@ Cvgr.Func.initializeCanvas = function(iko)
 
       // load [seq 20190401°1325]
       Cvgr.Vars.bSoundLibraryLoading = true;
-      if ( Cvgr.Vars.bSoundLibIsSoundManTwo ) {
-         var sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js');
-         var bFlag_UseSmFullCommented = false;
-         if (bFlag_UseSmFullCommented) {
-            sScript += 'libs/sm2/soundmanager2.js';
-         } else {
-            sScript += 'libs/sm2/soundmanager2-nodebug-jsmin.js';
-         }
-         Trekta.Utils.pullScriptBehind ( sScript
-                                        , Cvgr.Func.pullbehind_soundOnLoad('soundman2')
-                                         , Cvgr.Func.pullbehind_soundOnError('soundman2')
-                                          );
-      }
-      else {
 
-         // seq 20190402°0521
-         var sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.combined.js');
-         if (sScript === '') { sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); }
-         sScript += 'libs/howler/howler.min.js';
-         Trekta.Utils.pullScriptBehind ( sScript
-                                        , Cvgr.Func.pullbehind_soundOnLoad('howler')
-                                         , Cvgr.Func.pullbehind_soundOnError('howler')
-                                          );
-      }
+      // seq 20190402°0521
+      var sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.combined.js');
+      if (sScript === '') { sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); }
+      sScript += 'libs/howler/howler.min.js';
+      Trekta.Utils.pullScriptBehind ( sScript
+                                     , Cvgr.Func.pullbehind_soundOnLoad('howler')
+                                      , Cvgr.Func.pullbehind_soundOnError('howler')
+                                       );
    }
 
    // (D) set signal [line 20190330°0344]
@@ -1303,134 +1525,43 @@ Cvgr.Func.pullbehind_soundOnLoad = function(sScript)
    // [line 20190401°1345]
    Cvgr.Vars.bSoundLibraryLoaded = true;
 
-   // [seq 20190401°1346]
-   // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
-   // See issue 20190401°1347 'SM2 not available in script onLoad callback'
-   // //soundManager.setup ( {
-   // //   preferFlash: true,
-   // //   flashVersion: 9,
-   // //   url: '../../swf/',
-   // //   useHighPerformance: true,
-   // //   wmode: 'transparent',
-   // //   debugMode: false
-   // //});
-
    // workaround [seq 20190401°1348]
-   Cvgr.Vars.tHelper = setTimeout(Cvgr.Func.pullbehind_soundWorkaround, 1456);
+   // Curiously, here in this event handler, the loaded script seems
+   //  not yet available, but in the continuatino function it will be.  
+   Cvgr.Vars.tHelper = setTimeout(Cvgr.Func.pullbehind_soundOnLoaded, 1456);
 };
 
 /**
- * This function is a workaround for issue 20190401°1347 'SM2 not available ..'
+ * This function is a workaround for issue 20190401°1347 'loaded script not available ..'
  *
  * @id 20190401°1353
- * @see issue 20190401°1347 'SM2 not available in script onLoad callback'
+ * @see issue 20190401°1347 'loaded script not available in onLoad callback'
  * @see finding 20190401°1433 'summary on SoundManager2 so far'
  * @callers Only • pullScriptBehind callback
  */
-Cvgr.Func.pullbehind_soundWorkaround = function()
+Cvgr.Func.pullbehind_soundOnLoaded = function()
 {
-
-// condition 20190402°0515
-if ( Cvgr.Vars.bSoundLibIsSoundManTwo ) {
-
-   // [seq 20190401°1357]
-   // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
-   // See todo 20190401°1553 'finetune sound installation'
-   // //soundManager.onready ( function() {
-   // //   noise = soundManager.createSound({
-   // //      id : 'noise',
-   // //      url : './../libs/sm2/fingerplop.mp3',                    // '../animation/audio/fingerplop.mp3'
-   // //      multiShot : true,
-   // //      autoLoad : true
-   // //   });
-   // //   soundManager.createSound({
-   // //      id : 'down',
-   // //      url : './../libs/sm2/click-low.mp3',                     // '../_mp3/click-low.mp3'
-   // //      multiShot : true,
-   // //      autoLoad : true
-   // //   });
-   // //   soundManager.createSound({
-   // //      id : 'up',
-   // //      url : './../libs/sm2/click-high.mp3',                    // '../_mp3/click-high.mp3'
-   // //      multiShot : true,
-   // //      autoLoad : true
-   // //   });
-   // //});
-
-   // [seq 20190401°1355]
-   // See ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
-   // See ref 20190327°0816 'Scott Schiller : SoundManager 2 Template Example'
-   soundManager.setup ( {
-      preferFlash : true                                               // ?
-      , flashVersion : 9                                               // ?
-      , url : './../libs/sm2/'                                         // '../../swf/'
-      , useHighPerformance : true
-      , wmode : 'transparent'
-      , debugMode : false
-
-      , onready : function() {
-         var mySound = soundManager.createSound ( {
-            id : 'aSound'
-            , url : './../libs/sm2/fingerplop.mp3' // curiously, './sm2/fingerplop.mp3' does not work
-         });
-         var bFlag_PlayImmediate = false;
-         if (bFlag_PlayImmediate) {
-            mySound.play();
-         }
-      }
-
-      , ontimeout : function() {
-         // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
-         alert('SM2 failed to start.');
-      }
-
-      , onload : function() { console.log('SoundManager2 is loaded ..', this); }
-
-   });
-
-}
-else { // Howler
-
-   /**
-    * This immediately executed function creates a sound object
-    *
-    * id 20190402°0541 (after 20190402°0221)
-    * note : After ref 20190401°1616 https://github.com/goldfire/howler.js/
-    * note : The files from examples
-    *         • './p7/howler.js-2.1.2/examples/player/audio/80s_vibe.mp3'
-    *         • './p7/howler.js-2.1.2/examples/player/audio/rave_digger.mp3'
-    *         • './p7/howler.js-2.1.2/examples/player/audio/running_out.mp3'
-    */
-   ////Midiprobe.sound = new Howl({
-   var bUseDataUri = false;
-   if ( bUseDataUri ) { // false true
-      // See issue 20190402°0611 'audio data source does not work'
-      Cvgr.Vars.sound = new Howl (
-               ////{ src: [ './p7/howler.js-2.1.2/examples/player/audio/80s_vibe.webm'
-               //// , './p7/howler.js-2.1.2/examples/player/audio/rave_digger.mp3'
-               ////  ] }
- ////          { src: [ './libs/sm2/fingerplop.mp3' ] }
- ////          { src: [ 'http://localhost/treksvn/canvasgeardev/trunk/canvasgear/libs/sm2/fingerplop.mp3' ] }
-   ////        { src: [ 'data:image/png;base64,' + Cvgr.Const.sB64_Fingerplop2Mp3 ] }
-//               { src: [ 'data:audio/mpeg;base64,' + Cvgr.Const.sB64_Fingerplop2Mp3 ] }
-//               { src : [ ( 'data:audio/mpeg;base64,' + Cvgr.Const.sB64_Fingerplop2Mp3 ) ] }
-               //{ src : [ ( 'data:audio/mpeg;base64,' + Cvgr.Const.sB64_MouseOver ) ] }
-               //{ src : [ ( 'data:audio/wav;base64,' + Cvgr.Const.sB64_MouseOver ) ]
-               { src : [ ( 'data:audio/mpeg;base64,' + Cvgr.Const.sB64_MouseOver ) ]
-               , loop : false }
-      );
+   // prepare source string [seq 20190402°0543]
+   // See issue 20190402°0611 'audio data source does not work'
+   var sAudioData = '4';
+   switch (sAudioData) {
+      case '1' : sAudioData = Cvgr.Const.sB64Dopiaza_Bonk_Mp3; break;  // not so loud
+      case '2' : sAudioData = Cvgr.Const.sB64Dopiaza_Fingerplop2_Mp3; break; // a bit higher
+      case '3' : sAudioData = Cvgr.Const.sB64Dopiaza_Fingerplop_Mp3; break; // a bit lower
+      case '4' : sAudioData = Cvgr.Const.sB64Dopiaza_MouseOverMp3; break; // ringing
+      default : sAudioData = './../libs/sm2/mouseover.mp3'; // possibly not available with canvasgear.combined.js
    }
-   else {
-      Cvgr.Vars.sound = new Howl (
-              ////{ src: [ './libs/sm2/fingerplop2.mp3' ] }
-              //{ src: [ 'http://localhost/treksvn/canvasgeardev/trunk/canvasgear/libs/sm2/fingerplop.mp3' ] }
-//              { src: [ './../libs/sm2/fingerplop.mp3' ] } // this works
-              { src : [ './../libs/sm2/mouseover.mp3' ] } // this works
-      );
-   }
-}
 
-   // set flag [line 20190401°1359]
+   // [line 20190402°0541 (after 20190402°0221)]
+   // note : Line after ref 20190401°1616 https://github.com/goldfire/howler.js/
+   // note : The recommendation is to put the file in several formats, so Howlser
+   //    can choose which fits for the browser, but we found the mp3 serves all
+   Cvgr.Vars.sound = new Howl ({
+                     src : [ ( sAudioData ) ] // one format only
+                     , loop : false
+                      });
+
+   // finally set flag [line 20190401°1359]
    Cvgr.Vars.bSoundLibraryReady = true;
 };
 
@@ -1465,7 +1596,7 @@ Cvgr.Func.setRadiobutton = function()
    return;
 };
 
-﻿/*! - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
+﻿/** - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
  * This section provides algorithm 'Ballist'
  *
  * id 20140916°0411 namespace
@@ -1482,6 +1613,7 @@ Cvgr.Algos = Cvgr.Algos || {};
 
 /**
  * This namespace holds the Ballist algorithm
+ * (This is built-in but planned to be extracted to a rider script)
  *
  * @id 20180619°0121
  */
@@ -1895,8 +2027,9 @@ Cvgr.Algos.Ballist = {
 };
 //- - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-﻿/*! ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
- * This section provides the internal Template algorithm
+﻿/** ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+ * This section provides the Template algorithm
+ * (This is built-in but planned to be extracted to a rider script)
  *
  * id : module 20190329°0611
  * version : 0.x.x — 20190330°0757..
@@ -1993,8 +2126,9 @@ Cvgr.Algos.Template.defaultProperties = {
 };
 // ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
 
-/*! ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+/** ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
  * This section holds the develop algorithm
+ * (This is built-in but planned to be extracted to a rider script)
  *
  * id : section 20140901°0511
  */
@@ -2065,7 +2199,7 @@ Cvgr.Algos.develop = {
 };
 // ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
-/*! + + + ✂ + + + + + + + + + + + + + + + + + + + + + + + + + +
+/** + + + ✂ + + + + + + + + + + + + + + + + + + + + + + + + + +
  * This section provides the oblongrose algorithm
  *
  * id : module 20190329°0721
@@ -2082,6 +2216,7 @@ Cvgr.Algos = Cvgr.Algos || {};
 
 /**
  * This namespace holds the 'oblongrose' algorithm
+ * (This is built-in but planned to be extracted to a rider script)
  *
  * @id 20190329°0722
  */
@@ -2158,6 +2293,7 @@ Cvgr.Algos.oblongrose = {
 // -- -- ✂ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 /**
  * This namespace holds the 'pulse' algorithm
+ * (This is built-in but planned to be extracted to a rider script)
  *
  * @id 20190329°0731
  */
@@ -2243,6 +2379,7 @@ Cvgr.Algos.pulse = {
 // ~~ ~~ ✂ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~
 /**
  * This namespace holds the 'triangle' algorithm
+ * (This is built-in but planned to be extracted to a rider script)
  *
  * @id 20190329°0741
  */
@@ -2341,6 +2478,7 @@ Cvgr.Algos.triangle = {
 // ' ' ' ✂ ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' '
 /**
  * This namespace holds the 'triangulum' algorithm
+ * (This is built-in but planned to be extracted to a rider script)
  *
  * @id 20190329°0751
  */

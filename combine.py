@@ -1,5 +1,5 @@
 ﻿#!/usr/bin/env python
-#
+
 # id : 20190402°0411
 # encoding : UTF-8-with-BOM
 # interpeter : Python 3.6
@@ -10,15 +10,15 @@
 #  • If no local executable, provide fallback to online API
 #  • Did run under Windows so far, is not tested for others,
 #     e.g. exchange backslashes by slashes
-# note : For using the Google Closure Compiler API see
+# note : For implementing call to online Google Closure Compiler API see
 #  • https://developers.google.com/closure/compiler/docs/gettingstarted_api
 #  • https://developers.google.com/closure/compiler/docs/api-tutorial1
 # todo : create files list programmatically from all riders\*.js files
 
-
 """
-   This script minifies then combines the canvasgear.js and its
-   rider scripts to one single file canvasgear.combined.js
+   This script minifies canvasgear.js and its rider scripts and
+   then combines all to one single file canvasgear.combined.js.
+   Dependency: Have Closure Compiler available on local drive.
 """
 
 import os, sys
@@ -27,8 +27,8 @@ sLocalCompiler = '..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler
 
 # seq 20190402°0441
 def mount(fileslist) :
-   print ('.. mount fileslist ..')
-   ##return
+
+   print ('Combining files from list ..')
 
    # seq 20190402°0443
    # Remember ref 20190402°0437 'stackoverflow → python concatenate text files'
@@ -49,7 +49,7 @@ def mount(fileslist) :
 # seq 20190402°0431
 def main(argv) :
 
-   print ('*** Run combineall.py ***')
+   print ('*** Run combine.py ***')
 
    # prepare path
    sFullFilename = os.path.abspath(__file__)

@@ -1,13 +1,13 @@
-# CanvasGear v0.2.2.c <sup><sub><sub>20190401°1437..</sub></sub></sup>
+# CanvasGear v0.2.3 <sup><sub><sub>20190402°0641</sub></sub></sup>
 
 **Slogan** : Draw animated canvases by specifying parameters in a data attribute
 
 **Features** :
-- Paints canvases after parameters in a data attribute
-- Provides a framework for writing canvas graphics
-- Provides mechanism for cyclically animated canvases
-- Interactivity is possible (reads mouse and keyboard)
-- Sound is possible (e.g. play MP3 files)
+- Paint canvases after parameters in a data attribute
+- Provide a framework for writing canvas graphics
+- Provide mechanism for cyclically animated canvases
+- Interaction with mouse and keyboard
+- Sound from files or inline
 - Browser compatibility from IE 9 up
 - Small footprint
 - No dependencies
@@ -22,7 +22,7 @@
 ```
       <head>
          ...
-         <script src="./canvasgear.min.js"></script>          <!-- 1. load script -->
+         <script src="./canvasgear.combined.js"></script>     <!-- 1. load script -->
          ...
       </head>
       <body>
@@ -35,13 +35,21 @@
          ...
       </body>
 ```
-- Now the defined canvas should appear on the page
-- If you like experimenting, additionally copy [`canvasgear.Template.js`](./canvasgear.Template.js)
+- Now the given canvas should appear on the page
+
+**Programming** :
+- To experiment with your own algorithm, copy file
+   [`riders/canvasgear.Template.js`](./riders/canvasgear.Template.js)
+   or any other rider file to one with your new algorithm name,
+   e.g. `canvasgear.MyAlgo2.js`
+   and edit this. It will be recognized automatically.
+- To debug or edit CanvasGear itself, just use the plain `canvasgear.js` with with
+   the libs and riders folders behind, instead the standalone script `canvasgear.combined.js`
 
 **License** : GNU LGPL v3 or later [opensource.org/licenses/LGPL-3.0](https://opensource.org/licenses/LGPL-3.0)
 
 Have fun
 
-2019-April-20
+2019-April-23
 
 <sup><sub>[file 20140815°0121, project 20140815°0111]</sub></sup>

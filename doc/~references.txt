@@ -14,6 +14,43 @@
    chain :
    ܀
 
+   ref 20190402°0623 'Dopiaza → data: URI Generator'
+   objtype : ref.service
+   url : https://dopiaza.org/tools/datauri/index.php
+   title : Dopiaza → data: URI Generator
+   summary :
+   author : David Wilkinson
+   releasedate :
+   usage : issue 20190402°0611 'audio data source does not work'
+   ܀
+
+   ref 20190402°0617 'Fiddle data:audio/mpeg vs. data:audio/mp3'
+   objtype : ref.fiddle
+   url : http://jsfiddle.net/hyjqh91f/
+   title : Test data:audio/mpeg vs. data:audio/mp3
+   summary :
+   releasedate :
+   usage : issue 20190402°0611 'audio data source does not work'
+   ܀
+
+   ref 20190402°0616 'howler issue wrong MIME type'
+   objtype : ref.thread
+   url : https://github.com/goldfire/howler.js/issues/218
+   title : test wrong MIME type when using data URI #218
+   summary :
+   releasedate : 2014-Oct-1
+   usage : issue 20190402°0611 'audio data source does not work'
+   ܀
+
+   ref 20190402°0615 'stackoverflow → mimetype for mp3 file'
+   objtype : ref.thread
+   url : https://stackoverflow.com/questions/10688588/which-mime-type-should-i-use-for-mp3
+   title : Which mime type should I use for mp3
+   summary :
+   releasedate : 2012-May-21
+   usage : issue 20190402°0611 'audio data source does not work'
+   ܀
+
    ref 20190402°0614 'stackoverflow → base64 wav file with howler'
    objtype : ref.thread
    url : https://stackoverflow.com/questions/46623006/why-does-encoding-wav-file-to-base64-with-python-and-online-webapp-give-differen

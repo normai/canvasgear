@@ -180,39 +180,32 @@ Cvgr.Algos.Noisy1 = {
    , pickupOnMouseMove : function(evt) // [Cvgr.Algos.Noisy1.pickupOnMouseMove]
    {
 
-// condition 20190402°0513
-if ( Cvgr.Vars.bSoundLibIsSoundManTwo ) {
+      // condition 20190402°0513
+      if ( Cvgr.Vars.bSoundLibIsSoundManTwo ) {}
 
-      // [line 20190401°1423]
-      // See ref 20190401°0541 'Scott Schiller → A Noisy1 page (animation.js)'
-      if ( Cvgr.Vars.bSoundLibraryReady ) {
-
-         // //alert('noise is defined');
-         // //Cvgr.Vars.fNoise.play ( {
-         // //   ///volume : parseInt ( Math.min ( 1 , scale / 3 ) * 100 )
-         // //   ///, pan : ( x < screenX2 ? (screenX2 - x) / screenX2*-100 : (x - screenX2) / screenX2 * 100 )
-         // //   volume : 99
-         // //   , pan : 99
-         // //});
-         // //soundManager.play('noise');
-
-         // initialize sound [seq 20190401°1425]
-         // See todo 20190401°1553 'finetune sound installation'
-         var sSound = 'aSound'; // 'noise';
-         soundManager.play(sSound); // after bare bone instructions
-      }
-
-}
-else { // Howler
+      // // [line 20190401°1423]
+      // // See ref 20190401°0541 'Scott Schiller → A Noisy1 page (animation.js)'
+      // if ( Cvgr.Vars.bSoundLibraryReady ) {
+      //
+      //    // //alert('noise is defined');
+      //    // //Cvgr.Vars.fNoise.play ( {
+      //    // //   ///volume : parseInt ( Math.min ( 1 , scale / 3 ) * 100 )
+      //    // //   ///, pan : ( x < screenX2 ? (screenX2 - x) / screenX2*-100 : (x - screenX2) / screenX2 * 100 )
+      //    // //   volume : 99
+      //    // //   , pan : 99
+      //    // //});
+      //    // //soundManager.play('noise');
+      //
+      //    // initialize sound [seq 20190401°1425]
+      //    // See todo 20190401°1553 'finetune sound installation'
+      //    var sSound = 'aSound'; // 'noise';
+      //    soundManager.play(sSound); // after bare bone instructions
+      // }
 
       // [seq 20190402°0531]
       if ( Cvgr.Vars.bSoundLibraryReady ) {
-
-         ////var nSoundId = Midiprobe.sound.play();
          Cvgr.Vars.sound.play();
-
       }
-}
 
       // fix cursor pos [line 20190401°1515]
       Cvgr.Algos.Noisy1.settle_cursorPos(evt.clientX, evt.clientY);

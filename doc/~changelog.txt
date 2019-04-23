@@ -1,5 +1,9 @@
 
-   •
+
+   version v0.2.3 —20190402°0641
+   • Use Howler.js
+   • Have sound inline as base64
+   • Release combined version with new combine.py
 
    log v0.2.2.b — 20190401°1437 'Introduce interactivity'
    • Cursor proof-of-concept

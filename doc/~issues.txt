@@ -5,10 +5,14 @@
 
    issue 20190402°0611 'audio data source does not work'
    matter : Audio data source does not work with Howler.
+   see : ref 20190402°0623 'Dopiaza → data: URI Generator' ✱
+   see : ref 20190402°0617 'Fiddle data:audio/mpeg vs. data:audio/mp3'
+   see : ref 20190402°0616 'howler issue wrong MIME type'
+   see : ref 20190402°0615 'stackoverflow → mimetype for mp3 file'
    see : ref 20190402°0614 'stackoverflow → base64 wav file with howler'
    see : ref 20190402°0613 'stackoverflow → data uris in video and audio tags'
    location : canvasgear.js func 20190401°1353 pullbehind_soundWorkaround
-   workaound : none
+   solution : The data URI generated with ref 20190402°0623 did work
    status : open
    ܀
 
@@ -23,7 +27,7 @@
    status : open
    ܀
 
-   issue 20190401°1347 'SM2 not available in script onLoad callback'
+   issue 20190401°1347 'loaded script not available in onLoad callback'
    matter : Function soundManager.setup is not available in the script onLoad
       callback. It looks like it is only available after the callback has
       finished. Should it not already be available in the callback itself?

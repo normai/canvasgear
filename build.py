@@ -50,7 +50,7 @@ def mount(fileslist) :
 # seq 20190402°0431
 def main(argv) :
 
-   print ('*** Run combine.py ***')
+   print ('*** Run build.py ***')
 
    # prepare path
    sFullFilename = os.path.abspath(__file__)

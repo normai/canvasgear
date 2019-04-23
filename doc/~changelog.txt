@@ -5,7 +5,7 @@
    release v0.2.3 —20190402°0641 'Introduce keyboard, mouse and sound usage proof-of-concept'
    • Use Howler.js
    • Have sound inline as base64
-   • Build combined version with new script combine.py
+   • Build combined version with new Python script
 
    log v0.2.2.b — 20190401°1437 'Introduce interactivity'
    • Cursor proof-of-concept

@@ -81,6 +81,13 @@
    status : finished (somehow disappeard by itself 20190402°0353)
    ܀
 
+   todo 20180618°0751 'make func parse appear in namespace instead global'
+   matter : In NetBeans Navigator, this function is listed on script level.
+   do : Make it appear inside the Daf.Utilis.CmdlinParser level.
+   location : Func 20140926°0642 Trekta.Util2.parse
+   status : finished
+   ܀
+
    issue 20160416°1321 'IE8 canvas Context.fillText not supported'
    symptom : Text not drawn in IE8
    location : file 20140916°0411 canvasgersalgos.js "iko.Context.fillText(..)"

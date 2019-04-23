@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.3.b — 20190402°0641..
+ * version : 0.2.3.c — 20190402°0817
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -482,7 +482,8 @@ Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iThick)
 {
    // workaround for missing default parameter [seq 20190312°0253]
    //  Remember issue 20190312°0251 'IE fails with default params'
-   if (iWidth === undefined) {
+   ////if (iWidth === undefined) {
+   if ( typeof iWidth === 'undefined' ) { // fix 20190402°0723`12 'unify undefined question'
        var iWidth = 2;
    }
 
@@ -607,7 +608,8 @@ Cvgr.startCanvasGear = function()
       // Now ico.Command is known, e.g. "algo=pulse hertz=111 color=orange"
 
       // () parse commandline [line 20140815°0946]
-      ico.CmdsHash = Trekta.Util2.CmdlinParser.parse(ico.Command, true);
+      ////ico.CmdsHash = Trekta.Util2.CmdlinParser.parse(ico.Command, true);
+      ico.CmdsHash = Trekta.Util2.CmdlinParser.parse(ico.Command);
 
       // set AlgoName in advance [line 20190330°0221]
       ico.AlgoName = ( ( 'algo' in ico.CmdsHash ) && (ico.CmdsHash['algo'] !== '') )
@@ -2603,33 +2605,62 @@ Trekta.Util2.CmdlinParser = ( function()
 {
 
    'use strict'; // [line 20190329°0845`14]
-   var parse = null; // wanted with strict mode [line 20190329°0853]
+   //var parse = null; // wanted with strict mode [line 20190329°0853] ////
+
+   /*
+   todo 20190402°0735 'In CmdlinParser eliminate alternative sequence'
+   matter : Trekta.Util2.CmdlinParser does understand only double quotes for tokens.
+   do : Drop old seq 20140926°0632 in favour of new seq 20140926°1111
+   note : Befor doing this, a test suite should be written and executed
+   status : open
+   */
+
+   /*
+   todo 20190402°0731 'Make CmdlinParser understand also single quotes'
+   matter : Trekta.Util2.CmdlinParser does understand only double quotes for tokens.
+   do : Make it understand also single quotes.
+   reason : In the HTML files, the tags are mostly made with double quotes.
+      But for the canvas element we need that exception to make it with single
+      quotes, so the double quotes are available for the parser inside the
+      data-cvgr tag. We do not like exceptions.
+   status : open
+   */
 
    /**
     * This function parses a commandline
     *
     * @id 20140926°0642
-    * @todo 20180618°0751 In NetBeans Navigator, this function is listed on
-    *    script level. Make it appear inside the Daf.Utilis.CmdlinParser level.
+    * @note Process todo 20190402°0735 'In CmdlinParser eliminate alternative sequence'
+    * @note Process todo 20190402°0731 'Make CmdlinParser understand also single quotes'
+    * @note Remember todo 20190402°0737 'In CmdlinParser eliminate quotes flag'
+    * @note Remember todo 20180618°0751 'make func parse appear in namespace instead global'
     * @param sCmdlin {string} The string to be parsed
     * @param bProcessQuotes {boolean} Flag whether to process quotes or not
     * @returns
     */
-   parse = function(sCmdlin, bProcessQuotes)
+   ////parse = function(sCmdlin, bProcessQuotes)
+   ////Trekta.Util2.parse = function(sCmdlin, bProcessQuotes)
+   Trekta.Util2.parse = function(sCmdlin)
    {
+      // hardcode the former parameter
+      var bProcessQuotes = true; // finally also eliminate this (remember todo 20190402°0737)
+
       // paranoia — advisably
-      if (sCmdlin === undefined) {
+      ////if (sCmdlin === undefined) {
+      if (typeof sCmdlin === 'undefined') { // fix 20190402°0723`13 'unify undefined question'
          sCmdlin = '';
       }
 
+      // [loop 20140926°064x]
       var args = [];
       var bQuoteReading = false;
       var sToken = '';
       for ( var i = 0; i < sCmdlin.length; i++)
       {
-         // look for token delimiter
+         // look for token delimiter [condition 20140926°064x]
          if ( ((sCmdlin.charAt(i) === ' ') || (sCmdlin.charAt(i) === '=')) && (! bQuoteReading) ) {
 
+            // [seq 20140926°064x]
             // look for token delimiter found, finish token
             args.push(sToken);
             sToken = '';
@@ -2641,7 +2672,7 @@ Trekta.Util2.CmdlinParser = ( function()
          }
          else {
 
-            // no token delimiter, continue with token
+            // no token delimiter, continue with token [seq 20140926°064x]
             if (( sCmdlin.charAt(i) === '\"') && bProcessQuotes ) {
                bQuoteReading = (! bQuoteReading);
             }
@@ -2653,14 +2684,14 @@ Trekta.Util2.CmdlinParser = ( function()
       args.push(sToken);
       // now the plain token array is ready, the equal sign is also a token.
 
-      // There are two parsing modes: (1) plain parse and (2) kvp parse.
+      // process the token array [condition 20140926°064x]
+      // There are two processing modes: (1) plain parse and (2) kvp parse
       var bParsePlain = true; // (flag 20140926°1121)
       if (! bParsePlain) {
 
-         // (a) The old and proven mode. It reads only the equations
-         //  and is just dropping single commands [seq 20140926°06322]
-         // note : This algo points to an equal sign, and then it processes
-         //   the elements above and below.
+         // (a) read only equations, drop single commands [seq 20140926°0632]
+         // note : This is the old and proven mode. The algo points to an equal
+         //   sign, and then it processes the elements above and below.
 
          // (a.1) loop over the token array and assemble key/value pairs from the equal signs
          var kvps = [];
@@ -2725,16 +2756,17 @@ Trekta.Util2.CmdlinParser = ( function()
    // Curiously, if you place the curly bracket behind return on the
    //  next line, the script will be broken (note 20160416°1311)
    return {
-      parse : parse
+      ////parse : parse
+      parse : Trekta.Util2.parse
    };
 })();
 // - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-// summary : This area is shared via cutnpaste by those scripts:
-//            • dafutils.js • canvasgear.js • slidegear.js
+// summary : This area is shared via cut-n-paste by the following scripts:
+//               • dafutils.js • canvasgear.js • slidegear.js
 // id : area 20190106°0307
-// version : 20190331°0242 // 20190329°0913
+// version : 20190402°0755 // 20190331°0242 20190329°0913
 
 /**
  * This namespace shall be root namespace
@@ -3135,79 +3167,79 @@ Trekta.Utils = Trekta.Utils || {
       return path; // e.g. "http://localhost/daftaridev/trunk/daftari/js/daftaro/"
    }
 
-   /**
-    * This function tells the relative path from the page to the given given script
-    *
-    * This function is useful if the script uses resources, e.g. images,
-    *  which are located relative to the script, as typically is the case
-    *  within a project folder structure.
-    *
-    * @id 20160501°1611
-    * @ref See howto 20190209°0131 'retrieve this script path'
-    * @todo 20190316°0141 'call retrieveScriptFolderRel without canary'
-    *     Implement the possibility to call the function
-    *     without parameter. Then we have no canary to seach for in the script
-    *     tags, but we use the last from the list. This is the last one loaded,
-    *     and mostly means the calling script itself.
-    * @callers • dafstart.js from scriptlevel
-    * @param sCanary {String} Trailing part of the wanted script, e.g. '/js/daftaro/dafutils.js'
-    * @returns {String} The path to the folder where the given script resides
-                *           , e.g. "'/js/daftaro/dafutils.js'"
-    */
-   , retrieveScriptFolderRel : function (sCanary)
-   {
-      'use strict'; // [line 20190329°0847`23]
-
-      var s = '';
-
-      // () get the script tags list
-      var scripts = document.getElementsByTagName('script');
-
-      // () find the canary script tag
-      var script = null;
-      var bFound = false;
-      for (var i = 0; i < scripts.length; i++) {
-         if (scripts[i].src.indexOf(sCanary) > 0) {
-            script = scripts[i];
-            bFound = true;
-            break;
-         }
-      }
-
-      // paranoia
-      if (! bFound) {
-         s = '[20160501°1631] Fatal error'
-            + '\n' + 'The wanted script could not be found.'
-             + '\n' + 'It looks like the search string is wrong.'
-              + '\n\n' + 'search string = ' + sCanary
-               ;
-         alert(s);
-         return '';
-      }
-
-      // (.1) get the DOM internal absolute path
-      //  This is just for fun, not finally wanted.
-      s = script.src;
-      s = s.substring(0, (s.length - sCanary.length));         // used as canary is '/js/daftaro/dafutils.js'
-      Trekta.Utils.s_DaftariBaseFolderAbs = s;                 // e.g. "file:///G:/work/downtown/daftaridev/trunk/daftari/"
-
-      // (.2) get the script tag's literal path (algo 20111225°1251)
-      var sPathLiteral = '';
-      for (var i = 0; i < script.attributes.length; i++) {
-         if (script.attributes[i].name === 'src') {
-            sPathLiteral = script.attributes[i].value;
-            break;
-         }
-      }
-
-      // reduce from canary script path to folder only path [seq 20190316°0131]
-      // E.g. for sCanary "/js/daftaro/dafutils.js" :
-      //    • "./../../daftari/js/daftaro/dafutils.js" ⇒ "./../../daftari/"
-      //    • "./daftari/js/daftaro/dafutils.js"       ⇒ "./daftari/"
-      var sPathOnly = sPathLiteral.substring ( 0 , ( sPathLiteral.length - sCanary.length + 1 ) );
-
-      return sPathOnly;
-   }
+   /////**
+   //// * This function tells the relative path from the page to the given given script
+   //// *
+   //// * This function is useful if the script uses resources, e.g. images,
+   //// *  which are located relative to the script, as typically is the case
+   //// *  within a project folder structure.
+   //// *
+   //// * @id 20160501°1611
+   //// * @ref See howto 20190209°0131 'retrieve this script path'
+   //// * @todo 20190316°0141 'call retrieveScriptFolderRel without canary'
+   //// *     Implement the possibility to call the function
+   //// *     without parameter. Then we have no canary to seach for in the script
+   //// *     tags, but we use the last from the list. This is the last one loaded,
+   //// *     and mostly means the calling script itself.
+   //// * @callers • dafstart.js from scriptlevel
+   //// * @param sCanary {String} Trailing part of the wanted script, e.g. '/js/daftaro/dafutils.js'
+   //// * @returns {String} The path to the folder where the given script resides
+   ////             *           , e.g. "'/js/daftaro/dafutils.js'"
+   //// */
+   ////, retrieveScriptFolderRel : function (sCanary)
+   ////{
+   ////   'use strict'; // [line 20190329°0847`23]
+   ////
+   ////   var s = '';
+   ////
+   ////   // () get the script tags list
+   ////   var scripts = document.getElementsByTagName('script');
+   ////
+   ////   // () find the canary script tag
+   ////   var script = null;
+   ////   var bFound = false;
+   ////   for (var i = 0; i < scripts.length; i++) {
+   ////      if (scripts[i].src.indexOf(sCanary) > 0) {
+   ////         script = scripts[i];
+   ////         bFound = true;
+   ////         break;
+   ////      }
+   ////   }
+   ////
+   ////   // paranoia
+   ////   if (! bFound) {
+   ////      s = '[20160501°1631] Fatal error'
+   ////         + '\n' + 'The wanted script could not be found.'
+   ////          + '\n' + 'It looks like the search string is wrong.'
+   ////           + '\n\n' + 'search string = ' + sCanary
+   ////            ;
+   ////      alert(s);
+   ////      return '';
+   ////   }
+   ////
+   ////   // (.1) get the DOM internal absolute path
+   ////   //  This is just for fun, not finally wanted.
+   ////   s = script.src;
+   ////   s = s.substring(0, (s.length - sCanary.length));         // used as canary is '/js/daftaro/dafutils.js'
+   ////   Trekta.Utils.s_DaftariBaseFolderAbs = s;                 // e.g. "file:///G:/work/downtown/daftaridev/trunk/daftari/"
+   ////
+   ////   // (.2) get the script tag's literal path (algo 20111225°1251)
+   ////   var sPathLiteral = '';
+   ////   for (var i = 0; i < script.attributes.length; i++) {
+   ////      if (script.attributes[i].name === 'src') {
+   ////         sPathLiteral = script.attributes[i].value;
+   ////         break;
+   ////      }
+   ////   }
+   ////
+   ////   // reduce from canary script path to folder only path [seq 20190316°0131]
+   ////   // E.g. for sCanary "/js/daftaro/dafutils.js" :
+   ////   //    • "./../../daftari/js/daftaro/dafutils.js" ⇒ "./../../daftari/"
+   ////   //    • "./daftari/js/daftaro/dafutils.js"       ⇒ "./daftari/"
+   ////   var sPathOnly = sPathLiteral.substring ( 0 , ( sPathLiteral.length - sCanary.length + 1 ) );
+   ////
+   ////   return sPathOnly;
+   ////}
 
    /**
     * This function daisychains the given function on the windows.onload events

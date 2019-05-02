@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.3.c — 20190402°0817
+ * version : 0.2.3.c.... — 20190402°0817..
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -15,7 +15,7 @@
  * @note Search ✂
  */
 
-'use strict'; // [line 20190329°0843]
+'use strict';
 
 /**
  * This namespace constitutes the CanvasGear root namespace
@@ -482,8 +482,7 @@ Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iThick)
 {
    // workaround for missing default parameter [seq 20190312°0253]
    //  Remember issue 20190312°0251 'IE fails with default params'
-   ////if (iWidth === undefined) {
-   if ( typeof iWidth === 'undefined' ) { // fix 20190402°0723`12 'unify undefined question'
+   if ( typeof iWidth === 'undefined' ) {
        var iWidth = 2;
    }
 
@@ -544,7 +543,7 @@ Cvgr.startCanvasGear = function()
     * This anonymous function might register the test radiobutton click handler.
     *
     * @id 20140819°1811
-    * @see todo 20190330°0121 'register test buttons cleanup'
+    * @see todo 20190330°0121 'register-test-buttons cleanup'
     * @note Does not work as expected. We need still onclick in HTML.
     * @note This can also be defined outside this function on script level.
     * @note Experimental shutdown 20170302°0321 did not work as expected
@@ -608,8 +607,7 @@ Cvgr.startCanvasGear = function()
       // Now ico.Command is known, e.g. "algo=pulse hertz=111 color=orange"
 
       // () parse commandline [line 20140815°0946]
-      ////ico.CmdsHash = Trekta.Util2.CmdlinParser.parse(ico.Command, true);
-      ico.CmdsHash = Trekta.Util2.CmdlinParser.parse(ico.Command);
+      ico.CmdsHash = Trekta.Utils.CmdlinParser.parse(ico.Command);
 
       // set AlgoName in advance [line 20190330°0221]
       ico.AlgoName = ( ( 'algo' in ico.CmdsHash ) && (ico.CmdsHash['algo'] !== '') )
@@ -1014,12 +1012,12 @@ Cvgr.Func.executeFrame = function()
          }
 
          // (2.2.2) load buddy module [seq 20190329°0415]
-         var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.combined.js'); // e.g. "http://localhost/canvasgear/"
-         if (sPathAbs === '') { // supplement 20190402°0451
-            sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js');
+         var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('/canvasgear.combined.js');
+         if (sPathAbs === '') {
+            sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('/canvasgear.js');
          }
-         var sModuleNameOne = sPathAbs + 'riders/canvasgear.' + sAlgo + '.js';
-         var sModuleNameTwo = sPathAbs + 'canvasgear.' + sAlgo + '.js';
+         var sModuleNameOne = sPathAbs + '/riders/canvasgear.' + sAlgo + '.js';
+         var sModuleNameTwo = sPathAbs + '/canvasgear.' + sAlgo + '.js';
          var iModuleIndex = Cvgr.Vars.aPiggyAlgoNames.length;
 
          // create piggy array set [seq 20190330°0344]
@@ -1145,9 +1143,9 @@ Cvgr.Func.initializeCanvas = function(iko)
       Cvgr.Vars.bSoundLibraryLoading = true;
 
       // seq 20190402°0521
-      var sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.combined.js');
-      if (sScript === '') { sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); }
-      sScript += 'libs/howler/howler.min.js';
+      var sScript = Trekta.Utils.retrieveScriptFolderAbs('/canvasgear.combined.js');
+      if (sScript === '') { sScript = Trekta.Utils.retrieveScriptFolderAbs('/canvasgear.js'); }
+      sScript += '/libs/howler/howler.min.js';
       Trekta.Utils.pullScriptBehind ( sScript
                                      , Cvgr.Func.pullbehind_soundOnLoad('howler')
                                       , Cvgr.Func.pullbehind_soundOnError('howler')
@@ -1428,7 +1426,7 @@ Cvgr.Algos.Ballist = {
     */
    Hit : function(nRingval, nMinutes) { // Cvgr.Algos.Ballist.Hit
 
-      'use strict'; // [line 20190329°0843`14]
+      'use strict';
 
       // set source values
       this.ringval = nRingval;                            // number - the ring value (assumed from 1.0 to 10.9)
@@ -1513,7 +1511,7 @@ Cvgr.Algos.Ballist = {
     */
    , executeAlgo_drawDiagonal : function(iko) // Cvgr.Algos.Ballist.executeAlgo_drawDiagonal
    {
-      'use strict'; // [line 20190329°0843`16]
+      'use strict';
 
       // preparation [seq 20140926°1212]
       var nHeight = iko.Height;                           // pixel — remember issue 20140901°0933 'Opera 10 peculiar about capitals'
@@ -1578,7 +1576,7 @@ Cvgr.Algos.Ballist = {
     */
    , executeAlgo_getSeries : function(sSeries) // Cvgr.Algos.Ballist.executeAlgo_getSeries
    {
-      'use strict'; // [line 20190329°0843`17]
+      'use strict';
 
       var hits = new Array();
 
@@ -1633,7 +1631,7 @@ Cvgr.Algos.Ballist = {
     */
    , executeAlgo_getTarget : function(sTargetName) // Cvgr.Algos.Ballist.executeAlgo_getTarget
    {
-      'use strict'; // [line 20190329°0843`18]
+      'use strict';
 
       var target = new Cvgr.Algos.Ballist.Target();
 
@@ -1726,7 +1724,7 @@ Cvgr.Algos.Ballist = {
     */
    , executeAlgorithm : function(iko) // Cvgr.Algos.Ballist.executeAlgorithm
    {
-      'use strict'; // [line 20190329°0843`15]
+      'use strict';
 
       // retrieve target [seq 20140916°0433]
       var tgt = Cvgr.Algos.Ballist.executeAlgo_getTarget();
@@ -2113,7 +2111,7 @@ Cvgr.Algos.pulse = {
     */
    executeAlgorithm : function(iko) // Cvgr.Algos.pulse.executeAlgorithm
    {
-      'use strict'; // [line 20190329°0843`24]
+      'use strict';
 
       // (.) calculate size [seq 20140829°0514]
       var nRadiFull = (iko.Width + iko.Height) / 2;
@@ -2197,7 +2195,7 @@ Cvgr.Algos.triangle = {
     */
    executeAlgorithm : function(iko) // Cvgr.Algos.triangle.executeAlgorithm
    {
-      'use strict'; // [line 20190329°0843`25]
+      'use strict';
 
       // preparatory calculations [seq 20140916°0823]
       // Remember issue 20140901°0331 'IE8 demands extra plus sign'
@@ -2302,7 +2300,7 @@ Cvgr.Algos.triangulum = {
     */
    executeAlgorithm : function(iko) // Cvgr.Algos.triangulum.executeAlgorithm
    {
-      'use strict'; // [line 20190329°0843`26]
+      'use strict';
 
       // preparatory calculations [seq 20140916°0824]
       // Remember issue 20140901°0331 'IE8 demands extra plus sign'
@@ -2357,18 +2355,19 @@ Cvgr.Algos.triangulum = {
 
 // - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 // id : block 20190329°0131
-// version : 20190329°0912 20190329°0141
-// summary : This block is to be shared by scripts via cutnpaste
+// version : 20190329°0912.. 20190329°0141
+// summary : This block is to be shared by scripts via cut-n-paste
 // callers : So far only • canvasgear.js
 // note : Other commandline parser exist e.g. in terminal.js
 
 /**
- * @id 20190329°0111 (root 20190106°0311)
+ * @id 20190106°0311'11 (put 20190329°0111)
+ * @note This is wanted here, so we can open Trekta.Util2 below
  */
 var Trekta = Trekta || {};
 
 /**
- * @id 20190329°0113 (root 20190106°0313)
+ * @id root 20190106°0313`xx (put 20190329°0113)
  */
 Trekta.Util2 = Trekta.Util2 || {};
 
@@ -2585,191 +2584,22 @@ Trekta.Util2.colorNameToHex = function(sName) {
 
    return sCol;
 };
-
-/**
- * This ~static ~class provides a method to parse a commandstring
- *
- * @id 20140926°0641
- * @status Works fine for key/value pairs only. Limitation: This detects
- *    only key/value pairs, but not single command options.
- * @callers So far only • CanvasGear
- * @note Code inspired by ref 20140926°0621 'Krasimir: Simple command line parser in JS'
- * @note See also ref 20140828°0832 'majstro: tokenizing with split'
- * @note Test input
- *    - <!-- algo="triangle" color=mediumspringgreen hertz=0.1 -->
- *    - <!-- algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" shiftx=20 shifty=20 id="i20140916o0731" -->
- *    - <!-- algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11 -->
- *    -
- */
-Trekta.Util2.CmdlinParser = ( function()
-{
-
-   'use strict'; // [line 20190329°0845`14]
-   //var parse = null; // wanted with strict mode [line 20190329°0853] ////
-
-   /*
-   todo 20190402°0735 'In CmdlinParser eliminate alternative sequence'
-   matter : Trekta.Util2.CmdlinParser does understand only double quotes for tokens.
-   do : Drop old seq 20140926°0632 in favour of new seq 20140926°1111
-   note : Befor doing this, a test suite should be written and executed
-   status : open
-   */
-
-   /*
-   todo 20190402°0731 'Make CmdlinParser understand also single quotes'
-   matter : Trekta.Util2.CmdlinParser does understand only double quotes for tokens.
-   do : Make it understand also single quotes.
-   reason : In the HTML files, the tags are mostly made with double quotes.
-      But for the canvas element we need that exception to make it with single
-      quotes, so the double quotes are available for the parser inside the
-      data-cvgr tag. We do not like exceptions.
-   status : open
-   */
-
-   /**
-    * This function parses a commandline
-    *
-    * @id 20140926°0642
-    * @note Process todo 20190402°0735 'In CmdlinParser eliminate alternative sequence'
-    * @note Process todo 20190402°0731 'Make CmdlinParser understand also single quotes'
-    * @note Remember todo 20190402°0737 'In CmdlinParser eliminate quotes flag'
-    * @note Remember todo 20180618°0751 'make func parse appear in namespace instead global'
-    * @param sCmdlin {string} The string to be parsed
-    * @param bProcessQuotes {boolean} Flag whether to process quotes or not
-    * @returns
-    */
-   ////parse = function(sCmdlin, bProcessQuotes)
-   ////Trekta.Util2.parse = function(sCmdlin, bProcessQuotes)
-   Trekta.Util2.parse = function(sCmdlin)
-   {
-      // hardcode the former parameter
-      var bProcessQuotes = true; // finally also eliminate this (remember todo 20190402°0737)
-
-      // paranoia — advisably
-      ////if (sCmdlin === undefined) {
-      if (typeof sCmdlin === 'undefined') { // fix 20190402°0723`13 'unify undefined question'
-         sCmdlin = '';
-      }
-
-      // [loop 20140926°064x]
-      var args = [];
-      var bQuoteReading = false;
-      var sToken = '';
-      for ( var i = 0; i < sCmdlin.length; i++)
-      {
-         // look for token delimiter [condition 20140926°064x]
-         if ( ((sCmdlin.charAt(i) === ' ') || (sCmdlin.charAt(i) === '=')) && (! bQuoteReading) ) {
-
-            // [seq 20140926°064x]
-            // look for token delimiter found, finish token
-            args.push(sToken);
-            sToken = '';
-
-            // re-supplement equal sign
-            if (sCmdlin.charAt(i) === '=') {
-               args.push('=');
-            }
-         }
-         else {
-
-            // no token delimiter, continue with token [seq 20140926°064x]
-            if (( sCmdlin.charAt(i) === '\"') && bProcessQuotes ) {
-               bQuoteReading = (! bQuoteReading);
-            }
-            else {
-               sToken += sCmdlin.charAt(i);
-            }
-         }
-      }
-      args.push(sToken);
-      // now the plain token array is ready, the equal sign is also a token.
-
-      // process the token array [condition 20140926°064x]
-      // There are two processing modes: (1) plain parse and (2) kvp parse
-      var bParsePlain = true; // (flag 20140926°1121)
-      if (! bParsePlain) {
-
-         // (a) read only equations, drop single commands [seq 20140926°0632]
-         // note : This is the old and proven mode. The algo points to an equal
-         //   sign, and then it processes the elements above and below.
-
-         // (a.1) loop over the token array and assemble key/value pairs from the equal signs
-         var kvps = [];
-         for (var i = 0; i < args.length; i++) {
-            if (i === 0) {
-               continue;
-            }
-
-            if (i >= (args.length - 1)) {
-               continue;
-            }
-
-            // assemble key/value pair
-            if (args[i] === '=') {
-               kvps[args[i-1]] = args[i+1];
-               i++;                                                    // better do two or three increments?
-            }
-         }
-      }
-      else
-      {
-         // (b) parsing algo next version [seq 20140926°1111]
-         // summary : This algo points to the first token, then looks ahead for
-         //  an equal sign. This has the advantage, that any solitary token is
-         //  treated like a key as well, just later it will no more receive a value.
-         // hint : One loop finishes one CmdsHash element/cell.
-
-         // (b.1) loop over the token array and assemble key/value pairs from the equal signs
-         var kvps = [];
-         var sCurrKey = '';
-         for (var i = 0; i < args.length; i++) {
-
-            // (b.2) possibly skip empty elements
-            // note : This cleaning could be done separately before the loop. As
-            //    well it is not yet exactly clear, what happens with blank values.
-            if (args[i] === '') {                                      // experimental
-               continue;
-            }
-
-            // (b.3) read key name and create key with empty value
-            sCurrKey = args[i];
-            kvps[sCurrKey] = '<n/a>';                                  // '<n/a>' is a maker, may be replaced by null or the like
-
-            // (b.4) is next token an equal sign?
-            if (args[i + 1] === '=') {
-               // complete current key/value pair with value
-               kvps[sCurrKey] = args[i + 2];
-               sCurrKey = '<n?a>';                                     // reset
-
-               i++;                                                    // forward to equal sign
-               i++;                                                    // forward to this value
-               continue;                                               // forward to next key
-            }
-            else {
-               continue;                                               // forward to next key
-            }
-         }
-      }
-      return kvps;
-   };
-
-   // Curiously, if you place the curly bracket behind return on the
-   //  next line, the script will be broken (note 20160416°1311)
-   return {
-      ////parse : parse
-      parse : Trekta.Util2.parse
-   };
-})();
 // - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-// summary : This area is shared via cut-n-paste by the following scripts:
-//               • dafutils.js • canvasgear.js • slidegear.js
-// id : area 20190106°0307
-// version : 20190402°0755 // 20190331°0242 20190329°0913
+// ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ area 20190106°0307 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+/**
+ *  This area 'Trekta.Utils' holds low level functions for standalone
+ *  scripts. This area is shared via cut-n-paste by the following scripts
+ *  • daftari.js • canvasgear.js • fadeinfiles.js • slidegear.js
+ *
+ * version : 20190405°0521 Add and refine CmdlinParser
+ * version : 20190405°0349 Refine pullScriptBehind
+ * version : 20190404°0941 ''
+ *
+ */
 
 /**
- * This namespace shall be root namespace
+ * This shall be the root namespace
  *
  * @id 20190106°0311
  * @callers
@@ -2777,7 +2607,7 @@ Trekta.Util2.CmdlinParser = ( function()
 var Trekta = Trekta || {};
 
 /**
- * This namespace shall provide some general basic functionalities.
+ * This namespace shall provide some general basic functionalities
  *
  *  The section between ~~~ Schnippel ~~~ and ~~~ Schnappel ~~~ can be cut
  *  and pasted to other scripts to provide them independent standalone basics.
@@ -2795,14 +2625,13 @@ Trekta.Utils = Trekta.Utils || {
     *      • 20150515°1241 sitmapWorkoff_process_Cakecrumbs1 • 20120830°0451 editFinishTransmit
     * @returns {String} e.g. 'daftari/daftari/login.html' (with Firefox)
     */
-   getFileNameFull : function() // [Trekta.Utils.getFileNameFull]
+   getFileNameFull : function() // Trekta.Utils.getFileNameFull
    {
-      'use strict'; // [line 20190329°0847`12]
+      'use strict'; // [line 20190329°0847]
 
-      // read URL of this page
-      // Values are e.g.
-      //    • 'http://localhost/eps/index.html?XDEBUG_SESSION_START=netbeans-xdebug#'
-      //    • 'file:///G:/work/daftaridev/trunk/daftari/moonbouncy.html' (not yet working)
+      // read URL of this page, values are e.g.
+      //   • 'http://localhost/eps/index.html?XDEBUG_SESSION_START=netbeans-xdebug#'
+      //   • 'file:///G:/work/daftaridev/trunk/daftari/moonbouncy.html' (not yet working)
       var sUrl = document.location.href;
 
       // remove possible query after the file name
@@ -2821,9 +2650,9 @@ Trekta.Utils = Trekta.Utils || {
     * @callers E.g. • dafdispatch.js::workoff_Cake_0_go
     * @returns {String} The plainfilename, e.g. 'help.html'
     */
-   , getFilenamePlain : function() // [Trekta.Utils.getFileNameFull]
+   , getFilenamePlain : function() // Trekta.Utils.getFilenamePlain
    {
-      'use strict'; // [line 20190329°0847`13]
+      'use strict';
 
       var sUrl = Trekta.Utils.getFileNameFull(); // e.g 'daftari/daftari/login.html' (in FF)
 
@@ -2847,17 +2676,16 @@ Trekta.Utils = Trekta.Utils || {
     * @callers : • readTextFile1 • MakeRequest
     * @note :
     */
-   , getXMLHttp : function() // [Trekta.Utils.getFileNameFull]
+   , getXMLHttp : function() // Trekta.Utils.getXMLHttp
    {
-      'use strict'; // [line 20190329°0847`14]
+      'use strict';
 
       var xmlHttp;
 
       // () seqence 20150515°1612 'browser switch'
       // note : Heureka, now we can read the XML file in dafdispatch.js.
       //    This solves issue 20150515°1411 'jquery get() fails in IE8'.
-      // note : We do not use variable Trekta.Utils.bIs_Browser_Explorer anymore,
-      //    so this function can be used without .. daftari.js, e.g. in fadeinfiles.js.
+      // note : Variable bIs_Browser_Explorer should be used no more ...
       // note : Tested only with IE8, not yet with any higher IE version.
       if ( ! Trekta.Utils.bIs_Browser_Explorer ) {
 
@@ -2884,8 +2712,8 @@ Trekta.Utils = Trekta.Utils || {
       }
       else {
          // Internet Explorer (IE8)
-         // todo 20190209°0835 : Switch off this sequence, this seems
-         //    to be for Internet Exporer 5 and 6.
+         // todo 20190209°0835 : Switch off this sequence, it seems to be for Internet Exporer 5 and 6.
+         // see : chg 20180619°0115 'discontinue IE8 support'
          try {
             xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
          }
@@ -2912,9 +2740,9 @@ Trekta.Utils = Trekta.Utils || {
     * @param sHtml {String} The HTML fragment to be escaped
     * @returns {String} The wanted escaped HTML fragment
     */
-   , htmlEscape : function(sHtml) // [Trekta.Utils.htmlEscape]
+   , htmlEscape : function(sHtml) // Trekta.Utils.htmlEscape
    {
-      'use strict'; // [line 20190329°0847`15]
+      'use strict';
 
       sHtml = sHtml.replace(/</g, '&lt;'); // g = replace all hits, not only the first
       sHtml = sHtml.replace(/>/g, '&gt;');
@@ -2923,17 +2751,19 @@ Trekta.Utils = Trekta.Utils || {
    }
 
    /**
-    * This function tests, whether the given script is already loaded or not.
+    * This function tests, whether the given script is already loaded
+    *  or not. This function is unfaithful during the loading phase
     *
     * @id 20160503°0231
-    * @status
+    * @note Mind issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
+    * @status unfaithful
     * @callers ..
     * @param {string} sWantedScript — The plain name of the wanted script (not a complete path)
     * @returns {boolean} Flag telling whether the script is loaded or not.
     */
-   , isScriptAlreadyLoaded : function (sWantedScript) // [Trekta.Utils.isScriptAlreadyLoaded]
+   , isScriptAlreadyLoaded : function (sWantedScript) // Trekta.Utils.isScriptAlreadyLoaded
    {
-      'use strict'; // [line 20190329°0847`16]
+      'use strict';
 
       var regexp = null;
 
@@ -2962,8 +2792,9 @@ Trekta.Utils = Trekta.Utils || {
     * This function loads the given script then calls the given function
     *
     * @id 20110821°0121
-    * @version 20190331°0241 added parameter for onError callback
-    * @version 20181229°1941 now with parameter for onload callback function
+    * @version 20190405°0347 Refine onload callback (see issue 20190405°0333)
+    * @version 20190331°0241 Added parameter for onError callback
+    * @version 20181229°1941 Now with parameter for onload callback function
     * @status works
     * @chain project 20181230°0211 http://www.trekta.biz/svn/demosjs/trunk/pullbehind
     * @note About how exactly to call function(s) in the loaded script, see
@@ -2971,38 +2802,22 @@ Trekta.Utils = Trekta.Utils || {
     * @note See howto 20181229°1943 'summary on pullbehind'
     * @callers • dafstart.js::callCanarySqueak • daftari.js::pull-behind slides
     *    • daftari.js::pull-behind fancytree • canvasgear.js::..
-    * @param {String} sScriptToLoad The path from page to script, e.g. "./../../daftari/js/daftaro/dafcanary.js", 'js/daftaro/dafcanary.js'
-    * @param {Function} callbackOnload The callback function for the script onload event
-    * @param {Function} callbackOnerror The callback function for the script onerror event
-    * @returns {Boolean}  Success flag (just a dummy always true)
+    * @param sScLoad {string} The path from page to script, e.g. "./../../daftari/js/daftaro/dafcanary.js", 'js/daftaro/dafcanary.js'
+    * @param callbackOnLoad {function} Optional. Callback function for the script onload event
+    * @param callbackOnError {function} Optional. Callback function for the script onerror event
+    * @param sJob {type} Optional. Some identifiyer to be passed from initiator to the callbacks (experimentally introduced 20190403°0215)
+    * @returns {boolean} Success flag (just a dummy, always true)
     */
-   , pullScriptBehind : function ( sScriptToLoad, callbackOnload, callbackOnerror )
+   , pullScriptBehind : function ( sScLoad, callbackOnLoad, callbackOnError, sJob ) // Trekta.Utils.pullScriptBehind
    {
-      'use strict'; // [line 20190329°0847`17]
+      'use strict';
 
       // avoid multiple loading [seq 20110821°0122]
-      if ( Trekta.Utils.isScriptAlreadyLoaded(sScriptToLoad) ) {
-         if ( Trekta.Utils.bShow_Debug_Dialogs ) {
-            alert ("[Debug]\n\nScript is already loaded:\n\n" + sScriptToLoad);
-         }
-         callbackOnload();
+      // Remember issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
+      // note : Compatibility — array.indexOf is not available below IE9
+      if ( Trekta.Utils.aPulled.indexOf(sScLoad) >= 0 ) {
+         callbackOnLoad(sScLoad, sJob, true);
          return;
-      }
-
-      // workaround against workaround [condition 20190329°0151]
-      if ( typeof DafStart !== 'undefined' ) {
-
-         // bad workaround for s_DaftariBaseFolderRel mismatch [seq 20190211°0131]
-         //  The reason is, that s_DaftariBaseFolderRel is the folder where
-         //  the calling script resides, not the Daftari base folder.
-         var sScriptSource = DafStart.Conf.s_DaftariBaseFolderRel + sScriptToLoad;
-         if ( sScriptToLoad.indexOf('showdown/showdown' ) > 0) {
-            sScriptSource = sScriptToLoad; // e.g. "http://localhost/workspaces/daftaridev/trunk/daftari/js.libs/showdown/showdown.min.js"
-         }
-      }
-      else {
-         // call from • CanvasGear
-         sScriptSource = sScriptToLoad;
       }
 
       // prepare the involved elements [seq 20110821°0123]
@@ -3011,15 +2826,24 @@ Trekta.Utils = Trekta.Utils || {
 
       // set the trivial properties [seq 20110821°0124]
       script.type = 'text/javascript';
-      script.src = sScriptSource; // DafStart.Conf.s_DaftariBaseFolderRel + sScriptToLoad;
+      script.src = sScLoad;
 
-      // set the non-trivial but crucial property [line 20181229°1932]
-      // note : Remember todo 20181229°1931 'make pullbehind state-of-the-art'
-      script.onload = callbackOnload;
+      // possibly work without callback [condition 20190404°0831] 
+      // This condition was wanted for loading fadeinfiles.js in seq 20190404°0827.
+      //  No, it is not wanted from there. But hm.. the paranoia may be nice anyway.
+      //  Finally, I am not sure now, whether the condition is useful or not.
+      if (typeof callbackOnLoad !== 'undefined') {
+
+         // set the non-trivial but crucial property [line 20181229°1932]
+         // The custom callback goes piggyback with the mandatory one
+         // note : Remember todo 20181229°1931 'make pullbehind state-of-the-art'
+         var cbkCustom = function () { callbackOnLoad(sScLoad, sJob, false); };
+         script.onload = ( function () { Trekta.Utils.pullScript_onload(sScLoad, cbkCustom); } );
+      }
 
       // [condition 20190331°0242]
-      if ((typeof callbackOnerror !== 'undefined') && (callbackOnerror !== null)) {
-         script.onerror = callbackOnerror;
+      if (( typeof callbackOnError !== 'undefined' ) && (callbackOnError !== null)) {
+         script.onerror =  ( function () { callbackOnError (sScLoad, sJob); } );
       }
 
       // ignit the pulling [seq 20110821°0125]
@@ -3029,50 +2853,65 @@ Trekta.Utils = Trekta.Utils || {
    }
 
    /**
+    * This function constitutes the unconditional onload handler
+    *
+    * @id 20190405°0341
+    * @summary This method is introduced to fix issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
+    * @callers Onyl • onload event from pullScriptBehind
+    */
+   , pullScript_onload : function ( sScript, cbkCustom ) // Trekta.Utils.pullScript_onload
+   {
+      Trekta.Utils.aPulled.push(sScript);
+      cbkCustom();
+   }
+
+   /**
     * This function reads a file via Ajax
+    *  This shall be replaced by function readTextFile2
     *
     * @id 20140704°1011
     * @status productive
+    * @todo Process todo 20190211°0151 'Make all requests asynchronous'
     * @note 20150515°173102 : This function seems to work even with IE8
     * @note Remember issue 20140713°1121 'read file via filesystem protocol'
     * @note Remember todo 20150517°0121 'implement local file reading after Dean Edwards 20150516°0612'
     * @note This function does now work via filesystem protocol with Chrome.
-    * @ref http://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript [20160611°0341]
-    * @ref http://stackoverflow.com/questions/6338797/jquery-to-load-text-file-data [20140625°1731]
-    * @ref http://stackoverflow.com/questions/18440241/load-div-content-from-one-page-and-show-it-to-another [20140627°1111]
-    * @ref http://stackoverflow.com/questions/14446447/javascript-read-local-text-file [20140704°0842]
-    * @todo 20190211°0151 : Make all requests asynchronous (param bAsync = true).
+    * @see ref 20160611°0341 'stackoverflow → read an external local JSON file'
+    * @see ref 20140704°0842 'stackoverflow → read local text file'
+    * @see ref 20140627°1111 'stackoverflow → load div from one page and show in other'
+    * @see ref 20140625°1731 'stackoverflow → jQuery to load text file data'
     * @callers
     *     • Func 20190106°0615 slidegear.js::o2ReadSetup_ImageList : *.json
     *     • daflingos.js::getLangFromCrumb                    : sitmaplangs.json // fails with async
     *     • dafsitmap.js::sitmapWorkoff_process_Cakecrumbs1   : sitmapdaf.xml
-    *     • fadeinfiles.js::fadeInFiles_fillBehind           : given textfile
+    *     • fadeinfiles.js::fadeInFiles_fillBehind            : given textfile
     *     • fadeinfiles.js::fadeInFiles_fillPre()             : given textfile
     * @param sFilename {String} — Path to file to be read
     * @param bAsync {Boolean} — Request flavour flag (prefere asynchronous)
     * @returns {String} The content of the wanted file
     */
-   , readTextFile1 : function(sFilename, bAsync) // [Trekta.Utils.readTextFile1]
+   , readTextFile1 : function(sFilename, bAsync) // Trekta.Utils.readTextFile1
    {
-      'use strict'; // [line 20190329°0847`18]
+      'use strict';
 
-      // () preparation
+      // () preparation [line 20140704°1013`11]
+
       var sRead = '';
 
-      // () use a wrapper instead direct XMLHttpRequest
+      // () use a wrapper instead direct XMLHttpRequest [line 20140704°1014`11]
       var xmlHttp = Trekta.Utils.getXMLHttp();
 
-      // () set request parameters
+      // () set request parameters [line 20140704°1015`11]
       // See issue 20180304°0611 'Synchronous XMLHttpRequest deprecated'. But
       //  async = 'true' works not for all, see issue 20181229°1911 'make async work'
-      if (bAsync) {
-         xmlHttp.open("GET", sFilename, true); // [line 20190211°0147]
+      if ( bAsync ) {
+         xmlHttp.open("GET", sFilename, true); // [line 20190211°0147`11]
       }
       else {
-         xmlHttp.open("GET", sFilename, false); // [line 20180304°0614]
+         xmlHttp.open("GET", sFilename, false); // [line 20180304°0614`11]
       }
 
-      // () probe the ongoing
+      // () probe the ongoing [line 20140704°1016`11]
       xmlHttp.onreadystatechange = function () {
          if ( xmlHttp.readyState === 4 ) {
             if ( xmlHttp.status === 200 || xmlHttp.status === 0 ) {
@@ -3081,7 +2920,7 @@ Trekta.Utils = Trekta.Utils || {
          }
       };
 
-      // () finally perform the request
+      // () finally perform the request [seq 20140704°1017`11]
       try {
          // If file to read does not exist, we get exception "Failed to load
          //  resource: the server responded with a status of 404 (Not Found)"
@@ -3090,24 +2929,28 @@ Trekta.Utils = Trekta.Utils || {
       }
       catch (ex)
       {
-         // note 20160624°0131 : To test below error messages, browse pages
-         // - file:///X:/.../daftari/manual/fadeinfiles.html with Firefox
-         // - file:///X:/.../daftari/manual/slideshow.html with Chrome
+         // [line 20140704°1103`11]
+         // note 20160624°0131`11 : To test below error messages, browse via file protocol
+         //    the pages • 20160613°0211 Daftari → Manual → FadeInFiles with Firefox
+         //    • and 20150211°1211 Daftari → Manual → Slideshow with Chrome
          var sMsg = "<b>Sorry, some feature on this page does not work.</b>"
-                   + '\n File <tt>' + sFilename + '</tt> could not be read.' // [info 20160622°0131]
+                   + '\n File <tt>' + sFilename + '</tt> could not be read.'
                    + "\nYour browser said: "
                     + '<tt>' + ex.message + '</tt>.' // e.g. "A network error occurred".
                      ;
 
+         // [condi 20140704°1104`11]
          // ref : screenshot 20160911°1221 'Chrome debugger showing exception'
          // ref : issue 20150516°0531 'Chrome cannot load local files'
          if ( Trekta.Utils.bIs_Browser_Chrome && (location.protocol === 'file:') ) {
+            // [line 20140704°1105`11]
             sMsg += "\nYour browser seems to be Chrome, and this does not read files via file protocol."
                  + "\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Firefox or IE"
                  + "\nor (2) view this page from <tt>localhost</tt> with a HTTP server."
                   ;
          }
          else if ( Trekta.Utils.bIs_Browser_Firefox && (location.protocol === 'file:') ) {
+            // [line 20140704°1106`11]
             sMsg += "\nYour browser seems to be <b>Firefox</b>, and this does not read files"
                  + "\nwith a path going below the current directory via file protocol."
                  + "\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Chrome or IE"
@@ -3115,11 +2958,94 @@ Trekta.Utils = Trekta.Utils || {
                   ;
          }
          else {
-            sMsg += '\n [info 20160622°0131] Failed reading file ' + sFilename + '.';
+            // [line 20140704°1107`11]
+            sMsg += '\n [info 20160622°0131`11`] Failed reading file ' + sFilename + '.';
          }
       }
 
+      // [line 20140704°1023`11]
       return sRead;
+   }
+
+   /**
+    * This function reads a file via asynchronous Ajax.
+    *  This shall finally replace function readTextFile1
+    *
+    * @id 20190405°0231 (after 20140704°1011)
+    * @status
+    * @callers •
+    * @param sFilename {string} — Path to file to be read
+    * @param cbk {function} — Either missing or null or the callback function
+    * @returns {string} The content of the wanted file
+    */
+   , readTextFile2 : function(sFilename, cbk) // Trekta.Utils.readTextFile2
+   {
+      'use strict';
+
+      // () prologue [line 20140704°1013]
+      cbk = (typeof cbk === 'undefined') ? null : cbk ;
+
+      // () use a wrapper instead direct XMLHttpRequest [line 20140704°1014]
+      var xmlHttp = Trekta.Utils.getXMLHttp();
+
+      // () set request parameters [line 20140704°1015]
+      xmlHttp.open("GET", sFilename, true); // [line 20190211°0147]
+
+      // () probe the ongoing [line 20140704°1016]
+      xmlHttp.onreadystatechange = function () {
+         if ( xmlHttp.readyState === 4 ) {
+            if ( xmlHttp.status === 200 || xmlHttp.status === 0 ) {
+               cbk(xmlHttp.responseText);
+            }
+         }
+      };
+
+      // () finally perform the request [seq 20140704°1017]
+      try {
+         // If file to read does not exist, we get exception "Failed to load
+         //  resource: the server responded with a status of 404 (Not Found)"
+         // See issue 20181228°0937 'try to look for file but without error 404'
+         xmlHttp.send(null);
+      }
+      catch (ex)
+      {
+
+         // [line 20140704°1103]
+         // note 20160624°0131 : To test below error messages, browse via file protocol
+         //    the pages • 20160613°0211 Daftari → Manual → FadeInFiles with Firefox
+         //    • and 20150211°1211 Daftari → Manual → Slideshow with Chrome
+         var sMsg = "<b>Sorry, some feature on this page does not work.</b>"
+                   + '\n File <tt>' + sFilename + '</tt> could not be read.'
+                    + "\nYour browser said: "
+                     + '<tt>' + ex.message + '</tt>.' // e.g. "A network error occurred".
+                      ;
+
+         // [condi 20140704°1104]
+         // ref : screenshot 20160911°1221 'Chrome debugger showing exception'
+         // ref : issue 20150516°0531 'Chrome cannot load local files'
+         if ( Trekta.Utils.bIs_Browser_Chrome && (location.protocol === 'file:') ) {
+            // [line 20140704°1105]
+            sMsg += "\nYour browser seems to be Chrome, and this does not read files via file protocol."
+                  + "\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Firefox or IE"
+                   + "\nor (2) view this page from <tt>localhost</tt> with a HTTP server."
+                    ;
+         }
+         else if ( Trekta.Utils.bIs_Browser_Firefox && (location.protocol === 'file:') ) {
+            // [line 20140704°1106]
+            sMsg += "\nYour browser seems to be <b>Firefox</b>, and this does not read files"
+                  + "\nwith a path going below the current directory via file protocol."
+                   + "\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Chrome or IE"
+                    + "\nor (2)  view this page from <tt>localhost</tt> with a HTTP server."
+                     ;
+         }
+         else {
+            // [line 20140704°1107]
+            sMsg += '\n [info 20160622°0131] Failed reading file ' + sFilename + '.';
+         }
+
+         // use callback to deliver error message [line 20190405°0233]
+         cbk(sMsg); // hm ..
+      }
    }
 
    /**
@@ -3127,16 +3053,16 @@ Trekta.Utils = Trekta.Utils || {
     *
     * @id 20110820°2041
     * @status working
-    * @callers • CanvasGear func 20140815°1221 executeFrame
+    * @callers e.g. • CanvasGear func 20140815°1221 executeFrame • • •
     * @param sScriptName {String} The name of the canary script, e.g. 'sitmapdaf.js'.
     * @returns {String} The wanted path, where the given script resides, but
     *    there are browser differences, e.g.
     *     - FF etc : scripts[i].src = 'http://localhost/manual/daftari/daftari.js'
     *     - IE     : scripts[i].src = '../daftari/daftari.js'
     */
-   , retrieveScriptFolderAbs : function (sScriptName) // [Trekta.Utils.retrieveScriptFolderAbs]
+   , retrieveScriptFolderAbs : function (sScriptName) // Trekta.Utils.retrieveScriptFolderAbs
    {
-      'use strict'; // [line 20190329°0847`22]
+      'use strict';
 
       var s = '';
 
@@ -3167,80 +3093,6 @@ Trekta.Utils = Trekta.Utils || {
       return path; // e.g. "http://localhost/daftaridev/trunk/daftari/js/daftaro/"
    }
 
-   /////**
-   //// * This function tells the relative path from the page to the given given script
-   //// *
-   //// * This function is useful if the script uses resources, e.g. images,
-   //// *  which are located relative to the script, as typically is the case
-   //// *  within a project folder structure.
-   //// *
-   //// * @id 20160501°1611
-   //// * @ref See howto 20190209°0131 'retrieve this script path'
-   //// * @todo 20190316°0141 'call retrieveScriptFolderRel without canary'
-   //// *     Implement the possibility to call the function
-   //// *     without parameter. Then we have no canary to seach for in the script
-   //// *     tags, but we use the last from the list. This is the last one loaded,
-   //// *     and mostly means the calling script itself.
-   //// * @callers • dafstart.js from scriptlevel
-   //// * @param sCanary {String} Trailing part of the wanted script, e.g. '/js/daftaro/dafutils.js'
-   //// * @returns {String} The path to the folder where the given script resides
-   ////             *           , e.g. "'/js/daftaro/dafutils.js'"
-   //// */
-   ////, retrieveScriptFolderRel : function (sCanary)
-   ////{
-   ////   'use strict'; // [line 20190329°0847`23]
-   ////
-   ////   var s = '';
-   ////
-   ////   // () get the script tags list
-   ////   var scripts = document.getElementsByTagName('script');
-   ////
-   ////   // () find the canary script tag
-   ////   var script = null;
-   ////   var bFound = false;
-   ////   for (var i = 0; i < scripts.length; i++) {
-   ////      if (scripts[i].src.indexOf(sCanary) > 0) {
-   ////         script = scripts[i];
-   ////         bFound = true;
-   ////         break;
-   ////      }
-   ////   }
-   ////
-   ////   // paranoia
-   ////   if (! bFound) {
-   ////      s = '[20160501°1631] Fatal error'
-   ////         + '\n' + 'The wanted script could not be found.'
-   ////          + '\n' + 'It looks like the search string is wrong.'
-   ////           + '\n\n' + 'search string = ' + sCanary
-   ////            ;
-   ////      alert(s);
-   ////      return '';
-   ////   }
-   ////
-   ////   // (.1) get the DOM internal absolute path
-   ////   //  This is just for fun, not finally wanted.
-   ////   s = script.src;
-   ////   s = s.substring(0, (s.length - sCanary.length));         // used as canary is '/js/daftaro/dafutils.js'
-   ////   Trekta.Utils.s_DaftariBaseFolderAbs = s;                 // e.g. "file:///G:/work/downtown/daftaridev/trunk/daftari/"
-   ////
-   ////   // (.2) get the script tag's literal path (algo 20111225°1251)
-   ////   var sPathLiteral = '';
-   ////   for (var i = 0; i < script.attributes.length; i++) {
-   ////      if (script.attributes[i].name === 'src') {
-   ////         sPathLiteral = script.attributes[i].value;
-   ////         break;
-   ////      }
-   ////   }
-   ////
-   ////   // reduce from canary script path to folder only path [seq 20190316°0131]
-   ////   // E.g. for sCanary "/js/daftaro/dafutils.js" :
-   ////   //    • "./../../daftari/js/daftaro/dafutils.js" ⇒ "./../../daftari/"
-   ////   //    • "./daftari/js/daftaro/dafutils.js"       ⇒ "./daftari/"
-   ////   var sPathOnly = sPathLiteral.substring ( 0 , ( sPathLiteral.length - sCanary.length + 1 ) );
-   ////
-   ////   return sPathOnly;
-   ////}
-
    /**
     * This function daisychains the given function on the windows.onload events
     *
@@ -3250,9 +3102,9 @@ Trekta.Utils = Trekta.Utils || {
     * @param funczion {function} The function to be appended to the window.onload event
     * @returns nothing
     */
-   , windowOnloadDaisychain : function(funczion) // [Trekta.Utils.windowOnloadDaisychain]
+   , windowOnloadDaisychain : function(funczion) // Trekta.Utils.windowOnloadDaisychain
    {
-      'use strict'; // [line 20190329°0847`24]
+      'use strict';
 
       // is the onload handler already used?
       if ( window.onload ) {
@@ -3272,6 +3124,16 @@ Trekta.Utils = Trekta.Utils || {
    }
 
    /**
+    * This variable constitutes the onload ready flags for pullScriptBehind
+    *
+    * @id 20190405°0345
+    * @note This flags solves issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
+    * @type Array
+    */
+   , aPulled : [] // Trekta.Utils.aPulled
+
+
+   /**
     * This ~constant provides a flag whether the browser is Chrome or not
     *
     *  Explanation. The plain expression "navigator.appName.match(/Chrome/)"
@@ -3284,7 +3146,7 @@ Trekta.Utils = Trekta.Utils || {
     * @id 20160622°0221
     * @type Boolean
     */
-   , bIs_Browser_Chrome : ( navigator.userAgent.match(/Chrome/) ? true : false ) // [Trekta.Utils.bIs_Browser_Chrome]
+   , bIs_Browser_Chrome : ( navigator.userAgent.match(/Chrome/) ? true : false ) // Trekta.Utils.bIs_Browser_Chrome
 
    /**
     * This ~constant provides a flag whether the browser is Internet Exporer or not
@@ -3296,7 +3158,7 @@ Trekta.Utils = Trekta.Utils || {
     *    For code, compare function getIEVersion() in canvasgearexcanvas.js.
     * @type Boolean
     */
-   , bIs_Browser_Explorer : ( navigator.appName.match(/Explorer/) ? true : false ) // [Trekta.Utils.bIs_Browser_Explorer]
+   , bIs_Browser_Explorer : ( navigator.appName.match(/Explorer/) ? true : false ) // Trekta.Utils.bIs_Browser_Explorer
 
    /**
     * This ~constant provides a flag whether the browser is Firefox or not
@@ -3304,7 +3166,7 @@ Trekta.Utils = Trekta.Utils || {
     * @id 20160624°0121
     * @type Boolean
     */
-   , bIs_Browser_Firefox : ( navigator.userAgent.match(/Firefox/) ? true : false ) // [Trekta.Utils.bIs_Browser_Firefox]
+   , bIs_Browser_Firefox : ( navigator.userAgent.match(/Firefox/) ? true : false ) // Trekta.Utils.bIs_Browser_Firefox
 
    /**
     * This property provides a flag whether the browser is Opera or not.
@@ -3317,7 +3179,7 @@ Trekta.Utils = Trekta.Utils || {
     * @id 20190107°0821
     * @type Boolean
     */
-   , bIs_Browser_Opera : ( navigator.userAgent.match(/(Opera)|(OPR)/) ? true : false ) // [Trekta.Utils.bIs_Browser_Opera]
+   , bIs_Browser_Opera : ( navigator.userAgent.match(/(Opera)|(OPR)/) ? true : false ) // Trekta.Utils.bIs_Browser_Opera
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -3328,6 +3190,141 @@ Trekta.Utils = Trekta.Utils || {
    , bShow_Debug_Dialogs : false // [Trekta.Utils.bShow_Debug_Dialogs]
 
 };
+
+/**
+ * This ~static ~class provides a method to parse a commandstring
+ *
+ * @id 20140926°0641
+ * @status Works
+ * @note Remember todo 20180618°0751 'make func parse appear in namespace instead global'
+ * @chg 20190405°0517 Allow whitespaces
+ * @chg 20190405°0507 Accept single quotes as well as double quotes
+ * @chg 20190405°0351 Function shifted here from canvasgear.js Trekta.Util2.CmdlinParser
+ * @callers • CanvasGear • page 20150210°0311 moonwalk/testing.html
+ * @note Code inspired by ref 20140926°0621 'Krasimir: Simple command line parser in JS'
+ * @note See also ref 20140828°0832 'majstro: tokenizing with split'
+ */
+Trekta.Utils.CmdlinParser = ( function()
+{
+   'use strict';
+
+   /**
+    * This function parses a commandline
+    *
+    * @id 20140926°0642
+    * @param sCmdlin {string} The string to be parsed
+    * @returns {object} Object with the read key-value-pairs
+    */
+   Trekta.Utils.parse = function(sCmdlin)
+   {
+      // paranoia — advisably [seq 20140926°0653]
+      if ( typeof sCmdlin === 'undefined' ) {
+         sCmdlin = '';
+      }
+
+      // prologue [loop 20140926°0654]
+      var args = []; // this accumulates the found tokens
+      var sQuoting = ''; // stores quote while inside quoted area
+      var sToken = ''; // this accumulates characters to one token
+
+      // scan characters [loop 20140926°0643]
+      for ( var i = 0; i < sCmdlin.length; i++ )
+      {
+         // convenience [line 20190405°0512]
+         var sChar = sCmdlin.charAt(i);
+
+         // process blank [condition 20140926°0644]
+         if ( (sChar === ' ') && (sQuoting === '') ) {
+
+            // ignore whitespace [seq 20190405°0513]
+            if (sToken === '') {
+               continue;
+            }
+
+            // finish current token [seq 20140926°0645]
+            args.push(sToken);
+            sToken = '';
+
+         }
+         // [condition 20190405°0514] experimental
+         else if ( (sChar === '=') && (sQuoting === '') ) {
+
+            // [seq 20190405°0515]
+            if (sToken !== '') {
+               args.push(sToken);
+               sToken = '';
+            }
+
+            // found token delimiter, finish current token [seq 20190405°0516]
+            args.push('=');
+
+         }
+         else {
+
+            // accumulate one token [seq 20140926°0646]
+            if ((sChar === "'") || (sChar === '"')) {
+               sQuoting = (sQuoting === '') ? sChar : ''; // toggle quoting flag
+            }
+            else {
+               sToken += sChar;
+            }
+         }
+      }
+      args.push(sToken);
+      // now the plain token array is ready, the equal sign is also a token.
+
+      // (B) parse the found tokens [seq 20140926°1111]
+      // summary : This algo points to the first token, then looks ahead for
+      //  an equal sign. This has the advantage, that any solitary token is
+      //  treated like a key as well, just later it will no more receive a value.
+      // hint : One loop finishes one CmdsHash element/cell.
+
+      // (B.1) prologue [seq 20140926°1112]
+      var oKvps = [];
+      var sCurrKey = '';
+
+      // (B.1) loop over the token array  [seq 20140926°1113]
+      //  Assemble key/value pairs from the equal signs
+      for (var i = 0; i < args.length; i++) {
+
+         // (B.2) possibly skip empty elements [seq 20140926°1114]
+         // note : This cleaning could be done separately before the loop. As
+         //    well it is not yet exactly clear, what happens with blank values.
+         if (args[i] === '') {                                         // experimental
+            continue;
+         }
+
+         // (B.3) read key name and create key with empty value [seq 20140926°1115]
+         sCurrKey = args[i];
+         oKvps[sCurrKey] = '<n/a>';                                    // '<n/a>' is a maker, may be replaced by null or the like
+
+         // (B.4) is next token an equal sign? [seq 20140926°1116]
+         if ( args[i + 1] === '=' ) {
+
+            // complete current key/value pair with value [seq 20140926°1117]
+            oKvps[sCurrKey] = args[i + 2];
+            sCurrKey = '<n?a>';                                        // reset
+
+            // [seq 20140926°1118]
+            i++;                                                       // forward to equal sign
+            i++;                                                       // forward to this value
+            continue;                                                  // forward to next key
+         }
+         else {
+            // [seq 20140926°1119]
+            continue;                                                  // forward to next key
+         }
+      }
+
+      return oKvps;
+   };
+
+   // Curiously, if you place the curly bracket behind return on the
+   //  next line, the script will be broken (note 20160416°1311)
+   return {
+      parse : Trekta.Utils.parse
+   };
+})();
 // ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 
 // start mechanism [line 20190316°0231]

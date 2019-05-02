@@ -106,7 +106,7 @@
    chain : issue 20150223°1821 'canvas inside paragraph does not work with IE'
    note : As reference for the effect and how to cope, see page 20150223°1511
       http://www.trekta.biz/svn/demomatrix/trunk/pages/sql/intro.html
-   status : ?
+   status : open
    ܀
 
    issue 20150223°1821 'canvas inside paragraph does not work with IE'

@@ -104,7 +104,7 @@
    issue 20140926°1321 'IE8 fails with Context.fillText'
    matter : IE8 does not understand the Context.fillText() function.
    location : func 20140926°1211 Cvgr.Algos.Ballist.executeAlgo_drawDiagonal
-   status : finished, IE8 no more supported
+   status : finished (chg 20180619°0115 'discontinue IE8 support')
    ܀
 
    todo 20140904°0711 'refactor property parsing'
@@ -141,7 +141,7 @@
    finding 20140901°0921 : Opera seems being case sensitive with object
       properties e.g. wrong 'iko.Canvas.Width' vs. right 'iko.Canvas.width'!
    priority : Low
-   status : finished (Opera 10 no more supported 20190330°0711)
+   status : finished (chg 20180619°0115 'discontinue IE8 support')
    ܀
 
    todo 20140901°0633 'support svg rendering'
@@ -179,6 +179,7 @@
       e.g 'blue' but not 'lightblue'.
    workaround : Use RGB values for all colors. Or implement a mapping function.
    status : finished (IE8 support discontinued 20190330°0711)
+   status : finished (chg 20180619°0115 'discontinue IE8 support')
    ܀
 
    issue 20140830°0221 'IE get HTML comment'

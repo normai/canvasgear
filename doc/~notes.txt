@@ -136,11 +136,6 @@
    status : informal statement
    ܀
 
-   feature 20180619°0115 'discontinue IE8 support'
-   text : Support for IE8 is discontinued
-   note :
-   ܀
-
    feature 20180619°0113 'supply external algorithm scripts'
    text :  With the Algo namespace we created the mean to automatically
       assign algorithms after their name. With the pull-behind mechanism,

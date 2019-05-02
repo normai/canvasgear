@@ -23,7 +23,7 @@
 
    release v0.1.7 — 20190330°0711 (2019-Apr-11)
    • Read parameter from data-cvgr attribute
-   • Discontinue IE8 (and Opera 10) support, remove excanvas.js
+   • Discontinue IE8 (and Opera 10) support, remove excanvas.js [chg 20180619°0115]
 ﻿   • Convert files to UTF-8
    • Shift project to http://www.trekta.biz/svn/canvasgeardev
    • Clear documentation

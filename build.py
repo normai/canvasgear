@@ -24,8 +24,8 @@
 import os, sys
 
 #  A d j u s t   t h i s !
-sLocalCompiler = '..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
-###sLocalCompiler = '..\\..\\..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
+###sLocalCompiler = '..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
+sLocalCompiler = '..\\..\\..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
 
 # seq 20190402°0441
 def mount(fileslist) :

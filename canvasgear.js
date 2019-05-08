@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.3.c.... — 20190402°0817..
+ * version : 0.2.3.c..... — 20190402°0817..
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -2590,12 +2590,15 @@ Trekta.Util2.colorNameToHex = function(sName) {
 /**
  *  This area 'Trekta.Utils' holds low level functions for standalone
  *  scripts. This area is shared via cut-n-paste by the following scripts
- *  • daftari.js • canvasgear.js • fadeinfiles.js • slidegear.js
+ *   • daftari.js • canvasgear.js • fadeinfiles.js • slidegear.js
  *
- * version : 20190405°0521 Add and refine CmdlinParser
- * version : 20190405°0349 Refine pullScriptBehind
- * version : 20190404°0941 ''
- *
+ * version : 20190407°0351..
+ */
+/**
+ * changelog
+ *  - version 20190405°0521 Add and refine CmdlinParser
+ *  - version 20190405°0349 Refine pullScriptBehind
+ *  - version 20190404°0941 Start versioning
  */
 
 /**
@@ -2805,18 +2808,20 @@ Trekta.Utils = Trekta.Utils || {
     * @param sScLoad {string} The path from page to script, e.g. "./../../daftari/js/daftaro/dafcanary.js", 'js/daftaro/dafcanary.js'
     * @param callbackOnLoad {function} Optional. Callback function for the script onload event
     * @param callbackOnError {function} Optional. Callback function for the script onerror event
-    * @param sJob {type} Optional. Some identifiyer to be passed from initiator to the callbacks (experimentally introduced 20190403°0215)
+    * @param sJob {type} Optional. Some identifiyer string or object to be passed
+    *     from initiator to the callbacks (experimentally introduced 20190403°0215)
     * @returns {boolean} Success flag (just a dummy, always true)
     */
-   , pullScriptBehind : function ( sScLoad, callbackOnLoad, callbackOnError, sJob ) // Trekta.Utils.pullScriptBehind
+   , pullScriptBehind : function ( sScLoad, callbackOnLoad, callbackOnError, oJobs ) // Trekta.Utils.pullScriptBehind
    {
       'use strict';
 
       // avoid multiple loading [seq 20110821°0122]
       // Remember issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
-      // note : Compatibility — array.indexOf is not available below IE9
+      // note : Compatibility — array.indexOf is not available below IE9, we
+      //    workaround this with seq 20190407°0313 'polyfill for array.indexOf'
       if ( Trekta.Utils.aPulled.indexOf(sScLoad) >= 0 ) {
-         callbackOnLoad(sScLoad, sJob, true);
+         callbackOnLoad(sScLoad, oJobs, true);
          return;
       }
 
@@ -2837,14 +2842,13 @@ Trekta.Utils = Trekta.Utils || {
          // set the non-trivial but crucial property [line 20181229°1932]
          // The custom callback goes piggyback with the mandatory one
          // note : Remember todo 20181229°1931 'make pullbehind state-of-the-art'
-         var cbkCustom = function () { callbackOnLoad(sScLoad, sJob, false); };
+         var cbkCustom = function () { callbackOnLoad(sScLoad, oJobs, false); };
          script.onload = ( function () { Trekta.Utils.pullScript_onload(sScLoad, cbkCustom); } );
       }
 
-      // [condition 20190331°0242]
-      if (( typeof callbackOnError !== 'undefined' ) && (callbackOnError !== null)) {
-         script.onerror =  ( function () { callbackOnError (sScLoad, sJob); } );
-      }
+      // attach onerror handler [condition 20190331°0242]
+      callbackOnError = callbackOnError || null;
+      script.onerror =  ( function () { callbackOnError (sScLoad, oJobs); } );
 
       // ignit the pulling [seq 20110821°0125]
       head.appendChild(script);
@@ -2873,7 +2877,7 @@ Trekta.Utils = Trekta.Utils || {
     * @status productive
     * @todo Process todo 20190211°0151 'Make all requests asynchronous'
     * @note 20150515°173102 : This function seems to work even with IE8
-    * @note Remember issue 20140713°1121 'read file via filesystem protocol'
+    * @note Remember issue 20140713°1121 'ajax read file via filesystem protocol'
     * @note Remember todo 20150517°0121 'implement local file reading after Dean Edwards 20150516°0612'
     * @note This function does now work via filesystem protocol with Chrome.
     * @see ref 20160611°0341 'stackoverflow → read an external local JSON file'
@@ -2885,7 +2889,6 @@ Trekta.Utils = Trekta.Utils || {
     *     • daflingos.js::getLangFromCrumb                    : sitmaplangs.json // fails with async
     *     • dafsitmap.js::sitmapWorkoff_process_Cakecrumbs1   : sitmapdaf.xml
     *     • fadeinfiles.js::fadeInFiles_fillBehind            : given textfile
-    *     • fadeinfiles.js::fadeInFiles_fillPre()             : given textfile
     * @param sFilename {String} — Path to file to be read
     * @param bAsync {Boolean} — Request flavour flag (prefere asynchronous)
     * @returns {String} The content of the wanted file
@@ -2969,7 +2972,7 @@ Trekta.Utils = Trekta.Utils || {
 
    /**
     * This function reads a file via asynchronous Ajax.
-    *  This shall finally replace function readTextFile1
+    *  This shall replace function readTextFile1
     *
     * @id 20190405°0231 (after 20140704°1011)
     * @status
@@ -3053,44 +3056,95 @@ Trekta.Utils = Trekta.Utils || {
     *
     * @id 20110820°2041
     * @status working
-    * @callers e.g. • CanvasGear func 20140815°1221 executeFrame • • •
-    * @param sScriptName {String} The name of the canary script, e.g. 'sitmapdaf.js'.
-    * @returns {String} The wanted path, where the given script resides, but
-    *    there are browser differences, e.g.
+    * @see todo 20190316°0141 'call retrieveScriptFolderRel without canary'
+    * @see howto 20190209°0131 'retrieve this script path'
+    * @note There mighty be browser differences with the return value, e.g.
     *     - FF etc : scripts[i].src = 'http://localhost/manual/daftari/daftari.js'
     *     - IE     : scripts[i].src = '../daftari/daftari.js'
+    * @callers e.g. • CanvasGear func 20140815°1221 executeFrame • • •
+    * @param sCanary {String} The name of the canary script, e.g. '/sitmapdaf.js'.
+    * @returns {String} The wanted path, where the given script resides or empty string
     */
-   , retrieveScriptFolderAbs : function (sScriptName) // Trekta.Utils.retrieveScriptFolderAbs
+   , retrieveScriptFolderAbs : function (sCanary) // Trekta.Utils.retrieveScriptFolderAbs
    {
       'use strict';
 
-      var s = '';
-
       // () prepare regex [seq 20160621°0142]
-      var regexMatch = / /;                                               // space between slashes prevents a syntax error
+      var regexMatch = / /;                                            // space between slashes prevents a syntax error
       var regexReplace = / /;
-      s = sScriptName.replace(/\./g, "\\.") + "$";                        // e.g. 'dafutils.js' to 'dafutils\.js$'
-      regexMatch = new RegExp(s, '');                                     // e.g. /dafutils\.js$/
-      s = '(.*)' + s;                                                     // prepend group
-      regexReplace = new RegExp(s, '');                                   // e.g. /(.*)dafutils\.js$/ ('/' seems automatically replaced by '\/')
+      var s = sCanary.replace(/\./g, "\\.") + "$";                     // e.g. 'dafutils.js' to 'dafutils\.js$'
+      regexMatch = new RegExp(s, '');                                  // e.g. /dafutils\.js$/
+      s = '(.*)' + s;                                                  // prepend group
+      regexReplace = new RegExp(s, '');                                // e.g. /(.*)dafutils\.js$/ ('/' seems automatically replaced by '\/')
 
       // () algo 20110820°2042 do the job (compare algo 20160503°0241)
-      var path = '';
-      var scripts = document.getElementsByTagName('SCRIPT');              // or 'script'
+      var sPath = '';
+      var scripts = document.getElementsByTagName('SCRIPT');           // or 'script'
       if (scripts && scripts.length > 0) {
-         for (var i in scripts) {
+         for ( var i in scripts ) {
             // note : There are browser differences, e.g.
             //    • FF etc : scripts[i].src = 'http://localhost/manual/daftari/daftari.js'
             //    • IE     : scripts[i].src = '../daftari/daftari.js'
             if (scripts[i].src) {
-               if ( scripts[i].src.match(regexMatch) ) {                  // e.g. /dafstart\.js$/
-                  path = scripts[i].src.replace(regexReplace, '$1');      // e.g. /(.*)dafstart.js$/
+               if ( scripts[i].src.match(regexMatch) ) {               // e.g. /dafstart\.js$/
+                  sPath = scripts[i].src.replace(regexReplace, '$1');  // e.g. /(.*)dafstart.js$/
                }
             }
          }
       }
 
-      return path; // e.g. "http://localhost/daftaridev/trunk/daftari/js/daftaro/"
+      return sPath; // e.g. "http://localhost/daftaridev/trunk/daftari/js/daftaro/"
+   }
+
+   /**
+    * This function returns the path to the given script .. using indexOf
+    *
+    * @id 20160501°1611
+    * @chg 20190407°0245 Former func 20160501°1611 retrieveScriptFolderRel_ELIM
+    *    is shifted here. The reason to preserve this code is, that above regex
+    *    usage may be elegant and short, but the regex is not immediately to
+    *    understand. The code here is a bit bulkier, but easier to understand.
+    * @status working
+    */
+   , retrieveScriptFolderRel : function (sCanary) // Trekta.Utils.retrieveScriptFolderRel
+   {
+      'use strict';
+
+      // () get the script tags list
+      var scripts = document.getElementsByTagName('script');
+
+      // () find the canary script tag
+      var script = null;
+      var bFound = false;
+      for (var i = 0; i < scripts.length; i++) {
+         if (scripts[i].src.indexOf(sCanary) > 0) {
+            script = scripts[i];
+            bFound = true;
+            break;
+         }
+      }
+
+      // paranoia
+      if (! bFound) {
+         var s = '[Error 20160501°1631] Fatal.\nScript tag not found: "' + sCanary + '"';
+         alert(s);
+         return '';
+      }
+
+      // (.2) get the script tag's literal path (algo 20111225°1251)
+      var sPathToCanary = '';
+      for (var i = 0; i < script.attributes.length; i++) {
+         if ( script.attributes[i].name === 'src' ) {
+            sPathToCanary = script.attributes[i].value;
+            break;
+         }
+      }
+
+      // reduce from canary script path to folder only path [seq 20190316°0131]
+      var sWantedPath = sPathToCanary.substring ( 0 , ( sPathToCanary.length - sCanary.length ) );
+
+      return sWantedPath;
+
    }
 
    /**
@@ -3188,6 +3242,22 @@ Trekta.Utils = Trekta.Utils || {
     * @type Boolean
     */
    , bShow_Debug_Dialogs : false // [Trekta.Utils.bShow_Debug_Dialogs]
+
+   /**
+    * This constant provides a constant false value
+    *
+    * @id 20190407°0121
+    * @type Boolean
+    */
+   , bToggle_FALSE : false // Trekta.Utils.bToggle_FALSE
+
+   /**
+    * This constant provides a constant false value
+    *
+    * @id 20190407°0122
+    * @type Boolean
+    */
+   , bToggle_TRUE : true // Trekta.Utils.bToggle_TRUE
 
 };
 

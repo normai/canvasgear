@@ -2,12 +2,10 @@
  * This script provides a CanvasGear algorithm
  *
  * file : 20190401°0311
- * version : 0.2.3.b — 20190402°0641..
+ * version : 0.2.3.d
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */
-
-'use strict'; // [line 20190329°0844`xx]
 
 // Formal integration into main script [seq 20190329°0621`xx]
 var Cvgr = Cvgr || {}; // (after parent 20180618°0621)
@@ -45,6 +43,7 @@ Cvgr.Algos.Hamster = {};
  */
 Cvgr.Algos.Hamster.draw = function(ctx)
 {
+   'use strict';
    ctx.save();
    ctx.translate(0,0);
    ctx.translate(0,0);
@@ -956,6 +955,8 @@ Cvgr.Algos.Hamster.draw = function(ctx)
  */
 Cvgr.Algos.Hamster.executeAlgorithm = function(iko)
 {
+   'use strict';
+
    // [seq 20190401°0333]
    Cvgr.Algos.Hamster.draw(iko.Context);
 
@@ -993,5 +994,5 @@ Cvgr.Algos.Hamster.defaultProperties = {
    DrawNumberLimit : 5
 };
 
-﻿/* - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
+/* - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* eof */

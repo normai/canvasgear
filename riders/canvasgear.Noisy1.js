@@ -5,8 +5,6 @@
  */
 // note : Words — Algorithm figure gesture paragon pattern
 
-'use strict';
-
 // Formal integration [seq 20190329°0621`xx]
 var Cvgr = Cvgr || {};
 Cvgr.Algos = Cvgr.Algos || {};
@@ -50,7 +48,7 @@ Cvgr.Algos.Noisy1 = {
          iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
          // (A.3) prepare some lines [seq 20190401°0724]
-         var aLins = new Array();
+         var aLins = [];
          var oLin1 = new Cvgr.Objs.Line(iDist, iSize / 2, iSize / 2 , iDist, iko.Color);
          var oLin2 = new Cvgr.Objs.Line(iSize / 2, iDist, iSize / 2, iSize - iDist, iko.Color2);
          var oLin3 = new Cvgr.Objs.Line(iSize / 2, iSize - iDist, iSize - iDist, iSize / 2, iko.Color3);
@@ -132,6 +130,8 @@ Cvgr.Algos.Noisy1 = {
     */
    , getElementPositionOnPage : function(el) // [Cvgr.Algos.Noisy1.getElementPositionOnPage]
    {
+      'use strict';
+
       var rect = el.getBoundingClientRect()
                 , scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
                  , scrollTop = window.pageYOffset || document.documentElement.scrollTop
@@ -147,6 +147,8 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnKeyDown : function(evt) // [Cvgr.Algos.Noisy1.pickupOnKeyDown]
    {
+      'use strict';
+
       // catch char [seq 20190401°1103]
       var oEvt = evt || window.event;
       ///if (typeof self.keys[sChar] !== 'undefined') soundManager.play('s' + self.keys[sChar]);
@@ -169,6 +171,7 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnMouseDown : function() // [Cvgr.Algos.Noisy1.pickupOnKeyDown]
    {
+      'use strict';
    }
 
    /**
@@ -180,6 +183,7 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnMouseMove : function(evt) // [Cvgr.Algos.Noisy1.pickupOnMouseMove]
    {
+      'use strict';
 
       // [seq 20190402°0531]
       if ( Cvgr.Vars.bSoundLibraryReady ) {
@@ -201,6 +205,7 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnMouseUp : function() // [Cvgr.Algos.Noisy1.pickupOnKeyDown]
    {
+      'use strict';
    }
 
    /**
@@ -211,6 +216,8 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnTouchMove : function(evt) // [Cvgr.Algos.Noisy1.pickupOnTouchMove]
    {
+      'use strict';
+
       // [seq 20190401°1027]
       // finding : On a iPhone, this paints a dot where the screen
       //   is touched, but it does not follow a swipe
@@ -226,6 +233,7 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnTouchStart : function() // [Cvgr.Algos.Noisy1.pickupOnTouchStart]
    {
+      'use strict';
    }
 
    /**
@@ -236,6 +244,8 @@ Cvgr.Algos.Noisy1 = {
     */
    , settle_ringbuffer : function() // [Cvgr.Algos.Noisy1.settle_ringbuffer]
    {
+      'use strict';
+
       // rotate ringbuffer index [seq 20190401°1026]
       if ( Cvgr.Algos.Noisy1.iPtsNdx === null ) {
          Cvgr.Algos.Noisy1.iPtsNdx = 0;
@@ -268,6 +278,7 @@ Cvgr.Algos.Noisy1 = {
     */
    , settle_cursorPos : function(nClientX, nClientY) // [Cvgr.Algos.Noisy1.settle_cursorPos]
    {
+      'use strict';
 
       // calculation [seq 20190401°1541]
       var nScrollAmountX = document.documentElement.scrollLeft || document.body.scrollLeft;

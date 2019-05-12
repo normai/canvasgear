@@ -2,12 +2,10 @@
  * This script serves as template to spawn CanvasGear algorithms
  *
  * id : file 20190329°0611
- * version : 0.2.3.b — 20190402°0641..
+ * version : 0.2.3.d
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  */
-
-'use strict';
 
 // Formal integration into main script
 var Cvgr = Cvgr || {};
@@ -41,6 +39,8 @@ Cvgr.Algos.Template = {
     */
    executeAlgorithm : function(iko)
    {
+      'use strict';
+
       // prepare canvas [seq 20190329°0441]
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
       iko.Context.fillStyle = iko.BgColor;
@@ -103,5 +103,5 @@ Cvgr.Algos.Template = {
    }
 
 };
-﻿/* - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
+/* - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* eof */

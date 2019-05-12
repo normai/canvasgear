@@ -23,9 +23,20 @@
 
 import os, sys
 
-#  A d j u s t   t h i s !
-###sLocalCompiler = '..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
-sLocalCompiler = '..\\..\\..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
+####sLocalCompiler = '..\\..\\..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
+
+# enroll your local compiler here [func 20190408°0141]
+def getBinPath() :
+   tpBinPathes = ( '..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
+                , '..\\..\\..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
+                 )
+   sBinPath = ''
+   for sPath in tpBinPathes :
+      if os.path.isfile(sPath) :
+         sBinPath = sPath
+         break
+   return sBinPath
+
 
 # seq 20190402°0441
 def mount(fileslist) :
@@ -72,7 +83,7 @@ def main(argv) :
 
    # job 1 — minify all files to intermediates
    if True :
-      sBin = 'java.exe -jar ' + sLocalCompiler + ' --formatting PRETTY_PRINT --charset UTF-8'
+      sBin = 'java.exe -jar ' + getBinPath() + ' --formatting PRETTY_PRINT --charset UTF-8'
       for tupls in fileslist:
          if len(tupls[0]) > 0 :
             sCmd = sBin + ' < ' + sPath + '\\' + tupls[0] + ' > ' + tupls[1]

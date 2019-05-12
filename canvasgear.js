@@ -1,7 +1,7 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.3.c..... — 20190402°0817..
+ * version : 0.2.3.d — 20190408°0212
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
@@ -14,8 +14,6 @@
  * @note Use canvas class 'skipthis' to skip canvas not to be process by CanvasGear
  * @note Search ✂
  */
-
-'use strict';
 
 /**
  * This namespace constitutes the CanvasGear root namespace
@@ -45,7 +43,7 @@ Cvgr.Const =
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.3.b'
+    versionnumber : '0.2.3.d'
 
    /**
     * This constant tells the CanvasGear version timestamp -- unused so far
@@ -414,6 +412,7 @@ if (Cvgr.Vars.radiobuttn !== null)
  */
 Cvgr.Objs.Algo = function()
 {
+   'use strict';
    this.Canvas = null;                                 // Canvas object - the canvas tag [prop 20140916°0552]
    this.Context = null;                                // Context object - attached to canvas [prop 20140916°0553]
    this.Funktion = null;                               // function - ... [prop 20140916°0554]
@@ -434,6 +433,7 @@ Cvgr.Objs.Algo = function()
  */
 Cvgr.Objs.Ikon = function()
 {
+   'use strict';
 
    // public properties, to be set by user via HTML comment [seq 20140815°1322]
    this.AlgoName = ''; // 'pulse'                      // string - algorithm (workaround for Algo) [prop 20140916°0512]
@@ -441,7 +441,7 @@ Cvgr.Objs.Ikon = function()
    this.Color = 'Silver';                              // [prop 20140916°0514] string - RGB or webcolor
    this.Color2 = 'Gray';                               // [prop 20140916°0515] string - RGB or webcolor 
    this.Color3 = 'SlateGray';                          // string - RGB or webcolor (nowhere used?) [prop 20140916°0516]
-   this.Hertz = 0.1;        ;                          // number - frequency in Hz [prop 20140916°0517]
+   this.Hertz = 0.1;                                   // number - frequency in Hz [prop 20140916°0517]
    this.Ide = null;                                    // string - canvas ID, read from HTML [prop 20140926°0311]
    this.ShiftX = 0;                                    // int - horizontal offset (in pixel) [prop 20140916°0518]
    this.ShiftY = 0;                                    // int - vertical offset (in pixel) [prop 20140916°0522]
@@ -480,10 +480,12 @@ Cvgr.Objs.Ikon = function()
  */
 Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iThick)
 {
+   'use strict';
+
    // workaround for missing default parameter [seq 20190312°0253]
    //  Remember issue 20190312°0251 'IE fails with default params'
-   if ( typeof iWidth === 'undefined' ) {
-       var iWidth = 2;
+   if ( typeof iThick === 'undefined' ) {
+       iThick = 2;
    }
 
    this.X1 = iX1;
@@ -508,6 +510,8 @@ Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iThick)
  */
 Cvgr.Objs.Pojnt = function(nX, nY)
 {
+   'use strict';
+
    // [seq 20140815°1332]
    this.ptX = nX;
    this.ptY = nY;
@@ -526,8 +530,8 @@ Cvgr.Objs.Pojnt = function(nX, nY)
 };
 
 // Some 'static' variables for below function startCanvasGear()
-Cvgr.Vars.icos = new Array();                          // [var 20140815°1246]
-Cvgr.Vars.iFrameNo = 0;                                // [var 20140815°1247]
+Cvgr.Vars.icos = [];                                                   // [var 20140815°1246]
+Cvgr.Vars.iFrameNo = 0;                                                // [var 20140815°1247]
 
 /**
  * This function starts CanvasGear
@@ -538,6 +542,7 @@ Cvgr.Vars.iFrameNo = 0;                                // [var 20140815°1247]
  */
 Cvgr.startCanvasGear = function()
 {
+   'use strict';
 
    /**
     * This anonymous function might register the test radiobutton click handler.
@@ -784,6 +789,7 @@ Cvgr.Vars.tHelper = null; // [var 20190401°1413]
  */
 Cvgr.Func.examineAlgo = function(iNdxPiggy, iko)
 {
+   'use strict';
 
    // is algorithm available now? [condi 20190329°0453]
    var sAlgoNameOrg = iko.AlgoName;
@@ -821,6 +827,8 @@ Cvgr.Func.examineAlgo = function(iNdxPiggy, iko)
  */
 Cvgr.Func.executeFram_PrintInfoCanvas = function(iNdx)
 {
+   'use strict';
+
    // (x) output canvas status [seq 20140815°1251]
    // The ID of the output element has to be the ID of the canvas with added '.info'.
    // See ref 20190329°0513 'stackoverflow : convert float number to whole'
@@ -844,6 +852,9 @@ Cvgr.Func.executeFram_PrintInfoCanvas = function(iNdx)
       // print commandline args [seq 20140815°1315]
       for ( var ki in Cvgr.Vars.icos[iNdx].CmdsHash )
       {
+         if ( ! Cvgr.Vars.icos[iNdx].CmdsHash.hasOwnProperty(ki) ) {
+            continue;
+         }
          var sValEscaped = Trekta.Utils.htmlEscape(Cvgr.Vars.icos[iNdx].CmdsHash[ki]);
          sOut += "<br /> [cmd] " + ki + " = " + sValEscaped;
       }
@@ -865,6 +876,8 @@ Cvgr.Func.executeFram_PrintInfoPage = function ( iTimeCurr
                                                  , iFramesPerSecondTotal
                                                   )
 {
+   'use strict';
+
    // (.4) output Page Debug Info [seq 20140916°1032]
    var elDbg = document.getElementById("Cvgr_DebugPageOutputArea");
    if (elDbg !== null)
@@ -893,6 +906,7 @@ Cvgr.Func.executeFram_PrintInfoPage = function ( iTimeCurr
  */
 Cvgr.Func.executeFrame = function()
 {
+   'use strict';
 
    // (P) output page status [seq 20140815°1247]
    // (P.1) calculate each frame [seq 20140815°1252]
@@ -942,14 +956,10 @@ Cvgr.Func.executeFrame = function()
       // convenience [seq 20190330°0327]
       var iko = Cvgr.Vars.icos[iNdx];
 
-      if ( iko.AlgoName === 'Template' ) {
-         var sAlgo = sAlgo;
-      }
-
       // process DrawNumberLimit flag [seq 20190401°0431]
       // Remeber issue 20190401°0435 'hamster appears multiple times'
       // Remember finding 20190401°0451 'frame delay with pulled-behind canvases'
-      if ( ( ! iko.DrawNumberLimit < 1 )
+      if ( ( iko.DrawNumberLimit > 0 )
           && ( ( Cvgr.Vars.iFrameNo - iko.iFrameDelay ) > iko.DrawNumberLimit )
            ) {
          continue;
@@ -980,9 +990,9 @@ Cvgr.Func.executeFrame = function()
          } catch(err) {
             // it is e.g. the non-existent 'Oha' algorithm, note yet
             //  exchanged to the default algo. Just skip this.
-            Cvgr.Vars.sDebugPageHelper += '<br />↯ executeAlgorithm failed:'
+            Cvgr.Vars.sDebugPageHelper += '<br /> [Err 20190329°0412] ↯ executeAlgorithm failed :'
                             + 'Ide = ' + iko.Ide + ' algo = ' + sAlgo
-                             + ' (should never happen'
+                             + ' (should never happen)'
                               ;
          }
       }
@@ -1069,6 +1079,8 @@ Cvgr.Func.executeFrame = function()
  */
 Cvgr.Func.initializeCanvas = function(iko)
 {
+   'use strict';
+
    // (A) process properties [seq 20190330°0311]
    // (A.) translate tokens to property names [seq 20190330°0313]
    var oTokToProp = {
@@ -1091,11 +1103,17 @@ Cvgr.Func.initializeCanvas = function(iko)
 
    // (A.) first apply default values to Ikon object [line 20190330°0243]
    for (var sKey in oDefaults) {
-      iko[sKey] = oDefaults[sKey];
+      if ( oDefaults.hasOwnProperty(sKey) ) {
+         iko[sKey] = oDefaults[sKey];
+      }
    }
 
    // (A.) then overwrite with commandline values [seq 20190330°0244]
    for ( var sKeySrc in iko.CmdsHash) {
+
+      if ( ! iko.CmdsHash.hasOwnProperty(sKeySrc) ) {
+          continue;
+      }
 
       // (A.) do not restore the algo name [seq 20190331°0321]
       //  Any not-found algo might have switched it to default algo ('pulse')
@@ -1168,6 +1186,8 @@ Cvgr.Func.initializeCanvas = function(iko)
  */
 Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
 {
+   'use strict';
+
    if ( Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] === 'Template' ) {
       var xDbg = xDbg;
    }
@@ -1196,6 +1216,7 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
    Cvgr.Vars.aPiggyFlags4OnError2[iNdxPiggy] = true;
 
    // is algorithm available now? [condi 20190329°0453]
+   var aIcos = null;
    if ( Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] in Cvgr.Algos ) {
 
       // [seq 20190331°0333]
@@ -1205,7 +1226,7 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
       // this should be the run only by 'Template', does it? [seq 20190401°0531]
       // So far, only Template is searched external, although it were available internal.
       // todo : Sequence is redundant with just below. Somehow merge the two.
-      var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
+      aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
       for (var i = 0; i < aIcos.length; i++) {
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Template intern ' + i);
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
@@ -1215,13 +1236,13 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
    else {
       // rider not found, switch to default algo [seq 20190331°0343 (like 20190331°0345)]
       // loop over this canvases
-      var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
-      for (var i = 0; i < aIcos.length; i++) {
+      aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
+      for (var i2 = 0; i2 < aIcos.length; i2++) {
          // switch this canvas to substitute algo
-         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].AlgoName = 'pulse';
-         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Rp ' + i);
-         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
-         Cvgr.Func.initializeCanvas(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i2].AlgoName = 'pulse';
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i2].CmdsHash['text'] = ('Rp ' + i2);
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i2].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
+         Cvgr.Func.initializeCanvas(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i2]);
       }
    }
 
@@ -1246,6 +1267,8 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
  */
 Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
 {
+   'use strict';
+
    // main job [line 20190331°0323]
    Cvgr.Vars.aPiggyFlags4OnLoad1[iNdxPiggy] = true;
 
@@ -1295,6 +1318,8 @@ Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
  */
 Cvgr.Func.pullbehind_soundOnError = function(sScript)
 {
+   'use strict';
+
    // [seq 20190401°1334]
    if ( (sScript !== 'soundman2') && (sScript !== 'howler') ) {
       alert('Theoretically not possible:\n\nPullbehind onError wanted = "' + sScript + '"');
@@ -1314,6 +1339,8 @@ Cvgr.Func.pullbehind_soundOnError = function(sScript)
  */
 Cvgr.Func.pullbehind_soundOnLoad = function(sScript)
 {
+   'use strict';
+
    // [seq 20190401°1344]
    if ( (sScript !== 'soundman2') && (sScript !== 'howler') ) {
       alert('Theoretically not possible:\n\nPullbehind onLoad wanted = "' + sScript + '"');
@@ -1339,6 +1366,8 @@ Cvgr.Func.pullbehind_soundOnLoad = function(sScript)
  */
 Cvgr.Func.pullbehind_soundOnLoaded = function()
 {
+   'use strict';
+
    // prepare source string [seq 20190402°0543]
    // See issue 20190402°0611 'audio data source does not work'
    var sAudioData = '4';
@@ -1372,6 +1401,8 @@ Cvgr.Func.pullbehind_soundOnLoaded = function()
  */
 Cvgr.Func.setRadiobutton = function()
 {
+   'use strict';
+
    // toggle [seq 20140819°1753]
    var sMsg = '[Debug 20140926°1131]\n\nNow radio-button algo-mode = ';
    if (document.FormAlgoMode.AlgoMode[0].checked)
@@ -1394,7 +1425,7 @@ Cvgr.Func.setRadiobutton = function()
    return;
 };
 
-﻿/** - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
+/** - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
  * This section provides algorithm 'Ballist'
  *
  * id 20140916°0411 namespace
@@ -1499,7 +1530,7 @@ Cvgr.Algos.Ballist = {
       this.Diameter = 0.1;                                             // diameter in meter [var 20140926°1151] the canvas scale shall be based on this
       this.Naame = '<n/a>';                                            // the discipline name
       this.Shortnam = '<n/a>';                                         //
-      this.rings = new Array();                                        // array of rings, to be filled by somebody
+      this.rings = [];                                                 // array of rings, to be filled by somebody
    }
 
    /**
@@ -1578,22 +1609,22 @@ Cvgr.Algos.Ballist = {
    {
       'use strict';
 
-      var hits = new Array();
+      var hits = [];
 
       if (( typeof sSeries === 'undefined' ) || (sSeries.length < 1)) {
 
          // hardcoded default hitlist [seq 20140916°0751]
-         var h = new Cvgr.Algos.Ballist.Hit(10.7, 55); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(9.3, 43); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.1, 0); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.2, 1); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.3, 3); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.4, 6); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.5, 10); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.6, 20); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.7, 30); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.8, 40); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.9, 50); hits.push(h);
+         var h01 = new Cvgr.Algos.Ballist.Hit(10.7, 55); hits.push(h01);
+         var h02 = new Cvgr.Algos.Ballist.Hit(9.3, 43); hits.push(h02);
+         var h03 = new Cvgr.Algos.Ballist.Hit(2.1, 0); hits.push(h03);
+         var h04 = new Cvgr.Algos.Ballist.Hit(2.2, 1); hits.push(h04);
+         var h05 = new Cvgr.Algos.Ballist.Hit(2.3, 3); hits.push(h05);
+         var h06 = new Cvgr.Algos.Ballist.Hit(2.4, 6); hits.push(h06);
+         var h07 = new Cvgr.Algos.Ballist.Hit(2.5, 10); hits.push(h07);
+         var h08 = new Cvgr.Algos.Ballist.Hit(2.6, 20); hits.push(h08);
+         var h09 = new Cvgr.Algos.Ballist.Hit(2.7, 30); hits.push(h09);
+         var h10 = new Cvgr.Algos.Ballist.Hit(2.8, 40); hits.push(h10);
+         var h11 = new Cvgr.Algos.Ballist.Hit(2.9, 50); hits.push(h11);
 
          // retrieve series details ring-decimal/minutes-on-clock
          // Commandlines e.g.:
@@ -1745,10 +1776,10 @@ Cvgr.Algos.Ballist = {
       var iRadiX = iCenterPoint;
       var iRadiY = iCenterPoint;
       if (iko.ShiftX !== null) {
-         var iRadiX = iCenterPoint + parseInt(iko.ShiftX, 10);
+         iRadiX = iCenterPoint + parseInt(iko.ShiftX, 10);
       }
       if (iko.ShiftY !== null) {
-         var iRadiY = iCenterPoint + parseInt(iko.ShiftY, 10);
+         iRadiY = iCenterPoint + parseInt(iko.ShiftY, 10);
       }
 
       // (.) paint rings [seq 20140916°0442]
@@ -1756,13 +1787,13 @@ Cvgr.Algos.Ballist = {
 
          // (.) calculate current radius [seq 20140916°0443]
          // todo: Replace fixed factor by calculated factor
-         var radius = iCenterPoint * tgt.rings[iLoop].radiusAbs * 12;
+         var nRadius1 = iCenterPoint * tgt.rings[iLoop].radiusAbs * 12;
 
          // (.) draw [seq 20140916°0444]
          iko.Context.beginPath();                         // circle
          iko.Context.arc ( iRadiX                         // x coordinate, e.g. 90
                           , iRadiY                        // y coordinate, e.g. 90
-                           , radius                       // radius, e.g. 90
+                           , nRadius1                     // radius, e.g. 90
                             , 0                           // starting point angle in radians, starting east
                              , Math.PI * 2                // endpoint angle in radians
                               , false                     // clockwise
@@ -1779,17 +1810,17 @@ Cvgr.Algos.Ballist = {
       for (var i = 0; i < hits.length; i++) {
 
          // (.) calculate radius [seq 20140916°0447]
-         radius = 6;
+         nRadius2 = 6;
 
          // (.) [seq 20140916°0448]
-         var iRadiX = iCenterPoint + hits[i].X * 50 + parseInt(iko.ShiftX, 10);
-         var iRadiY = iCenterPoint + hits[i].Y * 50 + parseInt(iko.ShiftY, 10);
+         var n2RadiX = iCenterPoint + hits[i].X * 50 + parseInt(iko.ShiftX, 10);
+         var n2RadiY = iCenterPoint + hits[i].Y * 50 + parseInt(iko.ShiftY, 10);
 
          // (.) draw hit [seq 20140916°0452]
          iko.Context.beginPath();                      // circle
-         iko.Context.arc ( iRadiX                      // x coordinate
-                          , iRadiY                     // y coordinate
-                           , radius                    // radius, e.g. 90
+         iko.Context.arc ( n2RadiX                     // x coordinate
+                          , n2RadiY                    // y coordinate
+                           , nRadius2                  // radius, e.g. 90
                             , 0                        // starting point angle in radians, starting east
                              , Math.PI * 2             // endpoint angle in radians
                               , false                  // clockwise
@@ -1825,7 +1856,7 @@ Cvgr.Algos.Ballist = {
 };
 //- - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-﻿/** ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+/** ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
  * This section provides the Template algorithm
  * (This is built-in but planned to be extracted to a rider script)
  *
@@ -1863,6 +1894,8 @@ Cvgr.Algos.Template = Cvgr.Algos.Template || {};
  */
 Cvgr.Algos.Template.executeAlgorithm = function(iko)
 {
+   'use strict';
+
    // prepare canvas [seq 20190329°0441]
    iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
    iko.Context.fillStyle = iko.BgColor;
@@ -1963,7 +1996,7 @@ Cvgr.Algos.develop = {
       iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
       // build some lines [seq 20140901°0535]
-      var aLins = new Array();
+      var aLins = [];
       var oLin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, iko.Color);
       var oLin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, iko.Color2);
       var oLin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, iko.Color3);
@@ -2570,7 +2603,7 @@ Trekta.Util2.colorNameToHex = function(sName) {
 
    'use strict'; // [line 20190329°0845`13]
 
-   var cols = new Trekta.Util2.Webcolors;
+   var cols = new Trekta.Util2.Webcolors();
    var sCol = '';
 
    sName = sName.toLowerCase();
@@ -2587,18 +2620,16 @@ Trekta.Util2.colorNameToHex = function(sName) {
 // - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ area 20190106°0307 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-/**
- *  This area 'Trekta.Utils' holds low level functions for standalone
- *  scripts. This area is shared via cut-n-paste by the following scripts
- *   • daftari.js • canvasgear.js • fadeinfiles.js • slidegear.js
+/*!
+ * This area Trekta.Utils holds low level functions for standalone scripts
  *
- * version : 20190407°0351..
+ * version : 20190408°0212
+ * copyright : © 2019 Norbert C. Maier
+ * license : GNU AGPL v3
  */
 /**
- * changelog
- *  - version 20190405°0521 Add and refine CmdlinParser
- *  - version 20190405°0349 Refine pullScriptBehind
- *  - version 20190404°0941 Start versioning
+ * This area is shared via cut-n-paste by the following scripts
+ *   • daftari.js • canvasgear.js • fadeinfiles.js • slidegear.js
  */
 
 /**
@@ -2628,7 +2659,7 @@ Trekta.Utils = Trekta.Utils || {
     *      • 20150515°1241 sitmapWorkoff_process_Cakecrumbs1 • 20120830°0451 editFinishTransmit
     * @returns {String} e.g. 'daftari/daftari/login.html' (with Firefox)
     */
-   getFileNameFull : function() // Trekta.Utils.getFileNameFull
+   getFileNameFull : function() // (fullyqualified = Trekta.Utils.getFileNameFull)
    {
       'use strict'; // [line 20190329°0847]
 
@@ -2653,7 +2684,7 @@ Trekta.Utils = Trekta.Utils || {
     * @callers E.g. • dafdispatch.js::workoff_Cake_0_go
     * @returns {String} The plainfilename, e.g. 'help.html'
     */
-   , getFilenamePlain : function() // Trekta.Utils.getFilenamePlain
+   , getFilenamePlain : function() // (fullyqualified = Trekta.Utils.getFilenamePlain)
    {
       'use strict';
 
@@ -2679,7 +2710,7 @@ Trekta.Utils = Trekta.Utils || {
     * @callers : • readTextFile1 • MakeRequest
     * @note :
     */
-   , getXMLHttp : function() // Trekta.Utils.getXMLHttp
+   , getXMLHttp : function() // (fullyqualified = Trekta.Utils.getXMLHttp)
    {
       'use strict';
 
@@ -2743,7 +2774,7 @@ Trekta.Utils = Trekta.Utils || {
     * @param sHtml {String} The HTML fragment to be escaped
     * @returns {String} The wanted escaped HTML fragment
     */
-   , htmlEscape : function(sHtml) // Trekta.Utils.htmlEscape
+   , htmlEscape : function(sHtml) // (fullyqualified = Trekta.Utils.htmlEscape)
    {
       'use strict';
 
@@ -2764,7 +2795,7 @@ Trekta.Utils = Trekta.Utils || {
     * @param {string} sWantedScript — The plain name of the wanted script (not a complete path)
     * @returns {boolean} Flag telling whether the script is loaded or not.
     */
-   , isScriptAlreadyLoaded : function (sWantedScript) // Trekta.Utils.isScriptAlreadyLoaded
+   , isScriptAlreadyLoaded : function (sWantedScript) // (fullyqualified = Trekta.Utils.isScriptAlreadyLoaded)
    {
       'use strict';
 
@@ -2795,14 +2826,10 @@ Trekta.Utils = Trekta.Utils || {
     * This function loads the given script then calls the given function
     *
     * @id 20110821°0121
-    * @version 20190405°0347 Refine onload callback (see issue 20190405°0333)
+    * @version 20190405°0347 Refine onload callback (finished issue 20190405°0333)
     * @version 20190331°0241 Added parameter for onError callback
     * @version 20181229°1941 Now with parameter for onload callback function
-    * @status works
-    * @chain project 20181230°0211 http://www.trekta.biz/svn/demosjs/trunk/pullbehind
-    * @note About how exactly to call function(s) in the loaded script, see
-    *    e.g. issue 20160503°0211 and seq 20160624°0411 'pull-behind fancytree'.
-    * @note See howto 20181229°1943 'summary on pullbehind'
+    * @see howto 20181229°1943 'summary on pullbehind'
     * @callers • dafstart.js::callCanarySqueak • daftari.js::pull-behind slides
     *    • daftari.js::pull-behind fancytree • canvasgear.js::..
     * @param sScLoad {string} The path from page to script, e.g. "./../../daftari/js/daftaro/dafcanary.js", 'js/daftaro/dafcanary.js'
@@ -2812,14 +2839,24 @@ Trekta.Utils = Trekta.Utils || {
     *     from initiator to the callbacks (experimentally introduced 20190403°0215)
     * @returns {boolean} Success flag (just a dummy, always true)
     */
-   , pullScriptBehind : function ( sScLoad, callbackOnLoad, callbackOnError, oJobs ) // Trekta.Utils.pullScriptBehind
+   , pullScriptBehind : function ( sScLoad, callbackOnLoad, callbackOnError, oJobs ) // (fullyqualified = Trekta.Utils.pullScriptBehind)
    {
       'use strict';
 
+      // remedy when using minified scripts [seq 20190408°0135]
+      // note : Three identical seqences 20190408°0131, 20190408°0133 and 20190408°0135
+      if ( Trekta.Utils.bUseMinified ) {                               // [mark 20190408°0147`01]
+         var b1 = /.*\/highlight.pack.js$/.test(sScLoad);
+         var b2 = /.*\/showdown.min.js$/.test(sScLoad);
+         var b3 = /.*\/sitmapdaf.js$/.test(sScLoad);
+         var b4 = /.*\/tree.js$/.test(sScLoad);
+         if ( ! (b1 || b2 || b3 || b4 )) {
+            sScLoad = sScLoad.replace(/\.js$/, '.min.js');
+         }
+      }
+
       // avoid multiple loading [seq 20110821°0122]
       // Remember issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
-      // note : Compatibility — array.indexOf is not available below IE9, we
-      //    workaround this with seq 20190407°0313 'polyfill for array.indexOf'
       if ( Trekta.Utils.aPulled.indexOf(sScLoad) >= 0 ) {
          callbackOnLoad(sScLoad, oJobs, true);
          return;
@@ -2848,7 +2885,9 @@ Trekta.Utils = Trekta.Utils || {
 
       // attach onerror handler [condition 20190331°0242]
       callbackOnError = callbackOnError || null;
-      script.onerror =  ( function () { callbackOnError (sScLoad, oJobs); } );
+      if ( callbackOnError !== null) {
+         script.onerror =  ( function () { callbackOnError (sScLoad, oJobs); } );
+      }
 
       // ignit the pulling [seq 20110821°0125]
       head.appendChild(script);
@@ -2863,8 +2902,9 @@ Trekta.Utils = Trekta.Utils || {
     * @summary This method is introduced to fix issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
     * @callers Onyl • onload event from pullScriptBehind
     */
-   , pullScript_onload : function ( sScript, cbkCustom ) // Trekta.Utils.pullScript_onload
+   , pullScript_onload : function ( sScript, cbkCustom ) // (fullyqualified = Trekta.Utils.pullScript_onload)
    {
+      'use strict';
       Trekta.Utils.aPulled.push(sScript);
       cbkCustom();
    }
@@ -2893,7 +2933,7 @@ Trekta.Utils = Trekta.Utils || {
     * @param bAsync {Boolean} — Request flavour flag (prefere asynchronous)
     * @returns {String} The content of the wanted file
     */
-   , readTextFile1 : function(sFilename, bAsync) // Trekta.Utils.readTextFile1
+   , readTextFile1 : function(sFilename, bAsync) // (fullyqualified = Trekta.Utils.readTextFile1)
    {
       'use strict';
 
@@ -2981,7 +3021,7 @@ Trekta.Utils = Trekta.Utils || {
     * @param cbk {function} — Either missing or null or the callback function
     * @returns {string} The content of the wanted file
     */
-   , readTextFile2 : function(sFilename, cbk) // Trekta.Utils.readTextFile2
+   , readTextFile2 : function(sFilename, cbk) // (fullyqualified = Trekta.Utils.readTextFile2)
    {
       'use strict';
 
@@ -3065,9 +3105,21 @@ Trekta.Utils = Trekta.Utils || {
     * @param sCanary {String} The name of the canary script, e.g. '/sitmapdaf.js'.
     * @returns {String} The wanted path, where the given script resides or empty string
     */
-   , retrieveScriptFolderAbs : function (sCanary) // Trekta.Utils.retrieveScriptFolderAbs
+   , retrieveScriptFolderAbs : function (sCanary) // (fullyqualified = Trekta.Utils.retrieveScriptFolderAbs)
    {
       'use strict';
+
+      // remedy when using minified scripts [seq 20190408°0133]
+      // note : Three identical seqences 20190408°0131, 20190408°0133 and 20190408°0135
+      if ( Trekta.Utils.bUseMinified ) {                               //  [mark 20190408°0147`02 'minification']
+         var b1 = /.*\/highlight.pack.js$/.test(sCanary);
+         var b2 = /.*\/showdown.min.js$/.test(sCanary);
+         var b3 = /.*\/sitmapdaf.js$/.test(sCanary);
+         var b4 = /.*\/tree.js$/.test(sCanary);
+         if ( ! (b1 || b2 || b3 || b4 )) {
+            sCanary = sCanary.replace(/\.js$/, '.min.js');
+         }
+      }
 
       // () prepare regex [seq 20160621°0142]
       var regexMatch = / /;                                            // space between slashes prevents a syntax error
@@ -3097,57 +3149,6 @@ Trekta.Utils = Trekta.Utils || {
    }
 
    /**
-    * This function returns the path to the given script .. using indexOf
-    *
-    * @id 20160501°1611
-    * @chg 20190407°0245 Former func 20160501°1611 retrieveScriptFolderRel_ELIM
-    *    is shifted here. The reason to preserve this code is, that above regex
-    *    usage may be elegant and short, but the regex is not immediately to
-    *    understand. The code here is a bit bulkier, but easier to understand.
-    * @status working
-    */
-   , retrieveScriptFolderRel : function (sCanary) // Trekta.Utils.retrieveScriptFolderRel
-   {
-      'use strict';
-
-      // () get the script tags list
-      var scripts = document.getElementsByTagName('script');
-
-      // () find the canary script tag
-      var script = null;
-      var bFound = false;
-      for (var i = 0; i < scripts.length; i++) {
-         if (scripts[i].src.indexOf(sCanary) > 0) {
-            script = scripts[i];
-            bFound = true;
-            break;
-         }
-      }
-
-      // paranoia
-      if (! bFound) {
-         var s = '[Error 20160501°1631] Fatal.\nScript tag not found: "' + sCanary + '"';
-         alert(s);
-         return '';
-      }
-
-      // (.2) get the script tag's literal path (algo 20111225°1251)
-      var sPathToCanary = '';
-      for (var i = 0; i < script.attributes.length; i++) {
-         if ( script.attributes[i].name === 'src' ) {
-            sPathToCanary = script.attributes[i].value;
-            break;
-         }
-      }
-
-      // reduce from canary script path to folder only path [seq 20190316°0131]
-      var sWantedPath = sPathToCanary.substring ( 0 , ( sPathToCanary.length - sCanary.length ) );
-
-      return sWantedPath;
-
-   }
-
-   /**
     * This function daisychains the given function on the windows.onload events
     *
     * @id 20160614°0331
@@ -3156,7 +3157,7 @@ Trekta.Utils = Trekta.Utils || {
     * @param funczion {function} The function to be appended to the window.onload event
     * @returns nothing
     */
-   , windowOnloadDaisychain : function(funczion) // Trekta.Utils.windowOnloadDaisychain
+   , windowOnloadDaisychain : function(funczion) // (fullyqualified = Trekta.Utils.windowOnloadDaisychain)
    {
       'use strict';
 
@@ -3184,7 +3185,7 @@ Trekta.Utils = Trekta.Utils || {
     * @note This flags solves issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
     * @type Array
     */
-   , aPulled : [] // Trekta.Utils.aPulled
+   , aPulled : [] // (fullyqualified = Trekta.Utils.aPulled)
 
 
    /**
@@ -3200,7 +3201,7 @@ Trekta.Utils = Trekta.Utils || {
     * @id 20160622°0221
     * @type Boolean
     */
-   , bIs_Browser_Chrome : ( navigator.userAgent.match(/Chrome/) ? true : false ) // Trekta.Utils.bIs_Browser_Chrome
+   , bIs_Browser_Chrome : ( navigator.userAgent.match(/Chrome/) ? true : false ) // (fullyqualified = Trekta.Utils.bIs_Browser_Chrome)
 
    /**
     * This ~constant provides a flag whether the browser is Internet Exporer or not
@@ -3212,7 +3213,7 @@ Trekta.Utils = Trekta.Utils || {
     *    For code, compare function getIEVersion() in canvasgearexcanvas.js.
     * @type Boolean
     */
-   , bIs_Browser_Explorer : ( navigator.appName.match(/Explorer/) ? true : false ) // Trekta.Utils.bIs_Browser_Explorer
+   , bIs_Browser_Explorer : ( navigator.appName.match(/Explorer/) ? true : false ) // (fullyqualified = Trekta.Utils.bIs_Browser_Explorer)
 
    /**
     * This ~constant provides a flag whether the browser is Firefox or not
@@ -3220,7 +3221,7 @@ Trekta.Utils = Trekta.Utils || {
     * @id 20160624°0121
     * @type Boolean
     */
-   , bIs_Browser_Firefox : ( navigator.userAgent.match(/Firefox/) ? true : false ) // Trekta.Utils.bIs_Browser_Firefox
+   , bIs_Browser_Firefox : ( navigator.userAgent.match(/Firefox/) ? true : false ) // (fullyqualified = Trekta.Utils.bIs_Browser_Firefox)
 
    /**
     * This property provides a flag whether the browser is Opera or not.
@@ -3233,7 +3234,7 @@ Trekta.Utils = Trekta.Utils || {
     * @id 20190107°0821
     * @type Boolean
     */
-   , bIs_Browser_Opera : ( navigator.userAgent.match(/(Opera)|(OPR)/) ? true : false ) // Trekta.Utils.bIs_Browser_Opera
+   , bIs_Browser_Opera : ( navigator.userAgent.match(/(Opera)|(OPR)/) ? true : false ) // (fullyqualified = Trekta.Utils.bIs_Browser_Opera)
 
    /**
     * This ~constant tells whether to pop up debug messages or not
@@ -3241,7 +3242,7 @@ Trekta.Utils = Trekta.Utils || {
     * @id 20190311°1521
     * @type Boolean
     */
-   , bShow_Debug_Dialogs : false // [Trekta.Utils.bShow_Debug_Dialogs]
+   , bShow_Debug_Dialogs : false // (fullyqualified = Trekta.Utils.bShow_Debug_Dialogs)
 
    /**
     * This constant provides a constant false value
@@ -3249,7 +3250,7 @@ Trekta.Utils = Trekta.Utils || {
     * @id 20190407°0121
     * @type Boolean
     */
-   , bToggle_FALSE : false // Trekta.Utils.bToggle_FALSE
+   , bToggle_FALSE : false // (fullyqualified = Trekta.Utils.bToggle_FALSE)
 
    /**
     * This constant provides a constant false value
@@ -3257,7 +3258,15 @@ Trekta.Utils = Trekta.Utils || {
     * @id 20190407°0122
     * @type Boolean
     */
-   , bToggle_TRUE : true // Trekta.Utils.bToggle_TRUE
+   , bToggle_TRUE : true // (fullyqualified = Trekta.Utils.bToggle_TRUE)
+
+   /**
+    * This flag tells whether to pull-behind minified scripts or not
+    *
+    * @id 20190408°0115
+    * @callers
+    */
+   , bUseMinified : false // (fullyqualified = Trekta.Utils.bUseMinified)
 
 };
 
@@ -3298,10 +3307,10 @@ Trekta.Utils.CmdlinParser = ( function()
       var sToken = ''; // this accumulates characters to one token
 
       // scan characters [loop 20140926°0643]
-      for ( var i = 0; i < sCmdlin.length; i++ )
+      for ( var i1 = 0; i1 < sCmdlin.length; i1++ )
       {
          // convenience [line 20190405°0512]
-         var sChar = sCmdlin.charAt(i);
+         var sChar = sCmdlin.charAt(i1);
 
          // process blank [condition 20140926°0644]
          if ( (sChar === ' ') && (sQuoting === '') ) {
@@ -3355,29 +3364,29 @@ Trekta.Utils.CmdlinParser = ( function()
 
       // (B.1) loop over the token array  [seq 20140926°1113]
       //  Assemble key/value pairs from the equal signs
-      for (var i = 0; i < args.length; i++) {
+      for (var i2 = 0; i2 < args.length; i2++) {
 
          // (B.2) possibly skip empty elements [seq 20140926°1114]
          // note : This cleaning could be done separately before the loop. As
          //    well it is not yet exactly clear, what happens with blank values.
-         if (args[i] === '') {                                         // experimental
+         if (args[i2] === '') {                                        // experimental
             continue;
          }
 
          // (B.3) read key name and create key with empty value [seq 20140926°1115]
-         sCurrKey = args[i];
+         sCurrKey = args[i2];
          oKvps[sCurrKey] = '<n/a>';                                    // '<n/a>' is a maker, may be replaced by null or the like
 
          // (B.4) is next token an equal sign? [seq 20140926°1116]
-         if ( args[i + 1] === '=' ) {
+         if ( args[i2 + 1] === '=' ) {
 
             // complete current key/value pair with value [seq 20140926°1117]
-            oKvps[sCurrKey] = args[i + 2];
+            oKvps[sCurrKey] = args[i2 + 2];
             sCurrKey = '<n?a>';                                        // reset
 
             // [seq 20140926°1118]
-            i++;                                                       // forward to equal sign
-            i++;                                                       // forward to this value
+            i2++;                                                      // forward to equal sign
+            i2++;                                                      // forward to this value
             continue;                                                  // forward to next key
          }
          else {

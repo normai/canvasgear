@@ -1,6 +1,6 @@
 ﻿#!/usr/bin/env python
 
-# id : 20190402°0411
+# id : 20190402°0411 canvasgear/build.py
 # encoding : UTF-8-with-BOM
 # interpeter : Python 3.6
 # issues/todos :
@@ -10,9 +10,11 @@
 #    • After changing CWD, it were nice to restore it afterwards.
 #    • Did run under Windows so far, is not tested for others,
 #       e.g. exchange backslashes by slashes
-# note : For implementing planned call to online Google Closure Compiler API see
-#    • https://developers.google.com/closure/compiler/docs/gettingstarted_api
-#    • https://developers.google.com/closure/compiler/docs/api-tutorial1
+#    • Skip unmodified files, like in daftari/build.py seq 20190402°0437,
+#       only to do this, we must no more delete the temporary files
+# note : For implementing usage of online Google Closure Compiler API
+#    see http://downtown.trilo.de/svn/daftaridev/trunk/daftari/build.py,
+#    function 20190407°0721 minifyOnline, where it already works
 # todo : create files list programmatically from all riders\*.js files
 
 """
@@ -22,8 +24,6 @@
 """
 
 import os, sys
-
-####sLocalCompiler = '..\\..\\..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
 
 # enroll your local compiler here [func 20190408°0141]
 def getBinPath() :
@@ -62,13 +62,13 @@ def mount(fileslist) :
 # seq 20190402°0431
 def main(argv) :
 
-   print ('*** Run build.py ***')
+   print ('*** Run canvasgear/build.py ***')
 
    # prepare path
    sFullFilename = os.path.abspath(__file__)
    tup = os.path.split(os.path.abspath(sFullFilename))
    sPath = tup[0]
-   print ('Path = ' + sPath)
+   print ('>     Path = ' + sPath)
    os.chdir("G:\\") # not well done
    os.chdir(sPath)
 
@@ -81,6 +81,28 @@ def main(argv) :
                     , ( ''                              , 'libs\\howler\\howler.min.js' )
                      ]
 
+   # probe file modificationi times [seq 20190413°0211] quick-n-dirty
+   bDoBuild = False
+   tTgt = os.path.getmtime('canvasgear.combined.js') 
+   tSrc1 = os.path.getmtime(fileslist[0][0]) 
+   tSrc2 = os.path.getmtime(fileslist[1][0]) 
+   tSrc3 = os.path.getmtime(fileslist[2][0]) 
+   tSrc4 = os.path.getmtime(fileslist[3][0]) 
+   tSrc5 = os.path.getmtime(fileslist[4][0]) 
+   if tTgt < tSrc1 :
+      bDoBuild = True
+   if tTgt < tSrc2 :
+      bDoBuild = True
+   if tTgt < tSrc3 :
+      bDoBuild = True
+   if tTgt < tSrc4 :
+      bDoBuild = True
+   if tTgt < tSrc5 :
+      bDoBuild = True
+   if not bDoBuild :
+      print ('>     Nothing to do, all source files younger than target file')
+      return
+
    # job 1 — minify all files to intermediates
    if True :
       sBin = 'java.exe -jar ' + getBinPath() + ' --formatting PRETTY_PRINT --charset UTF-8'
@@ -89,7 +111,7 @@ def main(argv) :
             sCmd = sBin + ' < ' + sPath + '\\' + tupls[0] + ' > ' + tupls[1]
             os.system(sCmd)
    else :
-      s = 'Minfication via online Closure Compiler API not yet available'
+      s = '> Minfication via online Closure Compiler API not yet available'
       print (s)
 
    # job 2 — combine the intermediates
@@ -101,12 +123,21 @@ def main(argv) :
          if len(tupls[0]) > 0 :
             os.remove(tupls[1])
 
-   input("Press Enter to continue...")
-   print ('Bye.')
+   ###input("Press Enter to continue...")
+   ###print ('Bye.')
 
    return 123
 
-# seq 20190402°0421 execution entry point
+# execution entry point [seq 20190402°0421]
 if __name__ == '__main__':
    i = main(sys.argv)
+
+   bGoodbye = True
+   if (len(sys.argv) > 1) and (sys.argv[1] == 'silent') :
+      bGoodbye = False
+
+   if bGoodbye  :
+      input("Press Enter to continue...")
+      print ('Bye.')
+
    sys.exit(i)

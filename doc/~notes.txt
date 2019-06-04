@@ -148,9 +148,8 @@
    ܀
 
    note 20140815°0731
-   matter : Coming from the example after (20140814°2211)
-      http://www.kirupa.com/html5/creating_simple_html5_canvas_animation.htm,
-      I want the following features to be changed:
+   matter : Coming from ref 20140814°2211 'kirupa → simple html5 canvas
+      animation', I want the following features to be changed:
        - The JS code is inside the HTML, I want it as a separate JS file
        - It is for modern browsers only, I want it for older browsers as well.
    finding : The transition did not succeed on the first attempt. So I introduced

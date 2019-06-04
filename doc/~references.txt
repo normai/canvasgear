@@ -300,6 +300,13 @@
    tags : css, github
    ܀
 
+   ref 20140926°1331 'wikimedia → 25 m precision and 50 meter pistol target'
+   url : http://commons.wikimedia.org/wiki/Category:Targets?uselang=de#mediaviewer/File:25_Meter_Precision_and_50_Meter_Pistol_Target.svg
+   title :
+   usage : canvasgear.js func 20140916°0921 executeAlgo_getTarget
+   tags :
+   ܀
+
    ref 20140926°0621 'Krasimir → Simple command line parser in JS'
    url : http://krasimirtsonev.com/blog/article/Simple-command-line-parser-in-JavaScript
    title : Simple command line parser in JavaScript
@@ -365,6 +372,13 @@
    url : http://www.williammalone.com"
    note : As well he maintains several canvas projects on github.
    tags : canvas
+   ܀
+
+   ref 20140831°0311 'wikipedia → web colors'
+   objtype : ref.manual
+   url : http://en.wikipedia.org/wiki/Web_colors
+   title : Wikipedia → Web Colors
+   usage : Object 20140831°0321 Trekta.Util2.Webcolors
    ܀
 
    ref 20140830°1222 'eric meyer: colorblender'
@@ -501,10 +515,19 @@
    tags : thirdparty
    ܀
 
-   ref 20140814°2211 'initial example file'
+   ref 20140814°2211 'kirupa → simple html5 canvas animation'
    url : http://www.kirupa.com/html5/creating_simple_html5_canvas_animation.htm
+   title :
    note : Here comes the initial example file from
+   usage : 
    tags : thirdparty
+   ܀
+
+   ref 20120725°1141 'peterkroener → links mit target-blank gesondert markieren'
+   url : http://www.peterkroener.de/links-mit-target_blank-gesondert-markieren
+   title :
+   usage : file 20140302°0611 stylesdaftari.css rule 20120725°1151
+   tags : css
    ܀
 
    ———————————————————————

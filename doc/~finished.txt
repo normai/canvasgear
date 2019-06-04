@@ -237,7 +237,7 @@
       - // icos[iFor] = algoPulse(x);
       - // algoPulse(icos[iFor]);
    note 20190329°1033 : Issue seems finished but I do not know why, and what it was before.
-   status : seems finished (note 20190329°1033)
+   status : seems finished (by note 20190329°1033)
    ܀
 
    issue 20140828°0541 'IE8 is drawing outside the canvas'

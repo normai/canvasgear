@@ -20,7 +20,7 @@
  * note :
  */
 
-/* basic body (20080710°2311) */
+/* basic body [rule 20080710°2311] */
 body {
        background-color:#fafafa;
        font-family:arial,helvetica,sans-serif;
@@ -89,9 +89,9 @@ p.footer       { border-top:1px solid; color:#808080; font-size:0.77em; margin-b
 
 /* ------------------- Link appearances -------------------- */
 
-/*  title : 'link-with-target-blank' (rule 20120725°1151)
- *  reference : http://www.peterkroener.de/links-mit-target_blank-gesondert-markieren (20120725°1141)
- *  note : This style eliminate the need for class 'extern', the target attribut in the link is sufficient
+/* title : 'link-with-target-blank' [rule 20120725°1151]
+ * see : ref 20120725°1141 'peterkroener → links mit target-blank gesondert markieren'
+ * note : This style eliminate the need for class 'extern', the target attribut in the link is sufficient
  */
 a[target^="_blank"] {
    padding-left:11px;

@@ -3,6 +3,30 @@
    Finished issues and the like
    ****************************
 ﻿
+   issue 20190402°0611 'audio data source does not work'
+   matter : Audio data source does not work with Howler.
+   see : ref 20190402°0623 'Dopiaza → data: URI Generator' ✱
+   see : ref 20190402°0617 'Fiddle data:audio/mpeg vs. data:audio/mp3'
+   see : ref 20190402°0616 'howler issue wrong MIME type'
+   see : ref 20190402°0615 'stackoverflow → mimetype for mp3 file'
+   see : ref 20190402°0614 'stackoverflow → base64 wav file with howler'
+   see : ref 20190402°0613 'stackoverflow → data uris in video and audio tags'
+   location : canvasgear.js func 20190401°1353 pullbehind_soundWorkaround
+   solution : The data URI generated with ref 20190402°0623 did work
+   status : finshed (by using 20190402°0623)
+   ܀
+
+   todo 20190401°1553 'finetune sound installation'
+   matter : In reference script 'A Noisy Page', the sound installation
+      allows controling the volume, but is a bit tricky. It did not work
+      for us on the first attempt. Thus we retreted to the bare bone
+      instructions from SoundManager2, which are obviously simpler.
+   do : Try abain to implement the sound solution as done in 'A Noisy Page'.
+   see : ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
+   location : seq 20190401°1425 'initialize sound'
+   status : finished (by using Howler)
+   ܀
+
    todo 20190401°1223 'outsource lines'
    do : Outsource lines, they are identically wanted from pickupOnTouchMove
    location : Func 20190401°1121 pickupOnMouseMove
@@ -16,6 +40,23 @@
    bottomline: Looks like we need to wrap the rotate in two translate.
    location : Algo 'oblongrose'
    status : finished
+
+   todo 20190330°0423 'catch callback stockpile array overflow'
+   matter : The brute force solution of issue 20190330°0355 'callback parameters
+      useless' involves a hardcoded array with callbacks. This will come short
+      if a page has many external or wrong algorithms.
+   do : Implement detecting and processing the possible over-use of this array.
+        It suffices, if the affected icons just do not get their wanted external
+        algo, but fall back to the default algoritm.
+   status : finished [20190402°0354]
+   ܀
+
+   issue 20190330°0331 'pull-behind only per algo'
+   matter : Do the pull-behind only once for one algo, even if that algo appears
+      multiple times on the page. Otherwise curious script abortion observed.
+   note : This was seen on page 20190324°0511 demo2.html
+   status : finished
+   ܀
 
    todo 20190329°1045 'commandline and default values'
    text : The commandline should be evaluated only after the algorithm is
@@ -31,10 +72,39 @@
    status : finished
    ܀
 
+   issue 20190329°0421 'impossible index'
+   matter : The function is called with iNdx = 2, when only two canvases
+      exist on the page. How can this be? Where from comes this call?
+   workaround : As a quick-n-dirty remedy I just try a condition
+   location : func executeAlgorithm called by Cvgr.Func.executeFrame
+   priority : high
+   status : finished (somehow disappeard by itself 20190402°0353)
+   ܀
+
+   todo 20180618°0751 'make func parse appear in namespace instead global'
+   matter : In NetBeans Navigator, this function is listed on script level.
+   do : Make it appear inside the Daf.Utilis.CmdlinParser level.
+   location : Func 20140926°0642 Trekta.Util2.parse
+   status : finished
+   ܀
+
+   issue 20160416°1321 'IE8 canvas Context.fillText not supported'
+   symptom : Text not drawn in IE8
+   location : file 20140916°0411 canvasgersalgos.js "iko.Context.fillText(..)"
+   ref : 20160419°1212 presents solutions
+       http://stackoverflow.com/questions/6039584/html5-canvas-excanvas-js-ie-text-not-showing-in-ie7
+   ref : 20160419°1213 https://code.google.com/archive/p/canvas-text/
+   ref : 20160419°1216 http://canvas-text.googlecode.com/svn-history/trunk/
+   finding : I tested versions 20160419°121502 and 20160419°122102 of excanvas.js,
+      and those did not work either. They just showed a differrent error in IE8.
+   solution : Possibly use canvas-text.js (just this may be too expensive).
+   status : finished (IE8 support discontinue 20180619°0115)
+   ܀
+
    issue 20140926°1321 'IE8 fails with Context.fillText'
    matter : IE8 does not understand the Context.fillText() function.
    location : func 20140926°1211 Cvgr.Algos.Ballist.executeAlgo_drawDiagonal
-   status : finished, IE8 no more supported
+   status : finished (chg 20180619°0115 'discontinue IE8 support')
    ܀
 
    todo 20140904°0711 'refactor property parsing'
@@ -55,6 +125,38 @@
    status : Should be finished.
    ܀
 
+   todo 20140901°0631 ''
+   do : Allow algorithms be provided in separate files.
+   status : finished (with feature 20180619°0113 'supply external algorithm scripts')
+   ܀
+
+   issue 20140901°0911 'Opera fillRect() fail'
+   title : Opera fillRect() fail
+   location : canvasgear.js with Opera 10.53
+   descr : in line "iko.Context.fillRect(0, 0, iko.Canvas.Width, iko.Canvas.Height);",
+      Opera throws exception 'Error: NOT_SUPPORTED_ERR'.
+   workaround : Wrap line in try envelope. Disadvantage is, that
+      the background is no more filled with it's color.
+   note : At other locations, fillRect() obviously works fine in Opera.
+   finding 20140901°0921 : Opera seems being case sensitive with object
+      properties e.g. wrong 'iko.Canvas.Width' vs. right 'iko.Canvas.width'!
+   priority : Low
+   status : finished (chg 20180619°0115 'discontinue IE8 support')
+   ܀
+
+   todo 20140901°0633 'support svg rendering'
+   do : Write algorithm to draw verctor graphics from graphic files like *.svg.
+   status : finished with algo Hamster (file 20190401°0311)
+   ܀
+
+   todo 20140901°0611 ''
+   matter : JavaScript advanced programming. Currently, different algorithms
+      are called via a switch, depending on the given token from the commandline.
+   do : Make the algorithm function a property of the icon, so it can
+         directly be called without any switch.
+   status : finished (by introducing rider scripts 20190330°0757)
+   ܀
+
    issue 20140901°0331 'IE8 demands extra plus sign'
    matter :  The plus sign before iko.Width and iko.Height is wanted for
        IE8, which will otherwise interpret that as string, and e.g.
@@ -70,6 +172,14 @@
    note : Could not find out why.
    workaround : None yet
    status : Finished (feature 20180619°0115 'discontinue IE8 support')
+   ܀
+
+   issue 20140830°0231 'IE webcolors'
+   text : IE8 does not understand all webcolors. IE understands
+      e.g 'blue' but not 'lightblue'.
+   workaround : Use RGB values for all colors. Or implement a mapping function.
+   status : finished (IE8 support discontinued 20190330°0711)
+   status : finished (chg 20180619°0115 'discontinue IE8 support')
    ܀
 
    issue 20140830°0221 'IE get HTML comment'
@@ -110,9 +220,9 @@
    workaround : Use something else to store the icon command, e.g.
        a comment like in seq 20140828°1251 (discarded 20140830°0246)
    note : Workaround was not useful, makes IE freeze see screenshot 20140828°1321
-      http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/img/20140828o1321.icondrawer--ie--get-comments.png
+      https://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/docs/img/20140828o1321.icondrawer--ie--get-comments.png
    ref 20190324°0813 : A demo how to find comments is now in repo 20140713°1811
-        http://www.trekta.biz/svn/demosjs/trunk/findcomments/findcomments.html
+        https://www.trekta.biz/svn/demosjs/trunk/findcomments/findcomments.html
    status : Finished with ref 20190324°0813
    ܀
 
@@ -127,7 +237,7 @@
       - // icos[iFor] = algoPulse(x);
       - // algoPulse(icos[iFor]);
    note 20190329°1033 : Issue seems finished but I do not know why, and what it was before.
-   status : seems finished (note 20190329°1033)
+   status : seems finished (by note 20190329°1033)
    ܀
 
    issue 20140828°0541 'IE8 is drawing outside the canvas'

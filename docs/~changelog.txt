@@ -1,9 +1,13 @@
 
 
-   version v0.2.3 —20190402°0641
+   version 20210426°1121 v0.2.4
+   • Simplify build.py
+   • Some cleanup
+
+   release v0.2.3 —20190402°0641 'Introduce keyboard, mouse and sound usage proof-of-concept'
    • Use Howler.js
    • Have sound inline as base64
-   • Release combined version with new combine.py
+   • Build combined version with new Python script
 
    log v0.2.2.b — 20190401°1437 'Introduce interactivity'
    • Cursor proof-of-concept
@@ -21,9 +25,9 @@
 
    release v0.1.7 — 20190330°0711 (2019-Apr-11)
    • Read parameter from data-cvgr attribute
-   • Discontinue IE8 support, remove excanvas.js
+   • Discontinue IE8 (and Opera 10) support, remove excanvas.js [chg 20180619°0115]
 ﻿   • Convert files to UTF-8
-   • Shift project to http://www.trekta.biz/svn/canvasgeardev
+   • Shift project to https://www.trekta.biz/svn/canvasgeardev
    • Clear documentation
 
    log 20140926°1411 CanvasGear v0.1.2.3 (2014-Oct-04)

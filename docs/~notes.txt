@@ -11,7 +11,7 @@
        ⁞ }
    • Example code about lazy loading is on
       http://www.schillmania.com/projects/soundmanager2/doc/getstarted/#lazy-loading
-   • See http://www.trekta.biz/svn/midiprobedev/trunk/midiprobe/p5sm/sm297a/demo/index.js
+   • See https://www.trekta.biz/svn/midiprobedev/trunk/midiprobe/p5sm/sm297a/demo/index.js
        ⁞ soundManager.createSound({
        ⁞    id: 'success',
        ⁞    url: 'demo/_mp3/mouseover.mp3'
@@ -27,7 +27,7 @@
    chain : ref 20190401°1533 'stackoverflow → Finding position relative to document'
    chain : ref 20190401°1532 'PlainJs → Get position relative to document' ✱
    chain : Function 20190401°1543 getElementPositionOnPage
-   chain : Script file 20190324°0757 http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursor2Trekta.js
+   chain : Script file 20190324°0757 https://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursor2Trekta.js
    ܀
 
    finding 20190401°1433 'summary on SoundManager2 so far'
@@ -136,11 +136,6 @@
    status : informal statement
    ܀
 
-   feature 20180619°0115 'discontinue IE8 support'
-   text : Support for IE8 is discontinued
-   note :
-   ܀
-
    feature 20180619°0113 'supply external algorithm scripts'
    text :  With the Algo namespace we created the mean to automatically
       assign algorithms after their name. With the pull-behind mechanism,
@@ -153,9 +148,8 @@
    ܀
 
    note 20140815°0731
-   matter : Coming from the example after (20140814°2211)
-      http://www.kirupa.com/html5/creating_simple_html5_canvas_animation.htm,
-      I want the following features to be changed:
+   matter : Coming from ref 20140814°2211 'kirupa → simple html5 canvas
+      animation', I want the following features to be changed:
        - The JS code is inside the HTML, I want it as a separate JS file
        - It is for modern browsers only, I want it for older browsers as well.
    finding : The transition did not succeed on the first attempt. So I introduced

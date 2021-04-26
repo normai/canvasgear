@@ -3,30 +3,6 @@
    Issues and todos
    ****************
 
-   issue 20190402°0611 'audio data source does not work'
-   matter : Audio data source does not work with Howler.
-   see : ref 20190402°0623 'Dopiaza → data: URI Generator' ✱
-   see : ref 20190402°0617 'Fiddle data:audio/mpeg vs. data:audio/mp3'
-   see : ref 20190402°0616 'howler issue wrong MIME type'
-   see : ref 20190402°0615 'stackoverflow → mimetype for mp3 file'
-   see : ref 20190402°0614 'stackoverflow → base64 wav file with howler'
-   see : ref 20190402°0613 'stackoverflow → data uris in video and audio tags'
-   location : canvasgear.js func 20190401°1353 pullbehind_soundWorkaround
-   solution : The data URI generated with ref 20190402°0623 did work
-   status : open
-   ܀
-
-   todo 20190401°1553 'finetune sound installation'
-   matter : In reference script 'A Noisy Page', the sound installation
-      allows controling the volume, but is a bit tricky. It did not work
-      for us on the first attempt. Thus we retreted to the bare bone
-      instructions from SoundManager2, which are obviously simpler.
-   do : Try abain to implement the sound solution as done in 'A Noisy Page'.
-   see : ref 20190401°0541 'Scott Schiller → A noisy page (animation.js)'
-   location : seq 20190401°1425 'initialize sound'
-   status : open
-   ܀
-
    issue 20190401°1347 'loaded script not available in onLoad callback'
    matter : Function soundManager.setup is not available in the script onLoad
       callback. It looks like it is only available after the callback has
@@ -58,16 +34,6 @@
    status : open
    ܀
 
-   todo 20190330°0423 'catch callback stockpile array overflow'
-   matter : The brute force solution of issue 20190330°0355 'callback parameters
-      useless' involves a hardcoded array with callbacks. This will come short
-      if a page has many external or wrong algorithms.
-   do : Implement detecting and processing the possible over-use of this array.
-        It suffices, if the affected icons just do not get their wanted external
-        algo, but fall back to the default algoritm.
-   status : finished
-   ܀
-
    issue 20190330°0355 'callback parameters useless'
    matter : Providing the callback for pullScriptBehind seems useless,
       because we call that three times, giving as parameter a variable,
@@ -88,13 +54,6 @@
    matter : Perhaps additionally we need algo-specific flag like bIsAlgoActivated
    note : See property 20190330°0353 bIsDefaultSettingDone
    status : processing
-   ܀
-
-   issue 20190330°0331 'pull-behind only per algo'
-   matter : Do the pull-behind only once for one algo, even if that algo appears
-      multiple times on the page. Otherwise curious script abortion observed.
-   note : This was seen on page 20190324°0511 demo2.html
-   status : under construction
    ܀
 
    todo 20190330°0151 'read properties in lump-sum'
@@ -122,28 +81,6 @@
    status : open
    ܀
 
-   issue 20190329°0421 'impossible index'
-   matter : The function is called with iNdx = 2, when only two canvases
-      exist on the page. How can this be? Where from comes this call?
-   workaround : As a quick-n-dirty remedy I just try a condition
-   location : func executeAlgorithm called by Cvgr.Func.executeFrame
-   priority : high
-   status : open
-   ܀
-
-   issue 20160416°1321 'IE8 canvas Context.fillText not supported'
-   symptom : Text not drawn in IE8
-   location : file 20140916°0411 canvasgersalgos.js "iko.Context.fillText(..)"
-   ref : 20160419°1212 presents solutions
-       http://stackoverflow.com/questions/6039584/html5-canvas-excanvas-js-ie-text-not-showing-in-ie7
-   ref : 20160419°1213 https://code.google.com/archive/p/canvas-text/
-   ref : 20160419°1216 http://canvas-text.googlecode.com/svn-history/trunk/
-   finding : I tested versions 20160419°121502 and 20160419°122102 of excanvas.js,
-      and those did not work either. They just showed a differrent error in IE8.
-   solution : Possibly use canvas-text.js (just this may be too expensive).
-   status : open (and possibly will never be closed)
-   ܀
-
    todo 20140926°1341 'provide writeText method'
    do : Outsource below sequence to a dedicated algorithm e.g. 'writetext'
    location : Many drawing functions
@@ -155,7 +92,7 @@
    location : canvasgear.js seq 20140815°0651 'workaround for missing requestAnimFrame'
    workaround : Use the fallback shim layer by Paul Irish (seq 20140815°0651).
    note 20190324°0143 : The method comes with IE10, IE9 is still missing it.
-   status : Leave as is until also IE9 support shall be dropped.
+   status : Leave as is until IE9 support will be discontinued.
    ܀
 
    issue 20150223°1851 'canvas inside paragraph'
@@ -168,66 +105,27 @@
       editor does (so far) not equip the div element with edit icons.
    chain : issue 20150223°1821 'canvas inside paragraph does not work with IE'
    note : As reference for the effect and how to cope, see page 20150223°1511
-      http://www.trekta.biz/svn/demomatrix/trunk/pages/sql/intro.html
-   status :
+      https://www.trekta.biz/svn/demomatrix/trunk/pages/sql/intro.html
+   status : open
    ܀
 
    issue 20150223°1821 'canvas inside paragraph does not work with IE'
-   location : File canvasgear.js for IE
+   location : File canvasgear.js with IE9
    symptom : If embedding the canvas inside a <p> tag, IE9 will not show it.
    problem : A 'div' inside a 'p' like '<p><div></div></p>' is not valid HTML.
    see : ref 20150223°1831 'stackoverflow: div inside p is adding extra p'
    see : ref 20150223°1813 'Rakesh Pai: IE runtime error using innerHTML'
    workaround : Just wrap the canvas element plus it's command comment
       into a div. No! This destroys the paragraphs 'iconfloatleft' style!
-   proposal : Perhaps a javascript preprocessor could find canvases directly
-      inside a paragraph, and wrap them with a div element.
-   status : Partially solved by workaround. Does work with IE10 but not IE9 and below.
+   proposal : A javascript preprocessor can find canvases directly inside
+      a paragraph, and wrap them with a div element.
+   status : Partially solved by workaround, works with IE10 but not IE9 and below.
    ܀
 
-   issue 20140901°0911 'Opera fillRect() fail'
-   title : Opera fillRect() fail
-   location : canvasgear.js with Opera 10.53
-   descr : in line "iko.Context.fillRect(0, 0, iko.Canvas.Width, iko.Canvas.Height);",
-      Opera throws exception 'Error: NOT_SUPPORTED_ERR'.
-   workaround : Wrap line in try envelope. Disadvantage is, that
-      the background is no more filled with it's color.
-   note : At other locations, fillRect() obviously works fine in Opera.
-   finding 20140901°0921 : Opera seems being case sensitive with object
-      properties e.g. wrong 'iko.Canvas.Width' vs. right 'iko.Canvas.width'!
-   priority : Low
-   status : Open
-   ܀
-
-   todo 20140901°0633 'support svg rendering'
-   do : Write algorithm to draw verctor graphics from graphic files like *.svg.
+   todo 20140901°0621 'generalize algorithm e.g. rotation'
+   do : Generalize algorithm. E.g. make the rotate function not part of one
+         specific algorithm, but apply it to other algorithms like an overlay.
    status : open
-   ܀
-
-   todo 20140901°0631 ''
-   do : Allow algorithms be provided in separate files.
-   status : done with feature 20180619°0113 'supply external algorithm scripts'
-   ܀
-
-   todo 20140901°0621 'gereralize features e.g. rotation'
-   do : Generalize features. E.g. make the rotate function not part of one specific
-         algorithm, but make a rotation applied to all algorithms like an overlay.
-   status :
-   ܀
-
-   todo 20140901°0611 ''
-   matter : JavaScript advanced programming. Currently, different algorithms
-      are called via a switch, depending on the given token from the commandline.
-   do : Make the algorithm function a property of the icon, so it can
-         directly be called without any switch.
-   status :
-   ܀
-
-   issue 20140830°0231 'IE webcolors'
-   text : IE8 does not understand all webcolors. IE understands
-      e.g 'blue' but not 'lightblue'.
-   workaround : Use RGB values for all colors. Or implement a mapping function.
-   status :
    ܀
 
    ———————————————————————

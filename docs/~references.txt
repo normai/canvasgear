@@ -14,14 +14,13 @@
    chain :
    ܀
 
-   ref 20190402°0623 'Dopiaza → data: URI Generator'
+   ref 20190402°0623 'Dopiaza → data: URI Generator' ✱
    objtype : ref.service
    url : https://dopiaza.org/tools/datauri/index.php
    title : Dopiaza → data: URI Generator
    summary :
    author : David Wilkinson
-   releasedate :
-   usage : issue 20190402°0611 'audio data source does not work'
+   note : This solved issue 20190402°0611 'audio data source does not work'
    ܀
 
    ref 20190402°0617 'Fiddle data:audio/mpeg vs. data:audio/mp3'
@@ -132,6 +131,8 @@
    title : A noisy page
    summary : Nice example for using cursor movement and sound
    chain : https://github.com/scottschiller/SoundManager2/blob/master/demo/animation-2b/index.html
+   note : SoundManager2 itself is no more used with CanvasGear. Nevertheless it
+      provides great examples, which are usefull also with other sound libraries.
    ܀
 
    ref 20190401°0133 'ProfessorCloud → SVG to HTML5 Canvas Converter' ✱
@@ -140,6 +141,7 @@
    title : SVG to HTML5 Canvas Converter
    author :
    releasedate :
+   chain : ref 20180924°0823 'openclipart → comic-hamster-face'
    chain : howto 20190401°0111 'draw svg on canvas'
    tags : canvas, javascript, svg
    ܀
@@ -299,6 +301,22 @@
    tags : css, github
    ܀
 
+   ref 20180924°0823 'openclipart → comic-hamster-face'
+   url : https://openclipart.org/detail/15597/comic-hamster-face
+   title : comic-hamster-face
+   authors :
+   chain : ref 20190401°0133 'ProfessorCloud → SVG to HTML5 Canvas Converter'
+   usage : Func 20190401°0141 Cvgr.Algos.Hamster.draw
+   tags : canvas, javascript, svg
+   ܀
+
+   ref 20140926°1331 'wikimedia → 25 m precision and 50 meter pistol target'
+   url : http://commons.wikimedia.org/wiki/Category:Targets?uselang=de#mediaviewer/File:25_Meter_Precision_and_50_Meter_Pistol_Target.svg
+   title :
+   usage : canvasgear.js func 20140916°0921 executeAlgo_getTarget
+   tags :
+   ܀
+
    ref 20140926°0621 'Krasimir → Simple command line parser in JS'
    url : http://krasimirtsonev.com/blog/article/Simple-command-line-parser-in-JavaScript
    title : Simple command line parser in JavaScript
@@ -364,6 +382,13 @@
    url : http://www.williammalone.com"
    note : As well he maintains several canvas projects on github.
    tags : canvas
+   ܀
+
+   ref 20140831°0311 'wikipedia → web colors'
+   objtype : ref.manual
+   url : http://en.wikipedia.org/wiki/Web_colors
+   title : Wikipedia → Web Colors
+   usage : Object 20140831°0321 Trekta.Util2.Webcolors
    ܀
 
    ref 20140830°1222 'eric meyer: colorblender'
@@ -500,10 +525,19 @@
    tags : thirdparty
    ܀
 
-   ref 20140814°2211 'initial example file'
+   ref 20140814°2211 'kirupa → simple html5 canvas animation'
    url : http://www.kirupa.com/html5/creating_simple_html5_canvas_animation.htm
+   title :
    note : Here comes the initial example file from
+   usage : 
    tags : thirdparty
+   ܀
+
+   ref 20120725°1141 'peterkroener → links mit target-blank gesondert markieren'
+   url : http://www.peterkroener.de/links-mit-target_blank-gesondert-markieren
+   title :
+   usage : file 20140302°0611 stylesdaftari.css rule 20120725°1151
+   tags : css
    ܀
 
    ———————————————————————

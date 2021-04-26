@@ -1,27 +1,28 @@
 ﻿/*!
  * This script paints animated icons on HTML5 canvases
  *
- * version : 0.2.3 — 20190402°0641
+ * file : 20140815°1213 canvasgear/canvasgear.js
  * license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
- * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
+ * copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
  * note : Minimized with Google Closure Compiler
  */
 /**
- * @id : file 20140815°1213
+ * @versions • 20210426°1121 v0.2.4 cleanup
+ *            • 20210416°1812 Start with GoCloCom advanced
+ *            • 20190408°0212 v0.2.3.d — 
  * @authors ncm
  * @encoding UTF-8-with-BOM
  * @note This shall work with Chrome 32.0, Edge 42 , FF 60, IE 9, Opera 58
  * @note Use canvas class 'skipthis' to skip canvas not to be process by CanvasGear
- * @note Search ✂
+ * @note See ✂ for the faded-in shared bottom part.
  */
-
-'use strict'; // [line 20190329°0843]
 
 /**
  * This namespace constitutes the CanvasGear root namespace
  *
  * See sequences 20190329°0621`
  * @id 20180618°0621 (this is parent)
+ * @c_o_n_s_t — Namespace
  */
 var Cvgr = {};
 
@@ -29,6 +30,7 @@ var Cvgr = {};
  * This namespace holds the individual and possibly external algorithm namespaces
  *
  * @id 20180619°0111 (this is parent)
+ * @c_o_n_s_t — Namespace
  */
 Cvgr.Algos = Cvgr.Algos || {};
 
@@ -37,232 +39,31 @@ Cvgr.Algos = Cvgr.Algos || {};
  *
  * @id 20140926°0741
  * @ref qna 20160612°0321 'semicolon after function definition'
+ * @c_o_n_s_t — Namespace
  */
 Cvgr.Const =
 {
    /**
-    * This constant tells the CanvasGear version number -- unused so far
+    * This constant tells the CanvasGear version number — unused so far
     *
     * @id 20140926°0931
     */
-    versionnumber : '0.2.3'
+    versionnumber : '0.2.4'
 
    /**
-    * This constant tells the CanvasGear version timestamp -- unused so far
+    * This constant tells the CanvasGear version timestamp — unused so far
     *
     * @id 20140926°0932
     */
-   , versiontimestamp : '20190402°0641'
+   , versiontimestamp : '20190408°0212..'
 
    /**
     * This ~constant tells whether to pop up debug messages or not
     *
     * @id 20190311°1523
-    * @type Boolean
+    * @type {boolean}
     */
    , bShow_Debug_Dialogs : false
-
-   // discarded in favour of var 20190402°0633
-   // // /**
-   // // /**
-   // //  * This ~constant holds file fingerplop2.mp3 as base64
-   // //  *
-   // //  * @id  20190402°0551
-   // //  * @note Converted by https://www.base64encode.org/ [ref 20190315°0313]
-   // //  * @type String
-   // //  */
-   // // , sB64_Fingerplop2Mp3 : 'w7/Du8KQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAAIKABA'
-   // //                   + 'QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEDCgMKAwoDCgMKAwoDCgMKAwoDCgMKAwoDCgMKAwoDCgMKA'
-   // //                   + 'woDCgMKAwoDCgMKAwoDCgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw4DD'
-   // //                   + 'gMOAw4DDgMOAw7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/'
-   // //                   + 'w78AAAA5TEFNRTMuOTcgAcKqAAAAACwXAAAUwoAkBcONTgAAwoAAAAgoV8O6VsKoAAAAAAAAAAAA'
-   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw7/Du8KQbAAAA00Q'
-   // //                   + 'w44NYcOgAC3DgRnCosKkwowAEXFZwo3CuWowGRcawq93KMKiAgBSw7wKM0rDjSNcQMKEHMKsdFLC'
-   // //                   + 'kTEgFMKHVWHDmDwUwpfCicKBEQUgKgcDwoLCnMK3wpPCssOmdcKoFcKKw4fCkSkRwoPDoMO4Pg/C'
-   // //                   + 'ggDCgCBQEwfDgcO3w4EAQBA4JAQgw7g+w6B8HygJwoPDp8Oww4LDj8O8wrggc8KUBAEHawfDn8Og'
-   // //                   + 'woTCuD9/wpfDigIfUcOCwoDCh8OUwqgGw4nDpMKAUMKBAQAgAMOAGBsNwpPDqsKIDkHDsHw/w6XD'
-   // //                   + 'n8Oyw6HDtH1+J8KoH3/Dv8O5w7/CiB3Dv8KDw6fDv8KCFCwGAwHCgMOUYDAUCQMBAAYTA8KYABnC'
-   // //                   + 'rRgcA8KIw6B8V0PDjHA0LsOPAMOPw7BnKsOwPxvDgMOlYcOwKMK4IA4BQH8LQBwCNBkqwr8Gw4cF'
-   // //                   + 'RDbDgAQiBkwXw74nEMOHBBofwqgiHgjChMO/w7jDmgQiw4HCqELCmGJCDMKfw7/DpMKAasOCwphc'
-   // //                   + 'w6DDsE3CicOQR8KEw47CtsO/w7xQAyhLFgdJWMOVOVDDh8O/w7/DswQZw4vChcOEw5luwrPDqMOV'
-   // //                   + 'woDDoHAwHA4HA8KBwoDCoEAAAQEBw4/DsEAgDMKIKsOwNRcBZsKNaMO0RMO4KhXDi35OPiotf8Kp'
-   // //                   + 'ISEpw7/DucOjUSJOPMO/w7PCiAhJwo9Gw7/DvsOqe8KhcsO/w7A/YknCkCI2w4ttwrLDq3bClcOb'
-   // //                   + 'LcK3VsOqw6hNGS/Dk8O/w7vCkmwKAAPDpmFcw64lYARAwopawqrDhcKIAA5xWT5dwpHCgAjDlsKD'
-   // //                   + 'w6lrwpIgAMOFQsOmwp3CosKsWMORJsKkezjDgcO1NVFRw5sTaTTDhMOWwp1dVcOdwrzDqcOEwqTD'
-   // //                   + 'pMONdsO3w7DDuy91w67DvcKvwq/Dv8KLbcO9XX/DvHbDqcKGwp/Cs8KTSW9haCMbw7bDj8OdGcK7'
-   // //                   + 'wqLCqsKfM8OJwrHDusKJwovDuUZhwrtrf3ctN8K3wrbCusKPw7zDgAcgwoAmUMOxw5jDvl/Dt04/'
-   // //                   + 'CcKgAAAADCAcBgVjAVjDomXDmmIzw4gKYBPCuA0fDSfDk8O/bMOfw6/Cn8O/wphBFcK/w7/CtS/D'
-   // //                   + 'v8O6wpbChy7DusOzwrE/w69yTMOrf8O/w7/DrEdwRGlXMcKhwqrDgCRoBMO4wqkbZsOywrkswqXC'
-   // //                   + 'vMKcR3MIdF40woU8GR4BYV5aQhZCwqDChMKMwpvCnBUKC8KnPMKYcsKWAjUEDcO0w4QRwqXChsKO'
-   // //                   + 'w7YxBWc8MjJlLXPDmsOTacKCw6LDs8Kew4BLZ3/DjsKUw43Dn1pUwojDiMOsw6FCU0vCsTV1w48U'
-   // //                   + 'FCHDtMOTDChTGG09w7ctekHDvBpTwocdw752TsKgNABEwoVpwqdrL2rCtkrDjMOhwrFAwpTClcOM'
-   // //                   + 'w5nDr1PDv8OIHxE4w4rDlcOUU8O1w71EwoHCryQZw7/DvG/Cr8O2D2gkTH7Dt8KpwoTClgLCscOV'
-   // //                   + 'M8KUey3CncKvTT4wwrpHwq3ClSHDiFXDhcKiQRLCtzoSwptED0YWfsKsw6LCkCJhwoHDuMKOHsKM'
-   // //                   + 'woRrwpnDhMO/w7vCkmwVwoADw4pBTcKFYQACTsOMWjzCpAgBDw1BOTk2woABLcKaw6vCtwTCgAJ0'
-   // //                   + 'Hi4jwo4YLEsQw44cwprCtMOkGjMaS8OKw6vCmsKdwrQiwrV9acO2w57Cq8OMwroOWDDDqBnDml00'
-   // //                   + 'LcKlwqDDssOHVTbDgz7Dh8OiKjLDmjgJwqYewozDnwDDtV3Djmx7wqXDt33CvkAuN8KtwrrCrEzD'
-   // //                   + 'tUElAMKbwqByDcKxdVxrJsKHIsOBClxCLMOJM8Kpw4jCr8O/w7/Dvh0Xw4kyWMOlw4jDt1JkJnbD'
-   // //                   + 'vsK0w7fCusORHsOIwojDncOtZ8OtecO6USZOw5koe2dLwr7CqXXCm1bCshLCiX7CjsKWwpnCri3D'
-   // //                   + 'ngrDrRYAADBDw4AgQUgAAMOREBYvY1RzBsKodFgdwpLDgMOcQn7DgcK0PUkiwpZ0woJcRWXDnsOl'
-   // //                   + 'wofDhylAwpE8bcOmwqgUTcKHwqJJLsKPw4oIEsOnw4omRxFjKl/Col9Iw4XDjMKKw5NJKsObw7zC'
-   // //                   + 'pMK0wovDpsKHwo1Nw4rDlsKkwpbCj1fDvMKUJEnCpigaw4ooJsK9fsK0f8O+dcOEQEZEZRt6w47C'
-   // //                   + 'qMKTP8OLAk3ChsKBQ2EgwrhaLRbCi0XCgAAxw4pcEMKKYmZ8G8KKwoAwW8OSaXXDvsOJwpQwVQXC'
-   // //                   + 'v8OGKcKFwpENw6vDv8K9KXfDgsO/w7/DuMOfwonCnmPDtsK/w7/Dh8KpFMOwKnjDgMOodCQlw7TC'
-   // //                   + 'gy4YPMKOVQAzw6gBQsKpMMKmw5QwEMKjCgImAWVLw5xjw6lRSSwIwoNEw4nCisO/w7vCkmwOwo/D'
-   // //                   + 'sxEwI8K3DSACL8KjRHHDoMKIAEAAAcKkAAAAIAAANMKAAAAEUW/Dv8O5SMKwJBpsKgjCksKkFhTC'
-   // //                   + 'ksKhw4XCkTTCqSzDhSLCmCzCicKrVRImwrVUMcKkWSl4w4Y+wqLCrHJIworCg3/Dv8OCGgpIJcOf'
-   // //                   + 'w7rCimhRw4DDg3puWR0Vw5TCisOhw5jCkAYQw4QhTEIUIUQmw79SwpZjGUpvw67CgcKMw6UBLCBX'
-   // //                   + 'QmzDkF4Nw6hRw4DCrB3Dv8O/FMOQwqfCi8O/w7/DiMOowq7CpUxBTUUzLjk3VVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVU='
-
-   // discarded in favour of var 20190402°0635
-   // // /**
-   // //  * This ~constant holds file fingerplop.mp3 as base64
-   // //  *
-   // //  * @id 20190402°0553
-   // //  * @type String
-   // //  */
-   // // , sB64_FingerplopMp3 : 'w7/Du8KQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAIAAAOwrAA'
-   // //                   + 'ICAgICAgICAgICAgQEBAQEBAQEBAQEBAYGBgYGBgYGBgYGBgYMKAwoDCgMKAwoDCgMKAwoDCgMKA'
-   // //                   + 'woDCgMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgw4DDgMOAw4DDgMOAw4DDgMOAw4DDgMOAw6DD'
-   // //                   + 'oMOgw6DDoMOgw6DDoMOgw6DDoMOgw6DDv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w78AAAA5TEFNRTMu'
-   // //                   + 'OTcgAcKqAAAAAC4XAAAUwoAkBWVOAADCgAAADsKwBDDCmF8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-   // //                   + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADDv8O7wpBsAAADMhrDjQ1pw6AALUFJwqrC'
-   // //                   + 'pMKIARHDgQd/wrnDusKwGR3CkMOywrc3KMKCAMKMOHMODRHDgsOCwo0DY8KRUMOtVDgFDGtzw7HD'
-   // //                   + 'uMO6WjbDgwVHwpnDlCZ8wqg4wpvCpMKKwoARwoBGAnjCmcKZc8KwHMKGwoDDtcKTwrUcJMOiGMKG'
-   // //                   + 'MkNDEMOFAsKxw6PDiMKZfsKGKBXCkTV3w7HDg8OfB8OBw7PDojPDpQ5/EAIQQcOTw79/LwQOQxLD'
-   // //                   + 'v8KXB8OAAAIlaFIDw5zDp8OUQMOkYMKAYcKLRsKNHMOoOMKzw6UlJMO6wo5KO8OxAAw/w4EPw7zC'
-   // //                   + 'oGHDlcKfw4TDp8O/w7rDgcO8woYDAcKAw4BwOxbCiAMBAAAwPwIlMVjDicOEw5/Dv8KYwpgGIsKc'
-   // //                   + 'w5jDhgdKw54Yw4teMMK0AMKoMMKUQVLDr8O3w4DDkmzCoDRYw6vDgMO5bcOQMcK7wpgNAh7DvA0Q'
-   // //                   + 'w7UDAgZAw4dAIDPDocOHw7wOOhADw6M4woDDhgDDgBYIwoYhwqLDn8OCw4gAw4DCgMOQGBPCgQAQ'
-   // //                   + 'NAoII8Ofw7zCpk8IAEAEJjo1f8O/KMKQw7HClCZIw4QIw6Mzw7/Dv8O5FinCrMOGEwHCjAYDwoHC'
-   // //                   + 'gMOgYDAUCADDoAAAFRAywoHCv8O/w7PDocK9NRo7wrfDv8OABAYiLcO/w74Dw6A2w78Twqhfw5AI'
-   // //                   + 'b8OGXE7Dg8OswrvDviXCpMOxwrlww4PDv3RPwp1Ew7/DqBrCoD/Dv1zCjE4RFsKBMcOMd29Tw4Ue'
-   // //                   + 'wrTDpkUwwqDDo8KJPMOrOcO/w7vCkmwKCBN3TsOTH2jDgAIqQMOqLMOsCAEQPTU0w43CsQvDiMKx'
-   // //                   + 'wpFodCwIZTFAw4tCwp0xSMK0wrdlwqMtw5tWwonDlcKiQlrCtcOpfmczO1dKwrzDo0zCtW81AlLD'
-   // //                   + 'm8K+ccKZw701bMOMw7nDhiVzOcOmWsK5wqjCscK4S2ZzwrTDusKnwprDn1vDplrCtMOdNw7CrzLD'
-   // //                   + 'k8KVw7tsw4/CnMO1wrMtMsOEwpLCqQfDv8O9Kw3CihhpAAAAFAA6exLDuBrDjEoGYEpeFcKRwqUp'
-   // //                   + 'wqs7w4DCoCtPwrMtwpFUSsOvw7/Dv8O/w7/Dv8O/w7/DmsKlCXpHwoDDiWREw6l8w7vCqMKZwoIE'
-   // //                   + 'EsKCFcKBwokqwprDmnHDscKAI8OwNQ7CjkHDtMOVwoLCq8OePcO4bMOiw4suw6MYXMKGwqvDu8Kz'
-   // //                   + 'w6B5w6jDuUISc2zCjsKLKGjCucKoXMKmw4Mhwp7DoVnDucK+ecKbTcKSbQvCm8Omw6nDvMKLSnTC'
-   // //                   + 'l8O1RXrCp0tHZBchXcOaYsKDwrFgUCUPBcOgw5PDkGvCoMKwwog1RsOoSxA8K8KCIcOowr3DjGXD'
-   // //                   + 'lsO/fsKdw7sAACQRMcKdJhd0FMKuw6xUZEsyXyHCt2BYA8O6RXvCpUvDv8OUw4FQKQUowqPCqzdb'
-   // //                   + 'w54nCsOLwpvCojXCjcKyworCqMKLFsKkw6k6bwLCmQFGDgzDrADDnmTDq8OmNAbDgcKgGXsFwoIi'
-   // //                   + 'w6/DqmEgScOLwpRaPcKqSiVwwrnDgsOhwrTDhMKbw4zCuSNIa8KuTsOewot0UsOGw5/Dn8OXSMKN'
-   // //                   + 'bMO9w6zDsnXCjF7Dv8O7wpJsJQwDwq1PThs6MiAvYUnDig8DJRDCvRMmTcOww4jCiQHChGh0F8KI'
-   // //                   + 'w4TDjsOnw63DvUlwwpnCrV8pwq5KwrROLjNVU8Kbwp3CrntswrJYdsKzwrXDjDN5w4zCnsKOw6TC'
-   // //                   + 'ssOnwoTCgsOjRzvDv3AABgoAAAAJEsKMDcKiw6nDrMKmQFfCl8OBw5fCg8KJwr0LRGpKw6XCgWBo'
-   // //                   + 'Hg7CnA8dw7/Dv8O/w7/Dv8O/w5otwr3CosKyKFFKQ8KrHTIQwoFgBBouE8OoGCBnYyZlGGoQwqd6'
-   // //                   + 'NcKTEgPChMONwqvDnsO6SDjDpHLCjwkgAjU8JCUCwpDCl2LCkUzCgm7DtsKkEznCqSbDjyxhw7Q2'
-   // //                   + 'dcO2EzYXw6MLwos0wqzDpcOvw4RxwoHCp1vDvW/CuDdNwoHDuSLDoMKrwqZzN8Orw4/DoMKOwppZ'
-   // //                   + 'wo8XTmQYWm9BR8OADiwGwrbDhsOKwqrCucKDw4w+BcK7w6s5w67DvsOlwrtZw47DvsKwGQANwobC'
-   // //                   + 'ulkjYcOIIUYUwpjCssKHJwAGDQPCr8OWCTw2Az0oGkPDuMKqEgtFAFcpwofCjkokecKTIsKNEgTD'
-   // //                   + 'oQTDkixscSTDtMOUbcK2w7xOw4fCnMO6VSzCjEbDmMOCwoNawpDDsMKqwovCmGA4JBTCqCg6wpAX'
-   // //                   + 'RjVCwpFgVlDDqk4ARMKNIBzCtsKNBCjDtcKUfQ8swo7DhCfDkcKvwpVaCQXCmMOtSjjCpU/CizbC'
-   // //                   + 'm351w7zCjUXCs8K5UcKNQlYWMmYhMMKzw4YxYsKXWDJmbMOpIsKeSXfDv8O7wpJsLgwEGGZIwotm'
-   // //                   + 'G3JBQcO5w4wsI2UPUcKRIC4YbQlIwpbDp8K0IwwtMMOuEMOLKcOWw5rCkMKlYMKRYRvCnUJ1PcKN'
-   // //                   + 'w4rCm8KDQT/ClcOuw7MpOzV6wp1Of8Onwo4hwqXCgsKaAAAUTsOZSsOBOcKxE8K8RybCgsKAw5or'
-   // //                   + 'eMOQNwt1QsKAwo8sworChMOmwpHDtw/DnzzChcK8w6xmw53Cj8KKFHHCl8KLwoYaw6LDtVbCksKl'
-   // //                   + 'LlFWwqVBwrAsIsK1BcKXIQdEA8KPCkPCg8OJwqLDixLCpcO7AAJMDggGwo7DhcKNw6FgKHBYwrvC'
-   // //                   + 'scO5w5RBwpLCjU0zblgedsOwwo82JgUowrzCmibCiChLIRYrN8KawpjCtsOLw65CVMKQZcOLCXkb'
-   // //                   + 'NhBAwpoKFEcrQjYyw4VCLMOtwrHDpzM9w6k3woLDsmBSQ3h5asKlwrnCn0/DoWPDtcOhw4Myw5Yc'
-   // //                   + 'w4/CnMOywp/CnWcLcMOhVhPDqWZkOMKAw7rDrTXDksK2w4DCmcOTwrDDsAQCR8OFwovDmirCmkVj'
-   // //                   + 'MMOmwrJlwpbDrHDDkHTDtSxZRSZ8EcKHEcK/CUl8w5NDw6xQczBMw44bHwLChcOow5nDicKLw4h9'
-   // //                   + 'wqtkZ0N+woJcH1fDk8O/w63DiUN7VsKeMU/CrADCgcKBw7nDgEhAVBnDpsOsw5fCmMKKcgEMNjc4'
-   // //                   + 'wpxqw616exEhw7osw51wYFoOw4AwUcKpwrALGsKZwrrCh8KIw6Fjw7LCkVUkwp5tw6bDtGpCQg7D'
-   // //                   + 'i1TCjMKvfxBJwpnCncKFZ8KbLlHDv8O7wpJsJMKIA8KZSEjCq1kYUkTDoQnDnQTDghdMw4lLKywM'
-   // //                   + 'w5XDgMO9FWZ0JgzDiMKOwpDCk2V0w53DscK6TMKIw7bDh8KrWMKYW8OHQsK9L8K4wpzDj8OfRMKf'
-   // //                   + 'JEDDnHrCh8K7f8ORw7Nvwo7Dt8KsMVJTAxhjRxzCtjTCkMKzw5psacKgQ8KrwoBVwozCt8K2w7vC'
-   // //                   + 'l8O+F8ObdsKBMzHDnMKXYCjDs0cOWiDDoiPClsOTG8KMw73Du8KswrbCnsODwqM3wqfDsz/Dvzcb'
-   // //                   + 'w5/DsMK9P8Ocw57Cu8OuwrfDr8K8KSfDmSASMWDDhsOhw4kNHsKmB0F8IsKxwovDv8K6w5zCtVvC'
-   // //                   + 'tjPDllvDj8Kfw5/DvFASG8KlCkXCnhzDtyJFdjTCrsO+THHCj8Kfw6RTw6cic8KvEMK3KMOvwovD'
-   // //                   + 'mileS8OYfUXCjWs2WUjCucO5DsK8w5FQJMKQw6I9KyMIwrbDucKGwo1mTcKNCDpnFsK4w6vDv8O7'
-   // //                   + 'QiADZXI6w6IIHcOLPi4SAMOPJkFMwqjDksOcwozCpmQtTsOeEFd7PMKIwojDoR/CsxzDr8K2w7le'
-   // //                   + 'GRxKT8OEwqDCgMKlw5bDoDjCqkjDncOJw5o6w6/Dv8Oqw6zCusKaAAbDmMK6wqUDwqQHwrTDhsOV'
-   // //                   + 'wrAVTERKFsO4HMKHTDrCh8KrFcOFw4rDhH/DpsOnEx/CqEVmwoPCk8OJwpU9wrrDhyvCq8KhH3vC'
-   // //                   + 'lBQEMhsUAsKSUcKlPH4GWsODAwfChcKQRlHDjMOARAHCogMFwp7DiRHCoDAyDMKpeUzDo8K7dMKO'
-   // //                   + 'w5LCm0TDh2zDv8KlQS59w5TCg8OidnHDv8O7wpJsNMKAAsOXKcOKw4oPGEBDw6DCujwIIxPDihR7'
-   // //                   + 'McKmPGZIw77Ch8Kpw7QAwow/A8KDw4Qtw4BMTkhjwqhjG2sKwprCt8O7w6pXwo3DvcO4w4nDl8OD'
-   // //                   + 'aBbDgMOpby/DmsK3TcK/GsOibMO7wr56HcOvOsKRw50SwrfCu8O/dBwHCAQAccK2w5TCjcK2woAR'
-   // //                   + 'NULClz/DqMO5FE3Ct8KCEDHCkcOrwpIbbQp7wp88woo8wpXCoFpOw6RYacKGCQAow6jClcKPw7xu'
-   // //                   + 'w63CoCbDgcOuwr/DnWdtXMOBwromwqZQfsOcCMKLw7hUw6rCvsOMw5Ffb3fCuWrCrcKDIkjDhMKz'
-   // //                   + 'aSRtIgzDksKGw7vDjcOdHcKZwrLCgyLCj07DvH3CoHnDvMKlByZYw61Twqh4bD56w7TClRR6w5LD'
-   // //                   + 'u8O9wrdzw5rDrS9WBHfDq8OxwofCrsKlw63Dv8Kfw7/Dv8O/w7wRDghrbDtkwqYqfA3ClRbCpsKL'
-   // //                   + 'IMKHwoJIwpHCmyfDuVEUEcKSw79JHMKMw6duaGl0QcKGNDLCnMOvwq3DiSEvSsOPwofDsMK/wrTD'
-   // //                   + 'j8KkX8Olw6vDncK5GsKxIsKbOMOgwqrClHEMwo3CslfDtcO/w4TCusO5w70OwrvDj1PDgsOuw70a'
-   // //                   + 'w6fCt8Kqw6tjwoI/UMKEw5FbwrbCtsOZI8KMbMKqwq7ChcKCw5zDqHnClcOMw6xqw7VTSMKGYsOG'
-   // //                   + 'FcKKw5nDkBxcwrLCpMOPI3wDwoTDmcKRwqQiKcOIw6hJHMKrKhhxAMK9cMOpZRvCijDCoGhBSDZ6'
-   // //                   + 'w4ohw7zDvcKLQMKCwoHCmULDsi1Cw5XDpcOGw44lIBcMwpkLwqnDv8O7wpJsXAACw7JCSQsPGFJH'
-   // //                   + 'aHnDvRQjw4kLw4RLJMOHwrDDgEkoDsOmdBEZLcOSw7PCpcKOw5LDu8KPVG5KV07Cmn8mw5ohwqLD'
-   // //                   + 'scOHwpTDqmjCrkQKEhJwSsOfw7VMVcKHBMKdf8KodirClcKXwqDDkcKew6BZcjfDrzxbw5zDmcK2'
-   // //                   + 'aiTDhUUlwovDt8Onw5rCrMK/w73Ds3/DrC3DmsKXHWgmw5wUXWvCihJAwq9pw4xKw7HChyfCvcKM'
-   // //                   + 'wpLCuVEGwqtDHMOrw4PCnybCvsO9w4fDuQnDgcO5dG94TCxpw6LDisK1wrBgWCrDi8KLwqbDpz/C'
-   // //                   + 'j8OLwo/DvysswpxYw6hcfllxwq/DvxViwrvDqcK9wpYGwokyw5XDgsKfacKuVHbDhMK6VSnCkkrD'
-   // //                   + 'pBIgCDDCkWHCgsKNMTRJCS0EwqXCrUTCjS0FwqJzw4JGwpcXwpUxwrMsw7HCs07Dn2XClcKfw5Ud'
-   // //                   + 'wpzCqMKOVFvClMOJb8KiOzrCo8KxwpFuw5/Dv8O6f2fDtkVnKcKCwqkcwqjCrMOlW8KyLcO9wp/C'
-   // //                   + 'p8O0VU/DqsKKR2MUMCHDjgApwonCqsKdwrZdwp82WcObw7sMwplkcmvCmUhqw5UHAQwIOg4kGRUk'
-   // //                   + 'w73CoCFjQVJGwpnDv8O/w7/CoAopTEFNRTMuOTdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVw7/Du8KSbHQP'
-   // //                   + 'w7MzaEDCgwYTci3Cg8K4MRgDcgAAAcKkAAAAIAAANMKAAAAEVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVQ=='
-
-   // discarded in favour of var 20190402°0631
-   // // /**
-   // //  * This ~constant holds file mouseover.mp3 as base64
-   // //  *
-   // //  * @id 20190402°0555
-   // //  * @type String
-   // //  */
-   // // , sB64_MouseOver : 'w7/Du1BkAAAAXADDocO1AAAIAAANIMKgAAERfcKnRBh6AAAAADTCgwAAAA4AAA8AAAAALn/DocKB'
-   // //                   + 'GB94AwjCvg9AF8OJwqHDjsOxwpYhwqPCm8O4w4rCkMOhw44VwrfDuQ0cw5FawpDDoXN/w6LCtiHC'
-   // //                   + 'osOlEMKow6UKw5vDv8OELDHCosKBD8KEY8KDw6IMwo3Dv8O4wq7ChkULQQ/DmC4YG0gHAwMUNAbC'
-   // //                   + 'gsO/WsK/w6XCkDB9w4DDkjkDAlgMwpjCgGzDsMK0woYBDMKyOsKFBDrCgMOSWC3CosOfwpDDkDcy'
-   // //                   + 'w4kfw7FzEMORwpkgwqUiBE8swrpqwqNkw5bCj8O/w7/Dv8OqacOUwqZKB3d4wpnCh3/CtsOWCcK2'
-   // //                   + 'woZGRmQRJsKYEE1Lw7/Du2BkCgjDs8KtRFDDvwbCgAIAAA0gw6AAAQltFynCoMKPwrdAAAA0woAA'
-   // //                   + 'AARSw5TCt3Z2dnQWwrUtXcOZwp3CqlrClsKlLsOOw47DjsOoLUtSw5VnZ2dBNBTCtS1LdndnZMOQ'
-   // //                   + 'WsKWwrUtw5nDmcOZBMOQTUtSw5JJHcOZaC1qEMKELnQOw5NgAkwjw6cxNibCr8O9QMOCw5VQMsKq'
-   // //                   + 'wq/DulnDvcKmwppGKsKqOmjCqsOqwqrCt8OVUALDkcO/w7YIw7/Dv8O/wq/Cn8O4ZcOyw4jDsMOv'
-   // //                   + 'w7zDiMO9ZcKpw4MuwoLCl8OBw73Ck8OyO8ObLMO/w7/Du8OZLmTDiy3Cn8O/wrrClcO1RsOqJXnC'
-   // //                   + 'gwDCscOLK8OBwpPDgCDCkC7CrA1+G8KUU8Ohw7LDgsOCwq7CucK/w5fCkQAAABfCgcO8wqwhw7/D'
-   // //                   + 'v8O9w7zDl8O/w6R4LcKyai3Cvg/DvsKtw7rDu8K5acO/wqfDlcOrw5vDv8O4S8OiwpImw6zCg2DC'
-   // //                   + 'gBwwIwrDky1GHTDDv8O7IGQaDMOyL0XDisOoIsO2wrgAAA0gAAABCFkXKmDCi8OcwqAAADTCgAAA'
-   // //                   + 'BMOFBlMBQBQswroqMQceKS/Dv8O+w5/Dkj/DusOAF8O/w7/DtcOzX8Ovw6Z0w4nDrBMNYMOBw6vD'
-   // //                   + 'qjLDvW1Nw5E/w7XDusOkw6/Dv8O8wqdfwqbCusKmIsKgCBQBw7BIXxjCmjXDocKCWDsYAADCqks3'
-   // //                   + 'OMK7w6Uiwp3Dv8O/w7zCnQAAABNvw7/DiCfDv8O/w7tAZATCiMOyXkZKaCLDryAAAA0gAAABCW0b'
-   // //                   + 'K8KgwovCnMKAAAA0woAAAATDv8O9w77Cl0/ClsKMwpcswq/DjsKGwqXDmUlXUcK0wqIzOsOQw7rD'
-   // //                   + 'kMKNw7/CnsKEZTvDvcOnw5wiEVnDtmDCv1LCjBATwpvCixvCmVAHwokEcAzDszvCk8O8wqLDgMKe'
-   // //                   + 'w4E5w7DDh8O/w7XCuAF3w7/DukFfw7/Dv8OWWcOrwpPDuUdGL1IoU2TDvMOFZylQw4M3R8KVwqZ/'
-   // //                   + 'Qyl/w7nCjSlmesOjw7XCqcKrw4ZcwpvCqyQwCllzwrkQTGoXDAQiMyrChiHDqMOVwrpbOMKUwrHD'
-   // //                   + 'oMOXw7/DtCoAAADDv8O7QGQBwojDsm5Gw4poIcOkw7AAAA0gAAABCMKxFSnCoQfCnkAAADTCgAAA'
-   // //                   + 'BMK3b8O+woQXw7/Dv8OLwr56eMOjw7HDgcKMwrTCn2jDmUwaw5rCgjkswp7Dij/CnAh/w7nCsBjD'
-   // //                   + 'iQ8+w5TCqy/CiE7CtcK2wpLCv8OWwoHCgsKDwocxwq8ow4A4JsKCR8O1w4TCiMOAw7HCjG3CkMKE'
-   // //                   + 'QMKAwrkGf8O+QAt/w7/DvMODwp/Dv8O+w7t+NX8vwr7Cm8KjwqZ/R0TCrcOVE8KoISV+Ry7ClsKi'
-   // //                   + 'w7/Ds8KRwoXDkz/Dl27DnMKpwrgJwpTDgEIQKcKRwqDCoMOgSsOiajEow4RqwoTCsVx4QF3Cn8O/'
-   // //                   + 'wqnDu2oAw7/Du0BkAMKAAsOeR8OKbQLCoAgAAA0gwqAAAQY1LzPDuAnCgAAAADTCgwAAAAAAFG/D'
-   // //                   + 'vcKAAcO0wr/DkMOpK2pILcK6SsK6w6jCqQTDkW1XScORw5Jew4cRw7dewpV/UktHw77CpGk6LMKn'
-   // //                   + 'w5TCksOIwqlwc8KHwqDDvUZIPcKQFAzCgcKARkBhFsOwGWQYAcKgQTnChcKxJ8KFakITRWMTVTzD'
-   // //                   + 'qHQ0RT/Dv8KkAAAAABgBw4AgH8Oxw6/DgAAAwqAKw77Cg37CpsO9f0vDn8O7el9fw5nCv8O/w7/D'
-   // //                   + 'v8O/w7/CoA3CjcKVP8OWHMODf8OxwqwCwqYgFQAABwPDv8O/w7sQZALCj8OwwrxDw5IfAEAIAAAN'
-   // //                   + 'IMOgAAEAAAHDvgAAACAAADTCgAAABMO/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8OywoUBAQESVUxB'
-   // //                   + 'TUUzLjk4VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVXDv8O7EGQYwo/D'
-   // //                   + 'sAAAaQAAAAgAAA0gAAABAAABwqQAAAAgAAA0woAAAARVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV'
-   // //                   + 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQ=='
 
    /**
     * This ~constant holds file bonk.mp3 as data uri
@@ -270,7 +71,7 @@ Cvgr.Const =
     * @note : File https://github.com/scottschiller/SoundManager2/tree/master/demo/animation-2b/audio/bonk.mp3
     * @note : Data generated by ref 20190402°0623 'Dopiaza → data: URI Generator'
     * @id 20190402°0637
-    * @type String
+    * @type {string}
     */
    , sB64Dopiaza_Bonk_Mp3 : 'data:audio/mp3;base64,'
                + '/+OAxAAAAAAAAAAAAEluZm8AAAAPAAAABwAADQ4AJCQkJCQkJCQkJCQkJCRJSUlJSUlJSUlJ'
@@ -342,7 +143,7 @@ Cvgr.Const =
     * @note : File https://github.com/scottschiller/SoundManager2/tree/master/demo/animation-2b/audio/fingerplop2.mp3
     * @note : Data generated by ref 20190402°0623 'Dopiaza → data: URI Generator'
     * @id 20190402°0633
-    * @type String
+    * @type {string}
     */
    , sB64Dopiaza_Fingerplop2_Mp3 : 'data:audio/mp3;base64,'
                + '//uQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAAIKABA'
@@ -391,7 +192,7 @@ Cvgr.Const =
     * @note : File https://github.com/scottschiller/SoundManager2/tree/master/demo/animation-2b/audio/fingerplop.mp3
     * @note : Data generated by ref 20190402°0623 'Dopiaza → data: URI Generator'
     * @id 20190402°0635
-    * @type String
+    * @type {string}
     */
    , sB64Dopiaza_Fingerplop_Mp3 : 'data:audio/mp3;base64,'
                + '//uQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAIAAAOsAAg'
@@ -474,7 +275,7 @@ Cvgr.Const =
     * @note : Remember issue 20190402°0611 'audio data source does not work'
     * @note : It works with mime-type mp3 and mpeg, but not with mpeg3
     * @note : Tested with browsers Chrome 64, Edge 42, FF 66, IE 9, Opera 58, Vivaldi 2.4
-    * @type String
+    * @type {string}
     */
    , sB64Dopiaza_MouseOverMp3 : 'data:audio/mp3;base64,'
                + '//tQZAAAAFwA4fUAAAgAAA0goAABEX2nRBh6AAAAADSDAAAADgAADwAAAAAuf+GBGB94Awi+'
@@ -616,6 +417,7 @@ if (Cvgr.Vars.radiobuttn !== null)
  */
 Cvgr.Objs.Algo = function()
 {
+   'use strict';
    this.Canvas = null;                                 // Canvas object - the canvas tag [prop 20140916°0552]
    this.Context = null;                                // Context object - attached to canvas [prop 20140916°0553]
    this.Funktion = null;                               // function - ... [prop 20140916°0554]
@@ -636,6 +438,7 @@ Cvgr.Objs.Algo = function()
  */
 Cvgr.Objs.Ikon = function()
 {
+   'use strict';
 
    // public properties, to be set by user via HTML comment [seq 20140815°1322]
    this.AlgoName = ''; // 'pulse'                      // string - algorithm (workaround for Algo) [prop 20140916°0512]
@@ -643,7 +446,7 @@ Cvgr.Objs.Ikon = function()
    this.Color = 'Silver';                              // [prop 20140916°0514] string - RGB or webcolor
    this.Color2 = 'Gray';                               // [prop 20140916°0515] string - RGB or webcolor 
    this.Color3 = 'SlateGray';                          // string - RGB or webcolor (nowhere used?) [prop 20140916°0516]
-   this.Hertz = 0.1;        ;                          // number - frequency in Hz [prop 20140916°0517]
+   this.Hertz = 0.1;                                   // number - frequency in Hz [prop 20140916°0517]
    this.Ide = null;                                    // string - canvas ID, read from HTML [prop 20140926°0311]
    this.ShiftX = 0;                                    // int - horizontal offset (in pixel) [prop 20140916°0518]
    this.ShiftY = 0;                                    // int - vertical offset (in pixel) [prop 20140916°0522]
@@ -682,10 +485,12 @@ Cvgr.Objs.Ikon = function()
  */
 Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iThick)
 {
+   'use strict';
+
    // workaround for missing default parameter [seq 20190312°0253]
    //  Remember issue 20190312°0251 'IE fails with default params'
-   if (iWidth === undefined) {
-       var iWidth = 2;
+   if ( typeof iThick === 'undefined' ) {
+       iThick = 2;
    }
 
    this.X1 = iX1;
@@ -710,6 +515,8 @@ Cvgr.Objs.Line = function(iX1, iY1, iX2, iY2, sColor, iThick)
  */
 Cvgr.Objs.Pojnt = function(nX, nY)
 {
+   'use strict';
+
    // [seq 20140815°1332]
    this.ptX = nX;
    this.ptY = nY;
@@ -719,7 +526,7 @@ Cvgr.Objs.Pojnt = function(nX, nY)
     * Function just for fun
     *
     * @id 20140815°1333
-    * @return {String}
+    * @return {string}
     */
    this.getIt = function()
    {
@@ -728,8 +535,8 @@ Cvgr.Objs.Pojnt = function(nX, nY)
 };
 
 // Some 'static' variables for below function startCanvasGear()
-Cvgr.Vars.icos = new Array();                          // [var 20140815°1246]
-Cvgr.Vars.iFrameNo = 0;                                // [var 20140815°1247]
+Cvgr.Vars.icos = [];                                                   // [var 20140815°1246]
+Cvgr.Vars.iFrameNo = 0;                                                // [var 20140815°1247]
 
 /**
  * This function starts CanvasGear
@@ -740,12 +547,13 @@ Cvgr.Vars.iFrameNo = 0;                                // [var 20140815°1247]
  */
 Cvgr.startCanvasGear = function()
 {
+   'use strict';
 
    /**
     * This anonymous function might register the test radiobutton click handler.
     *
     * @id 20140819°1811
-    * @see todo 20190330°0121 'register test buttons cleanup'
+    * @see todo 20190330°0121 'register-test-buttons cleanup'
     * @note Does not work as expected. We need still onclick in HTML.
     * @note This can also be defined outside this function on script level.
     * @note Experimental shutdown 20170302°0321 did not work as expected
@@ -809,7 +617,7 @@ Cvgr.startCanvasGear = function()
       // Now ico.Command is known, e.g. "algo=pulse hertz=111 color=orange"
 
       // () parse commandline [line 20140815°0946]
-      ico.CmdsHash = Trekta.Util2.CmdlinParser.parse(ico.Command, true);
+      ico.CmdsHash = Trekta.Utils.CmdlinParser.parse(ico.Command);
 
       // set AlgoName in advance [line 20190330°0221]
       ico.AlgoName = ( ( 'algo' in ico.CmdsHash ) && (ico.CmdsHash['algo'] !== '') )
@@ -981,11 +789,12 @@ Cvgr.Vars.tHelper = null; // [var 20190401°1413]
  * @id 20190329°0451
  * @todo 20190330°0441 : The two parameters iNdxPiggy and iko seem
  *     redundant, one of them should suffice. Does it`?
- * @param {Integer} iNdxPiggy — The index into the piggy arrays
- * @param {object} iko — The specific Ikon which's algo shall be examined
+ * @param {number} iNdxPiggy (Integer) — The index into the piggy arrays
+ * @param {Object} iko — The specific Ikon which's algo shall be examined
  */
 Cvgr.Func.examineAlgo = function(iNdxPiggy, iko)
 {
+   'use strict';
 
    // is algorithm available now? [condi 20190329°0453]
    var sAlgoNameOrg = iko.AlgoName;
@@ -1019,10 +828,12 @@ Cvgr.Func.examineAlgo = function(iNdxPiggy, iko)
  *
  * @id 20190329°0921
  * @callers Only • executeFrame()
- * @param {Integer} iNdx
+ * @param {number} iNdx (Integer) — ..
  */
 Cvgr.Func.executeFram_PrintInfoCanvas = function(iNdx)
 {
+   'use strict';
+
    // (x) output canvas status [seq 20140815°1251]
    // The ID of the output element has to be the ID of the canvas with added '.info'.
    // See ref 20190329°0513 'stackoverflow : convert float number to whole'
@@ -1046,6 +857,9 @@ Cvgr.Func.executeFram_PrintInfoCanvas = function(iNdx)
       // print commandline args [seq 20140815°1315]
       for ( var ki in Cvgr.Vars.icos[iNdx].CmdsHash )
       {
+         if ( ! Cvgr.Vars.icos[iNdx].CmdsHash.hasOwnProperty(ki) ) {
+            continue;
+         }
          var sValEscaped = Trekta.Utils.htmlEscape(Cvgr.Vars.icos[iNdx].CmdsHash[ki]);
          sOut += "<br /> [cmd] " + ki + " = " + sValEscaped;
       }
@@ -1067,6 +881,8 @@ Cvgr.Func.executeFram_PrintInfoPage = function ( iTimeCurr
                                                  , iFramesPerSecondTotal
                                                   )
 {
+   'use strict';
+
    // (.4) output Page Debug Info [seq 20140916°1032]
    var elDbg = document.getElementById("Cvgr_DebugPageOutputArea");
    if (elDbg !== null)
@@ -1095,6 +911,7 @@ Cvgr.Func.executeFram_PrintInfoPage = function ( iTimeCurr
  */
 Cvgr.Func.executeFrame = function()
 {
+   'use strict';
 
    // (P) output page status [seq 20140815°1247]
    // (P.1) calculate each frame [seq 20140815°1252]
@@ -1144,14 +961,10 @@ Cvgr.Func.executeFrame = function()
       // convenience [seq 20190330°0327]
       var iko = Cvgr.Vars.icos[iNdx];
 
-      if ( iko.AlgoName === 'Template' ) {
-         var sAlgo = sAlgo;
-      }
-
       // process DrawNumberLimit flag [seq 20190401°0431]
       // Remeber issue 20190401°0435 'hamster appears multiple times'
       // Remember finding 20190401°0451 'frame delay with pulled-behind canvases'
-      if ( ( ! iko.DrawNumberLimit < 1 )
+      if ( ( iko.DrawNumberLimit > 0 )
           && ( ( Cvgr.Vars.iFrameNo - iko.iFrameDelay ) > iko.DrawNumberLimit )
            ) {
          continue;
@@ -1182,9 +995,9 @@ Cvgr.Func.executeFrame = function()
          } catch(err) {
             // it is e.g. the non-existent 'Oha' algorithm, note yet
             //  exchanged to the default algo. Just skip this.
-            Cvgr.Vars.sDebugPageHelper += '<br />↯ executeAlgorithm failed:'
+            Cvgr.Vars.sDebugPageHelper += '<br /> [Err 20190329°0412] ↯ executeAlgorithm failed :'
                             + 'Ide = ' + iko.Ide + ' algo = ' + sAlgo
-                             + ' (should never happen'
+                             + ' (should never happen)'
                               ;
          }
       }
@@ -1214,12 +1027,12 @@ Cvgr.Func.executeFrame = function()
          }
 
          // (2.2.2) load buddy module [seq 20190329°0415]
-         var sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.combined.js'); // e.g. "http://localhost/canvasgear/"
-         if (sPathAbs === '') { // supplement 20190402°0451
-            sPathAbs = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js');
+         var sPathAbs = Trekta.Utils.retrieveDafBaseFolderAbs('/canvasgear.combi.js');
+         if (sPathAbs === '') {
+            sPathAbs = Trekta.Utils.retrieveDafBaseFolderAbs('/canvasgear.js');
          }
-         var sModuleNameOne = sPathAbs + 'riders/canvasgear.' + sAlgo + '.js';
-         var sModuleNameTwo = sPathAbs + 'canvasgear.' + sAlgo + '.js';
+         var sModuleNameOne = sPathAbs + '/riders/canvasgear.' + sAlgo + '.js';
+         var sModuleNameTwo = sPathAbs + '/canvasgear.' + sAlgo + '.js';
          var iModuleIndex = Cvgr.Vars.aPiggyAlgoNames.length;
 
          // create piggy array set [seq 20190330°0344]
@@ -1249,7 +1062,8 @@ Cvgr.Func.executeFrame = function()
          Trekta.Utils.pullScriptBehind ( sModuleNameOne
                                         , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][0]
                                          , Cvgr.Vars.aPiggyCallbacks[iModuleIndex][1]
-                                          );
+                                          , null // [marker 20210416°1633`48 GoCloCom] add param four
+                                           );
       } // immediate-versus-load condition finished
    } // single canvas processing finished
 
@@ -1271,6 +1085,8 @@ Cvgr.Func.executeFrame = function()
  */
 Cvgr.Func.initializeCanvas = function(iko)
 {
+   'use strict';
+
    // (A) process properties [seq 20190330°0311]
    // (A.) translate tokens to property names [seq 20190330°0313]
    var oTokToProp = {
@@ -1293,11 +1109,17 @@ Cvgr.Func.initializeCanvas = function(iko)
 
    // (A.) first apply default values to Ikon object [line 20190330°0243]
    for (var sKey in oDefaults) {
-      iko[sKey] = oDefaults[sKey];
+      if ( oDefaults.hasOwnProperty(sKey) ) {
+         iko[sKey] = oDefaults[sKey];
+      }
    }
 
    // (A.) then overwrite with commandline values [seq 20190330°0244]
    for ( var sKeySrc in iko.CmdsHash) {
+
+      if ( ! iko.CmdsHash.hasOwnProperty(sKeySrc) ) {
+          continue;
+      }
 
       // (A.) do not restore the algo name [seq 20190331°0321]
       //  Any not-found algo might have switched it to default algo ('pulse')
@@ -1345,13 +1167,14 @@ Cvgr.Func.initializeCanvas = function(iko)
       Cvgr.Vars.bSoundLibraryLoading = true;
 
       // seq 20190402°0521
-      var sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.combined.js');
-      if (sScript === '') { sScript = Trekta.Utils.retrieveScriptFolderAbs('canvasgear.js'); }
-      sScript += 'libs/howler/howler.min.js';
+      var sScript = Trekta.Utils.retrieveDafBaseFolderAbs('/canvasgear.combi.js');
+      if (sScript === '') { sScript = Trekta.Utils.retrieveDafBaseFolderAbs('/canvasgear.js'); }
+      sScript += '/howler/howler.min.js';
       Trekta.Utils.pullScriptBehind ( sScript
                                      , Cvgr.Func.pullbehind_soundOnLoad('howler')
                                       , Cvgr.Func.pullbehind_soundOnError('howler')
-                                       );
+                                       , null // [marker 20210416°1633`49 GoCloCom] add param four
+                                        );
    }
 
    // (D) set signal [line 20190330°0344]
@@ -1370,6 +1193,8 @@ Cvgr.Func.initializeCanvas = function(iko)
  */
 Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
 {
+   'use strict';
+
    if ( Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] === 'Template' ) {
       var xDbg = xDbg;
    }
@@ -1383,7 +1208,8 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
       Trekta.Utils.pullScriptBehind ( Cvgr.Vars.aPiggyModuleNamesTwo[iNdxPiggy]
                                      , Cvgr.Vars.aPiggyCallbacks[iNdxPiggy][0] // [2]
                                       , Cvgr.Vars.aPiggyCallbacks[iNdxPiggy][1] // [3]
-                                       );
+                                       , null // [marker 20210416°1633`50 GoCloCom] add param four
+                                        );
       Cvgr.Vars.sDebugPageHelper += '<br /> — pullScript_Second :'
                      + ' &nbsp; piggy ' + iNdxPiggy
                       + ' &nbsp; "' + Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] + '"'
@@ -1398,6 +1224,7 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
    Cvgr.Vars.aPiggyFlags4OnError2[iNdxPiggy] = true;
 
    // is algorithm available now? [condi 20190329°0453]
+   var aIcos = null;
    if ( Cvgr.Vars.aPiggyAlgoNames[iNdxPiggy] in Cvgr.Algos ) {
 
       // [seq 20190331°0333]
@@ -1407,7 +1234,7 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
       // this should be the run only by 'Template', does it? [seq 20190401°0531]
       // So far, only Template is searched external, although it were available internal.
       // todo : Sequence is redundant with just below. Somehow merge the two.
-      var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
+      aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
       for (var i = 0; i < aIcos.length; i++) {
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Template intern ' + i);
          Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
@@ -1417,13 +1244,13 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
    else {
       // rider not found, switch to default algo [seq 20190331°0343 (like 20190331°0345)]
       // loop over this canvases
-      var aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
-      for (var i = 0; i < aIcos.length; i++) {
+      aIcos = Cvgr.Vars.aPiggyIconArrays[iNdxPiggy];
+      for (var i2 = 0; i2 < aIcos.length; i2++) {
          // switch this canvas to substitute algo
-         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].AlgoName = 'pulse';
-         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].CmdsHash['text'] = ('Rp ' + i);
-         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
-         Cvgr.Func.initializeCanvas(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i]);
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i2].AlgoName = 'pulse';
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i2].CmdsHash['text'] = ('Rp ' + i2);
+         Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i2].iFrameDelay = Cvgr.Vars.iFrameNo - 1;
+         Cvgr.Func.initializeCanvas(Cvgr.Vars.aPiggyIconArrays[iNdxPiggy][i2]);
       }
    }
 
@@ -1448,6 +1275,8 @@ Cvgr.Func.pullbehind_onError = function(iNdxPiggy)
  */
 Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
 {
+   'use strict';
+
    // main job [line 20190331°0323]
    Cvgr.Vars.aPiggyFlags4OnLoad1[iNdxPiggy] = true;
 
@@ -1491,12 +1320,14 @@ Cvgr.Func.pullbehind_onLoad = function(iNdxPiggy)
  *    It will be interesting, if we possible want load even more scripts,
  *    whether it is easy to share this callback with multiple of them.
  * @callers Only • pullScriptBehind callback
- * @param {String} sScript The name of the script to load. This is, what
+ * @param {string} sScript The name of the script to load. This is, what
  *    will be interesting, whether it will be easy to share this callback
  *    between multiple scripts.
  */
 Cvgr.Func.pullbehind_soundOnError = function(sScript)
 {
+   'use strict';
+
    // [seq 20190401°1334]
    if ( (sScript !== 'soundman2') && (sScript !== 'howler') ) {
       alert('Theoretically not possible:\n\nPullbehind onError wanted = "' + sScript + '"');
@@ -1516,6 +1347,8 @@ Cvgr.Func.pullbehind_soundOnError = function(sScript)
  */
 Cvgr.Func.pullbehind_soundOnLoad = function(sScript)
 {
+   'use strict';
+
    // [seq 20190401°1344]
    if ( (sScript !== 'soundman2') && (sScript !== 'howler') ) {
       alert('Theoretically not possible:\n\nPullbehind onLoad wanted = "' + sScript + '"');
@@ -1541,6 +1374,8 @@ Cvgr.Func.pullbehind_soundOnLoad = function(sScript)
  */
 Cvgr.Func.pullbehind_soundOnLoaded = function()
 {
+   'use strict';
+
    // prepare source string [seq 20190402°0543]
    // See issue 20190402°0611 'audio data source does not work'
    var sAudioData = '4';
@@ -1549,7 +1384,7 @@ Cvgr.Func.pullbehind_soundOnLoaded = function()
       case '2' : sAudioData = Cvgr.Const.sB64Dopiaza_Fingerplop2_Mp3; break; // a bit higher
       case '3' : sAudioData = Cvgr.Const.sB64Dopiaza_Fingerplop_Mp3; break; // a bit lower
       case '4' : sAudioData = Cvgr.Const.sB64Dopiaza_MouseOverMp3; break; // ringing
-      default : sAudioData = './../libs/sm2/mouseover.mp3'; // possibly not available with canvasgear.combined.js
+      default : sAudioData = './../sm2/mouseover.mp3'; // possibly not available with canvasgear.combi.js
    }
 
    // [line 20190402°0541 (after 20190402°0221)]
@@ -1574,6 +1409,8 @@ Cvgr.Func.pullbehind_soundOnLoaded = function()
  */
 Cvgr.Func.setRadiobutton = function()
 {
+   'use strict';
+
    // toggle [seq 20140819°1753]
    var sMsg = '[Debug 20140926°1131]\n\nNow radio-button algo-mode = ';
    if (document.FormAlgoMode.AlgoMode[0].checked)
@@ -1596,13 +1433,13 @@ Cvgr.Func.setRadiobutton = function()
    return;
 };
 
-﻿/** - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
+/** - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
  * This section provides algorithm 'Ballist'
  *
  * id 20140916°0411 namespace
  * version : 0.x.x — 20190330°0757..
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
- * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
+ * copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
  * authors : ncm
  * encoding : UTF-8-with-BOM
  */
@@ -1628,7 +1465,7 @@ Cvgr.Algos.Ballist = {
     */
    Hit : function(nRingval, nMinutes) { // Cvgr.Algos.Ballist.Hit
 
-      'use strict'; // [line 20190329°0843`14]
+      'use strict';
 
       // set source values
       this.ringval = nRingval;                            // number - the ring value (assumed from 1.0 to 10.9)
@@ -1701,7 +1538,7 @@ Cvgr.Algos.Ballist = {
       this.Diameter = 0.1;                                             // diameter in meter [var 20140926°1151] the canvas scale shall be based on this
       this.Naame = '<n/a>';                                            // the discipline name
       this.Shortnam = '<n/a>';                                         //
-      this.rings = new Array();                                        // array of rings, to be filled by somebody
+      this.rings = [];                                                 // array of rings, to be filled by somebody
    }
 
    /**
@@ -1709,11 +1546,11 @@ Cvgr.Algos.Ballist = {
     *
     * @id 20140926°1211
     * @callers Only • func 20140916°0421 executeAlgorithm
-    * @param {object} iko ...
+    * @param {Object} iko ...
     */
    , executeAlgo_drawDiagonal : function(iko) // Cvgr.Algos.Ballist.executeAlgo_drawDiagonal
    {
-      'use strict'; // [line 20190329°0843`16]
+      'use strict';
 
       // preparation [seq 20140926°1212]
       var nHeight = iko.Height;                           // pixel — remember issue 20140901°0933 'Opera 10 peculiar about capitals'
@@ -1778,24 +1615,24 @@ Cvgr.Algos.Ballist = {
     */
    , executeAlgo_getSeries : function(sSeries) // Cvgr.Algos.Ballist.executeAlgo_getSeries
    {
-      'use strict'; // [line 20190329°0843`17]
+      'use strict';
 
-      var hits = new Array();
+      var hits = [];
 
       if (( typeof sSeries === 'undefined' ) || (sSeries.length < 1)) {
 
          // hardcoded default hitlist [seq 20140916°0751]
-         var h = new Cvgr.Algos.Ballist.Hit(10.7, 55); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(9.3, 43); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.1, 0); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.2, 1); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.3, 3); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.4, 6); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.5, 10); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.6, 20); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.7, 30); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.8, 40); hits.push(h);
-         var h = new Cvgr.Algos.Ballist.Hit(2.9, 50); hits.push(h);
+         var h01 = new Cvgr.Algos.Ballist.Hit(10.7, 55); hits.push(h01);
+         var h02 = new Cvgr.Algos.Ballist.Hit(9.3, 43); hits.push(h02);
+         var h03 = new Cvgr.Algos.Ballist.Hit(2.1, 0); hits.push(h03);
+         var h04 = new Cvgr.Algos.Ballist.Hit(2.2, 1); hits.push(h04);
+         var h05 = new Cvgr.Algos.Ballist.Hit(2.3, 3); hits.push(h05);
+         var h06 = new Cvgr.Algos.Ballist.Hit(2.4, 6); hits.push(h06);
+         var h07 = new Cvgr.Algos.Ballist.Hit(2.5, 10); hits.push(h07);
+         var h08 = new Cvgr.Algos.Ballist.Hit(2.6, 20); hits.push(h08);
+         var h09 = new Cvgr.Algos.Ballist.Hit(2.7, 30); hits.push(h09);
+         var h10 = new Cvgr.Algos.Ballist.Hit(2.8, 40); hits.push(h10);
+         var h11 = new Cvgr.Algos.Ballist.Hit(2.9, 50); hits.push(h11);
 
          // retrieve series details ring-decimal/minutes-on-clock
          // Commandlines e.g.:
@@ -1833,12 +1670,12 @@ Cvgr.Algos.Ballist = {
     */
    , executeAlgo_getTarget : function(sTargetName) // Cvgr.Algos.Ballist.executeAlgo_getTarget
    {
-      'use strict'; // [line 20190329°0843`18]
+      'use strict';
 
       var target = new Cvgr.Algos.Ballist.Target();
 
+      // See ref 20140926°1331 'wikimedia → 25 m precision and 50 meter pistol target'
       if (sTargetName === 'kkspp') {
-         // ref : http://commons.wikimedia.org/wiki/Category:Targets?uselang=de#mediaviewer/File:25_Meter_Precision_and_50_Meter_Pistol_Target.svg (20140926°1331)
          target.Diameter = 0.500;
          target.Naame = "Sportpistole 25 m Präzision";
          target.Shortnam = sTargetName;
@@ -1921,12 +1758,12 @@ Cvgr.Algos.Ballist = {
     *         degree, e.g. *not* for drawing the final line to origin.
     * @note Compatibility: Seems not to work with IE8
     * @callers • Cvgr.Func.executeFrame
-    * @param {array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
+    * @param {Array} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
     * @param {number} iNdx — The index into the Cvgr.Vars.icos array.
     */
    , executeAlgorithm : function(iko) // Cvgr.Algos.Ballist.executeAlgorithm
    {
-      'use strict'; // [line 20190329°0843`15]
+      'use strict';
 
       // retrieve target [seq 20140916°0433]
       var tgt = Cvgr.Algos.Ballist.executeAlgo_getTarget();
@@ -1947,10 +1784,10 @@ Cvgr.Algos.Ballist = {
       var iRadiX = iCenterPoint;
       var iRadiY = iCenterPoint;
       if (iko.ShiftX !== null) {
-         var iRadiX = iCenterPoint + parseInt(iko.ShiftX, 10);
+         iRadiX = iCenterPoint + parseInt(iko.ShiftX, 10);
       }
       if (iko.ShiftY !== null) {
-         var iRadiY = iCenterPoint + parseInt(iko.ShiftY, 10);
+         iRadiY = iCenterPoint + parseInt(iko.ShiftY, 10);
       }
 
       // (.) paint rings [seq 20140916°0442]
@@ -1958,13 +1795,13 @@ Cvgr.Algos.Ballist = {
 
          // (.) calculate current radius [seq 20140916°0443]
          // todo: Replace fixed factor by calculated factor
-         var radius = iCenterPoint * tgt.rings[iLoop].radiusAbs * 12;
+         var nRadius1 = iCenterPoint * tgt.rings[iLoop].radiusAbs * 12;
 
          // (.) draw [seq 20140916°0444]
          iko.Context.beginPath();                         // circle
          iko.Context.arc ( iRadiX                         // x coordinate, e.g. 90
                           , iRadiY                        // y coordinate, e.g. 90
-                           , radius                       // radius, e.g. 90
+                           , nRadius1                     // radius, e.g. 90
                             , 0                           // starting point angle in radians, starting east
                              , Math.PI * 2                // endpoint angle in radians
                               , false                     // clockwise
@@ -1981,17 +1818,17 @@ Cvgr.Algos.Ballist = {
       for (var i = 0; i < hits.length; i++) {
 
          // (.) calculate radius [seq 20140916°0447]
-         radius = 6;
+         nRadius2 = 6;
 
          // (.) [seq 20140916°0448]
-         var iRadiX = iCenterPoint + hits[i].X * 50 + parseInt(iko.ShiftX, 10);
-         var iRadiY = iCenterPoint + hits[i].Y * 50 + parseInt(iko.ShiftY, 10);
+         var n2RadiX = iCenterPoint + hits[i].X * 50 + parseInt(iko.ShiftX, 10);
+         var n2RadiY = iCenterPoint + hits[i].Y * 50 + parseInt(iko.ShiftY, 10);
 
          // (.) draw hit [seq 20140916°0452]
          iko.Context.beginPath();                      // circle
-         iko.Context.arc ( iRadiX                      // x coordinate
-                          , iRadiY                     // y coordinate
-                           , radius                    // radius, e.g. 90
+         iko.Context.arc ( n2RadiX                     // x coordinate
+                          , n2RadiY                    // y coordinate
+                           , nRadius2                  // radius, e.g. 90
                             , 0                        // starting point angle in radians, starting east
                              , Math.PI * 2             // endpoint angle in radians
                               , false                  // clockwise
@@ -2027,14 +1864,14 @@ Cvgr.Algos.Ballist = {
 };
 //- - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-﻿/** ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+/** ^ ^ ^ ✂ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
  * This section provides the Template algorithm
  * (This is built-in but planned to be extracted to a rider script)
  *
  * id : module 20190329°0611
  * version : 0.x.x — 20190330°0757..
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
- * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
+ * copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
  * authors : ncm
  * encoding : UTF-8-with-BOM
  */
@@ -2060,11 +1897,13 @@ Cvgr.Algos.Template = Cvgr.Algos.Template || {};
  *
  * @id 201910329°0631
  * @callers Only • Cvgr.Func.executeFrame
- * @note See issue 20190329°0421 'impossible index', is it solved?
+ * @note Remember issue 20190329°0421 'impossible index'
  * @param {Object} iko — The Icon object to paint
  */
 Cvgr.Algos.Template.executeAlgorithm = function(iko)
 {
+   'use strict';
+
    // prepare canvas [seq 20190329°0441]
    iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
    iko.Context.fillStyle = iko.BgColor;
@@ -2165,7 +2004,7 @@ Cvgr.Algos.develop = {
       iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
       // build some lines [seq 20140901°0535]
-      var aLins = new Array();
+      var aLins = [];
       var oLin1 = new Cvgr.Objs.Line(3, 3, iSize -3, 3, iko.Color);
       var oLin2 = new Cvgr.Objs.Line(4, iSize - 4, iSize - 4, iSize - 4, iko.Color2);
       var oLin3 = new Cvgr.Objs.Line(5, iSize - 7, iSize - 5, 7, iko.Color3);
@@ -2205,7 +2044,7 @@ Cvgr.Algos.develop = {
  * id : module 20190329°0721
  * version :
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
- * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
+ * copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
  * authors : ncm
  * encoding : UTF-8-with-BOM
  */
@@ -2303,17 +2142,17 @@ Cvgr.Algos.pulse = {
     * This function implements the pulse drawing algorithm
     *
     * @id 20140829°0511
-    * @descript Features are:
+    * @description Features are:
     *    • Adjust the drawing size relative to the canvas size
     *    • Allow parameters 'shiftx' and 'shifty'
     *    • Use parameter 'hertz' instead of the old 'speed'
     * @status
     * @param {Array} icos — Array of icon objects, Cvgr.Vars.icos[iNdx] at the caller
-    * @param {Integer} iNdx — The index into the array
+    * @param {number} iNdx (Integer) — The index into the array
     */
    executeAlgorithm : function(iko) // Cvgr.Algos.pulse.executeAlgorithm
    {
-      'use strict'; // [line 20190329°0843`24]
+      'use strict';
 
       // (.) calculate size [seq 20140829°0514]
       var nRadiFull = (iko.Width + iko.Height) / 2;
@@ -2392,12 +2231,13 @@ Cvgr.Algos.triangle = {
     * @status proof-of-concept
     * @see ref 20140828°0911 'MDN: Drawing shapes with canvas'
     * @see ref 20140901°0321 'William Malone: rotate canvas'
-    * @param icos {Object} This is Cvgr.Vars.icos[iNdx] at the caller.
-    * @param iNdx {Integer} The index into the icon objects array
+    * @param {Object} icos — This is Cvgr.Vars.icos[iNdx] at the caller.
+    * @param {number} iNdx (Integer) — The index into the icon objects array
+    * @return {undefined}
     */
    executeAlgorithm : function(iko) // Cvgr.Algos.triangle.executeAlgorithm
    {
-      'use strict'; // [line 20190329°0843`25]
+      'use strict';
 
       // preparatory calculations [seq 20140916°0823]
       // Remember issue 20140901°0331 'IE8 demands extra plus sign'
@@ -2424,7 +2264,7 @@ Cvgr.Algos.triangle = {
 
       // set background
       iko.Context.fillStyle = iko.BgColor;
-      // (20140901°0912) try envelope against issue 20140901°0911 'Opera fillRect() fail'
+      // [seq 20140901°0912] try envelope against issue 20140901°0911 'Opera fillRect() fail'
       try
       {
          // Opera may throw 'object DOMException' here (issue 20140901°0911)
@@ -2502,7 +2342,7 @@ Cvgr.Algos.triangulum = {
     */
    executeAlgorithm : function(iko) // Cvgr.Algos.triangulum.executeAlgorithm
    {
-      'use strict'; // [line 20190329°0843`26]
+      'use strict';
 
       // preparatory calculations [seq 20140916°0824]
       // Remember issue 20140901°0331 'IE8 demands extra plus sign'
@@ -2543,38 +2383,48 @@ Cvgr.Algos.triangulum = {
          iko.Angle = iko.Angle - Math.PI * 4;
       }
    }
+
+   /**
+    * This object defines default properties for this algorithm
+    *
+    * @id 20190402°0651
+    */
+   , defaultProperties : { // [Cvgr.Algos.triangulum.defaultProperties]
+      DrawNumberLimit : 0 // animated
+   }
 };
 // ' ' ' ✂ ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' '
 
 // - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 // id : block 20190329°0131
-// version : 20190329°0912 20190329°0141
-// summary : This block is to be shared by scripts via cutnpaste
+// version : 20190329°0912.. 20190329°0141
+// summary : This block is to be shared by scripts via cut-n-paste
 // callers : So far only • canvasgear.js
 // note : Other commandline parser exist e.g. in terminal.js
 
 /**
- * @id 20190329°0111 (root 20190106°0311)
+ * @id 20190106°0311'18
+ * @note This is wanted here, so we can open Trekta.Util2 below
  */
 var Trekta = Trekta || {};
 
 /**
- * @id 20190329°0113 (root 20190106°0313)
+ * @id root 20190106°0321
+ * @usage So far only • canvasgear.js
  */
 Trekta.Util2 = Trekta.Util2 || {};
-
 
 /**
  * This object defines webcolors
  *
  * @id 20140831°0321
- * @status Working
- * @callers Only function 20140831°0331 Trekta.Util2.colorNameToHex
- * @ref http://en.wikipedia.org/wiki/Web_colors [ws 20140831°0311]
+ * @see ref 20140831°0311 'wikipedia → web colors'
+ * @callers Only • func 20140831°0331 Trekta.Util2.colorNameToHex
+ * @returns {void} 
  */
 Trekta.Util2.Webcolors = function()
 {
-   'use strict'; // [line 20190329°0845`12]
+   'use strict';
 
    // Pink colors
    this.pink                 = '#ffc0cb';      // Pink                  FF C0 CB    255 192 203
@@ -2760,9 +2610,9 @@ Trekta.Util2.Webcolors = function()
  */
 Trekta.Util2.colorNameToHex = function(sName) {
 
-   'use strict'; // [line 20190329°0845`13]
+   'use strict';
 
-   var cols = new Trekta.Util2.Webcolors;
+   var cols = new Trekta.Util2.Webcolors();
    var sCol = '';
 
    sName = sName.toLowerCase();
@@ -2776,201 +2626,189 @@ Trekta.Util2.colorNameToHex = function(sName) {
 
    return sCol;
 };
-
-/**
- * This ~static ~class provides a method to parse a commandstring
- *
- * @id 20140926°0641
- * @status Works fine for key/value pairs only. Limitation: This detects
- *    only key/value pairs, but not single command options.
- * @callers So far only • CanvasGear
- * @note Code inspired by ref 20140926°0621 'Krasimir: Simple command line parser in JS'
- * @note See also ref 20140828°0832 'majstro: tokenizing with split'
- * @note Test input
- *    - <!-- algo="triangle" color=mediumspringgreen hertz=0.1 -->
- *    - <!-- algo=Ballist series="10.7/55 9.3/43 8.5/39 6.2/43 3.3/33 1.0/11" shiftx=20 shifty=20 id="i20140916o0731" -->
- *    - <!-- algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11 -->
- *    -
- */
-Trekta.Util2.CmdlinParser = ( function()
-{
-
-   'use strict'; // [line 20190329°0845`14]
-   var parse = null; // wanted with strict mode [line 20190329°0853]
-
-   /**
-    * This function parses a commandline
-    *
-    * @id 20140926°0642
-    * @todo 20180618°0751 In NetBeans Navigator, this function is listed on
-    *    script level. Make it appear inside the Daf.Utilis.CmdlinParser level.
-    * @param sCmdlin {string} The string to be parsed
-    * @param bProcessQuotes {boolean} Flag whether to process quotes or not
-    * @returns
-    */
-   parse = function(sCmdlin, bProcessQuotes)
-   {
-      // paranoia — advisably
-      if (sCmdlin === undefined) {
-         sCmdlin = '';
-      }
-
-      var args = [];
-      var bQuoteReading = false;
-      var sToken = '';
-      for ( var i = 0; i < sCmdlin.length; i++)
-      {
-         // look for token delimiter
-         if ( ((sCmdlin.charAt(i) === ' ') || (sCmdlin.charAt(i) === '=')) && (! bQuoteReading) ) {
-
-            // look for token delimiter found, finish token
-            args.push(sToken);
-            sToken = '';
-
-            // re-supplement equal sign
-            if (sCmdlin.charAt(i) === '=') {
-               args.push('=');
-            }
-         }
-         else {
-
-            // no token delimiter, continue with token
-            if (( sCmdlin.charAt(i) === '\"') && bProcessQuotes ) {
-               bQuoteReading = (! bQuoteReading);
-            }
-            else {
-               sToken += sCmdlin.charAt(i);
-            }
-         }
-      }
-      args.push(sToken);
-      // now the plain token array is ready, the equal sign is also a token.
-
-      // There are two parsing modes: (1) plain parse and (2) kvp parse.
-      var bParsePlain = true; // (flag 20140926°1121)
-      if (! bParsePlain) {
-
-         // (a) The old and proven mode. It reads only the equations
-         //  and is just dropping single commands [seq 20140926°06322]
-         // note : This algo points to an equal sign, and then it processes
-         //   the elements above and below.
-
-         // (a.1) loop over the token array and assemble key/value pairs from the equal signs
-         var kvps = [];
-         for (var i = 0; i < args.length; i++) {
-            if (i === 0) {
-               continue;
-            }
-
-            if (i >= (args.length - 1)) {
-               continue;
-            }
-
-            // assemble key/value pair
-            if (args[i] === '=') {
-               kvps[args[i-1]] = args[i+1];
-               i++;                                                    // better do two or three increments?
-            }
-         }
-      }
-      else
-      {
-         // (b) parsing algo next version [seq 20140926°1111]
-         // summary : This algo points to the first token, then looks ahead for
-         //  an equal sign. This has the advantage, that any solitary token is
-         //  treated like a key as well, just later it will no more receive a value.
-         // hint : One loop finishes one CmdsHash element/cell.
-
-         // (b.1) loop over the token array and assemble key/value pairs from the equal signs
-         var kvps = [];
-         var sCurrKey = '';
-         for (var i = 0; i < args.length; i++) {
-
-            // (b.2) possibly skip empty elements
-            // note : This cleaning could be done separately before the loop. As
-            //    well it is not yet exactly clear, what happens with blank values.
-            if (args[i] === '') {                                      // experimental
-               continue;
-            }
-
-            // (b.3) read key name and create key with empty value
-            sCurrKey = args[i];
-            kvps[sCurrKey] = '<n/a>';                                  // '<n/a>' is a maker, may be replaced by null or the like
-
-            // (b.4) is next token an equal sign?
-            if (args[i + 1] === '=') {
-               // complete current key/value pair with value
-               kvps[sCurrKey] = args[i + 2];
-               sCurrKey = '<n?a>';                                     // reset
-
-               i++;                                                    // forward to equal sign
-               i++;                                                    // forward to this value
-               continue;                                               // forward to next key
-            }
-            else {
-               continue;                                               // forward to next key
-            }
-         }
-      }
-      return kvps;
-   };
-
-   // Curiously, if you place the curly bracket behind return on the
-   //  next line, the script will be broken (note 20160416°1311)
-   return {
-      parse : parse
-   };
-})();
 // - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-// summary : This area is shared via cutnpaste by those scripts:
-//            • dafutils.js • canvasgear.js • slidegear.js
-// id : area 20190106°0307
-// version : 20190331°0242 // 20190329°0913
+
+// ~ ✂ ~ ~ ~ ~ ~ ~ ~ area 20190106°0307 start ~ ~ ~ ~ ~ ~ ~ ~ ~
+/**!
+ * This area Trekta.Utils holds low level functions to be pasted into standalone scripts
+ *
+ * file : 20190105°1717 daftari/jsi/trektautils.js
+ * version : 20210426°1031
+ * copyright : © 2019 - 2021 Norbert C. Maier
+ * license : GNU AGPL v3
+ */
+/**
+ * This area is shared via cut-n-paste by the following scripts :
+ *   • daftari.js • canvasgear.js • fadeinfiles.js • slidegear.js • trekta-utils.js
+ * Note : It is not really clear how to handle the propagation. Possibly
+ *       use trekta-utils.js as the master, since it is a standalone file?
+ * Note: Not sure about the script duplication in fadeinfiles/docs/demo.html.
+ *
+ * versions : • 20210426°1031 20210426°0921 just orthography
+ *             • 20210418°1111 little streamlining
+ *              • 20201228°1511 • 20190418°0343
+ */
 
 /**
- * This namespace shall be root namespace
+ * This shall be the root namespace
  *
  * @id 20190106°0311
- * @callers
+ * @const — Namespace
  */
 var Trekta = Trekta || {};
 
 /**
- * This namespace shall provide some general basic functionalities.
+ * This namespace shall provide some general basic functionalities
  *
  *  The section between ~~~ Schnippel ~~~ and ~~~ Schnappel ~~~ can be cut
  *  and pasted to other scripts to provide them independent standalone basics.
  *
  * @id 20190106°0313
+ * @const — Namespace
  */
 Trekta.Utils = Trekta.Utils || {
+
+   /**
+    * This function reads a cookie value
+    *
+    * @id 20110510°2127
+    * @ref ref 20110510°2125 'w3schools → JavaScript Cookies'
+    * @callers •
+    * @note See issue 20120902°1221 'Not all browsers have e.indexOf(),
+    *    why does it work here? The answer is: here we retrieve the index
+    *    of a char in a string, not an element in an array.
+    * @param {string} sCookieName — The name of the cookie to be read
+    * @return {string} —
+    */
+   getCookie : function(sCookieName) // fullyquali ⇒ Trekta.Utils.getCookie
+   {
+      'use strict';
+
+      // Prologue [seq 20110510°2128] Still using 'var' instead 'let'
+      var i = 0;
+      var sNam = '';
+      var sRet = '';
+      var sVal = '';
+      var sCookies = document.cookie; // semicolon-delimited string
+
+      // [condi 20201228°1331]
+      // See issue 20201228°1311 'cookie setting with file protocol'
+      // Todo 20201228°1332 : Detection is quick'n'dirty, should be done in a more 'official' way
+      if (sCookies.length > 0) {
+
+         // Find value [seq 20110510°2129]
+         var aCookies = document.cookie.split(';');
+         for (i = 0; i < aCookies.length; i++) {
+            sNam = aCookies[i].substr(0, aCookies[i].indexOf('='));
+            sVal = aCookies[i].substr(aCookies[i].indexOf('=')+1);
+            sNam = sNam.replace(/^\s+|\s+$/g, '');
+            if (sNam === sCookieName) {
+               // Function unescape is deprecated, I boldly replace it by decodeURI [chg 20190423°0641]
+               sRet = decodeURI(sVal);
+               break;
+            }
+         }
+      } else {
+
+         // Provide fallback for possibly failing cookies [seq 20201228°1333]
+         sRet = localStorage.getItem(sCookieName);
+      }
+
+      return sRet;
+   }
+
+   /**
+    * This function reads a cookie as boolean
+    *
+    * @id 20120828°2021
+    * @note This function is a wrapper for Trekta.Utils.getCookie().
+    * @callers • many
+    * @param {string} sCookieName — The name of the cookie to be read
+    * @param {boolean|null} bDefault — The default value
+    * @return {boolean} — The wanted cookie value
+    */
+   , getCookieBool : function(sCookieName, bDefault) // fullyquali ⇒ Trekta.Utils.getCookieBool
+   {
+      'use strict';
+
+      // Establish optional parameter [line 20120828°2022]
+      bDefault = bDefault || false;
+
+      // Forward to cookie reading function [line 20120828°2023]
+      var sVal = Trekta.Utils.getCookie(sCookieName);
+
+      // Postprocess value [line 20120828°2024]
+      var bReturn = bDefault;
+      if (sVal === 'true') {
+         bReturn = true;
+      } else if (sVal === 'false') {
+         bReturn = false;
+      } else {
+         //Trekta.Utils.setCookie(sCookieName, bDefault.toString() , 7); // iExpirationDays
+         bReturn = bDefault;
+      }
+
+      return bReturn;
+   }
+
+   /**
+    * This function reads a cookie as integer
+    *
+    * @id 20190420°0311
+    * @callers •
+    * @param sCookieName {string} The name of the cookie to be read
+    * @param iDefault {boolean} The default value
+    * @return {number} (integer) — The wanted cookie value
+    */
+   , getCookieInt : function(sCookieName, iDefault) // fullyquali ⇒ Trekta.Utils.getCookieInt
+   {
+      'use strict';
+
+      // Establish optional parameter [line 20190420°0312]
+      iDefault = iDefault || 0;
+
+      // Forward to cookie reading function [line 20190420°0313]
+      var sVal = Trekta.Utils.getCookie(sCookieName);
+
+      // Postprocess value [line 20190420°0314]
+      var iReturn = iDefault;
+      if (sVal !== '') {
+         iReturn = parseInt(sVal, 10);
+      }
+
+      return iReturn;
+   }
 
    /**
     * This function retrieves the filename of the page to be edited
     *
     * @id 20110820°1741
     * @note Remember issue 20110901°1741 'get self filename for default page'
-    * @callers • 20120827°1511 getFilenamePlain • 20150411°0651 featuresWorkoff_1_loopAll
-    *      • 20150515°1241 sitmapWorkoff_process_Cakecrumbs1 • 20120830°0451 editFinishTransmit
-    * @returns {String} e.g. 'daftari/daftari/login.html' (with Firefox)
+    * @callers • 20120827°1511 getFilenamePlain • 20150411°0651 provideCornerstonePathes
+    *           • 20120830°0451 editFinishTransmit
+    * @return {string} — E.g. 'daftari/panels/login.html' (with Firefox)
     */
-   getFileNameFull : function() // [Trekta.Utils.getFileNameFull]
+   , getFileNameFull : function() // fullyquali ⇒ Trekta.Utils.getFileNameFull
    {
-      'use strict'; // [line 20190329°0847`12]
+      'use strict';
 
-      // read URL of this page
-      // Values are e.g.
-      //    • 'http://localhost/eps/index.html?XDEBUG_SESSION_START=netbeans-xdebug#'
-      //    • 'file:///G:/work/daftaridev/trunk/daftari/moonbouncy.html' (not yet working)
+      // read URL of this page, values are e.g. [line 20110820°1742]
+      //   • 'http://localhost/'
+      //   • 'http://localhost/eps/index.html?XDEBUG_SESSION_START=netbeans-xdebug#'
+      //   • 'file:///G:/work/daftaridev/trunk/daftari/docs/moonwalk.html' (not yet working)
       var sUrl = document.location.href;
 
-      // remove possible query after the file name
+      // Remove possible query after the file name [line 20110820°1743]
       sUrl = sUrl.substring(0, (sUrl.indexOf('?') === -1) ? sUrl.length : sUrl.indexOf('?'));
 
-      // remove possible anchor at the end
+      // Remove possible anchor at the end [line 20110820°1744]
       sUrl = sUrl.substring(0, (sUrl.indexOf('#') === -1) ? sUrl.length : sUrl.indexOf('#'));
+
+      // Possibly supplement page name 'index.html' [seq 20190419°0133] (analogy to seq 20181228°0935)
+      if ( sUrl.indexOf('/', sUrl.length - 1) !== -1 ) {
+         sUrl += 'index.html';
+      }
 
       return sUrl;
    }
@@ -2980,102 +2818,32 @@ Trekta.Utils = Trekta.Utils || {
     *
     * @id 20120827°1511
     * @callers E.g. • dafdispatch.js::workoff_Cake_0_go
-    * @returns {String} The plainfilename, e.g. 'help.html'
+    * @return {string} — The plainfilename, e.g. 'help.html'
     */
-   , getFilenamePlain : function() // [Trekta.Utils.getFileNameFull]
+   , getFilenamePlain : function() // fullyquali ⇒ Trekta.Utils.getFilenamePlain
    {
-      'use strict'; // [line 20190329°0847`13]
+      'use strict';
 
-      var sUrl = Trekta.Utils.getFileNameFull(); // e.g 'daftari/daftari/login.html' (in FF)
-
-      // fix issue 20181228°0931 'slideshow fails' [seq 20181228°0935]
-      if ( sUrl.indexOf('/', sUrl.length - 1) !== -1 ) { // 'endswith' replacement, see howto 20181228°0936
-         sUrl += 'index.html';
-      }
-
+      var sUrl = Trekta.Utils.getFileNameFull();                       // e.g 'daftari/panels/login.html'
       var a = sUrl.split('/');
       sUrl = a[a.length - 1];
+
       return sUrl;
-   }
-
-   /**
-    * This helper function delivers an XMLHttp object
-    *
-    * @id : 20110816°1622
-    * @ref : 20110816°1421 'first simple ajax example'
-    * @note 20150515°173101 : This function seems to work even with IE8
-    * @note : Any AJAX request might be easier done with jQuery, e.g. like $.ajax()
-    * @callers : • readTextFile1 • MakeRequest
-    * @note :
-    */
-   , getXMLHttp : function() // [Trekta.Utils.getFileNameFull]
-   {
-      'use strict'; // [line 20190329°0847`14]
-
-      var xmlHttp;
-
-      // () seqence 20150515°1612 'browser switch'
-      // note : Heureka, now we can read the XML file in dafdispatch.js.
-      //    This solves issue 20150515°1411 'jquery get() fails in IE8'.
-      // note : We do not use variable Trekta.Utils.bIs_Browser_Explorer anymore,
-      //    so this function can be used without .. daftari.js, e.g. in fadeinfiles.js.
-      // note : Tested only with IE8, not yet with any higher IE version.
-      if ( ! Trekta.Utils.bIs_Browser_Explorer ) {
-
-         // Firefox, Opera 8.0+, Safari
-         // todo 20190209°0836 : Implement feature detect and notify if not
-         //    available. Then it will be different, what exactly the XMLHttpRequest
-         //    object does handle. See ref 20190209°0853 'MDN → Using XMLHttpRequest'.
-         xmlHttp = new XMLHttpRequest();
-
-         // [seq 20160616°0231] experimentally preserved from throwaway old sequence
-         // note : Does it make sense to keep this sequence here? Not really.
-         //  It might make a bit sense, if we distrust above condition from the
-         //  DafUtils library, and we want make our own opinion. And second,
-         //  this statement is may ubiquitous appear in JS, like a watchdog,
-         //  or perhaps like human speakers often use 'aeh'.
-         var bFlag_SnipArchival_NaviAppNamExplo = false; // flag 20160616°0251
-
-         // () condition 20160616°0241
-         if (bFlag_SnipArchival_NaviAppNamExplo) {
-            if ( Trekta.Utils.bIs_Browser_Explorer ) {
-               throw 'The browser is IE';
-            }
-         }
-      }
-      else {
-         // Internet Explorer (IE8)
-         // todo 20190209°0835 : Switch off this sequence, this seems
-         //    to be for Internet Exporer 5 and 6.
-         try {
-            xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
-         }
-         catch(e) {
-            try {
-               xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
-            }
-            catch(e) {
-               alert('Sorry, your browser does not support AJAX [message 20160613°0421]');
-               return false;
-            }
-         }
-      }
-      return xmlHttp;
    }
 
    /**
     * This function escapes a string to be used as HTML output
     *
-    * @id : 20140926°1431
-    * @callers : • Cvgr.Func.executeFrame
+    * @id 20140926°1431
+    * @callers • Cvgr.Func.executeFrame
     * @todo  In FadeInFiles seq 20151106°1822 and seq 20151106°1821
     *            shall use this function here. [todo 20190328°0943]
-    * @param sHtml {String} The HTML fragment to be escaped
-    * @returns {String} The wanted escaped HTML fragment
+    * @param {string} sHtml — The HTML fragment to be escaped
+    * @return {string} — The wanted escaped HTML fragment
     */
-   , htmlEscape : function(sHtml) // [Trekta.Utils.htmlEscape]
+   , htmlEscape : function(sHtml) // fullyquali ⇒ Trekta.Utils.htmlEscape
    {
-      'use strict'; // [line 20190329°0847`15]
+      'use strict';
 
       sHtml = sHtml.replace(/</g, '&lt;'); // g = replace all hits, not only the first
       sHtml = sHtml.replace(/>/g, '&gt;');
@@ -3084,33 +2852,36 @@ Trekta.Utils = Trekta.Utils || {
    }
 
    /**
-    * This function tests, whether the given script is already loaded or not.
+    * This function tests, whether the given script is already loaded
+    *  or not. This function is unfaithful during the loading phase
     *
     * @id 20160503°0231
-    * @status
+    * @note Mind issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
+    * @status unfaithful
     * @callers ..
     * @param {string} sWantedScript — The plain name of the wanted script (not a complete path)
-    * @returns {boolean} Flag telling whether the script is loaded or not.
+    * @return {boolean} — Flag telling whether the script is loaded or not.
     */
-   , isScriptAlreadyLoaded : function (sWantedScript) // [Trekta.Utils.isScriptAlreadyLoaded]
+   , isScriptAlreadyLoaded : function (sWantedScript) // fullyquali ⇒ Trekta.Utils.isScriptAlreadyLoaded
    {
-      'use strict'; // [line 20190329°0847`16]
+      'use strict';
 
       var regexp = null;
 
-      // build the appropriate regex variable [seq 20160623°0311]
+      // Build the appropriate regex variable [seq 20160623°0311]
       // note : See howto 20160621°0141 'programmatically build regex'
       // note : "/" seems automatically replaced by "\/"!
       var s = sWantedScript.replace(/\./g, "\\.");                     // e.g. '/slidegear.js' to '/slidegear\.js$'
       s = s + '$';
       regexp = new RegExp(s, '');                                      // e.g. /dafutils\.js$/
 
-      // algo 20160503°0241 (compare algo 20110820°2042)
+      // do the job [algo 20160503°0241 (like algo 20110820°2042 'find specific script')]
       var scripts = document.getElementsByTagName('SCRIPT');
       if (scripts && scripts.length > 0) {
-         for (var i in scripts) {
-            if (scripts[i].src) {
-               if (scripts[i].src.match(regexp)) {
+         for (var i1 in scripts) {
+            var i2 = Number.parseInt(i1,10);
+            if (scripts[i2]) {  // [marker 20210416°1633`58 GoCloCom] restricted index type
+               if (scripts[i2].src.match(regexp)) {
                   return true;
                }
             }
@@ -3120,167 +2891,432 @@ Trekta.Utils = Trekta.Utils || {
    }
 
    /**
-    * This function loads the given script then calls the given function
+    * This function outputs a string to some default 'shell' div
     *
-    * @id 20110821°0121
-    * @version 20190331°0241 added parameter for onError callback
-    * @version 20181229°1941 now with parameter for onload callback function
-    * @status works
-    * @chain project 20181230°0211 http://www.trekta.biz/svn/demosjs/trunk/pullbehind
-    * @note About how exactly to call function(s) in the loaded script, see
-    *    e.g. issue 20160503°0211 and seq 20160624°0411 'pull-behind fancytree'.
-    * @note See howto 20181229°1943 'summary on pullbehind'
-    * @callers • dafstart.js::callCanarySqueak • daftari.js::pull-behind slides
-    *    • daftari.js::pull-behind fancytree • canvasgear.js::..
-    * @param {String} sScriptToLoad The path from page to script, e.g. "./../../daftari/js/daftaro/dafcanary.js", 'js/daftaro/dafcanary.js'
-    * @param {Function} callbackOnload The callback function for the script onload event
-    * @param {Function} callbackOnerror The callback function for the script onerror event
-    * @returns {Boolean}  Success flag (just a dummy always true)
+    * @id 20150321°0311
+    * @note chg 20190412°0253 Shift func outDbgMsg() from dafmenu.js to Trekta.Utils
+    * @param {string} sOut — The text to be output
+    * @return {undefined} —
     */
-   , pullScriptBehind : function ( sScriptToLoad, callbackOnload, callbackOnerror )
+   , outDbgMsg : function (sOut) // fullyquali => Trekta.Utils.outDbgMsg
    {
-      'use strict'; // [line 20190329°0847`17]
+      'use strict';
 
-      // avoid multiple loading [seq 20110821°0122]
-      if ( Trekta.Utils.isScriptAlreadyLoaded(sScriptToLoad) ) {
-         if ( Trekta.Utils.bShow_Debug_Dialogs ) {
-            alert ("[Debug]\n\nScript is already loaded:\n\n" + sScriptToLoad);
-         }
-         callbackOnload();
+      // Obey flag [seq 20150814°0241]
+      if ( ! Trekta.Utils.getCookieBool('checkbox_yellowdebugpane', null)) { // [marker 20210416°1633`34 GoCloCom] added parameter two
          return;
       }
 
-      // workaround against workaround [condition 20190329°0151]
-      if ( typeof DafStart !== 'undefined' ) {
+      // Test page for availability, otherwise cache the message [seq 20150516°0431]
+      if ( document.readyState !== "complete" ) {
+         Trekta.Utils.InitialMessageCache.push(sOut);
+         return;
+      }
 
-         // bad workaround for s_DaftariBaseFolderRel mismatch [seq 20190211°0131]
-         //  The reason is, that s_DaftariBaseFolderRel is the folder where
-         //  the calling script resides, not the Daftari base folder.
-         var sScriptSource = DafStart.Conf.s_DaftariBaseFolderRel + sScriptToLoad;
-         if ( sScriptToLoad.indexOf('showdown/showdown' ) > 0) {
-            sScriptSource = sScriptToLoad; // e.g. "http://localhost/workspaces/daftaridev/trunk/daftari/js.libs/showdown/showdown.min.js"
+      // Provide target element [line 20150321°0312]
+      // See issue 20160618°0431 'HTML class and id set the same'
+      // '<div class="i20150321o0231_StandardOutputDiv" id="i20150321o0231_StandardOutputDiv"></div>'
+      var ele = Trekta.Utils.outDbgMsg_GuaranteeParentElement();
+
+      // [seq 20150411°0151]
+      // summary : Shim for IE8, which does not know Date.now like other browsers.
+      // see : ref 20150411°0141 'stackoverflow → get timestamp in javascript'
+      if (! Date.now) {
+         Date.now = function () {
+            return new Date().getTime();
+         };
+      }
+      var sTimestamp = Math.floor(Date.now() / 1000);
+      sTimestamp = sTimestamp.toString();
+
+      // [seq 20150321°0313]
+      var sMsgDbg = "[Dbg 20150324°0321] Run function Trekta.Utils.outDbgMsg().";
+      sMsgDbg += "\n ele.id = " + ele.id + "\n outerHTML = " + ele.outerHTML;
+
+      // Possibly prepend cached messages [seq 20150516°0441]
+      if (Trekta.Utils.InitialMessageCache.length > 0) {
+         var sOut22 = '';
+         for ( var i = Trekta.Utils.InitialMessageCache.length - 1; i >= 0; i-- ) {
+            if (sOut22 !== '') { sOut22 = '\n\n' + sOut22; }
+            sOut22 = Trekta.Utils.InitialMessageCache[i] + sOut22;
+         }
+         Trekta.Utils.InitialMessageCache.length = 0;
+
+         // Expeimental cosmetics [seq 20190412°0241]
+         sOut22 = '<div style="background-color:LightGreen; margin:1.1em; padding:0.7em;">' + sOut22 + '</div>';
+         sOut = sOut22 + "\n\n" + sOut;
+      }
+
+      // [algo 20150322°0221] 'replace textfile linebreaks by html tags'
+      //  Just replace the linebreak characters by HTML linebreak tags,
+      //  this is easier than converting them to paragraphs.
+      var sPayload = sOut.replace(/\n/g, '<br />');
+
+      // Wrap output in paragraph [seq 20150321°0314]
+      var s = '<span style="font-size:72%;">' + sTimestamp + '</span>';
+      var sAppend = '<p>' + s + ' ' + sPayload + '</p>';
+
+      // [seq 20150321°0316]
+      var eTarget = document.getElementById(Daf.Dspat.Config.sFurniture_OutputArea_Id); // "i20150321o0231_StandardOutputDiv"
+
+      // Assemble new element content [seq 20150321°0317]
+      sAppend = '\n' + sAppend;
+      eTarget.insertAdjacentHTML('beforeend', sAppend);
+   }
+
+   /**
+    * This function guarantees an element
+    *  If the wanted element does not exist, it is created newly.
+    *
+    * @id 20150323°0321
+    * @status Working
+    * @callers • func Trekta.Utils.outDbgMsg
+    * @return {Object|Node} — The wanted target element
+    */
+   , outDbgMsg_GuaranteeParentElement : function () // fullyquali Trekta.Utils.outDbgMsg_GuaranteeParentElement
+   {
+      'use strict';
+
+      // todo : Replace detection by not using index number
+      var sTargetId = Daf.Dspat.Config.sFurniture_OutputArea_Id; // "i20150321o0231_StandardOutputDiv"
+
+      var sMsg = "[Dbg 20150323°0411] Helper function Trekta.Utils.outDbgMsg_GuaranteeParentElement().";
+
+      var ele = document.getElementById(sTargetId); // 'i20150321o0231_...'
+
+      sMsg += "\n Target ID = '" + sTargetId + "'";
+
+      if (ele) {
+         sMsg += "\n Element does exists.";
+      } else {
+         sMsg += "\n (Msg 20150323°0431 in dafmenu.js)";
+         sMsg += "\n Element does not exist : id=\"" + sTargetId + "\".";
+         sMsg += "\n Element shall be created.";
+
+         // Create HTML fragment [seq 20150325°0311]
+         // note : Here we put '<br />', because this string is immediate, and
+         //    it will not be passed trough the string mangling engine of Trekta.Utils.outDbgMsg(),
+         //    which would have replaced automatically a newline by a br tag.
+         // note : The '&nbsp;' is used, because in a html paragraph, leading
+         //    blanks have no effect. As opposed to being in a pre tag block.
+         //    Perhaps console output were better done in a pre instead a p block?
+         var sHtml = '<div'
+                    + ' id="' + sTargetId + '"'
+                    + ' class="dafBoxDebugOutput"'                     // daftari.css style=".. background-color:LemonChiffon; .."
+                    + '>'
+                    + '<p>'
+                    + '[Msg 20150325°0211] Loading dafmenu.js (1/x).'
+                    + '\n<br />&nbsp; Here comes the yellow Standard Output Box. Some page values are :'
+                    + Daf.Mnu.Jsi.getJsiIntroDebugMessage(true)        // refactor 20180517°191103
+                    + '</p>'
+                    + '</div>'
+                     ;
+
+         // Integrate created fragment
+         var eBody = document.getElementsByTagName('body')[0];
+         var eDiv = document.createElement('div');
+         eDiv.innerHTML = sHtml;
+         eBody.appendChild(eDiv);
+
+         // Retry, now mostly successful
+         ele = document.getElementById(sTargetId);                     // 'i20150321o0231_StandardOutputDiv'
+      }
+      return ele;
+   }
+
+
+   /**
+    * This function loads the given script then calls the given function
+    *
+    * @id 20110821°0121
+    * @version 20190405°0347 Refine onload callback (finished issue 20190405°0333)
+    * @version 20190331°0241 Added parameter for onError callback
+    * @version 20181229°1941 Now with parameter for onload callback function
+    * @see howto 20181229°1943 'summary on pullbehind'
+    * @callers • dafmenu.js::callCanarySqueak • daftari.js::pull-behind slides
+    *    • daftari.js::pull-behind fancytree • canvasgear.js::..
+    * @param {string} sScLoad — The path from page to script, e.g. "./../../daftari/jsi/dafcanary.js", jsi/dafcanary.js'
+    * @param {Function} callbackOnLoad — Optional. Callback function for the script onload event
+    * @param {Function} callbackOnError — Optional. Callback function for the script onerror event
+    * @param {Object} oJobs — Optional. Some identifiyer string or object to be
+    *      passed from initiator to the callbacks (introduced 20190403°0215)
+    * @return {boolean|undefined} — Success flag (just a dummy, always true)
+    */
+   , pullScriptBehind : function ( sScLoad, callbackOnLoad, callbackOnError, oJobs ) // fullyquali ⇒ Trekta.Utils.pullScriptBehind
+   {
+      'use strict';
+ ///debugger;
+
+      /*
+      todo 20210426°1011 'let pullScriptBehind caller calculate minification flavour'
+      location : seq 20190408°0135 Process script names considering minification
+      do : Don't calculate minification flavour inside pullScriptBehind, let it the caller do.
+      why : The matter is not that strict, but more complicated, has too many exceptions.
+      status : Open
+      */
+
+      // Process script names considering minification [seq 20190408°0135]
+      // note : Three identical seqences 20190408°0131, 20190408°0133 and 20190408°0135
+      // See todo 20210426°1011 'let pullScriptBehind caller calculate minification flavour'
+      if ( Trekta.Utils.bUseMinified ) {                               // [mark 20190408°0147`01]
+         ////var b1 = /.*\/highlight.pack.js$/.test(sScLoad);
+         var b2 = /.*\/showdown.min.js$/.test(sScLoad);
+         var b3 = /.*\/sitmapdaf.js$/.test(sScLoad);
+         var b4 = /.*\/sitmaplangs.js$/.test(sScLoad);
+         ////if ( ! (b1 || b2 || b3 || b4 )) {
+         if ( ! (b2 || b3 || b4 )) {
+            sScLoad = sScLoad.replace(/\.js$/, '.min.js');
          }
       }
-      else {
-         // call from • CanvasGear
-         sScriptSource = sScriptToLoad;
+
+      // Avoid multiple loading [seq 20110821°0122]
+      // Remember issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
+      if ( Trekta.Utils.aPulled.indexOf(sScLoad) >= 0 ) {
+         callbackOnLoad ( sScLoad              //
+                         , oJobs               //
+                          , true               // was already loaded
+                           );
+         return;
       }
 
-      // prepare the involved elements [seq 20110821°0123]
+      // Prepare the involved elements [seq 20110821°0123]
       var head = document.getElementsByTagName('head')[0];
       var script = document.createElement('script');
 
-      // set the trivial properties [seq 20110821°0124]
+      // Set the trivial properties [seq 20110821°0124]
       script.type = 'text/javascript';
-      script.src = sScriptSource; // DafStart.Conf.s_DaftariBaseFolderRel + sScriptToLoad;
+      script.src = sScLoad;
 
-      // set the non-trivial but crucial property [line 20181229°1932]
-      // note : Remember todo 20181229°1931 'make pullbehind state-of-the-art'
-      script.onload = callbackOnload;
+      // Possibly work without callback [condi 20190404°0831]
+      // This condition was wanted for loading fadeinfiles.js in seq 20190404°0827.
+      //  No, it is not wanted from there. But hm.. the paranoia may be nice anyway.
+      //  Finally, I am not sure now, whether the condition is useful or not.
+      if (typeof callbackOnLoad !== 'undefined') {
 
-      // [condition 20190331°0242]
-      if ((typeof callbackOnerror !== 'undefined') && (callbackOnerror !== null)) {
-         script.onerror = callbackOnerror;
+         // Set the non-trivial but crucial property [line 20181229°1932]
+         // The custom callback goes piggyback with the mandatory one
+         var cbkCustom = function () { callbackOnLoad ( sScLoad
+                                                       , oJobs
+                                                        , false // flag 'was already loaded'
+                                                         ); };
+         script.onload = function () { Trekta.Utils.pullScript_onload(sScLoad, cbkCustom); };
       }
 
-      // ignit the pulling [seq 20110821°0125]
+      // Attach onerror handler [condi 20190331°0242]
+      callbackOnError = callbackOnError || null;
+      if ( callbackOnError !== null) {
+         script.onerror =  ( function () { callbackOnError (sScLoad, oJobs); } );
+      }
+
+      // Ignit the pulling [seq 20110821°0125]
       head.appendChild(script);
 
       return true;
    }
 
    /**
-    * This function reads a file via Ajax
+    * This function constitutes the unconditional onload handler
     *
-    * @id 20140704°1011
-    * @status productive
-    * @note 20150515°173102 : This function seems to work even with IE8
-    * @note Remember issue 20140713°1121 'read file via filesystem protocol'
-    * @note Remember todo 20150517°0121 'implement local file reading after Dean Edwards 20150516°0612'
-    * @note This function does now work via filesystem protocol with Chrome.
-    * @ref http://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript [20160611°0341]
-    * @ref http://stackoverflow.com/questions/6338797/jquery-to-load-text-file-data [20140625°1731]
-    * @ref http://stackoverflow.com/questions/18440241/load-div-content-from-one-page-and-show-it-to-another [20140627°1111]
-    * @ref http://stackoverflow.com/questions/14446447/javascript-read-local-text-file [20140704°0842]
-    * @todo 20190211°0151 : Make all requests asynchronous (param bAsync = true).
-    * @callers
-    *     • Func 20190106°0615 slidegear.js::o2ReadSetup_ImageList : *.json
-    *     • daflingos.js::getLangFromCrumb                    : sitmaplangs.json // fails with async
-    *     • dafsitmap.js::sitmapWorkoff_process_Cakecrumbs1   : sitmapdaf.xml
-    *     • fadeinfiles.js::fadeInFiles_fillBehind           : given textfile
-    *     • fadeinfiles.js::fadeInFiles_fillPre()             : given textfile
-    * @param sFilename {String} — Path to file to be read
-    * @param bAsync {Boolean} — Request flavour flag (prefere asynchronous)
-    * @returns {String} The content of the wanted file
+    * @id 20190405°0341
+    * @summary This method is introduced to fix issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
+    * @callers Onyl • onload event from pullScriptBehind
+    * @param {string} sScript — The script to be pulled behind
+    * @param  {Function} cbkCustom — The callback to be executed after script is loaded
+    * @return {undefined} —
     */
-   , readTextFile1 : function(sFilename, bAsync) // [Trekta.Utils.readTextFile1]
+   , pullScript_onload : function ( sScript, cbkCustom ) // fullyquali ⇒ Trekta.Utils.pullScript_onload
    {
-      'use strict'; // [line 20190329°0847`18]
+      'use strict';
+      Trekta.Utils.aPulled.push(sScript);
+      cbkCustom();
+   }
 
-      // () preparation
-      var sRead = '';
+   /**
+    * This function reads a file via asynchronous Ajax
+    *
+    * @id 20190417°0311
+    * @status  Not really tested
+    * @note    Remember todo 20150517°0121 'implement local file reading after Dean Edwards 20150516°0612'
+    * @note    Remember issue 20140713°1121 'ajax read file via filesystem protocol'
+    * @see     ref 20160611°0341 'stackoverflow → read an external local JSON file'
+    * @see     ref 20140704°0842 'stackoverflow → read local text file'
+    * @see     ref 20140627°1111 'stackoverflow → load div from one page and show in other'
+    * @see     ref 20140625°1731 'stackoverflow → jQuery to load text file data'
+    * @callers • func 20190106°0615 slidegear.js::o2ReadSetup_ImageList
+    * @param   {string} sUrl — File to be read
+    * @param   {Function} cbkLoad — Callback function for the case of success, taking one string parameter with the read content
+    * @param   {Function} cbkFail — Callback function for the case of fail, taking one string parameter
+    * @return  {undefined} —
+    */
+   , readTextFile2 : function(sUrl, cbkLoad, cbkFail) // fullyquali ⇒ Trekta.Utils.readTextFile2
+   {
+      'use strict';
+      Trekta.Utils.ajax3Send('GET', sUrl, '', cbkLoad, cbkFail);
+   }
 
-      // () use a wrapper instead direct XMLHttpRequest
-      var xmlHttp = Trekta.Utils.getXMLHttp();
+   /**
+    * Sends asynchronous Ajax request
+    *
+    * @id 20190405°0231 (after 20140704°1011)
+    * @callers • Trekta.Utils.readTextFile2
+    * @param sMethod {string} — Either 'GET' or 'POST' ("GET", "POST", "PUT", "DELETE")
+    * @param sUrl {string} — The request URL
+    * @param {string} sPayload — The data to transmit, only used with a POST request
+    * @param {Function} cbkLoad — Callback function for the case of success, taking one string parameter
+    * @param {Function} cbkFail — Callback function for the case of fail, taking one string parameter
+    * @return {undefined} —
+    */
+   , ajax3Send : function(sMethod, sUrl, sPayload, cbkLoad, cbkFail) // fullyquali ⇒ Trekta.Utils.ajax3Send
+   {
+      'use strict';
 
-      // () set request parameters
-      // See issue 20180304°0611 'Synchronous XMLHttpRequest deprecated'. But
-      //  async = 'true' works not for all, see issue 20181229°1911 'make async work'
-      if (bAsync) {
-         xmlHttp.open("GET", sFilename, true); // [line 20190211°0147]
-      }
-      else {
-         xmlHttp.open("GET", sFilename, false); // [line 20180304°0614]
-      }
+      // () Prologue [line 20140704°1013]
+      // todo : This must be refined .. e.g. with default callbacks
+      cbkLoad = (typeof cbkLoad === 'undefined') ? null : cbkLoad ;
+      cbkFail = (typeof cbkFail === 'undefined') ? null : cbkFail ;
 
-      // () probe the ongoing
-      xmlHttp.onreadystatechange = function () {
-         if ( xmlHttp.readyState === 4 ) {
-            if ( xmlHttp.status === 200 || xmlHttp.status === 0 ) {
-               sRead = xmlHttp.responseText;
+      // Get the XMLHttpRequest object [line 20190417°0111]
+      // See todo 20190209°0836 'XMLHttpRequest availability'
+      var xmlHttp = new XMLHttpRequest();
+
+      // () Set request parameters [line 20140704°1015]
+      xmlHttp.open(sMethod, sUrl, true); // true means asynchronous
+
+      // () Probe the ongoing [line 20140704°1016]
+      xmlHttp.onreadystatechange = function ()
+      {
+         // List after ref 20190412°0132 'MDN → XMLHttp​Request​.ready​State'
+         if ( xmlHttp.readyState === 0 ) {
+            // State = UNSENT	— Client has been created. open() not called yet
+         }
+         else if ( xmlHttp.readyState === 1 ) {
+            // State = OPENED — open() has been called
+         }
+         else if ( xmlHttp.readyState === 2 ) {
+            // State = HEADERS_RECEIVED — send() has been called, and headers and status are available
+         }
+         else if ( xmlHttp.readyState === 3 ) {
+            // State = LOADING — Downloading; responseText holds partial data
+         }
+         else if ( xmlHttp.readyState === 4 ) {
+            // State = DONE — The operation is complete
+            // Below the list after ref 20190412°0133 'MDN → HTTP response status codes'
+            var bSuccess = false; // pessimistic predetermination
+            switch (xmlHttp.status) {
+               // Case '0' may happen e.g. if • HTML file containing the
+               //   script is opened in the browser via the file scheme
+               //  • too much time passes before the server responds
+               case   0 : bSuccess = true; break;
+               case 100 : break; // "Continue"
+               case 101 : break; // "Switching Protocol"
+               case 102 : break; // "Processing (WebDAV)"
+               case 103 : break; // "Early Hints"
+               case 200 : bSuccess = true; break; // "OK"
+               case 201 : break; // "Created"
+               case 202 : break; // "Accepted"
+               case 203 : break; // "Non-Authoritative Information"
+               case 204 : break; // "No Content"
+               case 205 : break; // "Reset Content"
+               case 206 : break; // "Partial Content"
+               case 207 : break; // "Multi-Status (WebDAV)"
+               case 208 : break; // "Multi-Status (WebDAV)"
+               case 226 : break; // "IM Used (HTTP Delta encoding)"
+               case 300 : break; // "Multiple Choice"
+               case 301 : break; // "Moved Permanently"
+               case 302 : break; // "Found"
+               case 303 : break; // "See Other"
+               case 304 : break; // "Not Modified"
+               case 305 : break; // "Use Proxy 👎"
+               case 306 : break; // "unused"
+               case 307 : break; // "Temporary Redirect"
+               case 308 : break; // "Permanent Redirect"
+               case 400 : break; // "Bad Request"
+               case 401 : break; // "Unauthorized"
+               case 402 : break; // "Payment Required"
+               case 403 : break; // "Forbidden"
+               case 404 : break; // "Not Found"
+               case 405 : break; // "Method Not Allowed"
+               case 406 : break; // "Not Acceptable"
+               case 407 : break; // "Proxy Authentication Required"
+               case 408 : break; // "Request Timeout"
+               case 409 : break; // "Conflict"
+               case 410 : break; // "Gone"
+               case 411 : break; // "Length Required"
+               case 412 : break; // "Precondition Failed"
+               case 413 : break; // "Payload Too Large"
+               case 414 : break; // "URI Too Long"
+               case 415 : break; // "Unsupported Media Type"
+               case 416 : break; // "Requested Range Not Satisfiable"
+               case 417 : break; // "Expectation Failed"
+               case 418 : break; // "I"m a teapot"
+               case 421 : break; // "Misdirected Request"
+               case 422 : break; // "Unprocessable Entity (WebDAV)"
+               case 423 : break; // "Locked (WebDAV)"
+               case 424 : break; // "Failed Dependency (WebDAV)"
+               case 425 : break; // "Too Early"
+               case 426 : break; // "Upgrade Required"
+               case 428 : break; // "Precondition Required"
+               case 429 : break; // "Too Many Requests"
+               case 431 : break; // "Request Header Fields Too Large"
+               case 451 : break; // "Unavailable For Legal Reasons"
+               default  : break; // (should never happen)
+            }
+            if ( bSuccess ) {
+               // xmlHttp.status is 0 or 200
+               cbkLoad(xmlHttp.responseText);
+            } else {
+               // All other xmlHttp.status values
+               cbkFail(xmlHttp.responseText);
             }
          }
       };
 
-      // () finally perform the request
+      // () Finally perform the request [seq 20140704°1017]
       try {
          // If file to read does not exist, we get exception "Failed to load
          //  resource: the server responded with a status of 404 (Not Found)"
          // See issue 20181228°0937 'try to look for file but without error 404'
+         // See issue 20200103°0252 'Chrome → AJAX fails with file protocol'
          xmlHttp.send(null);
       }
       catch (ex)
       {
-         // note 20160624°0131 : To test below error messages, browse pages
-         // - file:///X:/.../daftari/manual/fadeinfiles.html with Firefox
-         // - file:///X:/.../daftari/manual/slideshow.html with Chrome
+         // [line 20140704°1103]
+         // note 20160624°0131 : To test below error messages, browse via file protocol
+         //    the pages • 20160613°0211 Daftari → Manual → FadeInFiles with Firefox
+         //    • and 20150211°1211 Daftari → Manual → Slideshow with Chrome
          var sMsg = "<b>Sorry, some feature on this page does not work.</b>"
-                   + '\n File <tt>' + sFilename + '</tt> could not be read.' // [info 20160622°0131]
-                   + "\nYour browser said: "
-                    + '<tt>' + ex.message + '</tt>.' // e.g. "A network error occurred".
-                     ;
+                   + '\nFile <tt>' + sUrl + '</tt> ~~could not be read.'
+                    + "\nYour browser said: "
+                     + '<tt>' + ex.message + '</tt>.' // e.g. "A network error occurred".
+                      ;
 
+         // [condi 20140704°1104]
          // ref : screenshot 20160911°1221 'Chrome debugger showing exception'
          // ref : issue 20150516°0531 'Chrome cannot load local files'
          if ( Trekta.Utils.bIs_Browser_Chrome && (location.protocol === 'file:') ) {
-            sMsg += "\nYour browser seems to be Chrome, and this does not read files via file protocol."
-                 + "\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Firefox or IE"
-                 + "\nor (2) view this page from <tt>localhost</tt> with a HTTP server."
-                  ;
+            // [line 20140704°1105]
+            sMsg += "\nYour browser seems to be Chrome, and this does not ~~read files via file protocol."
+                  + "\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Firefox or IE"
+                   + "\nor (2) view this page from <tt>localhost</tt> with a HTTP server."
+                    ;
          }
          else if ( Trekta.Utils.bIs_Browser_Firefox && (location.protocol === 'file:') ) {
-            sMsg += "\nYour browser seems to be <b>Firefox</b>, and this does not read files"
-                 + "\nwith a path going below the current directory via file protocol."
-                 + "\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Chrome or IE"
-                 + "\nor (2)  view this page from <tt>localhost</tt> with a HTTP server."
-                  ;
+            // [line 20140704°1106]
+            sMsg += "\nYour browser seems to be <b>Firefox</b>, and this does not ~~read files"
+                  + "\nwith a path going below the current directory via file protocol."
+                   + "\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Chrome or IE"
+                    + "\nor (2)  view this page from <tt>localhost</tt> with a HTTP server."
+                     ;
          }
          else {
-            sMsg += '\n [info 20160622°0131] Failed reading file ' + sFilename + '.';
+            // [line 20140704°1107]
+            sMsg += '\n [info 20160622°0131] Failed sending request ' + sUrl + '.';
          }
-      }
 
-      return sRead;
+         // Use callback to deliver error message [line 20190405°0233]
+         cbkLoad(sMsg); // hm .. perhaps better just use a plain alert()
+      }
    }
 
    /**
@@ -3288,149 +3324,171 @@ Trekta.Utils = Trekta.Utils || {
     *
     * @id 20110820°2041
     * @status working
-    * @callers • CanvasGear func 20140815°1221 executeFrame
-    * @param sScriptName {String} The name of the canary script, e.g. 'sitmapdaf.js'.
-    * @returns {String} The wanted path, where the given script resides, but
-    *    there are browser differences, e.g.
+    * @see todo 20190316°0141 'call retrieveDafBaseFolderRel without canary'
+    * @see howto 20190209°0131 'retrieve this script path'
+    * @note There might be browser differences with the return value, e.g.
     *     - FF etc : scripts[i].src = 'http://localhost/manual/daftari/daftari.js'
     *     - IE     : scripts[i].src = '../daftari/daftari.js'
+    * @callers e.g. • CanvasGear func 20140815°1221 executeFrame • • •
+    * @param {string} sCanary — The name of the canary script, e.g. '/sitmapdaf.js'.
+    * @return {string} — The wanted path, where the given script resides or empty string
     */
-   , retrieveScriptFolderAbs : function (sScriptName) // [Trekta.Utils.retrieveScriptFolderAbs]
+   , retrieveDafBaseFolderAbs : function (sCanary) // fullyquali ⇒ Trekta.Utils.retrieveDafBaseFolderAbs
    {
-      'use strict'; // [line 20190329°0847`22]
+      'use strict';
 
-      var s = '';
+      // Process script names considering minification [seq 20190408°0133]
+      // note : Three identical seqences 20190408°0131, 20190408°0133 and 20190408°0135
+      if ( Trekta.Utils.bUseMinified ) {                               //  [mark 20190408°0147`02 'minification']
+         var b1 = /.*\/highlight.pack.js$/.test(sCanary);
+         var b2 = /.*\/showdown.min.js$/.test(sCanary);
+         var b3 = /.*\/sitmapdaf.js$/.test(sCanary);
+         var b4 = /.*\/sitmaplangs.js$/.test(sCanary);
+         if ( ! (b1 || b2 || b3 || b4 )) {
+            sCanary = sCanary.replace(/\.js$/, '.min.js');
+         }
+      }
 
-      // () prepare regex [seq 20160621°0142]
-      var regexMatch = / /;                                               // space between slashes prevents a syntax error
+      // () Prepare regex [seq 20160621°0142]
+      var regexMatch = / /;                                            // space between slashes prevents a syntax error
       var regexReplace = / /;
-      s = sScriptName.replace(/\./g, "\\.") + "$";                        // e.g. 'dafutils.js' to 'dafutils\.js$'
-      regexMatch = new RegExp(s, '');                                     // e.g. /dafutils\.js$/
-      s = '(.*)' + s;                                                     // prepend group
-      regexReplace = new RegExp(s, '');                                   // e.g. /(.*)dafutils\.js$/ ('/' seems automatically replaced by '\/')
+      var s = sCanary.replace(/\./g, "\\.") + "$";                     // e.g. 'dafutils.js' to 'dafutils\.js$'
+      regexMatch = new RegExp(s, '');                                  // e.g. /dafutils\.js$/
+      s = '(.*)' + s;                                                  // prepend group
+      regexReplace = new RegExp(s, '');                                // e.g. /(.*)dafutils\.js$/ ('/' seems automatically replaced by '\/')
 
-      // () algo 20110820°2042 do the job (compare algo 20160503°0241)
-      var path = '';
-      var scripts = document.getElementsByTagName('SCRIPT');              // or 'script'
+      // () Do the job [algo 20110820°2042 'find specific script' prototype]
+      var sPath = '';
+      var scripts = document.getElementsByTagName('SCRIPT');           // or 'script'
       if (scripts && scripts.length > 0) {
-         for (var i in scripts) {
+         for ( var i1 in scripts ) {
+            var i2 = Number.parseInt(i1,10); // serve 'restricted index type' [line 20210416°1741]
             // note : There are browser differences, e.g.
             //    • FF etc : scripts[i].src = 'http://localhost/manual/daftari/daftari.js'
             //    • IE     : scripts[i].src = '../daftari/daftari.js'
-            if (scripts[i].src) {
-               if ( scripts[i].src.match(regexMatch) ) {                  // e.g. /dafstart\.js$/
-                  path = scripts[i].src.replace(regexReplace, '$1');      // e.g. /(.*)dafstart.js$/
+            if (scripts[i2]) { // If i2 is NaN, this evaluates to False // [marker 20210416°1633`59 GoCloCom] restricted index type
+               if ( scripts[i2].src.match(regexMatch) ) {               // e.g. /dafmenu\.js$/
+                  sPath = scripts[i2].src.replace(regexReplace, '$1');  // e.g. /(.*)dafmenu.js$/
                }
             }
          }
       }
 
-      return path; // e.g. "http://localhost/daftaridev/trunk/daftari/js/daftaro/"
+      return sPath; // e.g. "http://localhost/daftaridev/trunk/daftari/jsi"
    }
 
    /**
-    * This function tells the relative path from the page to the given given script
+    * This function shortens a long string by placing ellipsis in the middle
     *
-    * This function is useful if the script uses resources, e.g. images,
-    *  which are located relative to the script, as typically is the case
-    *  within a project folder structure.
-    *
-    * @id 20160501°1611
-    * @ref See howto 20190209°0131 'retrieve this script path'
-    * @todo 20190316°0141 'call retrieveScriptFolderRel without canary'
-    *     Implement the possibility to call the function
-    *     without parameter. Then we have no canary to seach for in the script
-    *     tags, but we use the last from the list. This is the last one loaded,
-    *     and mostly means the calling script itself.
-    * @callers • dafstart.js from scriptlevel
-    * @param sCanary {String} Trailing part of the wanted script, e.g. '/js/daftaro/dafutils.js'
-    * @returns {String} The path to the folder where the given script resides
-                *           , e.g. "'/js/daftaro/dafutils.js'"
+    * @id ~20201203°1441
+    * @callers • 20110811°1921 Daf.Mnu.Meo.execElementEdit
+    * @param {string} sOrig — The string to be shortened
+    * @param {number} iMaxLen (integer) — The maximum lenght of the output string
+    * @return {string} — The wanted shortened string
     */
-   , retrieveScriptFolderRel : function (sCanary)
+   , sConfine : function(sOrig, iMaxLen) // fullyquali ⇒ Trekta.Utils.sConfine
    {
-      'use strict'; // [line 20190329°0847`23]
-
-      var s = '';
-
-      // () get the script tags list
-      var scripts = document.getElementsByTagName('script');
-
-      // () find the canary script tag
-      var script = null;
-      var bFound = false;
-      for (var i = 0; i < scripts.length; i++) {
-         if (scripts[i].src.indexOf(sCanary) > 0) {
-            script = scripts[i];
-            bFound = true;
-            break;
-         }
+      var sRet = '';
+      if (sOrig.length > iMaxLen) {
+         sRet = sOrig.substring(0, iMaxLen / 2)
+               + ' … '
+                + sOrig.substring(sOrig.length - iMaxLen / 2)
+                 ;
       }
+      sRet = sRet.split('\n').join('☼'); // [line 20190424°0728] replaces func 20120830°1521 Daf.Utlis.convertLinebreaksToHtml
+      sRet = sRet.split('<').join('&lt;');
+      sRet = sRet.split('>').join('&gt;');
+      return sRet;
+   }
 
-      // paranoia
-      if (! bFound) {
-         s = '[20160501°1631] Fatal error'
-            + '\n' + 'The wanted script could not be found.'
-             + '\n' + 'It looks like the search string is wrong.'
-              + '\n\n' + 'search string = ' + sCanary
-               ;
-         alert(s);
-         return '';
+   /**
+    * This function sets a cookie
+    *
+    * @id 20110510°2126
+    * @ref ref 20120828°1931 'quirksmode → Cookies'
+    * @note chg 20190412°0253 Shift func get/setCookie from dafutils.js to Trekta.Utils
+    * @callers •
+    * @param {string} sCookieName — iExpirationDays is number of days until the cookie expires
+    * @param {string} sCookieValue — iExpirationDays is number of days until the cookie expires
+    * @param {number} iExpirationDays — iExpirationDays is number of days until the cookie expires
+    * @return {undefined} —
+    */
+   , setCookie : function(sCookieName, sCookieValue, iExpirationDays) // fullyquali ⇒ Trekta.Utils.setCookie
+   {
+      'use strict';
+
+      var dExDate = new Date();
+      dExDate.setDate(dExDate.getDate() + iExpirationDays);
+
+      // Escape is deprecated, I boldly replace it by encodeURI [note 20190423°0641`03]
+      var sValue = ( encodeURI(sCookieValue) + ((iExpirationDays === null)
+                    ? ''
+                     : '; Expires = ' + dExDate.toUTCString())
+                      );
+
+      var sCookie = sCookieName + '=' + sValue;
+
+      // [line 20120828°1932] Make it valid for the whole site, not only a subdir
+      sCookie += '; path=/';
+
+      //alert('Trekta.Utils.setCookie() = ' + sCookie);
+      document.cookie = sCookie;
+
+      // Detect cookie availability and provide fallback [seq 20201228°1321]
+      // See issue 20201228°1311 'cookie setting with file protocol'
+      if (document.cookie.length < 1) {
+         localStorage.setItem(sCookieName, sCookieValue);
       }
-
-      // (.1) get the DOM internal absolute path
-      //  This is just for fun, not finally wanted.
-      s = script.src;
-      s = s.substring(0, (s.length - sCanary.length));         // used as canary is '/js/daftaro/dafutils.js'
-      Trekta.Utils.s_DaftariBaseFolderAbs = s;                 // e.g. "file:///G:/work/downtown/daftaridev/trunk/daftari/"
-
-      // (.2) get the script tag's literal path (algo 20111225°1251)
-      var sPathLiteral = '';
-      for (var i = 0; i < script.attributes.length; i++) {
-         if (script.attributes[i].name === 'src') {
-            sPathLiteral = script.attributes[i].value;
-            break;
-         }
-      }
-
-      // reduce from canary script path to folder only path [seq 20190316°0131]
-      // E.g. for sCanary "/js/daftaro/dafutils.js" :
-      //    • "./../../daftari/js/daftaro/dafutils.js" ⇒ "./../../daftari/"
-      //    • "./daftari/js/daftaro/dafutils.js"       ⇒ "./daftari/"
-      var sPathOnly = sPathLiteral.substring ( 0 , ( sPathLiteral.length - sCanary.length + 1 ) );
-
-      return sPathOnly;
    }
 
    /**
     * This function daisychains the given function on the windows.onload events
     *
     * @id 20160614°0331
-    * @note Remember ref 20190328°0953 'mdn → addEventListener'
+    * @todo This bulky function may be obsolet by function Event​Target​.add​Event​Listener.
+    *    The function supports below IE9, add​Event​Listener supports IE9 and above.
+    * @see ref 20190328°0953 'mdn → addEventListener'
     * @callers
-    * @param funczion {function} The function to be appended to the window.onload event
-    * @returns nothing
+    * @param {Function} funczion — The function to be appended to the window.onload event
+    * @return {undefined} —
     */
-   , windowOnloadDaisychain : function(funczion) // [Trekta.Utils.windowOnloadDaisychain]
+   , windowOnloadDaisychain : function(funczion) // fullyquali ⇒ Trekta.Utils.windowOnloadDaisychain
    {
-      'use strict'; // [line 20190329°0847`24]
+      'use strict';
 
-      // is the onload handler already used?
+      // Is the onload handler already used?
       if ( window.onload ) {
-         // preserve existing function(s) and append our additional function
+         // Preserve existing function(s) and append our additional function
          var ld = window.onload;
          window.onload = function() {
-            ld();
+            ld(null); // [marker 20210416°1633`26 GoCloCom] Function requires 1 argument
             funczion();
          };
       }
       else {
-         // no other handlers are registered yet
+         // No other handlers are registered yet
          window.onload = function() {
             funczion();
          };
       }
    }
+
+   /**
+    * This caches any output messages as long the page is not yet loaded
+    * @id 20150516°0451
+    * @type {Array} —
+    */
+   , InitialMessageCache : Array() // fullyqualí ⇒ Trekta.Utils.InitialMessageCache
+
+   /**
+    * This variable constitutes the onload ready flags for pullScriptBehind
+    *
+    * @id 20190405°0345
+    * @note This flags solves issue 20190405°0331 'isScriptAlreadyLoaded unfaithful'
+    * @type {Array} —
+    */
+   , aPulled : [] // fullyquali ⇒ Trekta.Utils.aPulled
+
 
    /**
     * This ~constant provides a flag whether the browser is Chrome or not
@@ -3440,12 +3498,20 @@ Trekta.Utils = Trekta.Utils || {
     *  True or False. This is achieved by wrapping the expression in the
     *  ternary operator, manually replacing Null by false.
     *
+    * @id 20160622°0221
     * @todo 20190209°0833 : For browser detection, Inconsequently for some we use
     *    navigator.userAgent, for some we use navigator.appName. Standardize this.
-    * @id 20160622°0221
-    * @type Boolean
+    * @type {boolean} —
     */
-   , bIs_Browser_Chrome : ( navigator.userAgent.match(/Chrome/) ? true : false ) // [Trekta.Utils.bIs_Browser_Chrome]
+   , bIs_Browser_Chrome : ( navigator.userAgent.match(/Chrome/) ? true : false ) // fullyquali ⇒ Trekta.Utils.bIs_Browser_Chrome
+
+   /**
+    * This ~constant provides a flag whether the browser is Edge or not
+    *
+    * @id 20190417°0217
+    * @type {boolean} —
+    */
+   , bIs_Browser_Edge : ( navigator.userAgent.match(/Edge/) ? true : false ) // fullyquali ⇒ Trekta.Utils.bIs_Browser_Edge
 
    /**
     * This ~constant provides a flag whether the browser is Internet Exporer or not
@@ -3455,17 +3521,20 @@ Trekta.Utils = Trekta.Utils || {
     *    comparison 'if ( navigator.appName === "Microsoft Internet Explorer" )'.
     *    For code, compare function getBrowserInfo() in jquery.fancytree.logger.js.
     *    For code, compare function getIEVersion() in canvasgearexcanvas.js.
-    * @type Boolean
+    * @type {boolean} —
     */
-   , bIs_Browser_Explorer : ( navigator.appName.match(/Explorer/) ? true : false ) // [Trekta.Utils.bIs_Browser_Explorer]
+   , bIs_Browser_Explorer : ( // fullyquali ⇒ Trekta.Utils.bIs_Browser_Explorer
+       ( navigator.appName.match(/Explorer/)
+        || window.msCrypto // only IE11 has this [line 20190417°0215] IE11 has different user agent string than other IE
+         ) ? true : false )
 
    /**
     * This ~constant provides a flag whether the browser is Firefox or not
     *
     * @id 20160624°0121
-    * @type Boolean
+    * @type {boolean} —
     */
-   , bIs_Browser_Firefox : ( navigator.userAgent.match(/Firefox/) ? true : false ) // [Trekta.Utils.bIs_Browser_Firefox]
+   , bIs_Browser_Firefox : ( navigator.userAgent.match(/Firefox/) ? true : false ) // fullyquali ⇒ Trekta.Utils.bIs_Browser_Firefox
 
    /**
     * This property provides a flag whether the browser is Opera or not.
@@ -3476,22 +3545,206 @@ Trekta.Utils = Trekta.Utils || {
     *     • "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
     *       (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.118"
     * @id 20190107°0821
-    * @type Boolean
+    * @type {boolean} —
     */
-   , bIs_Browser_Opera : ( navigator.userAgent.match(/(Opera)|(OPR)/) ? true : false ) // [Trekta.Utils.bIs_Browser_Opera]
+   , bIs_Browser_Opera : ( navigator.userAgent.match(/(Opera)|(OPR)/) ? true : false ) // fullyquali ⇒ Trekta.Utils.bIs_Browser_Opera
 
    /**
-    * This ~constant tells whether to pop up debug messages or not
+    * This property tells whether to pop up debug messages or not
     *
     * @id 20190311°1521
-    * @type Boolean
+    * @type {boolean} —
     */
-   , bShow_Debug_Dialogs : false // [Trekta.Utils.bShow_Debug_Dialogs]
+   , bShow_Debug_Dialogs : false // fullyquali ⇒ Trekta.Utils.bShow_Debug_Dialogs
+
+   /**
+    * This property provides a constant false value
+    *
+    * @id 20190407°0121
+    * @type {boolean} —
+    */
+   , bToggle_FALSE : false // fullyquali ⇒ Trekta.Utils.bToggle_FALSE
+
+   /**
+    * This property provides a constant false value
+    *
+    * @id 20190407°0122
+    * @type {boolean} —
+    */
+   , bToggle_TRUE : true // fullyquali ⇒ Trekta.Utils.bToggle_TRUE
+
+   /**
+    * This flag tells whether to pull-behind minified scripts or not
+    *
+    * @id 20190408°0115
+    * @callers •
+    * @type {boolean} —
+    */
+   , bUseMinified : false // fullyquali ⇒ Trekta.Utils.bUseMinified
+
+   /**
+    * This const provides the ID for the general output area (yellow pane)
+    * @id 20160618°0421
+    * @type {string} —
+    */
+   , sFurniture_OutputArea_Id : "i20150321o0231_StandardOutputDiv" // fullyquali ⇒ Trekta.Utils.sFurniture_OutputArea_Id
+
+   /**
+    * This tells ..
+    *
+    * @id 20160501°1622
+    * @callers •
+    * @type {string} —
+    */
+   , s_DaftariBaseFolderAbs : '' // fullyquali ⇒ Trekta.Utils.s_DaftariBaseFolderAbs
+
+   /**
+    * This tells ..
+    *
+    * @id 20160501°1623
+    * @callers •
+    * @type {string} —
+    */
+   , s_DaftariBaseFolderRel : '' // fullyquali ⇒ Trekta.Utils.s_DaftariBaseFolderRel
 
 };
-// ~ ~ ~ ✂ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+/**
+ * This ~static ~class provides a method to parse a command string
+ *
+ * @id 20140926°0641
+ * @status Works
+ * @note Remember todo 20180618°0751 'make func parse appear in namespace instead global'
+ * @chg 20190405°0517 Allow whitespaces
+ * @chg 20190405°0507 Accept single quotes as well as double quotes
+ * @callers • CanvasGear • page 20150210°0311 docs/testing.html
+ * @note Code inspired by ref 20140926°0621 'Krasimir: Simple command line parser in JS'
+ * @note See also ref 20140828°0832 'majstro: tokenizing with split'
+ * @return {undefined} —
+ */
+Trekta.Utils.CmdlinParser = ( function()
+{
+   'use strict';
+
+   /**
+    * This function parses a commandline
+    *
+    * @id 20140926°0642
+    * @param sCmdlin {string} The string to be parsed
+    * @return {Object} — Object with the read key-value-pairs
+    */
+   Trekta.Utils.parse = function(sCmdlin)
+   {
+      // Paranoia — advisably [seq 20140926°0653]
+      if ( typeof sCmdlin === 'undefined' ) {
+         sCmdlin = '';
+      }
+
+      // Prologue [loop 20140926°0654]
+      var args = []; // this accumulates the found tokens
+      var sQuoting = ''; // stores quote while inside quoted area
+      var sToken = ''; // this accumulates characters to one token
+
+      // Scan characters [loop 20140926°0643]
+      for ( var i1 = 0; i1 < sCmdlin.length; i1++ )
+      {
+         // Convenience [line 20190405°0512]
+         var sChar = sCmdlin.charAt(i1);
+
+         // Process blank [condi 20140926°0644]
+         if ( (sChar === ' ') && (sQuoting === '') ) {
+
+            // Ignore whitespace [seq 20190405°0513]
+            if (sToken === '') {
+               continue;
+            }
+
+            // Finish current token [seq 20140926°0645]
+            args.push(sToken);
+            sToken = '';
+
+         }
+         // [condi 20190405°0514] experimental
+         else if ( (sChar === '=') && (sQuoting === '') ) {
+
+            // [seq 20190405°0515]
+            if (sToken !== '') {
+               args.push(sToken);
+               sToken = '';
+            }
+
+            // Found token delimiter, finish current token [seq 20190405°0516]
+            args.push('=');
+
+         }
+         else {
+
+            // Accumulate one token [seq 20140926°0646]
+            if ((sChar === "'") || (sChar === '"')) {
+               sQuoting = (sQuoting === '') ? sChar : ''; // toggle quoting flag
+            }
+            else {
+               sToken += sChar;
+            }
+         }
+      }
+      args.push(sToken);
+      // Now the plain token array is ready, the equal sign is also a token.
+
+      // (B) Parse the found tokens [seq 20140926°1111]
+      // summary : This algo points to the first token, then looks ahead for
+      //  an equal sign. This has the advantage, that any solitary token is
+      //  treated like a key as well, just later it will no more receive a value.
+      // hint : One loop finishes one CmdsHash element/cell.
+
+      // (B.1) Prologue [seq 20140926°1112]
+      var oKvps = [];
+      var sCurrKey = '';
+
+      // (B.1) Loop over the token array  [seq 20140926°1113]
+      //  Assemble key/value pairs from the equal signs
+      for (var i2 = 0; i2 < args.length; i2++) {
+
+         // (B.2) Possibly skip empty elements [seq 20140926°1114]
+         // note : This cleaning could be done separately before the loop. As
+         //    well it is not yet exactly clear, what happens with blank values.
+         if (args[i2] === '') {                                        // experimental
+            continue;
+         }
+
+         // (B.3) Read key name and create key with empty value [seq 20140926°1115]
+         sCurrKey = args[i2];
+         oKvps[sCurrKey] = '<n/a>';                                    // '<n/a>' is a maker, may be replaced by null or the like
+
+         // (B.4) Is next token an equal sign? [seq 20140926°1116]
+         if ( args[i2 + 1] === '=' ) {
+
+            // Complete current key/value pair with value [seq 20140926°1117]
+            oKvps[sCurrKey] = args[i2 + 2];
+            sCurrKey = '<n?a>';                                        // reset
+
+            // [seq 20140926°1118]
+            i2++;                                                      // forward to equal sign
+            i2++;                                                      // forward to this value
+            continue;                                                  // forward to next key
+         }
+         else {
+            // [seq 20140926°1119]
+            continue;                                                  // forward to next key
+         }
+      }
+
+      return oKvps;
+   };
+
+   // Curiously, if you place the opening curly bracket not behind the return
+   //  but on the next line, the script will be broken [note 20160416°1311]
+   return {
+      parse : Trekta.Utils.parse
+   };
+})();
+// ~ ✂ ~ ~ ~ ~ ~ ~ ~ area 20190106°0307 stop ~ ~ ~ ~ ~ ~ ~ ~ ~
+
 
 // start mechanism [line 20190316°0231]
 Trekta.Utils.windowOnloadDaisychain(Cvgr.startCanvasGear);
-
-/* eof */

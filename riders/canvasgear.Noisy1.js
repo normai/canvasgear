@@ -5,8 +5,6 @@
  */
 // note : Words — Algorithm figure gesture paragon pattern
 
-'use strict';
-
 // Formal integration [seq 20190329°0621`xx]
 var Cvgr = Cvgr || {};
 Cvgr.Algos = Cvgr.Algos || {};
@@ -50,7 +48,7 @@ Cvgr.Algos.Noisy1 = {
          iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
          // (A.3) prepare some lines [seq 20190401°0724]
-         var aLins = new Array();
+         var aLins = [];
          var oLin1 = new Cvgr.Objs.Line(iDist, iSize / 2, iSize / 2 , iDist, iko.Color);
          var oLin2 = new Cvgr.Objs.Line(iSize / 2, iDist, iSize / 2, iSize - iDist, iko.Color2);
          var oLin3 = new Cvgr.Objs.Line(iSize / 2, iSize - iDist, iSize - iDist, iSize / 2, iko.Color3);
@@ -128,10 +126,13 @@ Cvgr.Algos.Noisy1 = {
     *
     * @id 20190401°1543
     * @note Code after ref 20190401°1532 'PlainJs → Get position relative to document'
+    * @param el {Element} The element of which to get the position
     * @callers •
     */
    , getElementPositionOnPage : function(el) // [Cvgr.Algos.Noisy1.getElementPositionOnPage]
    {
+      'use strict';
+
       var rect = el.getBoundingClientRect()
                 , scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
                  , scrollTop = window.pageYOffset || document.documentElement.scrollTop
@@ -147,6 +148,8 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnKeyDown : function(evt) // [Cvgr.Algos.Noisy1.pickupOnKeyDown]
    {
+      'use strict';
+
       // catch char [seq 20190401°1103]
       var oEvt = evt || window.event;
       ///if (typeof self.keys[sChar] !== 'undefined') soundManager.play('s' + self.keys[sChar]);
@@ -169,38 +172,19 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnMouseDown : function() // [Cvgr.Algos.Noisy1.pickupOnKeyDown]
    {
+      'use strict';
    }
 
    /**
     * This optional function shall pick up the mouse-move event
     *
     * @id 20190401°1121
+    * @see ref 20190401°0541 'Scott Schiller → A Noisy1 page (animation.js)'
     * @callers Only •
     */
    , pickupOnMouseMove : function(evt) // [Cvgr.Algos.Noisy1.pickupOnMouseMove]
    {
-
-      // condition 20190402°0513
-      if ( Cvgr.Vars.bSoundLibIsSoundManTwo ) {}
-
-      // // [line 20190401°1423]
-      // // See ref 20190401°0541 'Scott Schiller → A Noisy1 page (animation.js)'
-      // if ( Cvgr.Vars.bSoundLibraryReady ) {
-      //
-      //    // //alert('noise is defined');
-      //    // //Cvgr.Vars.fNoise.play ( {
-      //    // //   ///volume : parseInt ( Math.min ( 1 , scale / 3 ) * 100 )
-      //    // //   ///, pan : ( x < screenX2 ? (screenX2 - x) / screenX2*-100 : (x - screenX2) / screenX2 * 100 )
-      //    // //   volume : 99
-      //    // //   , pan : 99
-      //    // //});
-      //    // //soundManager.play('noise');
-      //
-      //    // initialize sound [seq 20190401°1425]
-      //    // See todo 20190401°1553 'finetune sound installation'
-      //    var sSound = 'aSound'; // 'noise';
-      //    soundManager.play(sSound); // after bare bone instructions
-      // }
+      'use strict';
 
       // [seq 20190402°0531]
       if ( Cvgr.Vars.bSoundLibraryReady ) {
@@ -222,6 +206,7 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnMouseUp : function() // [Cvgr.Algos.Noisy1.pickupOnKeyDown]
    {
+      'use strict';
    }
 
    /**
@@ -232,6 +217,8 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnTouchMove : function(evt) // [Cvgr.Algos.Noisy1.pickupOnTouchMove]
    {
+      'use strict';
+
       // [seq 20190401°1027]
       // finding : On a iPhone, this paints a dot where the screen
       //   is touched, but it does not follow a swipe
@@ -247,6 +234,7 @@ Cvgr.Algos.Noisy1 = {
     */
    , pickupOnTouchStart : function() // [Cvgr.Algos.Noisy1.pickupOnTouchStart]
    {
+      'use strict';
    }
 
    /**
@@ -257,6 +245,8 @@ Cvgr.Algos.Noisy1 = {
     */
    , settle_ringbuffer : function() // [Cvgr.Algos.Noisy1.settle_ringbuffer]
    {
+      'use strict';
+
       // rotate ringbuffer index [seq 20190401°1026]
       if ( Cvgr.Algos.Noisy1.iPtsNdx === null ) {
          Cvgr.Algos.Noisy1.iPtsNdx = 0;
@@ -283,12 +273,13 @@ Cvgr.Algos.Noisy1 = {
     *
     * @id 20190401°1513
     * @note Compare seq 20190324°0831 'fix the height calculation' in file 20190324°0757
-    *     http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursor2Trekta.js
+    *     https://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursor2Trekta.js
     * @note : Remember todo 20190401°1223 'outsource lines'
     * @callers •
     */
    , settle_cursorPos : function(nClientX, nClientY) // [Cvgr.Algos.Noisy1.settle_cursorPos]
    {
+      'use strict';
 
       // calculation [seq 20190401°1541]
       var nScrollAmountX = document.documentElement.scrollLeft || document.body.scrollLeft;

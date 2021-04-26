@@ -141,6 +141,7 @@
    title : SVG to HTML5 Canvas Converter
    author :
    releasedate :
+   chain : ref 20180924°0823 'openclipart → comic-hamster-face'
    chain : howto 20190401°0111 'draw svg on canvas'
    tags : canvas, javascript, svg
    ܀
@@ -298,6 +299,15 @@
    chain : https://raw.githubusercontent.com/simonwhitaker/github-fork-ribbon-css/gh-pages/gh-fork-ribbon.css [ref 20190324°0234]
    author : Simon Whitacker
    tags : css, github
+   ܀
+
+   ref 20180924°0823 'openclipart → comic-hamster-face'
+   url : https://openclipart.org/detail/15597/comic-hamster-face
+   title : comic-hamster-face
+   authors :
+   chain : ref 20190401°0133 'ProfessorCloud → SVG to HTML5 Canvas Converter'
+   usage : Func 20190401°0141 Cvgr.Algos.Hamster.draw
+   tags : canvas, javascript, svg
    ܀
 
    ref 20140926°1331 'wikimedia → 25 m precision and 50 meter pistol target'

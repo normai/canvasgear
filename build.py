@@ -1,143 +1,57 @@
 ﻿#!/usr/bin/env python
 
 # id : 20190402°0411 canvasgear/build.py
+# version : 20210426°1111
 # encoding : UTF-8-with-BOM
 # interpeter : Python 3.6
-# issues/todos :
-#    • Call online Closure Compiler online API (instead local executable)
-#    • Local Closure Compiler path is hardcoded
+# issues: • Local Closure Compiler path is hardcoded
 #    • The drive letter changing is done quick-n-dirty
 #    • After changing CWD, it were nice to restore it afterwards.
-#    • Did run under Windows so far, is not tested for others,
-#       e.g. exchange backslashes by slashes
-#    • Skip unmodified files, like in daftari/build.py seq 20190402°0437,
-#       only to do this, we must no more delete the temporary files
-# note : For implementing usage of online Google Closure Compiler API
-#    see http://downtown.trilo.de/svn/daftaridev/trunk/daftari/build.py,
-#    function 20190407°0721 minifyOnline, where it already works
-# todo : create files list programmatically from all riders\*.js files
+#    • Howler.min.js causes two very ugly warnings with GoCloCom
+# todo : Provide alternative calling online Closure Compiler online API
+# todo : Create files list programmatically from all riders\*.js files
+# note : In version 20210426°1111, the code is simplified. Some interesting sequences
+#        are lost. About how to combine files with a loop over an array of tupels, see
+#        www.trekta.biz/svn/canvasgeardev/tags/20190402o0641.canvasgear.v023/combine.py
+#        seq 20190402°0443. Remember ref 20190402°0437 'stackoverflow → python concatenate text files'
 
 """
-   This script minifies canvasgear.js and its rider scripts and
-   then combines all to one single file canvasgear.combined.js.
-   Dependency: Have Closure Compiler available on local drive.
+   This minifies and combines canvasgear.js and its rider scripts one single file
+   canvasgear.combi.js. Dependency: Have Closure Compiler available on local drive.
 """
 
-import os, sys
+import os, pathlib, sys
 
-# enroll your local compiler here [func 20190408°0141]
-def getBinPath() :
-   tpBinPathes = ( '..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
-                , '..\\..\\..\\..\\..\\..\\gipsydrive\\app.composer\\trunk\\bin\\compiler-latest\\closure-compiler-v20190301.jar'
-                 )
-   sBinPath = ''
-   for sPath in tpBinPathes :
-      if os.path.isfile(sPath) :
-         sBinPath = sPath
-         break
-   return sBinPath
+sBinGoCloCom = 'G:/work/gipsydrive/app.composer/trunk/bin/goclocom/closure-compiler-v20210406.jar'
 
+print ('*** canvasgear/build.py ***')
 
-# seq 20190402°0441
-def mount(fileslist) :
+os.chdir(os.path.dirname(__file__))
 
-   print ('Combining files from list ..')
+# Get time of target file
+p = pathlib.Path('canvasgear.combi.js')                                # using pathlib just for fun
+if p.is_file() :
+   tTgt = os.path.getmtime('canvasgear.combi.js') 
+else :
+   tTgt = 0
 
-   # seq 20190402°0443
-   # Remember ref 20190402°0437 'stackoverflow → python concatenate text files'
-   with open( 'canvasgear.combined.js', 'wb' ) as newfile:
-      for tupl in fileslist:
-         readfile = open( tupl[1], 'rb' )
-         i = newfile.tell()
-         # not with the first file
-         if i > 0 :
-            s = '/* *** append ' + tupl[1] + ' at pos ' + str(i) + ' *** */\n\n'
-            b = s.encode('utf-8')
-            newfile.write(b)
-         newfile.write( readfile.read() )
-      # want a trailing newline
-      newfile.write('\n/* eof */\n'.encode('UTF-8'))
-      readfile.close()
+# Is any of the source files younger than the target file?
+bBuild = False
+if (     tTgt < os.path.getmtime('./canvasgear.js')
+      or tTgt < os.path.getmtime('./riders/canvasgear.Hamster.js')
+      or tTgt < os.path.getmtime('./riders/canvasgear.MyAlgo.js')
+      or tTgt < os.path.getmtime('./riders/canvasgear.Noisy1.js')
+      or tTgt < os.path.getmtime('./riders/canvasgear.Template.js')
+      or tTgt < os.path.getmtime('./howler/howler.min.js')
+       ) :
+   bBuild = True
 
-# seq 20190402°0431
-def main(argv) :
+sCmd = 'java.exe -jar ' + sBinGoCloCom + ' ./canvasgear.js ./riders/canvasgear.Hamster.js ./riders/canvasgear.MyAlgo.js ./riders/canvasgear.Noisy1.js ./riders/canvasgear.Template.js ./howler/howler.min.js --js_output_file ./canvasgear.combi.js --create_source_map ./canvasgear.combi.js.map --formatting PRETTY_PRINT --charset UTF-8'
 
-   print ('*** Run canvasgear/build.py ***')
+if bBuild :
+   print (' - canvasgear building ..')
+   os.system(sCmd)
+else :
+   print (' - canvasgear nothing to do.')
 
-   # prepare path
-   sFullFilename = os.path.abspath(__file__)
-   tup = os.path.split(os.path.abspath(sFullFilename))
-   sPath = tup[0]
-   print ('>     Path = ' + sPath)
-   os.chdir("G:\\") # not well done
-   os.chdir(sPath)
-
-   # provide files list
-   fileslist = [ ( 'canvasgear.js'                      , '_min.canvasgear.js' )
-                , ( 'riders\\canvasgear.Hamster.js'     , '_min.canvasgear.Hamster.js' )
-                 , ( 'riders\\canvasgear.MyAlgo.js'     , '_min.canvasgear.MyAlgo.js' )
-                  , ( 'riders\\canvasgear.Noisy1.js'    , '_min.canvasgear.Noisy1.js' )
-                   , ( 'riders\\canvasgear.Template.js' , '_min.canvasgear.Template.js' )
-                    , ( ''                              , 'libs\\howler\\howler.min.js' )
-                     ]
-
-   # probe file modificationi times [seq 20190413°0211] quick-n-dirty
-   bDoBuild = False
-   tTgt = os.path.getmtime('canvasgear.combined.js') 
-   tSrc1 = os.path.getmtime(fileslist[0][0]) 
-   tSrc2 = os.path.getmtime(fileslist[1][0]) 
-   tSrc3 = os.path.getmtime(fileslist[2][0]) 
-   tSrc4 = os.path.getmtime(fileslist[3][0]) 
-   tSrc5 = os.path.getmtime(fileslist[4][0]) 
-   if tTgt < tSrc1 :
-      bDoBuild = True
-   if tTgt < tSrc2 :
-      bDoBuild = True
-   if tTgt < tSrc3 :
-      bDoBuild = True
-   if tTgt < tSrc4 :
-      bDoBuild = True
-   if tTgt < tSrc5 :
-      bDoBuild = True
-   if not bDoBuild :
-      print ('>     Nothing to do, all source files younger than target file')
-      return
-
-   # job 1 — minify all files to intermediates
-   if True :
-      sBin = 'java.exe -jar ' + getBinPath() + ' --formatting PRETTY_PRINT --charset UTF-8'
-      for tupls in fileslist:
-         if len(tupls[0]) > 0 :
-            sCmd = sBin + ' < ' + sPath + '\\' + tupls[0] + ' > ' + tupls[1]
-            os.system(sCmd)
-   else :
-      s = '> Minfication via online Closure Compiler API not yet available'
-      print (s)
-
-   # job 2 — combine the intermediates
-   mount(fileslist)
-
-   # cleanup intermediates
-   if True :                                                           # False
-      for tupls in fileslist:
-         if len(tupls[0]) > 0 :
-            os.remove(tupls[1])
-
-   ###input("Press Enter to continue...")
-   ###print ('Bye.')
-
-   return 123
-
-# execution entry point [seq 20190402°0421]
-if __name__ == '__main__':
-   i = main(sys.argv)
-
-   bGoodbye = True
-   if (len(sys.argv) > 1) and (sys.argv[1] == 'silent') :
-      bGoodbye = False
-
-   if bGoodbye  :
-      input("Press Enter to continue...")
-      print ('Bye.')
-
-   sys.exit(i)
+print(' - canvasgear finish.')

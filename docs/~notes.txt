@@ -11,7 +11,7 @@
        ⁞ }
    • Example code about lazy loading is on
       http://www.schillmania.com/projects/soundmanager2/doc/getstarted/#lazy-loading
-   • See http://www.trekta.biz/svn/midiprobedev/trunk/midiprobe/p5sm/sm297a/demo/index.js
+   • See https://www.trekta.biz/svn/midiprobedev/trunk/midiprobe/p5sm/sm297a/demo/index.js
        ⁞ soundManager.createSound({
        ⁞    id: 'success',
        ⁞    url: 'demo/_mp3/mouseover.mp3'
@@ -27,7 +27,7 @@
    chain : ref 20190401°1533 'stackoverflow → Finding position relative to document'
    chain : ref 20190401°1532 'PlainJs → Get position relative to document' ✱
    chain : Function 20190401°1543 getElementPositionOnPage
-   chain : Script file 20190324°0757 http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursor2Trekta.js
+   chain : Script file 20190324°0757 https://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursor2Trekta.js
    ܀
 
    finding 20190401°1433 'summary on SoundManager2 so far'

@@ -1,7 +1,5 @@
 ﻿/**
- * id          : 20140302°0611
- * summary     : This is an extract from file 20080710°2301
- *                http://downtown.trilo.de/svn/daftaridev/trunk/daftari/css/daftari.css
+ * id          : 20140302°0611 (after 20080710°2301)
  * license     : MIT/X11 License
  * copyright   : Norbert C. Maier https://github.com/normai/canvasgear/
  * encoding : UTF-8-with-BOM
@@ -15,7 +13,7 @@
  *    (4) workaround 20140128°1331 'fix too small monospace size'.
  *        See ref 20140128°1332 'Stephen Morley: Fixing monospace font'
  *        The fix is to use 'font-family:monospace,monospace; font-size:1em;'
- * note : <!-- If doctype is missing, IE will not recognize the css hoover selector [note 20130725°1311] -->
+ * note : <!-- If doctype is missing, IE will not recognize the css hoover selector [note 20130725°1311`02] -->
  * todo : Check this with http://csslint.net (it has e.g. 118 warnings 20120929°1222)
  * note :
  */
@@ -28,7 +26,7 @@ body {
 }
 
 /**
- * rule 20160617°0211 Default chapter pane
+ * rule 20160617°0212 Default chapter pane
  * note : IE does not understand max-width, so as a compromise, apply
  *    the elements a width as well (after workaround 20100822°1323).
  */

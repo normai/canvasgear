@@ -126,6 +126,7 @@ Cvgr.Algos.Noisy1 = {
     *
     * @id 20190401°1543
     * @note Code after ref 20190401°1532 'PlainJs → Get position relative to document'
+    * @param el {Element} The element of which to get the position
     * @callers •
     */
    , getElementPositionOnPage : function(el) // [Cvgr.Algos.Noisy1.getElementPositionOnPage]
@@ -272,7 +273,7 @@ Cvgr.Algos.Noisy1 = {
     *
     * @id 20190401°1513
     * @note Compare seq 20190324°0831 'fix the height calculation' in file 20190324°0757
-    *     http://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursor2Trekta.js
+    *     https://www.trekta.biz/svn/demosjs/trunk/fairydustcursor/fairyDustCursor2Trekta.js
     * @note : Remember todo 20190401°1223 'outsource lines'
     * @callers •
     */

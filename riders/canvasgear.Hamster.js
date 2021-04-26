@@ -2,9 +2,9 @@
  * This script provides a CanvasGear algorithm
  *
  * file : 20190401°0311
- * version : 0.2.3.d
+ * version : 0.2.4...
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
- * copyright : (c) 2014 - 2019 Norbert C. Maier https://github.com/normai/canvasgear/
+ * copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
  */
 
 // Formal integration into main script [seq 20190329°0621`xx]
@@ -28,11 +28,11 @@ Cvgr.Algos.Hamster = {};
  * This function implements the drawing algorithm
  *
  * @id 20190401°0141
- * @note This is code after file 20190401°0134 hamster.txt
- *    it is file 20180924o0823.chrisdesignhamster.v0.svg from
- *    • https://openclipart.org/detail/15597/comic-hamster-face [ref 20180924°0823]
- *    converted to canvas commands by
- *    • http://www.professorcloud.com/svg-to-canvas/ [ref 20190401°0133]
+ * @note This is code after file 20190401°0134 hamster.txt, which
+ *    originally was file 20180924o0823.chrisdesignhamster.v0.svg from
+ *    • ref 20180924°0823 'openclipart → comic-hamster-face',
+ *       converted to canvas commands by
+ *    • ref 20190401°0133 'ProfessorCloud → SVG to HTML5 Canvas Converter'
  * @note Modifications [lines 20190401°0411`xx] :
  *    • Repair bad converter line "ctx.scale(0,0)" to ctx.scale(1,1)
  *    • Add lines to shift into visibility [seq 20190401°0413]

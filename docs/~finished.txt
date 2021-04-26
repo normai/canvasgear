@@ -220,9 +220,9 @@
    workaround : Use something else to store the icon command, e.g.
        a comment like in seq 20140828°1251 (discarded 20140830°0246)
    note : Workaround was not useful, makes IE freeze see screenshot 20140828°1321
-      http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/img/20140828o1321.icondrawer--ie--get-comments.png
+      https://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/docs/img/20140828o1321.icondrawer--ie--get-comments.png
    ref 20190324°0813 : A demo how to find comments is now in repo 20140713°1811
-        http://www.trekta.biz/svn/demosjs/trunk/findcomments/findcomments.html
+        https://www.trekta.biz/svn/demosjs/trunk/findcomments/findcomments.html
    status : Finished with ref 20190324°0813
    ܀
 

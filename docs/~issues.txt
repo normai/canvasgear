@@ -105,26 +105,26 @@
       editor does (so far) not equip the div element with edit icons.
    chain : issue 20150223°1821 'canvas inside paragraph does not work with IE'
    note : As reference for the effect and how to cope, see page 20150223°1511
-      http://www.trekta.biz/svn/demomatrix/trunk/pages/sql/intro.html
+      https://www.trekta.biz/svn/demomatrix/trunk/pages/sql/intro.html
    status : open
    ܀
 
    issue 20150223°1821 'canvas inside paragraph does not work with IE'
-   location : File canvasgear.js for IE
+   location : File canvasgear.js with IE9
    symptom : If embedding the canvas inside a <p> tag, IE9 will not show it.
    problem : A 'div' inside a 'p' like '<p><div></div></p>' is not valid HTML.
    see : ref 20150223°1831 'stackoverflow: div inside p is adding extra p'
    see : ref 20150223°1813 'Rakesh Pai: IE runtime error using innerHTML'
    workaround : Just wrap the canvas element plus it's command comment
       into a div. No! This destroys the paragraphs 'iconfloatleft' style!
-   proposal : Perhaps a javascript preprocessor could find canvases directly
-      inside a paragraph, and wrap them with a div element.
-   status : Partially solved by workaround. Does work with IE10 but not IE9 and below.
+   proposal : A javascript preprocessor can find canvases directly inside
+      a paragraph, and wrap them with a div element.
+   status : Partially solved by workaround, works with IE10 but not IE9 and below.
    ܀
 
-   todo 20140901°0621 'gereralize features e.g. rotation'
-   do : Generalize features. E.g. make the rotate function not part of one specific
-         algorithm, but make a rotation applied to all algorithms like an overlay.
+   todo 20140901°0621 'generalize algorithm e.g. rotation'
+   do : Generalize algorithm. E.g. make the rotate function not part of one
+         specific algorithm, but apply it to other algorithms like an overlay.
    status : open
    ܀
 

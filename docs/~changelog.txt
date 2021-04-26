@@ -1,6 +1,8 @@
 
-   •
 
+   version 20210426°1121 v0.2.4
+   • Simplify build.py
+   • Some cleanup
 
    release v0.2.3 —20190402°0641 'Introduce keyboard, mouse and sound usage proof-of-concept'
    • Use Howler.js
@@ -25,7 +27,7 @@
    • Read parameter from data-cvgr attribute
    • Discontinue IE8 (and Opera 10) support, remove excanvas.js [chg 20180619°0115]
 ﻿   • Convert files to UTF-8
-   • Shift project to http://www.trekta.biz/svn/canvasgeardev
+   • Shift project to https://www.trekta.biz/svn/canvasgeardev
    • Clear documentation
 
    log 20140926°1411 CanvasGear v0.1.2.3 (2014-Oct-04)

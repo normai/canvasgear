@@ -1,4 +1,4 @@
-# CanvasGear v0.2.3.d <sup><sub><sub>— 20190408°0212</sub></sub></sup>
+﻿# CanvasGear v0.2.4 <sup><sub><sub>— 20210426°1121</sub></sub></sup>
 
 **Slogan** : Draw animated canvases by specifying parameters in a data attribute
 
@@ -14,15 +14,15 @@
 
 **Status** : Works, but has only few boring algorithms on board
 
-**Demos** : [http://www.trekta.biz/../canvasgear/doc/index.html](http://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/doc/index.html).
+**Demos** : [https://www.trekta.biz/../canvasgear/docs/index.html](https://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/docs/index.html).
 
 **Installation** :
-- Copy [`canvasgear.combined.js`](./canvasgear.combined.js) to your web folder
+- Copy [`canvasgear.combi.js`](./canvasgear.combi.js) to your web folder
 - Equip your HTML file like follows :
 ```
       <head>
          ...
-         <script src="./canvasgear.combined.js"></script>     <!-- 1. load script -->
+         <script src="./canvasgear.combi.js"></script>     <!-- 1. load script -->
          ...
       </head>
       <body>
@@ -44,7 +44,7 @@
    e.g. `canvasgear.MyAlgo2.js`
    and edit this. It will be recognized automatically.
 - To debug or edit CanvasGear itself, just use the plain `canvasgear.js` with
-   the libs and riders folders behind, instead the standalone script `canvasgear.combined.js`
+   the libs and riders folders behind, instead the standalone script `canvasgear.combi.js`
 
 **License** : GNU LGPL v3 or later [opensource.org/licenses/LGPL-3.0](https://opensource.org/licenses/LGPL-3.0)
 
@@ -52,4 +52,4 @@ Have fun
 
 2019-April-23
 
-<sup><sub>[file 20140815°0121, project 20140815°0111]</sub></sup>
+<sup><sub>[project 20140815°0111 folder 20140815°0122 file 20140815°0123]</sub></sup>

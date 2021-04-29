@@ -5,14 +5,29 @@
  */
 // note : Words — Algorithm figure gesture paragon pattern
 
-// Formal integration [seq 20190329°0621`xx]
+/**
+ * Formal integration
+ * 
+ * @id seq 20190329°0621`xx
+ * @type {Object} —
+ * @c_o_n_s_t — Namespace
+ */
 var Cvgr = Cvgr || {};
+
+/**
+ * Formal integration
+ * 
+ * @id seq 20190329°0621`xx
+ * @type {Object} —
+ * @c_o_n_s_t — Namespace
+ */
 Cvgr.Algos = Cvgr.Algos || {};
 
 /**
  * This namespace represents the Noisy1 algorithm
  *
  * @id 20190401°0713
+ * @const — Namespace
  */
 Cvgr.Algos.Noisy1 = {
 

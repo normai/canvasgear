@@ -1,5 +1,8 @@
 
 
+   version 20210428°1041 v0.2.5
+   • Just streamlining
+
    version 20210426°1121 v0.2.4
    • Simplify build.py
    • Some cleanup

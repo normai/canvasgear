@@ -2,6 +2,7 @@
  This script paints animated icons on HTML5 canvases
 
  file : 20140815°1213 canvasgear/canvasgear.js
+ version : 0.2.5 20210428°1041
  license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
  copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
  note : Minimized with Google Closure Compiler
@@ -185,7 +186,7 @@ $jscomp.polyfill("Array.prototype.keys", function(a) {
 }, "es6", "es3");
 var Cvgr = {};
 Cvgr.Algos = Cvgr.Algos || {};
-Cvgr.Const = {versionnumber:"0.2.4", versiontimestamp:"20190408°0212..", bShow_Debug_Dialogs:!1, sB64Dopiaza_Bonk_Mp3:"data:audio/mp3;base64,/+OAxAAAAAAAAAAAAEluZm8AAAAPAAAABwAADQ4AJCQkJCQkJCQkJCQkJCRJSUlJSUlJSUlJSUlJSW1tbW1tbW1tbW1tbW1tkpKSkpKSkpKSkpKSkpKStra2tra2tra2tra2trbb29vb29vb29vb29vb2///////////////////AAAAWkxBTUUzLjkyIAHDAAAAAAAAAAACQCQF2SEAAAAAAA0OXWa08wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/+OAxABa1IIMF5uwACCDBAGAB/86aEEGTrP/hZNdJTyqr/pn4OCRDARfjtIEHqAZfjEAZzj+AZkhOeMiITA2IE0A1rkeA6cdIA9GMcA66Ro+MmOYSZqT4G0RQAGcoYgGMcNoGAQPQGJ4KH4wyIEXNjUiYGUkgoGMMRYGEkBIGFkLYGG8P4GGMDv8tmpPn0J4DEOL0DGmI8AYFQGEkHIGDUHIGDEBYGD4F3/NicKiaCSJfLYGBoAQr4GFIIgGDoGwGCYAgGCsC4WhAFAQAw7hT//PE+ZmREB5IkLgGAO8ghUAwXgbAaAuUwMAIHQMFYDwMQAngMUwZgIAJAx5CmAwpAQFrAwcAs//6d97vTdngYJAPAFAkAGAeK2DlAGABluASAMDAaAsL3gYBwBgYAwDgNAHDU///////AwBgDDfxkBjxS4aoGQWIIF0nxWgYoFgJoAwBABwFBBQMiCAH//4GAUAIGAMA4DQBwAgDhc2MmBgWAgDY6AcA9UJAILy11W1dqwrXViy2OQCw1TFUqEku6WxLaggJZ4skWaLxKbQemiY/+OCxCha9IJFQ9jwABJw+YDYFRgagfGCiDUYQ4UhhvilGSSRkauQAZguA5mCgBuYC4DRgKgBBcBJxU5SzpgBADmAMAWYBQC5gFgGGAaAUYBIAxgDgBGAGAAWaQeV070dgBymHLDLDKmVMoEw1xZajTDtnsNKVBQAEwCgITBSAeMBcAgFABJFLucp3ozGYzLYzGcq0qpYzGYy5L+w67LszVqmv3dVYzLY1Gniac/0PRp/mlJiNeh6TyyNRqNQ1GYZf2GX9jLOXVgatTQ0/0PQWYEALbAkTlAVSs5a6zl/Xdh2My6mtayzq1aXKmlVymtU2WPa0n3n+tZY1X2TgjVNTU1al3j+5mUfg0WUQn9ZWvyxu473zH/5r/5jzHX/zHDn719rLLn3bO+5VuxaGm/ZbLbUqtU1rLP48+l/Hm5bD1NTUtLZpsfwxxuZU2SPPcqaaQAhh+FryH0uXjKpcoDewl+bSaWw/SLjbQLj8agKecVQYFATAIARMA0CgwBgSzAVCgMFAdkxD47Tt0DxMGgRAwHwVTAtAHBwVhgyiBBgOSTMH//jgsRRWgyCFULXtuQ5FkPVXXrENw3ZinyWZDgGE5YWqR/J+P0gNEVBZdGEjl1wlmZgAkb+ljIIyOMR2tdf7s3Fbzds47dprvwFI701C0yHDlMW5VhyelLWaO8MgTbROzjZc4MF3gn26qtiU/vstkOdu+6bR0TXks1pmVLtAosYDlE1+mY4CbaNMqlEbpb2oKk8kty2tauSKXyZusW+ih2GakYp2DVpRlRUUnmnjVAX3jVmJ87EpXEdSBuqVOMVFA1JhGCC4zBkqv3MotL5fRw1HpdnGpJD8odr56cgJyb0jm3ihiHJuIu9KqODsvkUzhS1uSqWx0EAa/YQ/N+jcF8ZqGIgoEJBNBSV5hbC9sZqDr8MqW/L6sVl2MM2pIYKQJncuwwqmR50hLvF3Zl0dUbAs7ViSSi7QSKIS6Hc9Z27ECMHRnIgBDAGAaMAkFEwJwFzEzJPMjjX89/l5TFqBeMCUC0wEQATAoA6MEcGZLtXk5SdWTA29vrU1POVTvBQwfEZbbtQ9KZRD4oA2JAExp9XBhyXxJK8wCALmttYq1rcamv/44LEfVscgggNWvAAViw7L6zk9Vh+eytw9KmttugmdZokWo5RJ9Yu1LMGBV5fOP9uEEwAMlpIJbWahqdmqlWgn6Wwy59WI3ZbHZA4bymB6BIDAFm5xtUiw1q/GXrsw5uVPLDVSnhFR+FtwKuxe0odCHpdTY3aTeFXka5L9KrAYBKV0UruS7KR3rlM6Rf7O8IgAXsQVijiSx5VrLCt86jEXVWbYclwoBj7IlH2ssGpJG6NiIPhGnLaWuZe7uxJ/YTMu03Z2WbQA3GSqbLqaS4sOupDcvf2rF4csW3Rrqyr2lcMUuT1ONYu3KGWwqgqOjCIy+2FuUhYAeBcoRTVBCSCRkof4QBfxYWZQMRCQAd1kQCzHgTXLwA6pYCCAFTAtBRMD8A8wOAcTBoAvMFUQ6GoZRCMKEQcwQJFzHkCyMMINwwiBNTHuK1MwwuswSAgVbn3Y0wIwvARi7Jg+AoAIDkwFwCzCwDVMKwEcwNAbzCAB1MDADCD4KhrN4jAwAOAoD5gNgDoCTAnAZDAMzA6BpMFYCcwBQVjAmA/MBIAQwMQUIat/+OCxKV/zGIABZrwAMBRK/NGBWBKQgDquMCEBtC9SwwGQATAMAVEIERgWgPBcAwwIwKgwCswCwJq1/H8pmqVAAAUATDQIAGFgCAAAIYBAACxTASAEMCUBQqgRmAiBIPARGAYBWYAYBRYALMBgB198JmryrV5vY8ABPGAMAAvFWNPARgImBAAOhPLVs3MAMAMwCAFwwCEEAHmAsAmCAADACAXAQEIhAUAgAqNhgFgJNdxrZbmq3a1butJ1v0YBIA8aZIgPTQXQ+4QAAtRUiDiXKNgNAIAwCyRxgBgCISwSAUBgEiAAkEgCK/AAB6gSMoCAFZj3HHUzVwmavKtXn+zR/ggAxmKQb8l91L0w3HTDLfoL0KAeLqELfTsYKAABU4AsACBgBUdAYAGmaFwBkEq+ACAFOoZJ9JpFtmHoCkNkdca2W61btat3Wu739XH6qokhHEYI6j8M4aRRKZP2lS1p8UxbTope7WqTEFNRTMuOTKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqv/jgsQ6AAADSAHAAACqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpMQU1FMy45Mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr/44LE/wAAA0gAAAAAqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqTEFNRTMuOTKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", 
+Cvgr.Const = {versionnumber:"0.2.5", versiontimestamp:"20210428°1041", bShow_Debug_Dialogs:!1, sB64Dopiaza_Bonk_Mp3:"data:audio/mp3;base64,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qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr/44LE/wAAA0gAAAAAqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqTEFNRTMuOTKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", 
 sB64Dopiaza_Fingerplop2_Mp3:"data:audio/mp3;base64,//uQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAAIKABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQECAgICAgICAgICAgICAgICAgICAgICAgICAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwP////////////////////////////////8AAAA5TEFNRTMuOTcgAaoAAAAALBcAABSAJAXNTgAAgAAACChX+laoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//uQbAAAA00Qzg1h4AAtwRmipIwAEXFZjblqMBkXGq93KKICAFL8CjNKzSNcQIQcrHRSkTEgFIdVYdg8FJeJgREFICoHA4Kct5Oy5nWoFYrHkSkRg+D4Pg+CAIAgUBMHwffBAEAQOCQEIPg+4HwfKAmD5/DCz/y4IHOUBAEHawff4IS4P3+XygIfUcKAh9SoBsnkgFCBAQAgAMAYGw2T6ogOQfB8P+Xf8uH0fX4nqB9///n/iB3/g+f/ghQsBgMBgNRgMBQJAwEABhMDmAAZrRgcA4jgfFdDzHA0Ls8Az/BnKvA/G8DlYfAouCAOAUB/C0AcAjQZKr8GxwVENsAEIgZMF/4nEMcEGh+oIh4IhP/42gQiwahCmGJCDJ//5IBqwphc4PBNidBHhM62//xQAyhLFgdJWNU5UMf///MEGcuFxNlus+jVgOBwMBwOBwOBgKBAAAEBAc/wQCAMiCrwNRcBZo1o9ET4KhXLfk4+Ki1/qSEhKf/541EiTjz/84gISY9G//7qe6Fy//A/YkmQIjbLbbLrdpXbLbdW6uhNGS/T//uSbAoAA+ZhXO4lYARAilqqxYgADnFZPl2RgAjWg+lrkiAAxULmnaKsWNEmpHs4wfU1UVHbE2k0xNadXVXdvOnEpOTNdvfw+y917v2vr/+Lbf1df/x26Yafs5NJb2FoIxv2z90Zu6KqnzPJsfqJi/lGYbtrf3ctN7e2uo/8wAcggCZQ8dj+X/dOPwmgAAAADCAcBgVjAVjiZdpiM8gKYBO4DR8NJ9P/bN/vn/+YQRW//7Uv//qWhy7687E/73JM63///+xHcERpVzGhqsAkaAT4qRtm8rkspbycR3MIdF40hTwZHgFhXlpCFkKghIybnBUKC6c8mHKWAjUEDfTEEaWGjvYxBWc8MjJlLXPa02mC4vOewEtnf86Uzd9aVIjI7OFCU0uxNXXPFBQh9NMMKFMYbT33LXpB/BpThx3+dk6gNABEhWmnay9qtkrM4bFAlJXM2e9T/8gfETjK1dRT9f1Ega8kGf/8b6/2D2gkTH73qYSWArHVM5R7LZ2vTT4wuketlSHIVcWiQRK3OhKbRA9GFn6s4pAiYYH4jh6MhGuZxP/7kmwVgAPKQU2FYQACTsxaPKQIAQ8NQTk5NoABLZrrtwSAAnQeLiOOGCxLEM4cmrTkGjMaS8rrmp20IrV9afbeq8y6Dlgw6BnaXTQtpaDyx1U2wz7H4ioy2jgJph6M3wD1Xc5se6X3fb5ALjetuqxM9UElAJugcg2xdVxrJociwQpcQizJM6nIr////h0XyTJY5cj3UmQmdv6097rRHsiI3e1n7Xn6USZO2Sh7Z0u+qXWbVrISiX6OlpmuLd4K7RYAADBDwCBBSAAA0RAWL2NUcwaodFgdksDcQn7BtD1JIpZ0glxFZd7lh8cpQJE8beaoFE2Hokkuj8oIEufKJkcRYypfol9IxcyK00kq2/yktIvmh41Nytaklo9X/JQkSaYoGsooJr1+tH/+dcRARkRlG3rOqJM/ywJNhoFDYSC4Wi0Wi0WAADHKXBCKYmZ8G4qAMFvSaXX+yZQwVQW/ximFkQ3r/70pd8L///jfiZ5j9r//x6kU8Cp4wOh0JCX0gy4YPI5VADPoAUKpMKbUMBCjCgImAWVL3GPpUUksCINEyYr/+5JsDo/zETAjtw0gAi+jRHHgiABAAAGkAAAAIAAANIAAAARRb//5SLAkGmwqCJKkFhSSocWRNKksxSKYLImrVRImtVQxpFkpeMY+oqxySIqDf//CGgpIJd/6imhRwMN6blkdFdSK4diQBhDEIUxCFCFEJv9SlmMZSm/ugYzlASwgV0Js0F4N6FHArB3//xTQp4v//8jorqVMQU1FMy45N1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV", 
 sB64Dopiaza_Fingerplop_Mp3:"data:audio/mp3;base64,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efylByZY7VOoeGw+evSVFHrS+/23c9rtL1YEd+vxh66l7f+f/////BEOCGtsO2SmKnwNlRamiyCHgkiRmyf5URQRkv9JHIznbmhpdEGGNDKc763JIS9Kz4fwv7TPpF/l6925GrEimzjgqpRxDI2yV/X/xLr5/Q67z1PC7v0a57eq62OCP1CE0Vu2ttkjjGyqroWC3Oh5lczsavVTSIZixhWK2dAcXLKkzyN8A4TZkaQiKcjoSRyrKhhxAL1w6WUbijCgaEFINnrKIfz9i0CCgZlC8i1C1eXGziUgFwyZC6n/+5JsXAAC8kJJCw8YUkdoef0UI8kLxEskx7DASSgO5nQRGS3S86WO0vuPVG5KV06afybaIaLxx5TqaK5EChIScErf9UxVhwSdf6h2KpWXoNGe4FlyN+88W9zZtmokxUUli/fn2qy//fN/7C3alx1oJtwUXWuKEkCvacxK8YcnvYySuVEGq0Mc68OfJr79x/kJwfl0b3hMLGniyrWwYFgqy4um5z+Py4//KyycWOhcfllxr/8VYrvpvZYGiTLVwp9prlR2xLpVKZJK5BIgCDCRYYKNMTRJCS0Epa1EjS0FonPCRpcXlTGzLPGzTt9llZ/VHZyojlRblMlvojs6o7GRbt//+n9n9kVnKYKpHKis5VuyLf2fp/RVT+qKR2MUMCHOACmJqp22XZ82Wdv7DJlkcmuZSGrVBwEMCDoOJBkVJP2gIWNBUkaZ////oAopTEFNRTMuOTdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//uSbHQP8zNoQIMGE3Itg7gxGANyAAABpAAAACAAADSAAAAEVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQ==", 
 sB64Dopiaza_MouseOverMp3:"data:audio/mp3;base64,//tQZAAAAFwA4fUAAAgAAA0goAABEX2nRBh6AAAAADSDAAAADgAADwAAAAAuf+GBGB94Awi+D0AXyaHO8ZYho5v4ypDhzhW3+Q0c0VqQ4XN/4rYhouUQqOUK2//ELDGigQ+EY4PiDI3/+K6GRQtBD9guGBtIBwMDFDQGgv9av+WQMH3A0jkDAlgMmIBs8LSGAQyyOoUEOoDSWC2i35DQNzLJH/FzENGZIKUiBE8sumqjZNaP////6mnUpkoHd3iZh3+21gm2hkZGZBEmmBBNS//7YGQKCPOtRFD/BoACAAANIOAAAQltFymgj7dAAAA0gAAABFLUt3Z2dnQWtS1d2Z2qWpalLs7OzugtS1LVZ2dnQTQUtS1LdndnZNBalrUt2dnZBNBNS1LSSR3ZaC1qEIQudA7TYAJMI+cxNiav/UDC1VAyqq/6Wf2mmkYqqjpoquqqt9VQAtH/9gj///+vn/hl8sjw7/zI/WWpwy6Cl8H9k/I72yz///vZLmTLLZ//upX1RuoleYMAscsrwZPAIJAurA1+G5RT4fLCwq65v9eRAAAAF4H8rCH///381//keC2yai2+D/6t+vu5af+n1evb//hL4pIm7INggBwwIwrTLUYdMP/7IGQaDPIvRcroIva4AAANIAAAAQhZFypgi9ygAAA0gAAABMUGUwFAFCy6KjEHHikv//7f0j/6wBf///XzX+/mdMnsEw1gwevqMv1tTdE/9frk7//8p1+muqYioAgUAfBIXxiaNeGCWDsYAACqSzc4u+Uinf///J0AAAATb//IJ///+0BkBIjyXkZKaCLvIAAADSAAAAEJbRsroIucgAAANIAAAAT//f6XT5aMlyyvzoal2UlXUbSiMzrQ+tCN/56EZTv959wiEVn2YL9SjBATm4sbmVAHiQRwDPM7k/yiwJ7BOfDH//W4AXf/+kFf///WWeuT+UdGL1IoU2T8xWcpUMM3R5Wmf0Mpf/mNKWZ64/Wpq8Zcm6skMApZc7kQTGoXDAQiMyqGIejVuls4lLHg1//0KgAAAP/7QGQBiPJuRspoIeTwAAANIAAAAQixFSmhB55AAAA0gAAABLdv/oQX///Lvnp44/HBjLSfaNlMGtqCOSyeyj+cCH/5sBjJDz7Uqy+ITrW2kr/WgYKDhzGvKMA4JoJH9cSIwPGMbZCEQIC5Bn/+QAt///zDn//++341fy++m6Omf0dErdUTqCElfkculqL/85GF0z/XbtypuAmUwEIQKZGgoOBK4moxKMRqhLFceEBdn/+p+2oA//tAZACAAt5Hym0CoAgAAA0goAABBjUvM/gJgAAAADSDAAAAAAAUb/2AAfS/0Okrakgtukq66KkE0W1XSdHSXscR916Vf1JLR/6kaTosp9SSyKlwc4eg/UZIPZAUDIGARkBhFvAZZBgBoEE5hbEnhWpCE0VjE1U86HQ0RT//pAAAAAAYAcAgH/HvwAAAoAr+g36m/X9L3/t6X1/Zv///////oA2NlT/WHMN/8awCpiAVAAAHA///+xBkAo/wvEPSHwBACAAADSDgAAEAAAH+AAAAIAAANIAAAAT////////////////yhQEBARJVTEFNRTMuOThVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/7EGQYj/AAAGkAAAAIAAANIAAAAQAAAaQAAAAgAAA0gAAABFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"};
@@ -984,8 +985,8 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
   return b;
 }, pullScriptBehind:function(a, b, d, g) {
   if (Trekta.Utils.bUseMinified) {
-    var h = /.*\/showdown.min.js$/.test(a), m = /.*\/sitmapdaf.js$/.test(a), q = /.*\/sitmaplangs.js$/.test(a);
-    h || m || q || (a = a.replace(/\.js$/, ".min.js"));
+    var h = /.*\/fadeinfiles.combi.js$/.test(a), m = /.*\/highlight.pack.js$/.test(a), q = /.*\/showdown.min.js$/.test(a), r = /.*\/sitmapdaf.js$/.test(a), t = /.*\/sitmaplangs.js$/.test(a), y = /.*\/canvasgear.combi.js$/.test(a);
+    h || m || q || r || t || y || (a = a.replace(/\.js$/, ".min.js"));
   }
   if (0 <= Trekta.Utils.aPulled.indexOf(a)) {
     b(a, g, !0);
@@ -995,11 +996,11 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
     m.type = "text/javascript";
     m.src = a;
     if ("undefined" !== typeof b) {
-      var r = function() {
+      var c = function() {
         b(a, g, !1);
       };
       m.onload = function() {
-        Trekta.Utils.pullScript_onload(a, r);
+        Trekta.Utils.pullScript_onload(a, c);
       };
     }
     d = d || null;
@@ -1040,16 +1041,16 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
   }
 }, retrieveDafBaseFolderAbs:function(a) {
   if (Trekta.Utils.bUseMinified) {
-    var b = /.*\/highlight.pack.js$/.test(a), d = /.*\/showdown.min.js$/.test(a), g = /.*\/sitmapdaf.js$/.test(a), h = /.*\/sitmaplangs.js$/.test(a);
-    b || d || g || h || (a = a.replace(/\.js$/, ".min.js"));
+    var b = /.*\/fadeinfiles.combi.js$/.test(a), d = /.*\/highlight.pack.js$/.test(a), g = /.*\/showdown.min.js$/.test(a), h = /.*\/sitmapdaf.js$/.test(a), m = /.*\/sitmaplangs.js$/.test(a), q = /.*\/canvasgear.combi.js$/.test(a);
+    b || d || g || h || m || q || (a = a.replace(/\.js$/, ".min.js"));
   }
   b = a.replace(/\./g, "\\.") + "$";
   a = new RegExp(b, "");
   b = new RegExp("(.*)" + b, "");
   d = "";
   if ((g = document.getElementsByTagName("SCRIPT")) && 0 < g.length) {
-    for (var m in g) {
-      h = Number.parseInt(m, 10), g[h] && g[h].src.match(a) && (d = g[h].src.replace(b, "$1"));
+    for (var r in g) {
+      h = Number.parseInt(r, 10), g[h] && g[h].src.match(a) && (d = g[h].src.replace(b, "$1"));
     }
   }
   return d;
@@ -1101,7 +1102,7 @@ Trekta.Utils.windowOnloadDaisychain(Cvgr.startCanvasGear);
  This script provides a CanvasGear algorithm
 
  file : 20190401°0311
- version : 0.2.4...
+ version : 0.2.5
  license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
 */
@@ -2022,7 +2023,7 @@ Cvgr.Algos.Hamster.defaultProperties = {DrawNumberLimit:5};
  - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
  This script supplements a CanvasGear algorithm [file 20190329°1111]
 
- version : 0.2.4
+ version : 0.2.5
  license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
 */
@@ -2118,7 +2119,7 @@ Cvgr.Algos.Noisy1 = {executeAlgorithm:function(a) {
  This script serves as template to spawn CanvasGear algorithms
 
  id : file 20190329°0611
- version : 0.2.4
+ version : 0.2.5
  license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
 */
@@ -2156,7 +2157,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     return c._counter = 1e3, c._html5AudioPool = [], c.html5PoolSize = 10, c._codecs = {}, c._howls = [], c._muted = !1, c._volume = 1, c._canPlayEvent = "canplaythrough", c._navigator = "undefined" != typeof window && window.navigator ? window.navigator : null, c.masterGain = null, c.noAudio = !1, c.usingWebAudio = !0, c.autoSuspend = !0, c.ctx = null, c.autoUnlock = !0, c._setup(), c;
   }, volume:function(c) {
     var e = this || b;
-    if (c = parseFloat(c), e.ctx || z(), void 0 !== c && 0 <= c && 1 >= c) {
+    if (c = parseFloat(c), e.ctx || y(), void 0 !== c && 0 <= c && 1 >= c) {
       if (e._volume = c, e._muted) {
         return e;
       }
@@ -2174,7 +2175,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     return e._volume;
   }, mute:function(c) {
     var e = this || b;
-    e.ctx || z();
+    e.ctx || y();
     e._muted = c;
     e.usingWebAudio && e.masterGain.gain.setValueAtTime(c ? 0 : e._volume, b.ctx.currentTime);
     for (var f = 0; f < e._howls.length; f++) {
@@ -2190,7 +2191,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     for (var c = this || b, e = c._howls.length - 1; 0 <= e; e--) {
       c._howls[e].unload();
     }
-    return c.usingWebAudio && c.ctx && void 0 !== c.ctx.close && (c.ctx.close(), c.ctx = null, z()), c;
+    return c.usingWebAudio && c.ctx && void 0 !== c.ctx.close && (c.ctx.close(), c.ctx = null, y()), c;
   }, codecs:function(c) {
     return (this || b)._codecs[c.replace(/^x-/, "")];
   }, _setup:function() {
@@ -2322,7 +2323,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
   };
   d.prototype = {init:function(c) {
     var e = this;
-    return b.ctx || z(), e._autoplay = c.autoplay || !1, e._format = "string" != typeof c.format ? c.format : [c.format], e._html5 = c.html5 || !1, e._muted = c.mute || !1, e._loop = c.loop || !1, e._pool = c.pool || 5, e._preload = "boolean" != typeof c.preload || c.preload, e._rate = c.rate || 1, e._sprite = c.sprite || {}, e._src = "string" != typeof c.src ? c.src : [c.src], e._volume = void 0 !== c.volume ? c.volume : 1, e._xhrWithCredentials = c.xhrWithCredentials || !1, e._duration = 0, e._state = 
+    return b.ctx || y(), e._autoplay = c.autoplay || !1, e._format = "string" != typeof c.format ? c.format : [c.format], e._html5 = c.html5 || !1, e._muted = c.mute || !1, e._loop = c.loop || !1, e._pool = c.pool || 5, e._preload = "boolean" != typeof c.preload || c.preload, e._rate = c.rate || 1, e._sprite = c.sprite || {}, e._src = "string" != typeof c.src ? c.src : [c.src], e._volume = void 0 !== c.volume ? c.volume : 1, e._xhrWithCredentials = c.xhrWithCredentials || !1, e._duration = 0, e._state = 
     "unloaded", e._sounds = [], e._endTimers = {}, e._queue = [], e._playLock = !1, e._onend = c.onend ? [{fn:c.onend}] : [], e._onfade = c.onfade ? [{fn:c.onfade}] : [], e._onload = c.onload ? [{fn:c.onload}] : [], e._onloaderror = c.onloaderror ? [{fn:c.onloaderror}] : [], e._onplayerror = c.onplayerror ? [{fn:c.onplayerror}] : [], e._onpause = c.onpause ? [{fn:c.onpause}] : [], e._onplay = c.onplay ? [{fn:c.onplay}] : [], e._onstop = c.onstop ? [{fn:c.onstop}] : [], e._onmute = c.onmute ? [{fn:c.onmute}] : 
     [], e._onvolume = c.onvolume ? [{fn:c.onvolume}] : [], e._onrate = c.onrate ? [{fn:c.onrate}] : [], e._onseek = c.onseek ? [{fn:c.onseek}] : [], e._onunlock = c.onunlock ? [{fn:c.onunlock}] : [], e._onresume = [], e._webAudio = b.usingWebAudio && !e._html5, void 0 !== b.ctx && b.ctx && b.autoUnlock && b._unlockAudio(), b._howls.push(e), e._autoplay && e._queue.push({event:"play", action:function() {
       e.play();
@@ -2382,7 +2383,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
       return e || f._loadQueue("play"), p._id;
     }
     f._webAudio && b._autoResume();
-    var w = Math.max(0, 0 < p._seek ? p._seek : f._sprite[c][0] / 1E3), x = Math.max(0, (f._sprite[c][0] + f._sprite[c][1]) / 1E3 - w), y = 1E3 * x / Math.abs(p._rate), F = f._sprite[c][0] / 1E3, C = (f._sprite[c][0] + f._sprite[c][1]) / 1E3, G = !(!p._loop && !f._sprite[c][2]);
+    var w = Math.max(0, 0 < p._seek ? p._seek : f._sprite[c][0] / 1E3), x = Math.max(0, (f._sprite[c][0] + f._sprite[c][1]) / 1E3 - w), z = 1E3 * x / Math.abs(p._rate), F = f._sprite[c][0] / 1E3, C = (f._sprite[c][0] + f._sprite[c][1]) / 1E3, G = !(!p._loop && !f._sprite[c][2]);
     p._sprite = c;
     p._ended = !1;
     var B = function() {
@@ -2404,7 +2405,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
         v.gain.setValueAtTime(p._muted || f._muted ? 0 : p._volume, b.ctx.currentTime);
         p._playStart = b.ctx.currentTime;
         void 0 === v.bufferSource.start ? p._loop ? v.bufferSource.noteGrainOn(0, w, 86400) : v.bufferSource.noteGrainOn(0, w, x) : p._loop ? v.bufferSource.start(0, w, 86400) : v.bufferSource.start(0, w, x);
-        y !== 1 / 0 && (f._endTimers[p._id] = setTimeout(f._ended.bind(f, p), y));
+        z !== 1 / 0 && (f._endTimers[p._id] = setTimeout(f._ended.bind(f, p), z));
         e || setTimeout(function() {
           f._emit("play", p._id);
           f._loadQueue();
@@ -2430,7 +2431,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
           })) : e || (f._playLock = !1, B(), f._emit("play", p._id), f._loadQueue()), v.playbackRate = p._rate, v.paused) {
             return void f._emit("playerror", p._id, "Playback was unable to start. This is most commonly an issue on mobile devices and Chrome where playback was not within a user interaction.");
           }
-          "__default" !== c || p._loop ? f._endTimers[p._id] = setTimeout(f._ended.bind(f, p), y) : (f._endTimers[p._id] = function() {
+          "__default" !== c || p._loop ? f._endTimers[p._id] = setTimeout(f._ended.bind(f, p), z) : (f._endTimers[p._id] = function() {
             f._ended(p);
             v.removeEventListener("ended", f._endTimers[p._id], !1);
           }, v.addEventListener("ended", f._endTimers[p._id], !1));
@@ -2560,9 +2561,9 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     var x = Date.now();
     c._fadeTo = f;
     c._interval = setInterval(function() {
-      var y = (Date.now() - x) / k;
+      var z = (Date.now() - x) / k;
       x = Date.now();
-      u += w * y;
+      u += w * z;
       u = Math.max(0, u);
       u = Math.min(1, u);
       u = Math.round(100 * u) / 100;
@@ -2864,7 +2865,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     e && !c._duration && (c._duration = e.duration);
     0 === Object.keys(c._sprite).length && (c._sprite = {__default:[0, 1E3 * c._duration]});
     "loaded" !== c._state && (c._state = "loaded", c._emit("load"), c._loadQueue());
-  }, z = function() {
+  }, y = function() {
     if (b.usingWebAudio) {
       try {
         "undefined" != typeof AudioContext ? b.ctx = new AudioContext : "undefined" != typeof webkitAudioContext ? b.ctx = new webkitAudioContext : b.usingWebAudio = !1;

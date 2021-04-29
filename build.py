@@ -1,28 +1,32 @@
 ﻿#!/usr/bin/env python
 
-# id : 20190402°0411 canvasgear/build.py
-# version : 20210426°1111
-# encoding : UTF-8-with-BOM
-# interpeter : Python 3.6
-# issues: • Local Closure Compiler path is hardcoded
-#    • The drive letter changing is done quick-n-dirty
-#    • After changing CWD, it were nice to restore it afterwards.
-#    • Howler.min.js causes two very ugly warnings with GoCloCom
-# todo : Provide alternative calling online Closure Compiler online API
-# todo : Create files list programmatically from all riders\*.js files
-# note : In version 20210426°1111, the code is simplified. Some interesting sequences
-#        are lost. About how to combine files with a loop over an array of tupels, see
-#        www.trekta.biz/svn/canvasgeardev/tags/20190402o0641.canvasgear.v023/combine.py
-#        seq 20190402°0443. Remember ref 20190402°0437 'stackoverflow → python concatenate text files'
+# file         : 20190402°0411 canvasgear/build.py
+# version      : 20210426°1111
+# encoding     : UTF-8-with-BOM
+# interpeter   : Python 3.6
+# requirements : • Closure Compiler on drive • Java path set • Python path set
+# issues       : • Closure Compiler path is hardcoded
+#                • The drive letter changing is done quick-n-dirty
+#                • After changing CWD, it were nice to restore it afterwards.
+#                • Howler.min.js causes two ugly warnings with GoCloCom
+# todo         : Provide alternative calling online Closure Compiler online API
+# todo         : Create files list programmatically from all riders\*.js files
+# note         : In version 20210426°1111, the code is simplified. Some interesting sequences
+#                are lost. About how to combine files with a loop over an array of tupels, see
+#                www.trekta.biz/svn/canvasgeardev/tags/20190402o0641.canvasgear.v023/combine.py
+#                seq 20190402°0443. Remember ref 20190402°0437 'stackoverflow → python concatenate text files'
+# re
 
 """
-   This minifies and combines canvasgear.js and its rider scripts one single file
+   This minifies and combines canvasgear.js and its rider scripts to one single file
    canvasgear.combi.js. Dependency: Have Closure Compiler available on local drive.
 """
 
 import os, pathlib, sys
 
 sBinGoCloCom = 'G:/work/gipsydrive/app.composer/trunk/bin/goclocom/closure-compiler-v20210406.jar'
+
+sSp = ' '
 
 print ('*** canvasgear/build.py ***')
 
@@ -46,7 +50,18 @@ if (     tTgt < os.path.getmtime('./canvasgear.js')
        ) :
    bBuild = True
 
-sCmd = 'java.exe -jar ' + sBinGoCloCom + ' ./canvasgear.js ./riders/canvasgear.Hamster.js ./riders/canvasgear.MyAlgo.js ./riders/canvasgear.Noisy1.js ./riders/canvasgear.Template.js ./howler/howler.min.js --js_output_file ./canvasgear.combi.js --create_source_map ./canvasgear.combi.js.map --formatting PRETTY_PRINT --charset UTF-8'
+sCmd = 'java.exe -jar ' + sBinGoCloCom                                 \
+      + sSp + './canvasgear.js'                                        \
+      + sSp + './riders/canvasgear.Hamster.js'                         \
+      + sSp + './riders/canvasgear.MyAlgo.js'                          \
+      + sSp + './riders/canvasgear.Noisy1.js'                          \
+      + sSp + './riders/canvasgear.Template.js'                        \
+      + sSp + './howler/howler.min.js'                                 \
+      + sSp + '--js_output_file' + sSp + './canvasgear.combi.js'       \
+      + sSp + '--create_source_map' + sSp + './canvasgear.combi.js.map' \
+      + sSp + '--formatting' + sSp + 'PRETTY_PRINT'                    \
+      + sSp + '--charset UTF-8'                                        \
+      + sSp + '--jscomp_off' + sSp + 'uselessCode'                     # [JSC_USELESS_CODE] in howler.min.js
 
 if bBuild :
    print (' - canvasgear building ..')

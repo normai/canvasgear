@@ -1,4 +1,4 @@
-﻿# CanvasGear v0.2.4 <sup><sub><sub>— 20210426°1121</sub></sub></sup>
+﻿# CanvasGear v0.2.5
 
 **Slogan** : Draw animated canvases by specifying parameters in a data attribute
 

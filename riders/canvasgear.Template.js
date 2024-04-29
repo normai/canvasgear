@@ -2,13 +2,27 @@
  * This script serves as template to spawn CanvasGear algorithms
  *
  * id : file 20190329°0611
- * version : 0.2.4
+ * version : 0.2.6
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
  */
 
-// Formal integration into main script
+/**
+ *  Formal integration into main script
+ *
+ * @id seq 20190329°0621`xx
+ * @type {Object} —
+ * @c_o_n_s_t — Namespace
+ */
 var Cvgr = Cvgr || {};
+
+/**
+ *  Formal integration into main script
+ *
+ * @id seq 20190329°0621`xx
+ * @type {Cvgr.Algos} —
+ * @c_o_n_s_t — Namespace
+ */
 Cvgr.Algos = Cvgr.Algos || {};
 
 /**
@@ -41,24 +55,24 @@ Cvgr.Algos.Template = {
    {
       'use strict';
 
-      // prepare canvas [seq 20190329°0441]
+      // Prepare canvas [seq 20190329°0441]
       iko.Context.clearRect(0, 0, iko.Canvas.width, iko.Canvas.height);
       iko.Context.fillStyle = iko.BgColor;
       iko.Context.fillRect(0, 0, iko.Canvas.width, iko.Canvas.height);
 
-      // (.) calculate center position [line 20190329°0442]
+      // (.) Calculate center position [line 20190329°0442]
       // note : The calculation is redundant to 'iSize'.
       var iCenterX = iko.Width / 2;
       var iCenterY = iko.Height / 2;
 
-      // (.) adjust center position by shift [seq 20190329°0443]
+      // (.) Adjust center position by shift [seq 20190329°0443]
       iCenterX = (iko.ShiftX !== null) ? iCenterX + parseInt(iko.ShiftX, 10) : iCenterX;
       iCenterY = (iko.ShiftY !== null) ? iCenterY + parseInt(iko.ShiftY, 10) : iCenterY;
 
-      // (.) calculate radius [seq 20190329°0444]
+      // (.) Calculate radius [seq 20190329°0444]
       var nRadius = ( (iko.Width + iko.Height) / 4) * 0.55;
 
-      // (.) draw something [seq 20190329°0445]
+      // (.) Draw something [seq 20190329°0445]
       iko.Context.beginPath();
       iko.Context.arc ( iCenterX                                       // center x coordinate
                        , iCenterY                                      // center y coordinate
@@ -68,12 +82,12 @@ Cvgr.Algos.Template = {
                            , false                                     // clockwise
                             );
 
-      // (.) finish [seq 20190329°0446]
+      // (.) Finish [seq 20190329°0446]
       iko.Context.strokeStyle = iko.Color;
       iko.Context.lineWidth = 6;
       iko.Context.stroke();
 
-      // add text [seq 20190331°0531] (after parent 20190331°0521 'write text')
+      // Add text [seq 20190331°0531] (after parent 20190331°0521 'write text')
       // See howto 20190331°0541 'about linebreaks in canvas'
       var sText = "Template extern";
       if (iko.CmdsHash['text']) {
@@ -83,7 +97,7 @@ Cvgr.Algos.Template = {
       iko.Context.font = "0.9em Arial";
       iko.Context.fillText(sText, 3, 21);                              // text, start pos x, start pos y
 
-      // progress [seq 20190329°0447]
+      // Progress [seq 20190329°0447]
       //  Remember todo 20190329°0833 'centralize progression'
       iko.Angle += Cvgr.Vars.nIncTurnsPerFrame * Math.PI * iko.Hertz;
       if (iko.Angle > Math.PI * 2)
@@ -96,10 +110,15 @@ Cvgr.Algos.Template = {
     * This object defines the default properties for this algorithm
     *
     * @id 20190329°0617
+    * @type {Object} —
     */
    , defaultProperties :
    {
-      DrawNumberLimit : 0 // unlimited frames, perform animation
+      /**
+       * @id 20190329°0618
+       * @type {number} (integer) —
+       */
+      DrawNumberLimit : 0                                              // unlimited frames, perform animation
    }
 
 };

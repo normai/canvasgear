@@ -1,14 +1,28 @@
 ﻿/*! - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
  * This script supplements a CanvasGear algorithm [file 20190329°1111]
  *
- * version : 0.2.4
+ * version : 0.2.6
  * license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  * copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
  */
 
-// Formal integration into main script [seq 20190329°0621`03]
-var Cvgr = Cvgr || {}; // (after parent 20180618°0621)
-Cvgr.Algos = Cvgr.Algos || {}; // (after parent 20180619°0111)
+/**
+ * Formal integration into main script
+ *
+ * @id 20190329°0621`03 (after parent 20180618°0621)
+ * @type {Object}
+ * @c_o_n_s_t — Namespace
+ */
+var Cvgr = Cvgr || {};
+
+/**
+ * Formal integration into main script
+ *
+ * @id 20180619°0111`xx (after parent 20180619°0111)
+ * @type {Object}
+ * @c_o_n_s_t — Namespace
+ */
+Cvgr.Algos = Cvgr.Algos || {};
 
 /**
  * This namespace holds the MyAlgo algorithm

@@ -1,10 +1,11 @@
 /*
  This script paints animated icons on HTML5 canvases
 
- file : 20140815°1213 canvasgear/canvasgear.js
- license : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
- copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
- note : Minimized with Google Closure Compiler
+ File : 20140815°1213 canvasgear/canvasgear.js
+ Version : v0.2.8 — 20240427°1521 — Formal updates
+ License : GNU LGPL v3 or later https://www.gnu.org/licenses/lgpl.html
+ Copyright : (c) 2014 - 2024 Norbert C. Maier https://github.com/normai/canvasgear/
+ Note : Minimized with Google Closure Compiler
 */
 var $jscomp = $jscomp || {};
 $jscomp.scope = {};
@@ -185,7 +186,7 @@ $jscomp.polyfill("Array.prototype.keys", function(a) {
 }, "es6", "es3");
 var Cvgr = {};
 Cvgr.Algos = Cvgr.Algos || {};
-Cvgr.Const = {versionnumber:"0.2.4", versiontimestamp:"20190408°0212..", bShow_Debug_Dialogs:!1, sB64Dopiaza_Bonk_Mp3:"data:audio/mp3;base64,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qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr/44LE/wAAA0gAAAAAqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqTEFNRTMuOTKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", 
+Cvgr.Const = {versionnumber:"0.2.8", versiontimestamp:"20240427°1521", bShow_Debug_Dialogs:!1, sB64Dopiaza_Bonk_Mp3:"data:audio/mp3;base64,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qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr/44LE/wAAA0gAAAAAqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqTEFNRTMuOTKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", 
 sB64Dopiaza_Fingerplop2_Mp3:"data:audio/mp3;base64,//uQbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAAIKABAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQECAgICAgICAgICAgICAgICAgICAgICAgICAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwP////////////////////////////////8AAAA5TEFNRTMuOTcgAaoAAAAALBcAABSAJAXNTgAAgAAACChX+laoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//uQbAAAA00Qzg1h4AAtwRmipIwAEXFZjblqMBkXGq93KKICAFL8CjNKzSNcQIQcrHRSkTEgFIdVYdg8FJeJgREFICoHA4Kct5Oy5nWoFYrHkSkRg+D4Pg+CAIAgUBMHwffBAEAQOCQEIPg+4HwfKAmD5/DCz/y4IHOUBAEHawff4IS4P3+XygIfUcKAh9SoBsnkgFCBAQAgAMAYGw2T6ogOQfB8P+Xf8uH0fX4nqB9///n/iB3/g+f/ghQsBgMBgNRgMBQJAwEABhMDmAAZrRgcA4jgfFdDzHA0Ls8Az/BnKvA/G8DlYfAouCAOAUB/C0AcAjQZKr8GxwVENsAEIgZMF/4nEMcEGh+oIh4IhP/42gQiwahCmGJCDJ//5IBqwphc4PBNidBHhM62//xQAyhLFgdJWNU5UMf///MEGcuFxNlus+jVgOBwMBwOBwOBgKBAAAEBAc/wQCAMiCrwNRcBZo1o9ET4KhXLfk4+Ki1/qSEhKf/541EiTjz/84gISY9G//7qe6Fy//A/YkmQIjbLbbLrdpXbLbdW6uhNGS/T//uSbAoAA+ZhXO4lYARAilqqxYgADnFZPl2RgAjWg+lrkiAAxULmnaKsWNEmpHs4wfU1UVHbE2k0xNadXVXdvOnEpOTNdvfw+y917v2vr/+Lbf1df/x26Yafs5NJb2FoIxv2z90Zu6KqnzPJsfqJi/lGYbtrf3ctN7e2uo/8wAcggCZQ8dj+X/dOPwmgAAAADCAcBgVjAVjiZdpiM8gKYBO4DR8NJ9P/bN/vn/+YQRW//7Uv//qWhy7687E/73JM63///+xHcERpVzGhqsAkaAT4qRtm8rkspbycR3MIdF40hTwZHgFhXlpCFkKghIybnBUKC6c8mHKWAjUEDfTEEaWGjvYxBWc8MjJlLXPa02mC4vOewEtnf86Uzd9aVIjI7OFCU0uxNXXPFBQh9NMMKFMYbT33LXpB/BpThx3+dk6gNABEhWmnay9qtkrM4bFAlJXM2e9T/8gfETjK1dRT9f1Ega8kGf/8b6/2D2gkTH73qYSWArHVM5R7LZ2vTT4wuketlSHIVcWiQRK3OhKbRA9GFn6s4pAiYYH4jh6MhGuZxP/7kmwVgAPKQU2FYQACTsxaPKQIAQ8NQTk5NoABLZrrtwSAAnQeLiOOGCxLEM4cmrTkGjMaS8rrmp20IrV9afbeq8y6Dlgw6BnaXTQtpaDyx1U2wz7H4ioy2jgJph6M3wD1Xc5se6X3fb5ALjetuqxM9UElAJugcg2xdVxrJociwQpcQizJM6nIr////h0XyTJY5cj3UmQmdv6097rRHsiI3e1n7Xn6USZO2Sh7Z0u+qXWbVrISiX6OlpmuLd4K7RYAADBDwCBBSAAA0RAWL2NUcwaodFgdksDcQn7BtD1JIpZ0glxFZd7lh8cpQJE8beaoFE2Hokkuj8oIEufKJkcRYypfol9IxcyK00kq2/yktIvmh41Nytaklo9X/JQkSaYoGsooJr1+tH/+dcRARkRlG3rOqJM/ywJNhoFDYSC4Wi0Wi0WAADHKXBCKYmZ8G4qAMFvSaXX+yZQwVQW/ximFkQ3r/70pd8L///jfiZ5j9r//x6kU8Cp4wOh0JCX0gy4YPI5VADPoAUKpMKbUMBCjCgImAWVL3GPpUUksCINEyYr/+5JsDo/zETAjtw0gAi+jRHHgiABAAAGkAAAAIAAANIAAAARRb//5SLAkGmwqCJKkFhSSocWRNKksxSKYLImrVRImtVQxpFkpeMY+oqxySIqDf//CGgpIJd/6imhRwMN6blkdFdSK4diQBhDEIUxCFCFEJv9SlmMZSm/ugYzlASwgV0Js0F4N6FHArB3//xTQp4v//8jorqVMQU1FMy45N1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV", 
 sB64Dopiaza_Fingerplop_Mp3:"data:audio/mp3;base64,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efylByZY7VOoeGw+evSVFHrS+/23c9rtL1YEd+vxh66l7f+f/////BEOCGtsO2SmKnwNlRamiyCHgkiRmyf5URQRkv9JHIznbmhpdEGGNDKc763JIS9Kz4fwv7TPpF/l6925GrEimzjgqpRxDI2yV/X/xLr5/Q67z1PC7v0a57eq62OCP1CE0Vu2ttkjjGyqroWC3Oh5lczsavVTSIZixhWK2dAcXLKkzyN8A4TZkaQiKcjoSRyrKhhxAL1w6WUbijCgaEFINnrKIfz9i0CCgZlC8i1C1eXGziUgFwyZC6n/+5JsXAAC8kJJCw8YUkdoef0UI8kLxEskx7DASSgO5nQRGS3S86WO0vuPVG5KV06afybaIaLxx5TqaK5EChIScErf9UxVhwSdf6h2KpWXoNGe4FlyN+88W9zZtmokxUUli/fn2qy//fN/7C3alx1oJtwUXWuKEkCvacxK8YcnvYySuVEGq0Mc68OfJr79x/kJwfl0b3hMLGniyrWwYFgqy4um5z+Py4//KyycWOhcfllxr/8VYrvpvZYGiTLVwp9prlR2xLpVKZJK5BIgCDCRYYKNMTRJCS0Epa1EjS0FonPCRpcXlTGzLPGzTt9llZ/VHZyojlRblMlvojs6o7GRbt//+n9n9kVnKYKpHKis5VuyLf2fp/RVT+qKR2MUMCHOACmJqp22XZ82Wdv7DJlkcmuZSGrVBwEMCDoOJBkVJP2gIWNBUkaZ////oAopTEFNRTMuOTdVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//uSbHQP8zNoQIMGE3Itg7gxGANyAAABpAAAACAAADSAAAAEVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQ==", 
 sB64Dopiaza_MouseOverMp3:"data:audio/mp3;base64,//tQZAAAAFwA4fUAAAgAAA0goAABEX2nRBh6AAAAADSDAAAADgAADwAAAAAuf+GBGB94Awi+D0AXyaHO8ZYho5v4ypDhzhW3+Q0c0VqQ4XN/4rYhouUQqOUK2//ELDGigQ+EY4PiDI3/+K6GRQtBD9guGBtIBwMDFDQGgv9av+WQMH3A0jkDAlgMmIBs8LSGAQyyOoUEOoDSWC2i35DQNzLJH/FzENGZIKUiBE8sumqjZNaP////6mnUpkoHd3iZh3+21gm2hkZGZBEmmBBNS//7YGQKCPOtRFD/BoACAAANIOAAAQltFymgj7dAAAA0gAAABFLUt3Z2dnQWtS1d2Z2qWpalLs7OzugtS1LVZ2dnQTQUtS1LdndnZNBalrUt2dnZBNBNS1LSSR3ZaC1qEIQudA7TYAJMI+cxNiav/UDC1VAyqq/6Wf2mmkYqqjpoquqqt9VQAtH/9gj///+vn/hl8sjw7/zI/WWpwy6Cl8H9k/I72yz///vZLmTLLZ//upX1RuoleYMAscsrwZPAIJAurA1+G5RT4fLCwq65v9eRAAAAF4H8rCH///381//keC2yai2+D/6t+vu5af+n1evb//hL4pIm7INggBwwIwrTLUYdMP/7IGQaDPIvRcroIva4AAANIAAAAQhZFypgi9ygAAA0gAAABMUGUwFAFCy6KjEHHikv//7f0j/6wBf///XzX+/mdMnsEw1gwevqMv1tTdE/9frk7//8p1+muqYioAgUAfBIXxiaNeGCWDsYAACqSzc4u+Uinf///J0AAAATb//IJ///+0BkBIjyXkZKaCLvIAAADSAAAAEJbRsroIucgAAANIAAAAT//f6XT5aMlyyvzoal2UlXUbSiMzrQ+tCN/56EZTv959wiEVn2YL9SjBATm4sbmVAHiQRwDPM7k/yiwJ7BOfDH//W4AXf/+kFf///WWeuT+UdGL1IoU2T8xWcpUMM3R5Wmf0Mpf/mNKWZ64/Wpq8Zcm6skMApZc7kQTGoXDAQiMyqGIejVuls4lLHg1//0KgAAAP/7QGQBiPJuRspoIeTwAAANIAAAAQixFSmhB55AAAA0gAAABLdv/oQX///Lvnp44/HBjLSfaNlMGtqCOSyeyj+cCH/5sBjJDz7Uqy+ITrW2kr/WgYKDhzGvKMA4JoJH9cSIwPGMbZCEQIC5Bn/+QAt///zDn//++341fy++m6Omf0dErdUTqCElfkculqL/85GF0z/XbtypuAmUwEIQKZGgoOBK4moxKMRqhLFceEBdn/+p+2oA//tAZACAAt5Hym0CoAgAAA0goAABBjUvM/gJgAAAADSDAAAAAAAUb/2AAfS/0Okrakgtukq66KkE0W1XSdHSXscR916Vf1JLR/6kaTosp9SSyKlwc4eg/UZIPZAUDIGARkBhFvAZZBgBoEE5hbEnhWpCE0VjE1U86HQ0RT//pAAAAAAYAcAgH/HvwAAAoAr+g36m/X9L3/t6X1/Zv///////oA2NlT/WHMN/8awCpiAVAAAHA///+xBkAo/wvEPSHwBACAAADSDgAAEAAAH+AAAAIAAANIAAAAT////////////////yhQEBARJVTEFNRTMuOThVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/7EGQYj/AAAGkAAAAIAAANIAAAAQAAAaQAAAAgAAA0gAAABFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"};
@@ -897,7 +898,8 @@ Trekta.Util2.colorNameToHex = function(a) {
   return b[a] ? b[a] : "#C0C0C0";
 };
 Trekta = Trekta || {};
-Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
+Trekta.Utils = Trekta.Utils || {};
+Trekta.Utils.getCookie = function(a) {
   var b, d = "";
   if (0 < document.cookie.length) {
     var g = document.cookie.split(";");
@@ -914,29 +916,35 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
     d = localStorage.getItem(a);
   }
   return d;
-}, getCookieBool:function(a, b) {
+};
+Trekta.Utils.getCookieBool = function(a, b) {
   b = b || !1;
   a = Trekta.Utils.getCookie(a);
   return "true" === a ? !0 : "false" === a ? !1 : b;
-}, getCookieInt:function(a, b) {
+};
+Trekta.Utils.getCookieInt = function(a, b) {
   b = b || 0;
   a = Trekta.Utils.getCookie(a);
   "" !== a && (b = parseInt(a, 10));
   return b;
-}, getFileNameFull:function() {
+};
+Trekta.Utils.getFileNameFull = function() {
   var a = document.location.href;
   a = a.substring(0, -1 === a.indexOf("?") ? a.length : a.indexOf("?"));
   a = a.substring(0, -1 === a.indexOf("#") ? a.length : a.indexOf("#"));
   -1 !== a.indexOf("/", a.length - 1) && (a += "index.html");
   return a;
-}, getFilenamePlain:function() {
+};
+Trekta.Utils.getFilenamePlain = function() {
   var a = Trekta.Utils.getFileNameFull();
   a = a.split("/");
   return a = a[a.length - 1];
-}, htmlEscape:function(a) {
+};
+Trekta.Utils.htmlEscape = function(a) {
   a = a.replace(/</g, "&lt;");
   return a = a.replace(/>/g, "&gt;");
-}, isScriptAlreadyLoaded:function(a) {
+};
+Trekta.Utils.isScriptAlreadyLoaded = function(a) {
   a = a.replace(/\./g, "\\.");
   a = new RegExp(a + "$", "");
   var b = document.getElementsByTagName("SCRIPT");
@@ -949,7 +957,8 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
     }
   }
   return !1;
-}, outDbgMsg:function(a) {
+};
+Trekta.Utils.outDbgMsg = function(a) {
   if (Trekta.Utils.getCookieBool("checkbox_yellowdebugpane", null)) {
     if ("complete" !== document.readyState) {
       Trekta.Utils.InitialMessageCache.push(a);
@@ -972,7 +981,8 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
       document.getElementById(Daf.Dspat.Config.sFurniture_OutputArea_Id).insertAdjacentHTML("beforeend", "\n" + b);
     }
   }
-}, outDbgMsg_GuaranteeParentElement:function() {
+};
+Trekta.Utils.outDbgMsg_GuaranteeParentElement = function() {
   var a = Daf.Dspat.Config.sFurniture_OutputArea_Id, b = document.getElementById(a);
   if (!b) {
     b = '<div id="' + a + '" class="dafBoxDebugOutput"><p>[Msg 20150325°0211] Loading dafmenu.js (1/x).\n<br />&nbsp; Here comes the yellow Standard Output Box. Some page values are :' + Daf.Mnu.Jsi.getJsiIntroDebugMessage(!0) + "</p></div>";
@@ -982,24 +992,20 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
     b = document.getElementById(a);
   }
   return b;
-}, pullScriptBehind:function(a, b, d, g) {
-  if (Trekta.Utils.bUseMinified) {
-    var h = /.*\/showdown.min.js$/.test(a), m = /.*\/sitmapdaf.js$/.test(a), q = /.*\/sitmaplangs.js$/.test(a);
-    h || m || q || (a = a.replace(/\.js$/, ".min.js"));
-  }
+};
+Trekta.Utils.pullScriptBehind = function(a, b, d, g) {
   if (0 <= Trekta.Utils.aPulled.indexOf(a)) {
     b(a, g, !0);
   } else {
-    h = document.getElementsByTagName("head")[0];
-    m = document.createElement("script");
+    var h = document.getElementsByTagName("head")[0], m = document.createElement("script");
     m.type = "text/javascript";
     m.src = a;
     if ("undefined" !== typeof b) {
-      var r = function() {
+      var q = function() {
         b(a, g, !1);
       };
       m.onload = function() {
-        Trekta.Utils.pullScript_onload(a, r);
+        Trekta.Utils.pullScript_onload(a, q);
       };
     }
     d = d || null;
@@ -1009,12 +1015,15 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
     h.appendChild(m);
     return !0;
   }
-}, pullScript_onload:function(a, b) {
+};
+Trekta.Utils.pullScript_onload = function(a, b) {
   Trekta.Utils.aPulled.push(a);
   b();
-}, readTextFile2:function(a, b, d) {
+};
+Trekta.Utils.readTextFile2 = function(a, b, d) {
   Trekta.Utils.ajax3Send("GET", a, "", b, d);
-}, ajax3Send:function(a, b, d, g, h) {
+};
+Trekta.Utils.ajax3Send = function(a, b, d, g, h) {
   g = "undefined" === typeof g ? null : g;
   h = "undefined" === typeof h ? null : h;
   var m = new XMLHttpRequest;
@@ -1023,9 +1032,6 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
     if (0 !== m.readyState && 1 !== m.readyState && 2 !== m.readyState && 3 !== m.readyState && 4 === m.readyState) {
       var q = !1;
       switch(m.status) {
-        case 0:
-          q = !0;
-          break;
         case 200:
           q = !0;
       }
@@ -1038,34 +1044,35 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
     a = "<b>Sorry, some feature on this page does not work.</b>\nFile <tt>" + b + "</tt> ~~could not be read.\nYour browser said: <tt>" + q.message + "</tt>.", a = Trekta.Utils.bIs_Browser_Chrome && "file:" === location.protocol ? a + "\nYour browser seems to be Chrome, and this does not ~~read files via file protocol.\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Firefox or IE\nor (2) view this page from <tt>localhost</tt> with a HTTP server." : Trekta.Utils.bIs_Browser_Firefox && 
     "file:" === location.protocol ? a + "\nYour browser seems to be <b>Firefox</b>, and this does not ~~read files\nwith a path going below the current directory via file protocol.\nThere are two <b>solutions</b>: (1) Use a different browser, e.g. Chrome or IE\nor (2)  view this page from <tt>localhost</tt> with a HTTP server." : a + ("\n [info 20160622°0131] Failed sending request " + b + "."), g(a);
   }
-}, retrieveDafBaseFolderAbs:function(a) {
-  if (Trekta.Utils.bUseMinified) {
-    var b = /.*\/highlight.pack.js$/.test(a), d = /.*\/showdown.min.js$/.test(a), g = /.*\/sitmapdaf.js$/.test(a), h = /.*\/sitmaplangs.js$/.test(a);
-    b || d || g || h || (a = a.replace(/\.js$/, ".min.js"));
-  }
-  b = a.replace(/\./g, "\\.") + "$";
+};
+Trekta.Utils.retrieveDafBaseFolderAbs = function(a) {
+  var b = a.replace(/\./g, "\\.") + "$";
   a = new RegExp(b, "");
   b = new RegExp("(.*)" + b, "");
-  d = "";
-  if ((g = document.getElementsByTagName("SCRIPT")) && 0 < g.length) {
-    for (var m in g) {
-      h = Number.parseInt(m, 10), g[h] && g[h].src.match(a) && (d = g[h].src.replace(b, "$1"));
+  var d = "", g = document.getElementsByTagName("SCRIPT");
+  if (g && 0 < g.length) {
+    for (var h in g) {
+      var m = Number.parseInt(h, 10);
+      g[m] && g[m].src.match(a) && (d = g[m].src.replace(b, "$1"));
     }
   }
   return d;
-}, sConfine:function(a, b) {
+};
+Trekta.Utils.sConfine = function(a, b) {
   var d = "";
   a.length > b && (d = a.substring(0, b / 2) + " … " + a.substring(a.length - b / 2));
   d = d.split("\n").join("☼");
   d = d.split("<").join("&lt;");
   return d = d.split(">").join("&gt;");
-}, setCookie:function(a, b, d) {
+};
+Trekta.Utils.setCookie = function(a, b, d) {
   var g = new Date;
   g.setDate(g.getDate() + d);
   d = encodeURI(b) + (null === d ? "" : "; Expires = " + g.toUTCString());
   document.cookie = a + "=" + d + "; path=/";
   1 > document.cookie.length && localStorage.setItem(a, b);
-}, windowOnloadDaisychain:function(a) {
+};
+Trekta.Utils.windowOnloadDaisychain = function(a) {
   if (window.onload) {
     var b = window.onload;
     window.onload = function() {
@@ -1077,8 +1084,21 @@ Trekta.Utils = Trekta.Utils || {getCookie:function(a) {
       a();
     };
   }
-}, InitialMessageCache:[], aPulled:[], bIs_Browser_Chrome:navigator.userAgent.match(/Chrome/) ? !0 : !1, bIs_Browser_Edge:navigator.userAgent.match(/Edge/) ? !0 : !1, bIs_Browser_Explorer:navigator.appName.match(/Explorer/) || window.msCrypto ? !0 : !1, bIs_Browser_Firefox:navigator.userAgent.match(/Firefox/) ? !0 : !1, bIs_Browser_Opera:navigator.userAgent.match(/(Opera)|(OPR)/) ? !0 : !1, bShow_Debug_Dialogs:!1, bToggle_FALSE:!1, bToggle_TRUE:!0, bUseMinified:!1, sFurniture_OutputArea_Id:"i20150321o0231_StandardOutputDiv", 
-s_DaftariBaseFolderAbs:"", s_DaftariBaseFolderRel:""};
+};
+Trekta.Utils.aPulled = [];
+Trekta.Utils.bIs_Browser_Chrome = navigator.userAgent.match(/Chrome/) ? !0 : !1;
+Trekta.Utils.bIs_Browser_Edge = navigator.userAgent.match(/Edge/) ? !0 : !1;
+Trekta.Utils.bIs_Browser_Explorer = navigator.appName.match(/Explorer/) || window.msCrypto ? !0 : !1;
+Trekta.Utils.bIs_Browser_Firefox = navigator.userAgent.match(/Firefox/) ? !0 : !1;
+Trekta.Utils.bIs_Browser_Opera = navigator.userAgent.match(/(Opera)|(OPR)/) ? !0 : !1;
+Trekta.Utils.bShow_Debug_Dialogs = !1;
+Trekta.Utils.bToggle_FALSE = !1;
+Trekta.Utils.bToggle_TRUE = !0;
+Trekta.Utils.bUseMinified = !1;
+Trekta.Utils.InitialMessageCache = [];
+Trekta.Utils.sFurniture_OutputArea_Id = "id20150321o0231_StandardOutputDiv";
+Trekta.Utils.s_DaftariBaseFolderAbs = "";
+Trekta.Utils.s_DaftariBaseFolderRel = "";
 Trekta.Utils.CmdlinParser = function() {
   Trekta.Utils.parse = function(a) {
     "undefined" === typeof a && (a = "");
@@ -1101,7 +1121,7 @@ Trekta.Utils.windowOnloadDaisychain(Cvgr.startCanvasGear);
  This script provides a CanvasGear algorithm
 
  file : 20190401°0311
- version : 0.2.4...
+ version : 0.2.6
  license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
 */
@@ -2022,7 +2042,7 @@ Cvgr.Algos.Hamster.defaultProperties = {DrawNumberLimit:5};
  - - - ✂ - - - - - - - - - - - - - - - - - - - - - - - - - -
  This script supplements a CanvasGear algorithm [file 20190329°1111]
 
- version : 0.2.4
+ version : 0.2.6
  license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
 */
@@ -2093,6 +2113,7 @@ Cvgr.Algos.Noisy1 = {executeAlgorithm:function(a) {
   17 < Cvgr.Algos.Noisy1.sKeyboard.length && (Cvgr.Algos.Noisy1.sKeyboard = Cvgr.Algos.Noisy1.sKeyboard.slice(Cvgr.Algos.Noisy1.sKeyboard.length - 17));
 }, pickupOnMouseDown:function() {
 }, pickupOnMouseMove:function(a) {
+  Cvgr.Vars.sound = new Howl({src:[sAudioData], loop:!1});
   Cvgr.Vars.bSoundLibraryReady && Cvgr.Vars.sound.play();
   Cvgr.Algos.Noisy1.settle_cursorPos(a.clientX, a.clientY);
   Cvgr.Algos.Noisy1.settle_ringbuffer();
@@ -2118,7 +2139,7 @@ Cvgr.Algos.Noisy1 = {executeAlgorithm:function(a) {
  This script serves as template to spawn CanvasGear algorithms
 
  id : file 20190329°0611
- version : 0.2.4
+ version : 0.2.6
  license : GNU LGPL v3 or later (https://www.gnu.org/licenses/lgpl.html)
  copyright : (c) 2014 - 2021 Norbert C. Maier https://github.com/normai/canvasgear/
 */
@@ -2146,7 +2167,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
   a.Angle > 2 * Math.PI && (a.Angle -= 2 * Math.PI);
 }, defaultProperties:{DrawNumberLimit:0}};
 /*
- howler.js v2.1.2 | (c) 2013-2019, James Simpson of GoldFire Studios | MIT License | howlerjs.com  Spatial Plugin */
+ howler.js v2.2.4 | (c) 2013-2020, James Simpson of GoldFire Studios | MIT License | howlerjs.com  Spatial Plugin */
 !function() {
   var a = function() {
     this.init();
@@ -2186,6 +2207,11 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
       }
     }
     return e;
+  }, stop:function() {
+    for (var c = this || b, e = 0; e < c._howls.length; e++) {
+      c._howls[e].stop();
+    }
+    return c;
   }, unload:function() {
     for (var c = this || b, e = c._howls.length - 1; 0 <= e; e--) {
       c._howls[e].unload();
@@ -2216,17 +2242,20 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     var c = this || b, e = null;
     try {
       e = "undefined" != typeof Audio ? new Audio : null;
-    } catch (l) {
+    } catch (p) {
       return c;
     }
     if (!e || "function" != typeof e.canPlayType) {
       return c;
     }
-    var f = e.canPlayType("audio/mpeg;").replace(/^no$/, ""), k = c._navigator && c._navigator.userAgent.match(/OPR\/([0-6].)/g);
-    k = k && 33 > parseInt(k[0].split("/")[1], 10);
-    return c._codecs = {mp3:!(k || !f && !e.canPlayType("audio/mp3;").replace(/^no$/, "")), mpeg:!!f, opus:!!e.canPlayType('audio/ogg; codecs="opus"').replace(/^no$/, ""), ogg:!!e.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ""), oga:!!e.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ""), wav:!!e.canPlayType('audio/wav; codecs="1"').replace(/^no$/, ""), aac:!!e.canPlayType("audio/aac;").replace(/^no$/, ""), caf:!!e.canPlayType("audio/x-caf;").replace(/^no$/, ""), m4a:!!(e.canPlayType("audio/x-m4a;") || 
-    e.canPlayType("audio/m4a;") || e.canPlayType("audio/aac;")).replace(/^no$/, ""), mp4:!!(e.canPlayType("audio/x-mp4;") || e.canPlayType("audio/mp4;") || e.canPlayType("audio/aac;")).replace(/^no$/, ""), weba:!!e.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/, ""), webm:!!e.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/, ""), dolby:!!e.canPlayType('audio/mp4; codecs="ec-3"').replace(/^no$/, ""), flac:!!(e.canPlayType("audio/x-flac;") || e.canPlayType("audio/flac;")).replace(/^no$/, 
-    "")}, c;
+    var f = e.canPlayType("audio/mpeg;").replace(/^no$/, ""), k = c._navigator ? c._navigator.userAgent : "", l = k.match(/OPR\/(\d+)/g);
+    l = l && 33 > parseInt(l[0].split("/")[1], 10);
+    var n = -1 !== k.indexOf("Safari") && -1 === k.indexOf("Chrome");
+    k = k.match(/Version\/(.*?) /);
+    k = n && k && 15 > parseInt(k[1], 10);
+    return c._codecs = {mp3:!(l || !f && !e.canPlayType("audio/mp3;").replace(/^no$/, "")), mpeg:!!f, opus:!!e.canPlayType('audio/ogg; codecs="opus"').replace(/^no$/, ""), ogg:!!e.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ""), oga:!!e.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ""), wav:!!(e.canPlayType('audio/wav; codecs="1"') || e.canPlayType("audio/wav")).replace(/^no$/, ""), aac:!!e.canPlayType("audio/aac;").replace(/^no$/, ""), caf:!!e.canPlayType("audio/x-caf;").replace(/^no$/, 
+    ""), m4a:!!(e.canPlayType("audio/x-m4a;") || e.canPlayType("audio/m4a;") || e.canPlayType("audio/aac;")).replace(/^no$/, ""), m4b:!!(e.canPlayType("audio/x-m4b;") || e.canPlayType("audio/m4b;") || e.canPlayType("audio/aac;")).replace(/^no$/, ""), mp4:!!(e.canPlayType("audio/x-mp4;") || e.canPlayType("audio/mp4;") || e.canPlayType("audio/aac;")).replace(/^no$/, ""), weba:!(k || !e.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/, "")), webm:!(k || !e.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/, 
+    "")), dolby:!!e.canPlayType('audio/mp4; codecs="ec-3"').replace(/^no$/, ""), flac:!!(e.canPlayType("audio/x-flac;") || e.canPlayType("audio/flac;")).replace(/^no$/, "")}, c;
   }, _unlockAudio:function() {
     var c = this || b;
     if (!c._audioUnlocked && c.ctx) {
@@ -2235,13 +2264,14 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
       c._mobileUnloaded || 44100 === c.ctx.sampleRate || (c._mobileUnloaded = !0, c.unload());
       c._scratchBuffer = c.ctx.createBuffer(1, 1, 22050);
       var e = function(f) {
-        for (f = 0; f < c.html5PoolSize; f++) {
+        for (; c._html5AudioPool.length < c.html5PoolSize;) {
           try {
             var k = new Audio;
             k._unlocked = !0;
             c._releaseHtml5Audio(k);
           } catch (u) {
             c.noAudio = !0;
+            break;
           }
         }
         for (f = 0; f < c._howls.length; f++) {
@@ -2265,12 +2295,13 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
           document.removeEventListener("touchstart", e, !0);
           document.removeEventListener("touchend", e, !0);
           document.removeEventListener("click", e, !0);
+          document.removeEventListener("keydown", e, !0);
           for (var u = 0; u < c._howls.length; u++) {
             c._howls[u]._emit("unlock");
           }
         };
       };
-      return document.addEventListener("touchstart", e, !0), document.addEventListener("touchend", e, !0), document.addEventListener("click", e, !0), c;
+      return document.addEventListener("touchstart", e, !0), document.addEventListener("touchend", e, !0), document.addEventListener("click", e, !0), document.addEventListener("keydown", e, !0), c;
     }
   }, _obtainHtml5Audio:function() {
     var c = this || b;
@@ -2297,16 +2328,21 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
         }
       }
       return c._suspendTimer && clearTimeout(c._suspendTimer), c._suspendTimer = setTimeout(function() {
-        c.autoSuspend && (c._suspendTimer = null, c.state = "suspending", c.ctx.suspend().then(function() {
-          c.state = "suspended";
-          c._resumeAfterSuspend && (delete c._resumeAfterSuspend, c._autoResume());
-        }));
+        if (c.autoSuspend) {
+          c._suspendTimer = null;
+          c.state = "suspending";
+          var k = function() {
+            c.state = "suspended";
+            c._resumeAfterSuspend && (delete c._resumeAfterSuspend, c._autoResume());
+          };
+          c.ctx.suspend().then(k, k);
+        }
       }, 3E4), c;
     }
   }, _autoResume:function() {
     var c = this;
     if (c.ctx && void 0 !== c.ctx.resume && b.usingWebAudio) {
-      return "running" === c.state && c._suspendTimer ? (clearTimeout(c._suspendTimer), c._suspendTimer = null) : "suspended" === c.state ? (c.ctx.resume().then(function() {
+      return "running" === c.state && "interrupted" !== c.ctx.state && c._suspendTimer ? (clearTimeout(c._suspendTimer), c._suspendTimer = null) : "suspended" === c.state || "running" === c.state && "interrupted" === c.ctx.state ? (c.ctx.resume().then(function() {
         c.state = "running";
         for (var e = 0; e < c._howls.length; e++) {
           c._howls[e]._emit("resume");
@@ -2322,11 +2358,12 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
   };
   d.prototype = {init:function(c) {
     var e = this;
-    return b.ctx || z(), e._autoplay = c.autoplay || !1, e._format = "string" != typeof c.format ? c.format : [c.format], e._html5 = c.html5 || !1, e._muted = c.mute || !1, e._loop = c.loop || !1, e._pool = c.pool || 5, e._preload = "boolean" != typeof c.preload || c.preload, e._rate = c.rate || 1, e._sprite = c.sprite || {}, e._src = "string" != typeof c.src ? c.src : [c.src], e._volume = void 0 !== c.volume ? c.volume : 1, e._xhrWithCredentials = c.xhrWithCredentials || !1, e._duration = 0, e._state = 
-    "unloaded", e._sounds = [], e._endTimers = {}, e._queue = [], e._playLock = !1, e._onend = c.onend ? [{fn:c.onend}] : [], e._onfade = c.onfade ? [{fn:c.onfade}] : [], e._onload = c.onload ? [{fn:c.onload}] : [], e._onloaderror = c.onloaderror ? [{fn:c.onloaderror}] : [], e._onplayerror = c.onplayerror ? [{fn:c.onplayerror}] : [], e._onpause = c.onpause ? [{fn:c.onpause}] : [], e._onplay = c.onplay ? [{fn:c.onplay}] : [], e._onstop = c.onstop ? [{fn:c.onstop}] : [], e._onmute = c.onmute ? [{fn:c.onmute}] : 
-    [], e._onvolume = c.onvolume ? [{fn:c.onvolume}] : [], e._onrate = c.onrate ? [{fn:c.onrate}] : [], e._onseek = c.onseek ? [{fn:c.onseek}] : [], e._onunlock = c.onunlock ? [{fn:c.onunlock}] : [], e._onresume = [], e._webAudio = b.usingWebAudio && !e._html5, void 0 !== b.ctx && b.ctx && b.autoUnlock && b._unlockAudio(), b._howls.push(e), e._autoplay && e._queue.push({event:"play", action:function() {
+    return b.ctx || z(), e._autoplay = c.autoplay || !1, e._format = "string" != typeof c.format ? c.format : [c.format], e._html5 = c.html5 || !1, e._muted = c.mute || !1, e._loop = c.loop || !1, e._pool = c.pool || 5, e._preload = "boolean" != typeof c.preload && "metadata" !== c.preload || c.preload, e._rate = c.rate || 1, e._sprite = c.sprite || {}, e._src = "string" != typeof c.src ? c.src : [c.src], e._volume = void 0 !== c.volume ? c.volume : 1, e._xhr = {method:c.xhr && c.xhr.method ? c.xhr.method : 
+    "GET", headers:c.xhr && c.xhr.headers ? c.xhr.headers : null, withCredentials:!(!c.xhr || !c.xhr.withCredentials) && c.xhr.withCredentials}, e._duration = 0, e._state = "unloaded", e._sounds = [], e._endTimers = {}, e._queue = [], e._playLock = !1, e._onend = c.onend ? [{fn:c.onend}] : [], e._onfade = c.onfade ? [{fn:c.onfade}] : [], e._onload = c.onload ? [{fn:c.onload}] : [], e._onloaderror = c.onloaderror ? [{fn:c.onloaderror}] : [], e._onplayerror = c.onplayerror ? [{fn:c.onplayerror}] : 
+    [], e._onpause = c.onpause ? [{fn:c.onpause}] : [], e._onplay = c.onplay ? [{fn:c.onplay}] : [], e._onstop = c.onstop ? [{fn:c.onstop}] : [], e._onmute = c.onmute ? [{fn:c.onmute}] : [], e._onvolume = c.onvolume ? [{fn:c.onvolume}] : [], e._onrate = c.onrate ? [{fn:c.onrate}] : [], e._onseek = c.onseek ? [{fn:c.onseek}] : [], e._onunlock = c.onunlock ? [{fn:c.onunlock}] : [], e._onresume = [], e._webAudio = b.usingWebAudio && !e._html5, void 0 !== b.ctx && b.ctx && b.autoUnlock && b._unlockAudio(), 
+    b._howls.push(e), e._autoplay && e._queue.push({event:"play", action:function() {
       e.play();
-    }}), e._preload && e.load(), e;
+    }}), e._preload && "none" !== e._preload && e.load(), e;
   }, load:function() {
     var c = null;
     if (b.noAudio) {
@@ -2382,7 +2419,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
       return e || f._loadQueue("play"), p._id;
     }
     f._webAudio && b._autoResume();
-    var w = Math.max(0, 0 < p._seek ? p._seek : f._sprite[c][0] / 1E3), x = Math.max(0, (f._sprite[c][0] + f._sprite[c][1]) / 1E3 - w), y = 1E3 * x / Math.abs(p._rate), F = f._sprite[c][0] / 1E3, C = (f._sprite[c][0] + f._sprite[c][1]) / 1E3, G = !(!p._loop && !f._sprite[c][2]);
+    var w = Math.max(0, 0 < p._seek ? p._seek : f._sprite[c][0] / 1E3), x = Math.max(0, (f._sprite[c][0] + f._sprite[c][1]) / 1E3 - w), y = 1E3 * x / Math.abs(p._rate), F = f._sprite[c][0] / 1E3, C = (f._sprite[c][0] + f._sprite[c][1]) / 1E3;
     p._sprite = c;
     p._ended = !1;
     var B = function() {
@@ -2390,7 +2427,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
       p._seek = w;
       p._start = F;
       p._stop = C;
-      p._loop = G;
+      p._loop = !(!p._loop && !f._sprite[c][2]);
     };
     if (w >= C) {
       return void f._ended(p);
@@ -2409,7 +2446,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
           f._emit("play", p._id);
           f._loadQueue();
         }, 0);
-      }, "running" === b.state ? k() : (f._playLock = !0, f.once("resume", k), f._clearTimer(p._id));
+      }, "running" === b.state && "interrupted" !== b.ctx.state ? k() : (f._playLock = !0, f.once("resume", k), f._clearTimer(p._id));
     } else {
       var D = function() {
         v.currentTime = w;
@@ -2421,21 +2458,21 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
           if (A && "undefined" != typeof Promise && (A instanceof Promise || "function" == typeof A.then) ? (f._playLock = !0, B(), A.then(function() {
             f._playLock = !1;
             v._unlocked = !0;
-            e || (f._emit("play", p._id), f._loadQueue());
+            e ? f._loadQueue() : f._emit("play", p._id);
           }).catch(function() {
             f._playLock = !1;
             f._emit("playerror", p._id, "Playback was unable to start. This is most commonly an issue on mobile devices and Chrome where playback was not within a user interaction.");
             p._ended = !0;
             p._paused = !0;
-          })) : e || (f._playLock = !1, B(), f._emit("play", p._id), f._loadQueue()), v.playbackRate = p._rate, v.paused) {
+          })) : e || (f._playLock = !1, B(), f._emit("play", p._id)), v.playbackRate = p._rate, v.paused) {
             return void f._emit("playerror", p._id, "Playback was unable to start. This is most commonly an issue on mobile devices and Chrome where playback was not within a user interaction.");
           }
           "__default" !== c || p._loop ? f._endTimers[p._id] = setTimeout(f._ended.bind(f, p), y) : (f._endTimers[p._id] = function() {
             f._ended(p);
             v.removeEventListener("ended", f._endTimers[p._id], !1);
           }, v.addEventListener("ended", f._endTimers[p._id], !1));
-        } catch (H) {
-          f._emit("playerror", p._id, H);
+        } catch (G) {
+          f._emit("playerror", p._id, G);
         }
       };
       "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA" === v.src && (v.src = f._src, v.load());
@@ -2444,7 +2481,9 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
         D();
       } else {
         f._playLock = !0;
+        f._state = "loading";
         var E = function() {
+          f._state = "loaded";
           D();
           v.removeEventListener(b._canPlayEvent, E, !1);
         };
@@ -2536,8 +2575,8 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
         l.fade(c, e, f, k);
       }}), l;
     }
-    c = parseFloat(c);
-    e = parseFloat(e);
+    c = Math.min(Math.max(0, parseFloat(c)), 1);
+    e = Math.min(Math.max(0, parseFloat(e)), 1);
     f = parseFloat(f);
     l.volume(c, k);
     for (var n = l._getSoundIds(k), p = 0; p < n.length; p++) {
@@ -2563,9 +2602,8 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
       var y = (Date.now() - x) / k;
       x = Date.now();
       u += w * y;
-      u = Math.max(0, u);
-      u = Math.min(1, u);
       u = Math.round(100 * u) / 100;
+      u = 0 > w ? Math.max(f, u) : Math.min(f, u);
       p._webAudio ? c._volume = u : p.volume(u, c._id, !0);
       n && (p._volume = u);
       (f < e && u <= f || f > e && u >= f) && (clearInterval(c._interval), c._interval = null, c._fadeTo = null, p.volume(f, c._id), p._emit("fade", c._id));
@@ -2588,7 +2626,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     }
     e = this._getSoundIds(e);
     for (k = 0; k < e.length; k++) {
-      (f = this._soundById(e[k])) && (f._loop = c, this._webAudio && f._node && f._node.bufferSource && (f._node.bufferSource.loop = c, c && (f._node.bufferSource.loopStart = f._start || 0, f._node.bufferSource.loopEnd = f._stop)));
+      (f = this._soundById(e[k])) && (f._loop = c, this._webAudio && f._node && f._node.bufferSource && (f._node.bufferSource.loop = c, c && (f._node.bufferSource.loopStart = f._start || 0, f._node.bufferSource.loopEnd = f._stop, this.playing(e[k]) && (this.pause(e[k], !0), this.play(e[k], !0)))));
     }
     return this;
   }, rate:function() {
@@ -2619,11 +2657,11 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     return f;
   }, seek:function() {
     var c, e, f = this, k = arguments;
-    0 === k.length ? e = f._sounds[0]._id : 1 === k.length ? 0 <= f._getSoundIds().indexOf(k[0]) ? e = parseInt(k[0], 10) : f._sounds.length && (e = f._sounds[0]._id, c = parseFloat(k[0])) : 2 === k.length && (c = parseFloat(k[0]), e = parseInt(k[1], 10));
+    0 === k.length ? f._sounds.length && (e = f._sounds[0]._id) : 1 === k.length ? 0 <= f._getSoundIds().indexOf(k[0]) ? e = parseInt(k[0], 10) : f._sounds.length && (e = f._sounds[0]._id, c = parseFloat(k[0])) : 2 === k.length && (c = parseFloat(k[0]), e = parseInt(k[1], 10));
     if (void 0 === e) {
-      return f;
+      return 0;
     }
-    if ("loaded" !== f._state || f._playLock) {
+    if ("number" == typeof c && ("loaded" !== f._state || f._playLock)) {
       return f._queue.push({event:"seek", action:function() {
         f.seek.apply(f, k);
       }}), f;
@@ -2640,8 +2678,8 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
       f._clearTimer(e);
       f._webAudio || !l._node || isNaN(l._node.duration) || (l._node.currentTime = c);
       var p = function() {
-        f._emit("seek", e);
         n && f.play(e, !0);
+        f._emit("seek", e);
       };
       if (n && !f._webAudio) {
         var u = function() {
@@ -2671,7 +2709,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     return this._state;
   }, unload:function() {
     for (var c = this._sounds, e = 0; e < c.length; e++) {
-      c[e]._paused || this.stop(c[e]._id), this._webAudio || (this._clearSound(c[e]._node), c[e]._node.removeEventListener("error", c[e]._errorFn, !1), c[e]._node.removeEventListener(b._canPlayEvent, c[e]._loadFn, !1), b._releaseHtml5Audio(c[e]._node)), delete c[e]._node, this._clearTimer(c[e]._id);
+      c[e]._paused || this.stop(c[e]._id), this._webAudio || (this._clearSound(c[e]._node), c[e]._node.removeEventListener("error", c[e]._errorFn, !1), c[e]._node.removeEventListener(b._canPlayEvent, c[e]._loadFn, !1), c[e]._node.removeEventListener("ended", c[e]._endFn, !1), b._releaseHtml5Audio(c[e]._node)), delete c[e]._node, this._clearTimer(c[e]._id);
     }
     e = b._howls.indexOf(this);
     0 <= e && b._howls.splice(e, 1);
@@ -2786,6 +2824,9 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     return c._node.bufferSource = b.ctx.createBufferSource(), c._node.bufferSource.buffer = h[this._src], c._panner ? c._node.bufferSource.connect(c._panner) : c._node.bufferSource.connect(c._node), c._node.bufferSource.loop = c._loop, c._loop && (c._node.bufferSource.loopStart = c._start || 0, c._node.bufferSource.loopEnd = c._stop || 0), c._node.bufferSource.playbackRate.setValueAtTime(c._rate, b.ctx.currentTime), this;
   }, _cleanBuffer:function(c) {
     var e = b._navigator && 0 <= b._navigator.vendor.indexOf("Apple");
+    if (!c.bufferSource) {
+      return this;
+    }
     if (b._scratchBuffer && c.bufferSource && (c.bufferSource.onended = null, c.bufferSource.disconnect(0), e)) {
       try {
         c.bufferSource.buffer = b._scratchBuffer;
@@ -2805,8 +2846,8 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     return this._muted = c._muted, this._loop = c._loop, this._volume = c._volume, this._rate = c._rate, this._seek = 0, this._paused = !0, this._ended = !0, this._sprite = "__default", this._id = ++b._counter, c._sounds.push(this), this.create(), this;
   }, create:function() {
     var c = this._parent, e = b._muted || this._muted || this._parent._muted ? 0 : this._volume;
-    return c._webAudio ? (this._node = void 0 === b.ctx.createGain ? b.ctx.createGainNode() : b.ctx.createGain(), this._node.gain.setValueAtTime(e, b.ctx.currentTime), this._node.paused = !0, this._node.connect(b.masterGain)) : (this._node = b._obtainHtml5Audio(), this._errorFn = this._errorListener.bind(this), this._node.addEventListener("error", this._errorFn, !1), this._loadFn = this._loadListener.bind(this), this._node.addEventListener(b._canPlayEvent, this._loadFn, !1), this._node.src = c._src, 
-    this._node.preload = "auto", this._node.volume = e * b.volume(), this._node.load()), this;
+    return c._webAudio ? (this._node = void 0 === b.ctx.createGain ? b.ctx.createGainNode() : b.ctx.createGain(), this._node.gain.setValueAtTime(e, b.ctx.currentTime), this._node.paused = !0, this._node.connect(b.masterGain)) : b.noAudio || (this._node = b._obtainHtml5Audio(), this._errorFn = this._errorListener.bind(this), this._node.addEventListener("error", this._errorFn, !1), this._loadFn = this._loadListener.bind(this), this._node.addEventListener(b._canPlayEvent, this._loadFn, !1), this._endFn = 
+    this._endListener.bind(this), this._node.addEventListener("ended", this._endFn, !1), this._node.src = c._src, this._node.preload = !0 === c._preload ? "auto" : c._preload, this._node.volume = e * b.volume(), this._node.load()), this;
   }, reset:function() {
     var c = this._parent;
     return this._muted = c._muted, this._loop = c._loop, this._volume = c._volume, this._rate = c._rate, this._seek = 0, this._rateSeek = 0, this._paused = !0, this._ended = !0, this._sprite = "__default", this._id = ++b._counter, this;
@@ -2819,6 +2860,10 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     0 === Object.keys(c._sprite).length && (c._sprite = {__default:[0, 1E3 * c._duration]});
     "loaded" !== c._state && (c._state = "loaded", c._emit("load"), c._loadQueue());
     this._node.removeEventListener(b._canPlayEvent, this._loadFn, !1);
+  }, _endListener:function() {
+    var c = this._parent;
+    c._duration === 1 / 0 && (c._duration = Math.ceil(10 * this._node.duration) / 10, c._sprite.__default[1] === 1 / 0 && (c._sprite.__default[1] = 1E3 * c._duration), c._ended(this));
+    this._node.removeEventListener("ended", this._endFn, !1);
   }};
   var h = {}, m = function(c) {
     var e = c._src;
@@ -2832,9 +2877,12 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
       r(k.buffer, c);
     } else {
       var n = new XMLHttpRequest;
-      n.open("GET", e, !0);
-      n.withCredentials = c._xhrWithCredentials;
+      n.open(c._xhr.method, e, !0);
+      n.withCredentials = c._xhr.withCredentials;
       n.responseType = "arraybuffer";
+      c._xhr.headers && Object.keys(c._xhr.headers).forEach(function(p) {
+        n.setRequestHeader(p, c._xhr.headers[p]);
+      });
       n.onload = function() {
         var p = (n.status + "")[0];
         if ("0" !== p && "2" !== p && "3" !== p) {
@@ -2874,8 +2922,8 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
       b.ctx || (b.usingWebAudio = !1);
       var c = /iP(hone|od|ad)/.test(b._navigator && b._navigator.platform), e = b._navigator && b._navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
       e = e ? parseInt(e[1], 10) : null;
-      c && e && 9 > e && (c = /safari/.test(b._navigator && b._navigator.userAgent.toLowerCase()), (b._navigator && b._navigator.standalone && !c || b._navigator && !b._navigator.standalone && !c) && (b.usingWebAudio = !1));
-      b.usingWebAudio && (b.masterGain = void 0 === b.ctx.createGain ? b.ctx.createGainNode() : b.ctx.createGain(), b.masterGain.gain.setValueAtTime(b._muted ? 0 : 1, b.ctx.currentTime), b.masterGain.connect(b.ctx.destination));
+      c && e && 9 > e && (c = /safari/.test(b._navigator && b._navigator.userAgent.toLowerCase()), b._navigator && !c && (b.usingWebAudio = !1));
+      b.usingWebAudio && (b.masterGain = void 0 === b.ctx.createGain ? b.ctx.createGainNode() : b.ctx.createGain(), b.masterGain.gain.setValueAtTime(b._muted ? 0 : b._volume, b.ctx.currentTime), b.masterGain.connect(b.ctx.destination));
       b._setup();
     }
   };
@@ -2883,7 +2931,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     return {Howler:b, Howl:d};
   });
   "undefined" != typeof exports && (exports.Howler = b, exports.Howl = d);
-  "undefined" != typeof window ? (window.HowlerGlobal = a, window.Howler = b, window.Howl = d, window.Sound = g) : "undefined" != typeof global && (global.HowlerGlobal = a, global.Howler = b, global.Howl = d, global.Sound = g);
+  "undefined" != typeof global ? (global.HowlerGlobal = a, global.Howler = b, global.Howl = d, global.Sound = g) : "undefined" != typeof window && (window.HowlerGlobal = a, window.Howler = b, window.Howl = d, window.Sound = g);
 }();
 !function() {
   HowlerGlobal.prototype._pos = [0, 0, 0];
@@ -2907,7 +2955,7 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
     }
     var r = this._orientation;
     return d = "number" != typeof d ? r[1] : d, g = "number" != typeof g ? r[2] : g, h = "number" != typeof h ? r[3] : h, m = "number" != typeof m ? r[4] : m, q = "number" != typeof q ? r[5] : q, "number" != typeof b ? r : (this._orientation = [b, d, g, h, m, q], void 0 !== this.ctx.listener.forwardX ? (this.ctx.listener.forwardX.setTargetAtTime(b, Howler.ctx.currentTime, .1), this.ctx.listener.forwardY.setTargetAtTime(d, Howler.ctx.currentTime, .1), this.ctx.listener.forwardZ.setTargetAtTime(g, 
-    Howler.ctx.currentTime, .1), this.ctx.listener.upX.setTargetAtTime(b, Howler.ctx.currentTime, .1), this.ctx.listener.upY.setTargetAtTime(d, Howler.ctx.currentTime, .1), this.ctx.listener.upZ.setTargetAtTime(g, Howler.ctx.currentTime, .1)) : this.ctx.listener.setOrientation(b, d, g, h, m, q), this);
+    Howler.ctx.currentTime, .1), this.ctx.listener.upX.setTargetAtTime(h, Howler.ctx.currentTime, .1), this.ctx.listener.upY.setTargetAtTime(m, Howler.ctx.currentTime, .1), this.ctx.listener.upZ.setTargetAtTime(q, Howler.ctx.currentTime, .1)) : this.ctx.listener.setOrientation(b, d, g, h, m, q), this);
   };
   Howl.prototype.init = function(b) {
     return function(d) {
@@ -3031,7 +3079,15 @@ Cvgr.Algos.Template = {executeAlgorithm:function(a) {
         m = {coneInnerAngle:void 0 !== h.coneInnerAngle ? h.coneInnerAngle : m.coneInnerAngle, coneOuterAngle:void 0 !== h.coneOuterAngle ? h.coneOuterAngle : m.coneOuterAngle, coneOuterGain:void 0 !== h.coneOuterGain ? h.coneOuterGain : m.coneOuterGain, distanceModel:void 0 !== h.distanceModel ? h.distanceModel : m.distanceModel, maxDistance:void 0 !== h.maxDistance ? h.maxDistance : m.maxDistance, refDistance:void 0 !== h.refDistance ? h.refDistance : m.refDistance, rolloffFactor:void 0 !== h.rolloffFactor ? 
         h.rolloffFactor : m.rolloffFactor, panningModel:void 0 !== h.panningModel ? h.panningModel : m.panningModel};
         var q = d._panner;
-        q ? (q.coneInnerAngle = m.coneInnerAngle, q.coneOuterAngle = m.coneOuterAngle, q.coneOuterGain = m.coneOuterGain, q.distanceModel = m.distanceModel, q.maxDistance = m.maxDistance, q.refDistance = m.refDistance, q.rolloffFactor = m.rolloffFactor, q.panningModel = m.panningModel) : (d._pos || (d._pos = this._pos || [0, 0, -.5]), a(d, "spatial"));
+        q || (d._pos || (d._pos = this._pos || [0, 0, -.5]), a(d, "spatial"), q = d._panner);
+        q.coneInnerAngle = m.coneInnerAngle;
+        q.coneOuterAngle = m.coneOuterAngle;
+        q.coneOuterGain = m.coneOuterGain;
+        q.distanceModel = m.distanceModel;
+        q.maxDistance = m.maxDistance;
+        q.refDistance = m.refDistance;
+        q.rolloffFactor = m.rolloffFactor;
+        q.panningModel = m.panningModel;
       }
     }
     return this;

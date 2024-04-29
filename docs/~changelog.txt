@@ -1,10 +1,23 @@
 
 
+
+   version v0.2.8 — 20240427°1523 — Formal updates
+   • Update Trekta.Utils from v0.2.7.d to v0.2.8
+   • Update Howler.js from v2.1.2 to v2.2.4
+
+   version 20210517°1211 — v0.2.7 — Streamline 'undefined' usage
+
+   version 20210516°1411 — v0.2.6 — Refresh trektautils
+   • Refresh trektautils.js inlay to version v0.2.6 20210516°1331
+
+   version 20210428°1041 v0.2.5
+   • Just streamlining
+
    version 20210426°1121 v0.2.4
    • Simplify build.py
    • Some cleanup
 
-   release v0.2.3 —20190402°0641 'Introduce keyboard, mouse and sound usage proof-of-concept'
+   release v0.2.3 — 20190402°0641 'Introduce keyboard, mouse and sound usage proof-of-concept'
    • Use Howler.js
    • Have sound inline as base64
    • Build combined version with new Python script

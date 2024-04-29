@@ -5,14 +5,29 @@
  */
 // note : Words — Algorithm figure gesture paragon pattern
 
-// Formal integration [seq 20190329°0621`xx]
+/**
+ * Formal integration
+ * 
+ * @id seq 20190329°0621`xx
+ * @type {Object} —
+ * @c_o_n_s_t — Namespace
+ */
 var Cvgr = Cvgr || {};
+
+/**
+ * Formal integration
+ * 
+ * @id seq 20190329°0621`xx
+ * @type {Object} —
+ * @c_o_n_s_t — Namespace
+ */
 Cvgr.Algos = Cvgr.Algos || {};
 
 /**
  * This namespace represents the Noisy1 algorithm
  *
  * @id 20190401°0713
+ * @const — Namespace
  */
 Cvgr.Algos.Noisy1 = {
 
@@ -152,7 +167,7 @@ Cvgr.Algos.Noisy1 = {
 
       // catch char [seq 20190401°1103]
       var oEvt = evt || window.event;
-      ///if (typeof self.keys[sChar] !== 'undefined') soundManager.play('s' + self.keys[sChar]);
+      ///if (typeof self.keys[sChar] !== 'undefined') soundManager.play('s' + self.keys[sChar]); // [mark 20210517°1111`zz] Undefined check
       ///var sChar = String.fromCharCode(oEvt.keyCode);
       ///var sChar = String.fromCharCode(oEvt.which);
       var sChar = oEvt.key;
@@ -187,6 +202,10 @@ Cvgr.Algos.Noisy1 = {
       'use strict';
 
       // [seq 20190402°0531]
+      Cvgr.Vars.sound = new Howl ({
+                        src : [ ( sAudioData ) ]                       // one format only
+                         , loop : false
+                          });
       if ( Cvgr.Vars.bSoundLibraryReady ) {
          Cvgr.Vars.sound.play();
       }

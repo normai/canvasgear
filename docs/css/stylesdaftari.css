@@ -60,10 +60,43 @@ h4 { text-align:center; color:#900060; font-size:130%; }                       /
 
 p.imageCenter  { text-align:center; color:green; }                              /* (rule 20100826°2111) */
 
-/* footer paragraphs */
-p.goodbye      { font-family:Comic Sans MS,Arial; margin-bottom:1.5em; margin-top:1.5em; } /* (rule 20080710°2314) */
-p.imprint      { color:#505050; font-size:0.77em; margin-bottom:0.1em; margin-right:1.1em; margin-top:2.4em; text-align:right; } /* (rule 20080710°2313) */
-p.footer       { border-top:1px solid; color:#808080; font-size:0.77em; margin-bottom:1.6em; margin-top:0.1%; } /* (rule 20080710°2312) */
+/**
+ * ruleset 20150211°0511
+ * summary : Additional footer paragraphs
+ */
+p.FontGoodbye  { font-family: ComicJensWeb, "Comic Sans MS", "Comic Sans", sans-serif; margin-top:2.1em; font-size:small; clear:both; color:ForestGreen; }  /* rule 20080710°2314 — Used as a final paragraph on a page */
+p.Footer23Update { color:Green; font-size:0.9em; margin-bottom:-3.7em; margin-left:1.1em; margin-top:2.4em; text-align:left; font-family: ComicJensWeb, sans-serif; }  /* rule 20180511°1541 */
+p.Footer23Imprint   { color:#808080; font-size:small; margin-bottom:-0.3em; margin-right:1.9em; margin-top:2.4em; text-align:right; }  /* rule 20080710°2313 */
+p.Footer23Imprint a { color:#505050; margin-left:0.6em; margin-right:0.6em; }  /* rule 20141129°0511 — Do not use padding here, it will interfere with rule 20100315°1943 'extern', instead use margin */
+
+/**
+ * ruleset 20200318°0611 Footer23Referer — Footer line with dedicated spans
+ * summary : Provide simple footer line with dedicated spans
+ * chain : Rule 20200318°0521 in https://www.trekta.biz/svn/demoshtml/trunk/cssdings/nthchild.html
+ * issue 20200321°0227 : For multilingual footer elements see page 20111224°2311
+ *    daftari/docs/moonwalk.html. I have tried to replace the spans by divs, of
+ *    style display:inline, but that did not work, and it seems not recommendable.
+ */
+p.Footer23Referer { border-top:1px solid; color:#505050; font-size:small; margin-bottom:1.7em; padding-top:0.2em; }  /* rule 20200318°0612 */
+span.Footer23Url { margin:0 0.4em 0 0.4em; font-family: 'Arial Narrow', Arial, sans-serif; }  /* rule 20200318°0613 */
+span.Footer23Url a { color:#505050; }
+span.Footer23Url:before { content:'Page:\00A0'; }
+span.Footer23Copy { margin:0 0.4em 0 0.4em; white-space:nowrap; }  /* rule 20200318°0614 */
+span.Footer23License span:nth-child(3) { margin:0 0.4em 0 0.4em; white-space:nowrap; }  /* rule 20200318°0615 */
+span.Footer23License a { color:#505050; }
+span.Footer23License:before { content:''; }
+span.Footer23License:after { content:''; }
+span.Footer23PageId { margin:0 0 0 0.4em; font-size:x-small; font-style:italic;
+                      font-family: 'ComicJensWeb', 'Comic Sans MS', 'Comic Sans', 'Chalkboard SE', 'Comic Neue', sans-serif;
+                      white-space:nowrap;
+                    }  /* rule 20200318°0616 */
+span.Footer23PageId:before { content:'page\00A0'; }
+span.Footer23PageId:after { content:''; }
+span.Footer23Invisible { display:none; } /* ELIMINATE in favour of Footer23PageMemo [rem 20240323°1312] */
+span.Footer23PageMemo { display:none; }
+
+/* = = = ✂ = = = = = = = = = = = = = = = = = = = = = = = = = = */
+
 
 
 /* note : 'text-align:left' counteracts 'text-align:center' for IE in body (workaround 20090208°2301) */
@@ -71,16 +104,16 @@ p.footer       { border-top:1px solid; color:#808080; font-size:0.77em; margin-b
 /* pre.codeSmall  { font-family:monospace,monospace; font-size:0.85em; text-align:left; padding:0.5em; background:#fff0f0; } */ /* (rule 20090208°0513) - #ffe8ff; */
 
 /* note : Padding is not 0.1em but 0.09em, otherwise e.g. an underline in the line above will be covered means invisible [note 20140209°0551] */
-.codeNormal { font-family:monospace,monospace; font-size:1.01em; padding:0.09em; background:MistyRose; } /* [rule 20140128°1331] */
-.codeSmall  { font-family:monospace,monospace; font-size:small; padding:0.09em; background:MistyRose; } /* [rule 20140128°1332] */
-.codeTiny  { font-family:monospace,monospace; font-size:x-small; padding:0.09em; background:MistyRose; }
+.FontCodeNormal { font-family:monospace,monospace; font-size:1.01em; padding:0.09em; background:MistyRose; } /* [rule 20140128°1331] */
+.FontCodeSmall  { font-family:monospace,monospace; font-size:small; padding:0.09em; background:MistyRose; } /* [rule 20140128°1332] */
+.FontCodeTiny  { font-family:monospace,monospace; font-size:x-small; padding:0.09em; background:MistyRose; }
 
 /*
  * rule 20140217°0611
  *  This replaces the obsolete 'tt' tag.
  *  Remember workaround 20140128°1331 'Monospace size'
  */
-.fontTypewrite {
+.FontTty {
    font-family:monospace,monospace; font-size:1.1em; padding-left:0.3em; padding-right:0.3em;
 }
 
@@ -104,7 +137,7 @@ a[target^="_blank"]:hover {                                    /* (rule 20120725
 }
 
 /* link with icon [rule 20100315°1943] */
-a.extern {
+a.LnkExtern {
    padding-left:12px;
    background-image:url(./../img/20091221o152103.extern.png);
    background-position:left center;
@@ -112,7 +145,7 @@ a.extern {
 }
 
 /* link without icon []rule 20100315°1944] */
-a.extern:hover {
+a.LnkExtern:hover {
    /* text-decoration:underline; */
    background-color:yellow; /* #ffd0d0; */
 }

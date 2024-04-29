@@ -3,14 +3,13 @@
 <head>
    <meta charset="utf-8" data-encoding="UTF-8-with-BOM">
    <title>CanvasGear → DemoOne</title>
-
    <script src="./../../canvasgear/canvasgear.js"></script>
-
    <link rel="stylesheet" href="./../../canvasgear/docs/css/gh-fork-ribbon.css"/>
    <link rel="stylesheet" href="./../../canvasgear/docs/css/stylescanvasgear.css"/>
    <link rel="stylesheet" href="./../../canvasgear/docs/css/stylesdaftari.css"/>
+   <link rel="shortcut icon" href="./imgs/20180508o1733.bird-looking-over-its-shoulder.v1.x0128y0127.png">
 
-   <style media="screen">
+   <style>
       /* note : See ref 20140829°0351 'stackoverflow : changing the color of a hr element' */
       hr.horizon { clear:left; border-bottom:0.2em solid #e0e0e0; border-top:1.2em solid transparent; } /* rule 20140829°0521 */
       .shineover { position:relative; z-index:10001; } /* 20190324o0341 shine over the github badge */
@@ -29,19 +28,19 @@
    </style>
 </head>
 
-<body class="BodyFaceCanvasGear" id="i20140815o0742">
+<body class="BodyFaceCanvasGear" id="id20140815o0742">
 
-<div id="i20190324o0336">
+<div id="id20190324o0336">
                <a class="github-fork-ribbon right-bottom fixed"
                    href="https://github.com/normai/canavasgear/"
                     data-ribbon="Fork me on GitHub"
                      title="Fork me on GitHub"
-                      id="i20190324o0337"
+                      id="id20190324o0337"
                        >Fork me on GitHub
                </a>
 </div>
 
-<table width="100%" summary="Aerial Breadcrumbs" border="0">
+<table width="100%" border="0">
  <tr>
   <td>
        <a href="./../../canvasgear/docs/index.html"><b>CanvasGear</b></a> &nbsp; → &nbsp;
@@ -50,31 +49,31 @@
        <a href="./../../canvasgear/docs/demo3.html">Demo3</a> &nbsp;
        <a href="./../../canvasgear/docs/demo4.html">Demo4</a> &nbsp;
        <a href="./../../canvasgear/docs/demo5.html">Demo5</a> &nbsp;
-       <a href="./../../canvasgear/docs/demo6.html" id="i20190331o0727">Demo6</a>
+       <a href="./../../canvasgear/docs/demo6.html" id="id20190331o0727">Demo6</a>
   </td>
   <td style="width:133px;">
-       <a href="./../../canvasgear/docs/index.html"><img src="./../../canvasgear/docs/img/20081114o1721.navi-arrow-left.png.gif" width="48" height="24" alt="Previous page" border="0" /></a>
-       <a href="./../../canvasgear/docs/index.html"><img src="./../../canvasgear/docs/img/20081114o1727.navi-arrow-up-wide.gif" width="24" height="24" alt="Home chapter" border="0" /></a>
-       <a href="./../../canvasgear/docs/demo2.html"><img src="./../../canvasgear/docs/img/20081114o1722.navi-arrow-right.png.gif" width="48" height="24" alt="Next page" border="0" /></a>
+       <a href="./../../canvasgear/docs/index.html"><img src="./../../canvasgear/docs/imgs/20081114o1721.navi-arrow-left.png.gif" width="48" height="24" alt="Previous page" border="0" /></a>
+       <a href="./../../canvasgear/docs/index.html"><img src="./../../canvasgear/docs/imgs/20081114o1727.navi-arrow-up-wide.gif" width="24" height="24" alt="Home chapter" border="0" /></a>
+       <a href="./../../canvasgear/docs/demo2.html"><img src="./../../canvasgear/docs/imgs/20081114o1722.navi-arrow-right.png.gif" width="48" height="24" alt="Next page" border="0" /></a>
   </td>
  </tr>
 </table>
 
-<div id="i20140831o0752" style="text-align:right; float:right;">
+<div id="id20140831o0752" style="text-align:right; float:right;">
                <canvas data-cvgr="algo=triangle color=mediumspringgreen hertz=0.1" id="myCanvas21" height="98" width="98">[Canvas]</canvas>
 </div>
 
-<div class="ChapterFaceNormal" id="i20140828o2212">
+<div class="ChapterFaceNormal" id="id20140828o2212">
 
- <p class="topTitleCrumbs" id="i20140815o1232">
-               <a href="./../../canvasgear/docs/index.html" id="i20190329o0452">CanvasGear</a> →
+ <p class="topTitleCrumbs" id="id20140815o1232">
+               <a href="./../../canvasgear/docs/index.html" id="id20190329o0452">CanvasGear</a> →
  </p>
 
- <h1 id="i20140815o1231">
+ <h1 id="id20140815o1231">
                Demo One
  </h1>
 
- <p style="font-size:small; padding-left:7.1em;" id="i20190402o0557">
+ <p style="font-size:small; padding-left:7.1em;" id="id20190402o0557">
                Note: For developing, the combined script is not useful. For developing, switch to the plain script :
                <br /><span class="DemoCellCode"> <!-- style="font-family:monospace;" -->
                &lt; script src="./../<b>canvasgear.combi.js</b>"&gt;&lt;/script &gt;
@@ -83,139 +82,138 @@
                </span>
  </p>
 
- <table id="i20140901o0413">
+ <table id="id20140901o0413">
 
-  <tr id="i20140901o0424">
-   <td id="i20140901o0425">
+  <tr id="id20140901o0424">
+   <td id="id20140901o0425">
                develop, Template
    </td>
-   <td class="DemoCell" id="i20140815o1431">
-               <canvas data-cvgr="algo=Noisy1 color=Crimson bgcolor=LightCyan" width="92" height="92" id="i20190331o0732">[Canvas]</canvas>
-               <canvas data-cvgr="algo=MyAlgo color=Crimson bgcolor=LightCyan" width="64" height="64" id="i20190330o0352">[Canvas]</canvas>
-               <canvas data-cvgr="algo=MyAlgo" width="64" height="64" id="i20190330o0353">[Canvas]</canvas>
-               <canvas data-cvgr="algo=MyAlgo" width="64" height="64" id="i20190330o0354">[Canvas]</canvas>
-               <canvas data-cvgr="" width="64" height="64" id="i20190330o0213">[Canvas]</canvas>
+   <td class="DemoCell" id="id20140815o1431">
+               <canvas data-cvgr="algo=Noisy1 color=Crimson bgcolor=LightCyan" width="92" height="92" id="id20190331o0732">[Canvas]</canvas>
+               <canvas data-cvgr="algo=MyAlgo color=Crimson bgcolor=LightCyan" width="64" height="64" id="id20190330o0352">[Canvas]</canvas>
+               <canvas data-cvgr="algo=MyAlgo" width="64" height="64" id="id20190330o0353">[Canvas]</canvas>
+               <canvas data-cvgr="algo=MyAlgo" width="64" height="64" id="id20190330o0354">[Canvas]</canvas>
+               <canvas data-cvgr="" width="64" height="64" id="id20190330o0213">[Canvas]</canvas>
                <canvas data-cvgr="algo=develop Color=Crimson Color2=SeaGreen Color3=RoyalBlue" width="64" height="64" id="myCanvas22">[Canvas]</canvas>
-               <canvas data-cvgr="algo=Template shiftx=15 color=Orange bgcolor=LightCyan" width="96" height="64" id="i20190329o0522">[Canvas]</canvas>
+               <canvas data-cvgr="algo=Template shiftx=15 color=Orange bgcolor=LightCyan" width="96" height="64" id="id20190329o0522">[Canvas]</canvas>
    </td>
   </tr>
 
-  <tr id="i20190329o0532">
-   <td id="i20190329o0534">
+  <tr id="id20190329o0532">
+   <td id="id20190329o0534">
    </td>
- <!-- pre class="codeTiny CvgrCode" id="i20190330o052x" -->
-   <td class="DemoCellCode2" id="i20190329o0535"
->&lt;canvas <b>data-cvgr="algo=Noisy1 color=Crimson bgcolor=LightCyan"</b> width="92" height="92" id="i20190331o0732"&gt;[Canvas]&lt;/canvas&gt;
- &lt;canvas <b>data-cvgr="algo=MyAlgo color=Crimson BgColor=LightCyan"</b> width="64" height="64" id="i20190330o0352"&gt;[Canvas]&lt;/canvas&gt;
- &lt;canvas <b>data-cvgr="algo=MyAlgo"</b> width="64" height="64" id="i20190330o0353"&gt;[Canvas]&lt;/canvas&gt;
- &lt;canvas <b>data-cvgr="algo=MyAlgo"</b> width="64" height="64" id="i20190330o0354"&gt;[Canvas]&lt;/canvas&gt;
- &lt;canvas <b>data-cvgr=""</b> width="64" height="64" id="i20190330o0213"&gt;[Canvas]&lt;/canvas&gt;
+   <td class="DemoCellCode2" id="id20190329o0535"
+>&lt;canvas <b>data-cvgr="algo=Noisy1 color=Crimson bgcolor=LightCyan"</b> width="92" height="92" id="id20190331o0732"&gt;[Canvas]&lt;/canvas&gt;
+ &lt;canvas <b>data-cvgr="algo=MyAlgo color=Crimson BgColor=LightCyan"</b> width="64" height="64" id="id20190330o0352"&gt;[Canvas]&lt;/canvas&gt;
+ &lt;canvas <b>data-cvgr="algo=MyAlgo"</b> width="64" height="64" id="id20190330o0353"&gt;[Canvas]&lt;/canvas&gt;
+ &lt;canvas <b>data-cvgr="algo=MyAlgo"</b> width="64" height="64" id="id20190330o0354"&gt;[Canvas]&lt;/canvas&gt;
+ &lt;canvas <b>data-cvgr=""</b> width="64" height="64" id="id20190330o0213"&gt;[Canvas]&lt;/canvas&gt;
  &lt;canvas <b>data-cvgr="algo=develop Color=Crimson Color2=SeaGreen Color3=RoyalBlue"</b> width="64" height="64" id="myCanvas22"&gt;[Canvas]&lt;/canvas&gt;
- &lt;canvas <b>data-cvgr="algo=Template shiftx=15 color=Orange bgcolor=LightCyan"</b> width="64" height="64" id="i20190329o0522"&gt;[Canvas]&lt;/canvas&gt;
+ &lt;canvas <b>data-cvgr="algo=Template shiftx=15 color=Orange bgcolor=LightCyan"</b> width="64" height="64" id="id20190329o0522"&gt;[Canvas]&lt;/canvas&gt;
 </td>
   </tr>
 
-  <tr id="i20140901o0426">
-   <td id="i20140901o0433">
+  <tr id="id20140901o0426">
+   <td id="id20140901o0433">
                oblongrose
    </td>
-   <td class="DemoCell" id="i20140815o1531">
+   <td class="DemoCell" id="id20140815o1531">
                <canvas data-cvgr="algo=oblongrose color=crimson" width="64" height="64" id="myCanvas23">[Canvas]</canvas>
-               <canvas data-cvgr="algo=oblongrose color=seagreen" width="48" height="48" id="i20140901o0341">[Canvas]</canvas>
-               <canvas data-cvgr="algo=oblongrose color=royalblue" width="32" height="32" id="i20140901o0342">[Canvas]</canvas>
+               <canvas data-cvgr="algo=oblongrose color=seagreen" width="48" height="48" id="id20140901o0341">[Canvas]</canvas>
+               <canvas data-cvgr="algo=oblongrose color=royalblue" width="32" height="32" id="id20140901o0342">[Canvas]</canvas>
    </td>
   </tr>
 
-  <tr id="i20190329o0806">
-   <td id="i20190329o0807">
+  <tr id="id20190329o0806">
+   <td id="id20190329o0807">
    </td>
-   <td class="DemoCellCode" id="i20190329o0808">
+   <td class="DemoCellCode" id="id20190329o0808">
                &lt;canvas <b>data-cvgr="algo=oblongrose color=crimson"</b> width="64" height="64" id="myCanvas23"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=oblongrose color=seagreen"</b> width="48" height="48" id="i20140901o0341"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=oblongrose color=royalblue"</b> width="32" height="32" id="i20140901o0342"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=oblongrose color=seagreen"</b> width="48" height="48" id="id20140901o0341"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=oblongrose color=royalblue"</b> width="32" height="32" id="id20140901o0342"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 
-  <tr id="i20140901o0434">
-   <td id="i20140901o0435">
+  <tr id="id20140901o0434">
+   <td id="id20140901o0435">
                pulse
    </td>
-   <td class="DemoCell" id="i20140815o1521">
+   <td class="DemoCell" id="id20140815o1521">
                <canvas data-cvgr="algo=pulse" width="64" height="64" id="myCanvas24">[Canvas]</canvas>
                <canvas data-cvgr="algo=pulse color=seagreen hertz=0.19" width="48" height="48" id="myCanvas25">[Canvas]</canvas>
                <canvas data-cvgr="algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11" width="32" height="32" id="myCanvas26">[Canvas]</canvas>
    </td>
   </tr>
 
-  <tr id="i20190329o0812">
-   <td id="i20190329o0813">
+  <tr id="id20190329o0812">
+   <td id="id20190329o0813">
    </td>
-   <td class="DemoCellCode" id="i20190329o0814">
+   <td class="DemoCellCode" id="id20190329o0814">
                &lt;canvas <b>data-cvgr="algo=pulse"</b> width="64" height="64" id="myCanvas24"&gt;[Canvas]&lt;/canvas&gt;
         <br /> &lt;canvas <b>data-cvgr="algo=pulse color=seagreen hertz=0.19"</b> width="48" height="48" id="myCanvas25"&gt;[Canvas]&lt;/canvas&gt;
         <br /> &lt;canvas <b>data-cvgr="algo=pulse color=orange hertz=0.2 shiftx=11 shifty=11"</b> width="32" height="32" id="myCanvas26"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 
-  <tr id="i20140901o0414">
-   <td id="i20140901o0415">
+  <tr id="id20140901o0414">
+   <td id="id20140901o0415">
                triangle
    </td>
-   <td class="DemoCell" id="i20140815o1451" style="clear:left;">
+   <td class="DemoCell" id="id20140815o1451" style="clear:left;">
                <canvas data-cvgr="algo=triangle" width="64" height="64" id="myCanvas27">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangle color=turquoise hertz=1" width="56" height="56" id="i20140901o0311">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangle color=mediumspringgreen hertz=0.25" width="48" height="48" id="i20140901o0312">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangle color=aquamarine hertz=0.05" width="40" height="40" id="i20140901o0313">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangle color=chartreuse hertz=-0.33" width="32" height="32" id="i20140901o0314">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=turquoise hertz=1" width="56" height="56" id="id20140901o0311">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=mediumspringgreen hertz=0.25" width="48" height="48" id="id20140901o0312">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=aquamarine hertz=0.05" width="40" height="40" id="id20140901o0313">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangle color=chartreuse hertz=-0.33" width="32" height="32" id="id20140901o0314">[Canvas]</canvas>
    </td>
   </tr>
 
-  <tr id="i20190329o0816">
-   <td id="i20190329o0817">
+  <tr id="id20190329o0816">
+   <td id="id20190329o0817">
    </td>
-   <td class="DemoCellCode" id="i20190329o0818">
+   <td class="DemoCellCode" id="id20190329o0818">
                &lt;canvas <b>data-cvgr="algo=triangle"</b> width="64" height="64" id="myCanvas27"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=turquoise hertz=1"</b> width="56" height="56" id="i20140901o0311"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=mediumspringgreen hertz=0.25"</b> width="48" height="48" id="i20140901o0312"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=aquamarine hertz=0.05"</b> width="40" height="40" id="i20140901o0313"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=chartreuse hertz=-0.33"</b> width="32" height="32" id="i20140901o0314"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=turquoise hertz=1"</b> width="56" height="56" id="id20140901o0311"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=mediumspringgreen hertz=0.25"</b> width="48" height="48" id="id20140901o0312"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=aquamarine hertz=0.05"</b> width="40" height="40" id="id20140901o0313"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangle color=chartreuse hertz=-0.33"</b> width="32" height="32" id="id20140901o0314"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 
-  <tr id="i20140901o0416">
-   <td id="i20140901o0423">
+  <tr id="id20140901o0416">
+   <td id="id20140901o0423">
                triangulum
    </td>
-   <td class="DemoCell" id="i20140815o1541">
+   <td class="DemoCell" id="id20140815o1541">
                <canvas data-cvgr="algo=triangulum" width="44" height="44" id="myCanvas28">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangulum hertz=0.2 bgcolor=lemonchiffon color=crimson color2=red color3=royalblue" width="40" height="40" id="i20140901o0531">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangulum color=seagreen hertz=0.5 bgcolor=papayawhip" width="36" height="36" id="i20140901o0532">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangulum color=royalblue hertz=1 bgcolor=moccasin" width="32" height="32" id="i20140901o0533">[Canvas]</canvas>
-               <canvas data-cvgr="algo=triangulum color=maroon hertz=2 bgcolor=mistyrose" width="28" height="28" id="i20140901o0534">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum hertz=0.2 bgcolor=lemonchiffon color=crimson color2=red color3=royalblue" width="40" height="40" id="id20140901o0531">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum color=seagreen hertz=0.5 bgcolor=papayawhip" width="36" height="36" id="id20140901o0532">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum color=royalblue hertz=1 bgcolor=moccasin" width="32" height="32" id="id20140901o0533">[Canvas]</canvas>
+               <canvas data-cvgr="algo=triangulum color=maroon hertz=2 bgcolor=mistyrose" width="28" height="28" id="id20140901o0534">[Canvas]</canvas>
    </td>
   </tr>
 
-  <tr id="i20190329o0822">
-   <td id="i20190329o0823">
+  <tr id="id20190329o0822">
+   <td id="id20190329o0823">
    </td>
-   <td class="DemoCellCode" id="i20190329o0824">
+   <td class="DemoCellCode" id="id20190329o0824">
                &lt;canvas <b>data-cvgr="algo=triangulum"</b> width="44" height="44" id="myCanvas28"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=triangulum hertz=0.2 bgcolor=lemonchiffon color=crimson color2=red color3=royalblue"</b> width="40" height="40" id="i20140901o0531"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=triangulum color=seagreen hertz=0.5 bgcolor=papayawhip"</b> width="36" height="36" id="i20140901o0532"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=triangulum color=royalblue hertz=1 bgcolor=moccasin"</b> width="32" height="32" id="i20140901o0533"&gt;[Canvas]&lt;/canvas&gt;
-        <br /> &lt;canvas <b>data-cvgr="algo=triangulum color=maroon hertz=2 bgcolor=mistyrose"</b> width="28" height="28" id="i20140901o0534"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangulum hertz=0.2 bgcolor=lemonchiffon color=crimson color2=red color3=royalblue"</b> width="40" height="40" id="id20140901o0531"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangulum color=seagreen hertz=0.5 bgcolor=papayawhip"</b> width="36" height="36" id="id20140901o0532"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangulum color=royalblue hertz=1 bgcolor=moccasin"</b> width="32" height="32" id="id20140901o0533"&gt;[Canvas]&lt;/canvas&gt;
+        <br /> &lt;canvas <b>data-cvgr="algo=triangulum color=maroon hertz=2 bgcolor=mistyrose"</b> width="28" height="28" id="id20140901o0534"&gt;[Canvas]&lt;/canvas&gt;
    </td>
   </tr>
 
-  <tr id="i20140901o0436">
-   <td style="max-width:7em;" id="i20140901o0443">
+  <tr id="id20140901o0436">
+   <td style="max-width:7em;" id="id20140901o0443">
                Invalid or missing definitions
    </td>
-   <td class="DemoCell" id="i20140901o0444">
+   <td class="DemoCell" id="id20140901o0444">
 
-    <div class="CvgrUseBorder" id="i20140815o1441" style="float:left;">
-               <canvas data-cvgr="" width="128" height="128" style="float:left;" id="i20140828o0741">[Canvas]</canvas>
-        <p class="Cvgr_CanvasAttachedInfoPara" id ="i20140828o0741.info">
+    <div class="CvgrUseBorder" id="id20140815o1441" style="float:left;">
+               <canvas data-cvgr="" width="128" height="128" style="float:left;" id="id20140828o0741">[Canvas]</canvas>
+        <p class="Cvgr_CanvasAttachedInfoPara" id="id20140828o0741.info">
                [CanvasInfoPara]
         </p>
     </div>
@@ -227,11 +225,11 @@
    </td>
   </tr>
 
-  <tr id="i20190329o0826">
-   <td id="i20190329o0827">
+  <tr id="id20190329o0826">
+   <td id="id20190329o0827">
    </td>
-   <td class="DemoCellCode" id="i20190329o0828">
-               &lt;canvas <b>data-cvgr=""</b> width="128" height="128" style="float:left;" id="i20140828o0741"&gt;[Canvas]&lt;/canvas&gt;
+   <td class="DemoCellCode" id="id20190329o0828">
+               &lt;canvas <b>data-cvgr=""</b> width="128" height="128" style="float:left;" id="id20140828o0741"&gt;[Canvas]&lt;/canvas&gt;
         <br /> &lt;canvas <b>data-cvgr="algo=Oha1 color=Turquoise shiftx=-33 shifty=-33"</b> width="64" height="128" id="myCanvas29"&gt;[Canvas]&lt;/canvas&gt;
         <br /> &lt;canvas <b>data-cvgr="algo=Oha2 shifty=-33"</b> width="48" height="128" id="myCanvas30"&gt;[CANVAS]&lt;/canvas&gt;
         <br /> &lt;canvas <b>data-cvgr="shiftx=20"</b> width="32" height="128" id="myCanvas31"&gt;[Canvas]&lt;/canvas&gt;
@@ -241,24 +239,24 @@
 
  </table>
 
- <p id="i20140831o0521" style="clear:left;">
+ <p id="id20140831o0521" style="clear:left;">
                &nbsp;
  </p>
 
- <p id="i20140829o0531">
+ <p id="id20140829o0531">
                Page level debug area:
  </p>
 
- <p style="background-color:palegreen; color:darkmagenta; font-size:small;" data-id2="i20140828o0651" id="Cvgr_DebugPageOutputArea"><!-- output status message -->
+ <p style="background-color:palegreen; color:darkmagenta; font-size:small;" data-id2="id20140828o0651" id="Cvgr_DebugPageOutputArea"><!-- output status message -->
                .<!-- This paragraph may be replaced from canvasgear.js -->
  </p>
 
- <div id="i20140829o0541">
- <form name="FormAlgoMode" action="input_radio.htm" id="FormAlgoMode"><!-- id="i20140829o0542" -->
-  <p id="i20140829o0543">
+ <div id="id20140829o0541">
+ <form name="FormAlgoMode" action="input_radio.htm" id="FormAlgoMode"><!-- id="id20140829o0542" -->
+  <p id="id20140829o0543">
                Toggle mode :
-               <input type="radio" name="AlgoMode" value="Tip" onClick="Cvgr.Func.setRadiobutton();" id="i20140819o1821">Tip
-               <input type="radio" name="AlgoMode" value="Top"  onClick="Cvgr.Func.setRadiobutton();" id="i20140819o1822">Top
+               <input type="radio" name="AlgoMode" value="Tip" onClick="Cvgr.Func.setRadiobutton();" id="id20140819o1821">Tip
+               <input type="radio" name="AlgoMode" value="Top"  onClick="Cvgr.Func.setRadiobutton();" id="id20140819o1822">Top
                &nbsp; &nbsp; (no functionality behind this)
   </p>
  </form>
@@ -266,14 +264,14 @@
 
 </div>
 
-<p class="imprint shineover">
-               <a href="http://www.trilo.de/imprint.html" class="extern">Imprint</a>
+<p class="Footer23Imprint shineover">
+               <a href="http://www.trilo.de/imprint.html" class="LnkExtern">Imprint</a>
 </p>
-<p class="footer shineover" id="i20140828o0631">
-               <span class="footerFileUrl">https://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/docs/<a href="https://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/docs/demo1.html">demo1.html</a></span>
-               <span class="footerCopyright">©&nbsp;2014&nbsp;&#8209;&nbsp;2020&nbsp;Norbert&nbsp;C.&nbsp;Maier</span> —
-               <span class="footerLicense">Page&nbsp;license:&nbsp;<a href="https://creativecommons.org/licenses/by-sa/4.0/" class="extern" data-webshot="20180503°2122" id="i20181116o0543">CC&nbsp;BY&#8209;SA&nbsp;4.0</a></span> —
-               <span class="footerPageId">page 20140828°0631</span>
+<p class="Footer23Referer shineover" id="id20140828o0631">
+               <span class="Footer23Url">https://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/docs/<a href="https://www.trekta.biz/svn/canvasgeardev/trunk/canvasgear/docs/demo1.html">demo1.html</a></span>
+               <span class="Footer23Copyright">© 2014 - 2024 Norbert C. Maier</span> —
+               <span class="Footer23License">Page license: <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="LnkExtern" data-webref="20180503°2122" id="id20181116o0543">CC BY-SA 4.0</a></span> —
+               <span class="Footer23PageId">20140828°0631</span>
 </p>
 </body>
 </html>

@@ -26,7 +26,7 @@ canvas { }
  * rule 20100826°2121)
  * note : This name collides with the class in Daftari styles.css
  */
-.timestamp { color:Turquoise; font-size:55%; font-family:Comic Sans MS,Arial }
+.FontTmestamp { color:Turquoise; font-size:55%; font-family:Comic Sans MS,Arial }
 
 /* (20140828°0731) */
 .CvgrUseBorder { border-width:3px; border-color:lightgray; border-style:solid; } /* useborder */

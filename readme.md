@@ -1,4 +1,4 @@
-﻿# CanvasGear v0.2.5
+﻿# CanvasGear <sup><sub><sup>*v0.2.8*</sup></sub></sup>
 
 **Slogan** : Draw animated canvases by specifying parameters in a data attribute
 
@@ -48,8 +48,10 @@
 
 **License** : GNU LGPL v3 or later [opensource.org/licenses/LGPL-3.0](https://opensource.org/licenses/LGPL-3.0)
 
-Have fun
+&nbsp;
 
-2021-April-26
+*Have fun*
 
-<sup><sub>[project 20140815°0111 folder 20140815°0122 file 20140815°0123]</sub></sup>
+*Norbert, 2024-April-29* &nbsp; <del>2021-April-26</del>
+
+<sup><sub><sup>*[project 20140815°0111 folder 20140815°0122 file 20140815°0123]*</sup></sub></sup>

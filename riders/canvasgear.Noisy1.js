@@ -167,7 +167,7 @@ Cvgr.Algos.Noisy1 = {
 
       // catch char [seq 20190401°1103]
       var oEvt = evt || window.event;
-      ///if (typeof self.keys[sChar] !== 'undefined') soundManager.play('s' + self.keys[sChar]);
+      ///if (typeof self.keys[sChar] !== 'undefined') soundManager.play('s' + self.keys[sChar]); // [mark 20210517°1111`zz] Undefined check
       ///var sChar = String.fromCharCode(oEvt.keyCode);
       ///var sChar = String.fromCharCode(oEvt.which);
       var sChar = oEvt.key;
@@ -202,6 +202,10 @@ Cvgr.Algos.Noisy1 = {
       'use strict';
 
       // [seq 20190402°0531]
+      Cvgr.Vars.sound = new Howl ({
+                        src : [ ( sAudioData ) ]                       // one format only
+                         , loop : false
+                          });
       if ( Cvgr.Vars.bSoundLibraryReady ) {
          Cvgr.Vars.sound.play();
       }
